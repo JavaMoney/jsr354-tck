@@ -9,11 +9,15 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
+import javax.money.MonetaryAdjuster;
+
 import junit.framework.Assert;
 
 import org.javamoney.tck.TCKValidationException;
 
 public class ClassTester {
+
+	private static final StringBuffer warnings = new StringBuffer();
 
 	private ClassTester() {
 
@@ -124,6 +128,29 @@ public class ClassTester {
 			for (Method m : current.getDeclaredMethods()) {
 				if (returnType.equals(returnType) &&
 						m.getName().equals(name) &&
+						((m.getModifiers() & Modifier.PUBLIC) != 0) &&
+						Arrays.equals(m.getParameterTypes(), paramTypes)) {
+					return;
+				}
+			}
+			current = current.getSuperclass();
+		}
+		throw new TCKValidationException(
+				"Class must implement method " + name + '('
+						+ Arrays.toString(paramTypes) + "): "
+						+ returnType.getName() + ", but does not: "
+						+ type.getName());
+	}
+
+	public static void testHasPublicStaticMethod(Class type, Class returnType,
+			String name, Class... paramTypes) {
+		Class current = type;
+		while (current != null) {
+			for (Method m : current.getDeclaredMethods()) {
+				if (returnType.equals(returnType) &&
+						m.getName().equals(name) &&
+						((m.getModifiers() & Modifier.PUBLIC) != 0) &&
+						((m.getModifiers() & Modifier.STATIC) != 0) &&
 						Arrays.equals(m.getParameterTypes(), paramTypes)) {
 					return;
 				}
@@ -166,6 +193,63 @@ public class ClassTester {
 			InvocationTargetException {
 		Method m = instance.getClass().getDeclaredMethod(methodName);
 		Assert.assertEquals(value, m.invoke(instance));
+	}
 
+	public static boolean testImmutableOpt(Class type) {
+		try {
+			testImmutable(type);
+			return true;
+		} catch (Exception e) {
+			warnings.append("Recommendation failed: Class should be immutable: "
+					+ type.getName() + ", details: " + e.getMessage() + "\n");
+			return false;
+		}
+	}
+
+	public static boolean testSerializableOpt(Class type) {
+		try {
+			testSerializable(type);
+			return true;
+		} catch (Exception e) {
+			warnings.append("Recommendation failed: Class should be serializable: "
+					+ type.getName() + ", details: " + e.getMessage() + "\n");
+			return false;
+		}
+	}
+
+	public static boolean testHasPublicStaticMethodOpt(Class type,
+			Class returnType,
+			String methodName, Class... paramTypes) {
+		try {
+			testHasPublicStaticMethod(type, returnType, methodName, paramTypes);
+			return true;
+		} catch (Exception e) {
+			warnings.append("Recommendation failed: Missing method [public static "
+					+ methodName
+					+ '('
+					+ Arrays.toString(paramTypes) + "):" + returnType.getName()
+					+ "] on: "
+					+ type.getName() + "\n");
+			return false;
+		}
+	}
+
+	public static boolean testSerializableOpt(Object instance) {
+		try {
+			testSerializable(instance);
+			return true;
+		} catch (Exception e) {
+			warnings.append("Recommendation failed: Class is serializable, but serialization failed: "
+					+ instance.getClass().getName() + "\n");
+			return false;
+		}
+	}
+
+	public static void resetWarnings() {
+		warnings.setLength(0);
+	}
+
+	public static String getWarnings() {
+		return warnings.toString();
 	}
 }
