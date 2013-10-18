@@ -15,7 +15,7 @@
 	<artifactId>jsr354-tck</artifactId>
 	<packaging>jar</packaging>
 
-	<version>0.7-SNAPSHOT</version>
+	<version>0.7</version>
 
 	<name>JSR 354 (Money and Currency API)</name>
 	<url>http://java.net/projects/javamoney</url>
@@ -23,16 +23,31 @@
 	<description>JSR 354 provides an API for representing, transporting, and performing comprehensive calculations with Money and Currency. 
 	This module impelements JSR 354.</description>
 
-	<properties>
+	<organization>
+		<name>JavaMoney</name>
+		<url>http://javamoney.org</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>Apache 2 License</name>
+			<comments>Spec</comments>
+			<url>LICENSE.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
+	<properties>
+		<jsr.version>0.7</jsr.version>
+		<jdkVersion>1.7</jdkVersion>
+		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
+		<maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<moduleDir>.</moduleDir>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<jdkVersion>1.7</jdkVersion>
-		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
-		<maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
 		<basedir>.</basedir>
 		<!-- Dependency versions -->
 		<junit.version>4.8.2</junit.version>
@@ -44,14 +59,9 @@
 		<!-- This properties must be set for another implementation to be tested. -->
 		<impl.groupId>org.javamoney</impl.groupId>
 		<impl.artifactId>jsr354-ri</impl.artifactId>
-		<impl.version>0.7-SNAPSHOT</impl.version>
+		<impl.version>0.7</impl.version>
 		<impl.packageType>jar</impl.packageType>
 	</properties>
-
-	<organization>
-		<name>JSR 354 - Expert Group</name>
-		<url>https://javamoney.java.net</url>
-	</organization>
 
 	<developers>
 		<developer>
@@ -207,15 +217,6 @@
 		<url>http://java.net/jira/browse/JAVAMONEY</url>
 	</issueManagement>
 
-
-	<licenses>
-		<license>
-			<name>Apache 2 License</name>
-			<comments>Spec</comments>
-			<url>LICENSE.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
 
 	<prerequisites>
 		<maven>3.0.4</maven>
