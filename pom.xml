@@ -11,7 +11,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.javamoney</groupId>
+	<groupId>org.javamoney.tck</groupId>
 	<artifactId>jsr354-tck</artifactId>
 	<packaging>jar</packaging>
 
@@ -42,7 +42,7 @@
 
 		<jboss.test.audit.version>1.1.0.Final</jboss.test.audit.version>
 		<!-- This properties must be set for another implementation to be tested. -->
-		<impl.groupId>org.javamoney</impl.groupId>
+		<impl.groupId>org.javamoney.ri</impl.groupId>
 		<impl.artifactId>jsr354-ri</impl.artifactId>
 		<impl.version>0.7-SNAPSHOT</impl.version>
 		<impl.packageType>jar</impl.packageType>
