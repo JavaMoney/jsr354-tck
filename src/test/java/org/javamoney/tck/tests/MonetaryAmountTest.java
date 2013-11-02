@@ -34,7 +34,8 @@ public class MonetaryAmountTest {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
 			for (String code : new String[] { "CHF", "hsgd", "374347&*%*ç" }) {
-				MonetaryAmount amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+				MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+						.getTestConfiguration()
 						.create(type, code, 10.15);
 				assertNotNull(amount);
 				assertNotNull(amount.getCurrency());
@@ -54,7 +55,8 @@ public class MonetaryAmountTest {
 					-1234 };
 			long[] wholes = new long[] { 0, 0, 1, -1, 0, 0, 1234, -1234 };
 			for (int i = 0; i < nums.length; i++) {
-				MonetaryAmount amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+				MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+						.getTestConfiguration()
 						.create(type, "XXX", nums[i]);
 				assertNotNull(amount);
 				assertEquals(wholes[i], amount.getAmountWhole());
@@ -71,13 +73,35 @@ public class MonetaryAmountTest {
 				.getAmountClasses()) {
 			double[] nums = new double[] { 0, -0, 1, -1, 0.001, -0.001, 1234,
 					-1234 };
-			long[] fractionNums = new long[] { 0, 0, 0, 0, 1, -1, 0, 0 };
+			int[] fractionSign = new int[] { 0, 0, 0, 0, 1, -1, 0, 0 };
 			for (int i = 0; i < nums.length; i++) {
-				MonetaryAmount amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+				MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+						.getTestConfiguration()
 						.create(type, "CHF", nums[i]);
 				assertNotNull(amount);
-				assertEquals(fractionNums[i],
-						amount.getAmountFractionNumerator());
+				switch (fractionSign[i]) {
+				case 0:
+					assertTrue(
+							"Expected for " + nums[i] + " numerator sign of "
+									+ fractionSign[i] + ", but was "
+									+ amount.getAmountFractionNumerator(),
+							amount.getAmountFractionNumerator() == 0);
+					break;
+				case 1:
+					assertTrue(
+							"Expected for " + nums[i] + " numerator sign of "
+									+ fractionSign[i] + ", but was "
+									+ amount.getAmountFractionNumerator(),
+							amount.getAmountFractionNumerator() > 0);
+					break;
+				case -1:
+					assertTrue(
+							"Expected for " + nums[i] + " numerator sign of "
+									+ fractionSign[i] + ", but was "
+									+ amount.getAmountFractionNumerator(),
+							amount.getAmountFractionNumerator() < 0);
+					break;
+				}
 			}
 		}
 	}
@@ -89,16 +113,19 @@ public class MonetaryAmountTest {
 	public void testAmountFractionDenominator() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
-			double[] nums = new double[] { 0, -0, 1, -1, 0.001, -0.001, 1.12,
+			double[] nums = new double[] { 0.00, -0, 1, -1, 0.001, -0.001,
+					1.12,
 					-1.123456 };
-			long[] fractionDenoms = new long[] { 100, 100, 100, 100, 1000,
-					1000, 100, 1000000 };
 			for (int i = 0; i < nums.length; i++) {
-				MonetaryAmount amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+				MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+						.getTestConfiguration()
 						.create(type, "CHF", nums[i]);
 				assertNotNull(amount);
-				assertEquals(fractionDenoms[i],
-						amount.getAmountFractionNumerator());
+				assertTrue(
+						"Expected for " + nums[i]
+								+ " denominator > 0, but was "
+								+ amount.getAmountFractionDenominator(),
+						amount.getAmountFractionDenominator() > 0);
 			}
 		}
 	}
@@ -111,7 +138,8 @@ public class MonetaryAmountTest {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
 			// Case 1
-			MonetaryAmount amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+					.getTestConfiguration()
 					.create(type, "XXX", 0);
 			assertNotNull(amount);
 			assertEquals(0,
@@ -119,7 +147,7 @@ public class MonetaryAmountTest {
 			assertTrue(amount.getAmountFractionDenominator() > 0);
 			assertEquals(0, amount.getAmountWhole());
 			// Case 2
-			amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
 					.create(type, "XXX", -0);
 			assertNotNull(amount);
 			assertEquals(0,
@@ -127,7 +155,7 @@ public class MonetaryAmountTest {
 			assertTrue(amount.getAmountFractionDenominator() > 0);
 			assertEquals(0, amount.getAmountWhole());
 			// Case 3
-			amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
 					.create(type, "XXX", -1);
 			assertNotNull(amount);
 			assertEquals(0,
@@ -135,7 +163,7 @@ public class MonetaryAmountTest {
 			assertTrue(amount.getAmountFractionDenominator() > 0);
 			assertEquals(-1, amount.getAmountWhole());
 			// Case 4
-			amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
 					.create(type, "XXX", 1);
 			assertNotNull(amount);
 			assertEquals(0,
@@ -143,14 +171,14 @@ public class MonetaryAmountTest {
 			assertTrue(amount.getAmountFractionDenominator() > 0);
 			assertEquals(1, amount.getAmountWhole());
 			// Case 4
-			amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
 					.create(type, "XXX", 2.234);
 			assertNotNull(amount);
 			assertTrue(amount.getAmountFractionNumerator() > 0);
 			assertTrue(amount.getAmountFractionDenominator() > 0);
 			assertEquals(2, amount.getAmountWhole());
 			// Case 5
-			amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
 					.create(type, "XXX", -2.234);
 			assertNotNull(amount);
 			assertTrue(amount.getAmountFractionNumerator() < 0);
@@ -166,7 +194,8 @@ public class MonetaryAmountTest {
 	public void testWith() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
-			MonetaryAmount amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+					.getTestConfiguration()
 					.create(type, "XXX", 0);
 			// amount.with();
 			// TODO
@@ -180,7 +209,8 @@ public class MonetaryAmountTest {
 	public void testQuery() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
-			MonetaryAmount amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+					.getTestConfiguration()
 					.create(type, "XXX", 0);
 			// amount.query();
 			// TODO
@@ -194,11 +224,13 @@ public class MonetaryAmountTest {
 	public void testImplementsEquals() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
-			MonetaryAmount amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+					.getTestConfiguration()
 					.create(type, "XXX", 0);
 			ClassTester.testHasPublicStaticMethodOpt(type, type,
 					"equals", MonetaryAdjuster.class);
-			MonetaryAmount amount2 = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			MonetaryAmount amount2 = (MonetaryAmount) TCKTestSetup
+					.getTestConfiguration()
 					.create(type, "XXX", 0);
 			assertEquals(amount, amount2);
 		}
@@ -211,11 +243,13 @@ public class MonetaryAmountTest {
 	public void testImplementsHashCode() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
-			MonetaryAmount amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+					.getTestConfiguration()
 					.create(type, "TST", 0);
 			ClassTester.testHasPublicStaticMethodOpt(type, type,
 					"hashCode", MonetaryAdjuster.class);
-			MonetaryAmount amount2 = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			MonetaryAmount amount2 = (MonetaryAmount) TCKTestSetup
+					.getTestConfiguration()
 					.create(type, "TST", 0);
 			assertEquals(amount.hashCode(), amount2.hashCode());
 		}
@@ -229,18 +263,22 @@ public class MonetaryAmountTest {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
 			ClassTester.testComparable(type);
-			MonetaryAmount amount = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+					.getTestConfiguration()
 					.create(type, "XXX", 0);
 			ClassTester.testHasPublicStaticMethodOpt(type, type,
 					"hashCode", MonetaryAdjuster.class);
-			MonetaryAmount amount2 = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			MonetaryAmount amount2 = (MonetaryAmount) TCKTestSetup
+					.getTestConfiguration()
 					.create(type, "XXX", 0);
 			assertTrue(((Comparable) amount).compareTo(amount2) == 0);
-			MonetaryAmount amount3 = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			MonetaryAmount amount3 = (MonetaryAmount) TCKTestSetup
+					.getTestConfiguration()
 					.create(type, "CHF", 1);
 			assertTrue(((Comparable) amount).compareTo(amount3) > 0);
 			assertTrue(((Comparable) amount3).compareTo(amount) < 0);
-			MonetaryAmount amount4 = (MonetaryAmount)TCKTestSetup.getTestConfiguration()
+			MonetaryAmount amount4 = (MonetaryAmount) TCKTestSetup
+					.getTestConfiguration()
 					.create(type, "XXX", 1);
 			assertTrue(((Comparable) amount3).compareTo(amount4) < 0);
 			assertTrue(((Comparable) amount4).compareTo(amount3) > 0);

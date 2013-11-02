@@ -3,6 +3,20 @@
 	xmlns="http://jboss.com/products/weld/tck/audit" xsi:schemaLocation="http://jboss.com/products/weld/tck/audit"
 	name="JSR 354 Money and Currency" version="1.0.0" id="JSR 354"
 	generateSectionIds="false">
+	<section id="0" title="TCK Setup" >
+		<assertion id="EnsureSetup">
+			<text>Ensure an implementation of org.javamoney.tck.JSR354TestConfiguration is registered using the java.util.ServiceLoader.</text>
+		</assertion>
+		<assertion id="EnsurePackageSetup">
+			<text>Asserts the basic implementation packages are registered.</text>
+		</assertion>
+		<assertion id="EnsureAdjusterSetup">
+			<text>Asserts adjusters to test are not empty.</text>
+		</assertion>
+		<assertion id="EnsureQuerySetup">
+			<text>Asserts queries to test are not empty.</text>
+		</assertion>
+	</section>
 	<section id="1" title="Introduction" />
 	<section id="2" title="Use Cases" />
 	<section id="3" title="Requirements" />

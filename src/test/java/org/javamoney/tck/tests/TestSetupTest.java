@@ -13,9 +13,8 @@ import org.junit.Test;
 public class TestSetupTest {
 
 	@SpecAssertion(
-		section = "3.1.2",
-		id = "EnsureSetup",
-		note = "Asserts the basic test setup is working.")
+		section = "0",
+		id = "EnsureSetup")
 	@Test
 	public void testTestSetup() {
 		assertTrue("TCK Configuration not available.",
@@ -24,9 +23,8 @@ public class TestSetupTest {
 	}
 
 	@SpecAssertion(
-		section = "3.1.2",
-		id = "EnsurePackageSetup",
-		note = "Asserts the basic implementation packages are registered.")
+		section = "0",
+		id = "EnsurePackageSetup")
 	@Test
 	public void testExceptionClassesSetup() {
 		assertTrue(
@@ -38,9 +36,8 @@ public class TestSetupTest {
 	}
 
 	@SpecAssertion(
-		section = "3.1.2",
-		id = "EnsureAdjusterSetup",
-		note = "Asserts adjusters registered are not empty.")
+		section = "0",
+		id = "EnsureAdjusterSetup")
 	@Test
 	public void testAdjusterTestSetup() {
 
@@ -50,9 +47,8 @@ public class TestSetupTest {
 	}
 
 	@SpecAssertion(
-		section = "3.1.2",
-		id = "EnsureQuerySetup",
-		note = "Asserts queries returned are not empty.")
+		section = "0",
+		id = "EnsureQuerySetup")
 	@Test
 	public void testQueryTestSetup() {
 		assertNotNull(TCKTestSetup.getTestConfiguration().getQueries());
