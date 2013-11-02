@@ -16,42 +16,42 @@
 							is available.
 						</text>
 					</assertion>
-					<assertion id="currencyCodeUnique">
+					<assertion id="CurrencyCodeUnique">
 						<text>Ensure at the currency code is unique.
 						</text>
 					</assertion>
-					<assertion id="enforce3LetterCode4ISO">
-						<text>Ensure for ISO codes 3-letters are enforced.
+					<assertion id="Enforce3LetterCode4ISO">
+						<text>Ensure ISO codes 3-letters are available.
 						</text>
 					</assertion>
-					<assertion id="allowAny4NonISO">
-						<text>Ensure for ISO codes 3-letters are enforced.
+					<assertion id="AllowAny4NonISOCode">
+						<text>Allow non ISO currency codes.
 						</text>
 					</assertion>
 				</group>
 				<group>
 					<text>General Requirements</text>
-					<assertion id="implementsHashCode">
+					<assertion id="ImplementsHashCode">
 						<text>CurrencyUnit must implement hashCode.
 						</text>
 					</assertion>
-					<assertion id="implementsEquals">
+					<assertion id="ImplementsEquals">
 						<text>CurrencyUnit must implement equals.
 						</text>
 					</assertion>
-					<assertion id="implementComparable">
+					<assertion id="ImplementComparable">
 						<text>CurrencyUnit implementation must be Comparable.
 						</text>
 					</assertion>
-					<assertion id="isImmutable">
+					<assertion id="IsImmutable">
 						<text>CurrencyUnit implementation must be immutable.
 						</text>
 					</assertion>
-					<assertion id="isThreadSafe">
+					<assertion id="IsThreadSafe">
 						<text>CurrencyUnit implementation must be thread safe.
 						</text>
 					</assertion>
-					<assertion id="isSerializable">
+					<assertion id="IsSerializable">
 						<text>CurrencyUnit implementation must be serializable.
 						</text>
 					</assertion>
@@ -68,22 +68,22 @@
 				</group>
 				<group>
 					<text>Currency Code and Numeric Representation</text>
-					<assertion id="getCurrencyCode">
+					<assertion id="CurrencyCode">
 						<text>Ensure getCurrencyCode returns correct results.</text>
 					</assertion>
-					<assertion id="getAmountWhole">
+					<assertion id="AmountWhole">
 						<text>Ensure getAmountWhole returns correct results.</text>
 					</assertion>
-					<assertion id="getAmountFractionNumber">
+					<assertion id="AmountFractionNumber">
 						<text>Ensure getAmountFractionNumber returns correct results.
 						</text>
 					</assertion>
-					<assertion id="getAmountFractionDenominator">
+					<assertion id="AmountFractionDenominator">
 						<text>Ensure getAmountFractionDenominator returns correct
 							results.
 						</text>
 					</assertion>
-					<assertion id="checkNumericRepresentation">
+					<assertion id="NumericRepresentation">
 						<text>The portable numeric representation constraints must be
 							followed.
 						</text>
@@ -91,12 +91,12 @@
 				</group>
 				<group>
 					<text>Extension Points</text>
-					<assertion id="with">
+					<assertion id="With">
 						<text>Ensure with(MonetaryAdjuster) can be called and produces
 							valuable results.
 						</text>
 					</assertion>
-					<assertion id="query">
+					<assertion id="Query">
 						<text>Ensure query(MonetaryQUery) can be called and produces
 							valuable results.
 						</text>
@@ -104,17 +104,17 @@
 				</group>
 				<group>
 					<text>General Requirements</text>
-					<assertion id="implementsEquals">
+					<assertion id="ImplementsEquals">
 						<text>Implementations of MonetaryAmount must implement equals,
 							considering number, currency and implementation type.
 						</text>
 					</assertion>
-					<assertion id="implementsHashCode">
+					<assertion id="ImplementsHashCode">
 						<text>Implementations of MonetaryAmount must implement hashCode,
 							considering number, currency and implementation type.
 						</text>
 					</assertion>
-					<assertion id="implementComparable">
+					<assertion id="ImplementComparable">
 						<text>Implementations of MonetaryAmount must be Comparable.
 						</text>
 					</assertion>
