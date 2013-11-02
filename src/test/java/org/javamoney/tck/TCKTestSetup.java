@@ -64,16 +64,27 @@ public final class TCKTestSetup {
 		@Override
 		public <T> T create(Class<T> type, Object... params) {
 			if (MoneyCurrency.class.equals(type)) {
-				return (T) MoneyCurrency.of((String) params[0]);
+				return (T) getOrCreateCurrency((String) params[0]);
 			}
 			if (Money.class.equals(type)) {
-				return (T) Money.of((String) params[0], (Number) params[1]);
+				return (T) Money.of(getOrCreateCurrency((String) params[0]),
+						(Number) params[1]);
 			}
 			if (FastMoney.class.equals(type)) {
-				return (T) FastMoney.of((String) params[0],
+				return (T) FastMoney.of(
+						getOrCreateCurrency((String) params[0]),
 						(Number) params[1]);
 			}
 			return null;
+		}
+
+		private MoneyCurrency getOrCreateCurrency(String code) {
+			try {
+				return MoneyCurrency.of(code);
+			} catch (Exception e) {
+				return new MoneyCurrency.Builder().withCurrencyCode(code)
+						.build(true);
+			}
 		}
 	}
 

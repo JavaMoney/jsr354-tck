@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<specification xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://jboss.com/products/weld/tck/audit" xsi:schemaLocation="http://jboss.com/products/weld/tck/audit"
+	name="JSR 354 Money and Currency" version="1.0.0" id="JSR 354"
+	generateSectionIds="false">
+	<section id="1" title="Introduction" />
+	<section id="2" title="Use Cases" />
+	<section id="3" title="Requirements" />
+	<section id="4" title="Specification" />
+	<section id="4.2" title="Money and Currency API"/>
+	<section id="4.2.1" title="Interface javax.money.CurrencyUnit" >
+		<group>
+			<text>Managing the Currency code</text>
+			<assertion id="EnsureCurrencyUnit">
+				<text>Ensure at least one javax.money.CurrencyUnit implementation
+					is available.
+				</text>
+			</assertion>
+			<assertion id="CurrencyCodeUnique">
+				<text>Ensure at the currency code is unique.
+				</text>
+			</assertion>
+			<assertion id="Enforce3LetterCode4ISO">
+				<text>Ensure ISO codes 3-letters are available.
+				</text>
+			</assertion>
+			<assertion id="AllowAny4NonISOCode">
+				<text>Allow non ISO currency codes.
+				</text>
+			</assertion>
+		</group>
+		<group>
+			<text>General Requirements</text>
+			<assertion id="ImplementsHashCode">
+				<text>CurrencyUnit must implement hashCode.
+				</text>
+			</assertion>
+			<assertion id="ImplementsEquals">
+				<text>CurrencyUnit must implement equals.
+				</text>
+			</assertion>
+			<assertion id="IsComparable">
+				<text>CurrencyUnit implementation must be Comparable.
+				</text>
+			</assertion>
+			<assertion id="IsImmutable">
+				<text>CurrencyUnit implementation must be immutable.
+				</text>
+			</assertion>
+			<assertion id="IsThreadSafe">
+				<text>CurrencyUnit implementation must be thread safe.
+				</text>
+			</assertion>
+			<assertion id="IsSerializable">
+				<text>CurrencyUnit implementation must be serializable.
+				</text>
+			</assertion>
+		</group>
+	</section>
+	<section id="4.2.2" title="Interface javax.money.MonetaryAmount">
+		<group>
+			<text>Preconditions</text>
+			<assertion id="EnsureMonetaryAmount">
+				<text>Ensure at least one javax.money.MonetaryAmount
+					implementation is available.
+				</text>
+			</assertion>
+		</group>
+		<group>
+			<text>Currency Code and Numeric Representation</text>
+			<assertion id="CurrencyCode">
+				<text>Ensure getCurrencyCode returns correct results.</text>
+			</assertion>
+			<assertion id="AmountWhole">
+				<text>Ensure getAmountWhole returns correct results.</text>
+			</assertion>
+			<assertion id="AmountFractionNumber">
+				<text>Ensure getAmountFractionNumber returns correct results.
+				</text>
+			</assertion>
+			<assertion id="AmountFractionDenominator">
+				<text>Ensure getAmountFractionDenominator returns correct
+					results.
+				</text>
+			</assertion>
+			<assertion id="NumericRepresentation">
+				<text>The portable numeric representation constraints must be
+					followed.
+				</text>
+			</assertion>
+		</group>
+		<group>
+			<text>Extension Points</text>
+			<assertion id="With">
+				<text>Ensure with(MonetaryAdjuster) can be called and produces
+					valuable results.
+				</text>
+			</assertion>
+			<assertion id="Query">
+				<text>Ensure query(MonetaryQUery) can be called and produces
+					valuable results.
+				</text>
+			</assertion>
+		</group>
+		<group>
+			<text>General Requirements</text>
+			<assertion id="ImplementsEquals">
+				<text>Implementations of MonetaryAmount must implement equals,
+					considering number, currency and implementation type.
+				</text>
+			</assertion>
+			<assertion id="ImplementsHashCode">
+				<text>Implementations of MonetaryAmount must implement hashCode,
+					considering number, currency and implementation type.
+				</text>
+			</assertion>
+			<assertion id="IsComparable">
+				<text>Implementations of MonetaryAmount must be Comparable.
+				</text>
+			</assertion>
+		</group>
+	</section>
+	<section id="4.2.3" title="Interface javax.money.MonetaryAdjuster" />
+	<section id="4.2.4" title="Interface javax.money.MonetaryQuery" />
+	<section id="4.2.5" title="Interface javax.money.MonetaryException">
+		<assertion id="Exceptions">
+			<text>All exceptions defined must extend MonetaryException.</text>
+		</assertion>
+	</section>
+	<section id="4.3" title="Formatting">
+		<assertion id="formatStandardCurrencies">
+			<text>Formatting default currencies.</text>
+		</assertion>
+		<assertion id="formatDifferentGroupSizes">
+			<text>Formatting different groupSizes.</text>
+		</assertion>
+	</section>
+	<section id="5" title="Recommendations"/>
+	<section id="5.1" title="Rounding">
+		<group>
+			<text>Access Recommendations</text>
+			<assertion id="AccessRoundings4Currency">
+				<text>Roundings should be accessible/provided by passing a
+					CurrencyUnit as an argument.
+				</text>
+			</assertion>
+			<assertion id="AccessRoundings4RoundingMode">
+				<text>Roundings should be accessible/provided by passing a
+					java.math.RoundingMode as an argument.
+				</text>
+			</assertion>
+			<assertion id="AccessRoundings4MathContext">
+				<text>Roundings should be accessible/provided by passing a
+					java.math.MathContext as an argument.
+				</text>
+			</assertion>
+			<assertion id="AccessCustomRounding">
+				<text>Roundings should be accessible/provided by passing a String
+					(name) as an argument.
+				</text>
+			</assertion>
+		</group>
+		<group>
+			<text>General Recommendations</text>
+			<assertion id="CheckAdjusterIsImmutable">
+				<text>Implementations of MonetaryAdjuster should be immutable.
+				</text>
+			</assertion>
+			<assertion id="CheckAdjusterIsThreadSafe">
+				<text>Implementations of MonetaryAdjuster should be thread-safe.
+				</text>
+			</assertion>
+		</group>
+	</section>
+	<section id="5.2" title="Monetary Arithmetic">
+		<assertion id="CheckAdd">
+			<text>Adding should be possible with MonetaryAmounts only.</text>
+		</assertion>
+		<assertion id="CheckSubtract">
+			<text>Subtracting should be possible with MonetaryAmounts only.
+			</text>
+		</assertion>
+		<assertion id="CheckMultiply">
+			<text>Multiplying should be possible with Numbers only.</text>
+		</assertion>
+		<assertion id="CheckDivide">
+			<text>Divide should be possible with Numbers only.</text>
+		</assertion>
+		<assertion id="AvoidNumberArguments">
+			<text>Avoid java.lang.Number as argument type.</text>
+		</assertion>
+		<assertion id="AvoidNumberResults">
+			<text>Avoid java.lang.Number as result type.</text>
+		</assertion>
+	</section>
+	<section id="5.3" title="Numeric Precision">
+		<assertion id="CheckCapabilitiesInheritance">
+			<text>Check if numeric precision is inherited on results.</text>
+		</assertion>
+	</section>
+</specification>

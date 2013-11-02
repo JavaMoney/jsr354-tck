@@ -12,18 +12,19 @@ import java.util.List;
 
 import javax.money.CurrencyUnit;
 
+import org.javamoney.tck.ClassTester;
 import org.javamoney.tck.TCKTestSetup;
-import org.javamoney.tck.util.ClassTester;
 import org.jboss.test.audit.annotations.SpecAssertion;
+import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Test;
 
+@SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class CurrencyUnitTest {
-
+	
 	@SpecAssertion(
 		section = "4.2.1",
-		id = "EnsureCurrencyUnit",
-		note = "Ensure at least one javax.money.CurrencyUnit implementation is available.")
-	@Test
+		id = "EnsureCurrencyUnit")
+	@Test	
 	public void testEnsureCurrencyUnit() {
 		assertTrue("TCK Configuration not available.",
 				TCKTestSetup.getTestConfiguration() != null);
@@ -33,14 +34,13 @@ public class CurrencyUnitTest {
 
 	@SpecAssertion(
 		section = "4.2.1",
-		id = "Enforce3LetterCode4ISO",
-		note = "Ensure ISO codes 3-letters are available.")
+		id = "Enforce3LetterCode4ISO")
 	@Test
 	public void testEnforce3LetterCode4ISO() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getCurrencyClasses()) {
 			for (Currency currency : Currency.getAvailableCurrencies()) {
-				CurrencyUnit unit = TCKTestSetup.getTestConfiguration().create(
+				CurrencyUnit unit = (CurrencyUnit)TCKTestSetup.getTestConfiguration().create(
 						type,
 						currency.getCurrencyCode());
 				assertNotNull(unit);
@@ -51,15 +51,14 @@ public class CurrencyUnitTest {
 
 	@SpecAssertion(
 		section = "4.2.1",
-		id = "AllowAny4NonISOCode",
-		note = "Allow non ISO currency codes.")
+		id = "AllowAny4NonISOCode")
 	@Test
 	public void testAllowAny4NonISOCode() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getCurrencyClasses()) {
 			for (String code : new String[] { "CHF1", "BTC", "EUR3", "GBP4",
 					"YEN5", "sgd-sdl:/&%" }) {
-				CurrencyUnit unit = TCKTestSetup.getTestConfiguration().create(
+				CurrencyUnit unit = (CurrencyUnit)TCKTestSetup.getTestConfiguration().create(
 						type,
 						code);
 				assertNotNull(unit);
@@ -70,17 +69,16 @@ public class CurrencyUnitTest {
 
 	@SpecAssertion(
 		section = "4.2.1",
-		id = "CurrencyCodeUnique",
-		note = "Ensure at the currency code is unique.")
+		id = "CurrencyCodeUnique")
 	@Test
 	public void testCurrencyCodeUnique() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getCurrencyClasses()) {
-			CurrencyUnit unit = TCKTestSetup.getTestConfiguration().create(
+			CurrencyUnit unit = (CurrencyUnit)TCKTestSetup.getTestConfiguration().create(
 					type,
 					"HHH");
 			assertNotNull(unit);
-			CurrencyUnit unit2 = TCKTestSetup.getTestConfiguration().create(
+			CurrencyUnit unit2 = (CurrencyUnit)TCKTestSetup.getTestConfiguration().create(
 					type,
 					"HHH");
 			assertEquals(unit, unit2);
@@ -90,15 +88,14 @@ public class CurrencyUnitTest {
 
 	@SpecAssertion(
 		section = "4.2.1",
-		id = "ImplementsSerializable",
-		note = "Asserts all CurrencyUnit implementation are serializable.")
+		id = "IsSerializable")
 	@Test
 	public void testImplementsSerializable() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getCurrencyClasses()) {
 			ClassTester.testSerializable(type);
 			for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
-				CurrencyUnit unit = TCKTestSetup.getTestConfiguration().create(
+				CurrencyUnit unit = (CurrencyUnit)TCKTestSetup.getTestConfiguration().create(
 						type,
 						code);
 				ClassTester.testSerializable(unit);
@@ -108,8 +105,7 @@ public class CurrencyUnitTest {
 
 	@SpecAssertion(
 		section = "4.2.1",
-		id = "IsImmutable",
-		note = "Asserts all CurrencyUnit implementation are immutable.")
+		id = "IsImmutable")
 	@Test
 	public void testIsImmutable() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
@@ -120,8 +116,7 @@ public class CurrencyUnitTest {
 
 	@SpecAssertion(
 		section = "4.2.1",
-		id = "IsComparable",
-		note = "Asserts all CurrencyUnit implementation are comparable.")
+		id = "IsComparable")
 	@Test
 	public void testCurrencyClassesComparable() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
@@ -132,8 +127,7 @@ public class CurrencyUnitTest {
 
 	@SpecAssertion(
 		section = "4.2.1",
-		id = "ImplementsHashCode",
-		note = "Asserts all CurrencyUnit implementation must implement hashCode().")
+		id = "ImplementsHashCode")
 	@Test
 	public void testCurrencyClassesEqualsHashcode() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
@@ -144,8 +138,7 @@ public class CurrencyUnitTest {
 
 	@SpecAssertion(
 		section = "4.2.1",
-		id = "ImplementsEquals",
-		note = "Asserts all CurrencyUnit implementation must implement equals(Object).")
+		id = "ImplementsEquals")
 	@Test
 	public void testImplementsEquals() {
 		List<CurrencyUnit> firstUnits = new ArrayList<CurrencyUnit>();
@@ -155,12 +148,12 @@ public class CurrencyUnitTest {
 			for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
 				ClassTester.testHasPublicMethod(type, boolean.class, "equals",
 						Object.class);
-				CurrencyUnit unit = TCKTestSetup.getTestConfiguration().create(
+				CurrencyUnit unit = (CurrencyUnit)TCKTestSetup.getTestConfiguration().create(
 						type,
 						code);
 				assertNotNull(unit);
 				firstUnits.add(unit);
-				CurrencyUnit unit2 = TCKTestSetup.getTestConfiguration()
+				CurrencyUnit unit2 = (CurrencyUnit)TCKTestSetup.getTestConfiguration()
 						.create(
 								type,
 								code);
@@ -174,9 +167,8 @@ public class CurrencyUnitTest {
 	}
 
 	@SpecAssertion(
-		section = "4.2.1",
-		id = "IsThreadSafe",
-		note = "CurrencyUnit implementation must be thread safe.")
+		section = "4.2.1", 
+		id = "IsThreadSafe")
 	@Test
 	public void testIsThreadSafe() throws NoSuchMethodException,
 			SecurityException, IllegalAccessException,
@@ -184,7 +176,7 @@ public class CurrencyUnitTest {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getCurrencyClasses()) {
 			for (Currency cur : Currency.getAvailableCurrencies()) {
-				CurrencyUnit unit = TCKTestSetup.getTestConfiguration()
+				CurrencyUnit unit = (CurrencyUnit)TCKTestSetup.getTestConfiguration()
 						.create(type, cur.getCurrencyCode());
 				fail("Not yet implemented: IsThreadSafe");
 			}

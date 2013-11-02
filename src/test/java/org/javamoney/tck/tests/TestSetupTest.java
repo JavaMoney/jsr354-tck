@@ -4,11 +4,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-
 import org.javamoney.tck.TCKTestSetup;
 import org.jboss.test.audit.annotations.SpecAssertion;
+import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Test;
 
+@SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class TestSetupTest {
 
 	@SpecAssertion(
@@ -24,7 +25,7 @@ public class TestSetupTest {
 
 	@SpecAssertion(
 		section = "3.1.2",
-		id = "EnsureSetup",
+		id = "EnsurePackageSetup",
 		note = "Asserts the basic implementation packages are registered.")
 	@Test
 	public void testExceptionClassesSetup() {
@@ -38,31 +39,8 @@ public class TestSetupTest {
 
 	@SpecAssertion(
 		section = "3.1.2",
-		id = "EnsureSetup",
-		note = "Asserts the basic amount classes are registered.")
-	@Test
-	public void testAmountTestSetup() {
-		assertNotNull(TCKTestSetup.getTestConfiguration().getAmountClasses());
-		assertFalse(TCKTestSetup.getTestConfiguration().getAmountClasses()
-				.isEmpty());
-	}
-
-	@SpecAssertion(
-		section = "3.1.2",
-		id = "EnsureSetup",
-		note = "Asserts the basic currency classes are registered.")
-	@Test
-	public void testCurrencyTestSetup() {
-
-		assertNotNull(TCKTestSetup.getTestConfiguration().getCurrencyClasses());
-		assertFalse(TCKTestSetup.getTestConfiguration().getCurrencyClasses()
-				.isEmpty());
-	}
-
-	@SpecAssertion(
-		section = "3.1.2",
-		id = "EnsureSetup",
-		note = "Asserts the basic adjuster classes are registered.")
+		id = "EnsureAdjusterSetup",
+		note = "Asserts adjusters registered are not empty.")
 	@Test
 	public void testAdjusterTestSetup() {
 
@@ -73,8 +51,8 @@ public class TestSetupTest {
 
 	@SpecAssertion(
 		section = "3.1.2",
-		id = "EnsureSetup",
-		note = "Asserts the basic currency classes are registered.")
+		id = "EnsureQuerySetup",
+		note = "Asserts queries returned are not empty.")
 	@Test
 	public void testQueryTestSetup() {
 		assertNotNull(TCKTestSetup.getTestConfiguration().getQueries());

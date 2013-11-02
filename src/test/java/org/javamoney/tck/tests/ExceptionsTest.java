@@ -8,17 +8,18 @@ import java.util.Currency;
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryException;
 
+import org.javamoney.tck.ClassTester;
 import org.javamoney.tck.TCKTestSetup;
-import org.javamoney.tck.util.ClassTester;
 import org.jboss.test.audit.annotations.SpecAssertion;
+import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Test;
 
+@SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class ExceptionsTest {
 
 	@SpecAssertion(
-		section = "3.2",
-		id = "EnsureMonetaryExceptions",
-		note = "Asserts all exceptions contained in the implementation package inherit from MonetaryException.")
+		section = "4.2.5",
+		id = "Exceptions")
 	@Test
 	public void testExceptionInheritance() {
 		for (Class clazz : TCKTestSetup.getTestConfiguration()

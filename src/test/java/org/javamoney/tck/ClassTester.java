@@ -1,4 +1,4 @@
-package org.javamoney.tck.util;
+package org.javamoney.tck;
 
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
@@ -9,11 +9,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
-import javax.money.MonetaryAdjuster;
-
 import junit.framework.Assert;
 
-import org.javamoney.tck.TCKValidationException;
 
 public class ClassTester {
 
