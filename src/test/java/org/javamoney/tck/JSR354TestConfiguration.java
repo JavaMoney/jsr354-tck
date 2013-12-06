@@ -29,7 +29,7 @@ public interface JSR354TestConfiguration {
 
 	Collection<Class> getCurrencyClasses();
 
-	Collection<Class> getAdjusters();
+	Collection<Class> getOperators();
 
 	Collection<Class> getQueries();
 

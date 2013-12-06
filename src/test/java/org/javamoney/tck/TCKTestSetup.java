@@ -3,12 +3,11 @@ package org.javamoney.tck;
 import java.lang.reflect.AccessibleObject;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
-import org.javamoney.moneta.CurrencyMismatchException;
-import org.javamoney.moneta.FastMoney;
-import org.javamoney.moneta.Money;
-import org.javamoney.moneta.MoneyCurrency;
-import org.javamoney.moneta.UnknownCurrencyException;
+import javax.money.FastMoney;
+import javax.money.Money;
+import javax.money.MoneyCurrency;
 
 public final class TCKTestSetup {
 
@@ -26,9 +25,10 @@ public final class TCKTestSetup {
 
 		@Override
 		public Collection<Class> getExceptionClasses() {
-			return Arrays
-					.asList(new Class[] { CurrencyMismatchException.class,
-							UnknownCurrencyException.class });
+			return Collections.emptySet();
+			// return Arrays
+			// .asList(new Class[] { CurrencyMismatchException.class,
+			// UnknownCurrencyException.class });
 		}
 
 		@Override
@@ -43,7 +43,7 @@ public final class TCKTestSetup {
 		}
 
 		@Override
-		public Collection<Class> getAdjusters() {
+		public Collection<Class> getOperators() {
 			return Arrays
 					.asList(new Class[] {});
 		}
@@ -82,7 +82,7 @@ public final class TCKTestSetup {
 			try {
 				return MoneyCurrency.of(code);
 			} catch (Exception e) {
-				return new MoneyCurrency.Builder().withCurrencyCode(code)
+				return new MoneyCurrency.Builder().setCurrencyCode(code)
 						.build(true);
 			}
 		}

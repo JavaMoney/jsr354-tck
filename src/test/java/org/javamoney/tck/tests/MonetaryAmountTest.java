@@ -1,10 +1,11 @@
 package org.javamoney.tck.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import javax.money.MonetaryAdjuster;
 import javax.money.MonetaryAmount;
+import javax.money.MonetaryOperator;
 
 import org.javamoney.tck.ClassTester;
 import org.javamoney.tck.TCKTestSetup;
@@ -44,148 +45,148 @@ public class MonetaryAmountTest {
 		}
 	}
 
-	@SpecAssertion(
-		section = "4.2.2",
-		id = "AmountWhole")
-	@Test
-	public void testAmountWhole() {
-		for (Class type : TCKTestSetup.getTestConfiguration()
-				.getAmountClasses()) {
-			double[] nums = new double[] { 0, -0, 1, -1, 0.001, -0.001, 1234,
-					-1234 };
-			long[] wholes = new long[] { 0, 0, 1, -1, 0, 0, 1234, -1234 };
-			for (int i = 0; i < nums.length; i++) {
-				MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
-						.getTestConfiguration()
-						.create(type, "XXX", nums[i]);
-				assertNotNull(amount);
-				assertEquals(wholes[i], amount.getAmountWhole());
-			}
-		}
-	}
-
-	@SpecAssertion(
-		section = "4.2.2",
-		id = "AmountFractionNumber")
-	@Test
-	public void testAmountFractionNumber() {
-		for (Class type : TCKTestSetup.getTestConfiguration()
-				.getAmountClasses()) {
-			double[] nums = new double[] { 0, -0, 1, -1, 0.001, -0.001, 1234,
-					-1234 };
-			int[] fractionSign = new int[] { 0, 0, 0, 0, 1, -1, 0, 0 };
-			for (int i = 0; i < nums.length; i++) {
-				MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
-						.getTestConfiguration()
-						.create(type, "CHF", nums[i]);
-				assertNotNull(amount);
-				switch (fractionSign[i]) {
-				case 0:
-					assertTrue(
-							"Expected for " + nums[i] + " numerator sign of "
-									+ fractionSign[i] + ", but was "
-									+ amount.getAmountFractionNumerator(),
-							amount.getAmountFractionNumerator() == 0);
-					break;
-				case 1:
-					assertTrue(
-							"Expected for " + nums[i] + " numerator sign of "
-									+ fractionSign[i] + ", but was "
-									+ amount.getAmountFractionNumerator(),
-							amount.getAmountFractionNumerator() > 0);
-					break;
-				case -1:
-					assertTrue(
-							"Expected for " + nums[i] + " numerator sign of "
-									+ fractionSign[i] + ", but was "
-									+ amount.getAmountFractionNumerator(),
-							amount.getAmountFractionNumerator() < 0);
-					break;
-				}
-			}
-		}
-	}
-
-	@SpecAssertion(
-		section = "4.2.2",
-		id = "AmountFractionDenominator")
-	@Test
-	public void testAmountFractionDenominator() {
-		for (Class type : TCKTestSetup.getTestConfiguration()
-				.getAmountClasses()) {
-			double[] nums = new double[] { 0.00, -0, 1, -1, 0.001, -0.001,
-					1.12,
-					-1.123456 };
-			for (int i = 0; i < nums.length; i++) {
-				MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
-						.getTestConfiguration()
-						.create(type, "CHF", nums[i]);
-				assertNotNull(amount);
-				assertTrue(
-						"Expected for " + nums[i]
-								+ " denominator > 0, but was "
-								+ amount.getAmountFractionDenominator(),
-						amount.getAmountFractionDenominator() > 0);
-			}
-		}
-	}
-
-	@SpecAssertion(
-		section = "4.2.2",
-		id = "NumericRepresentation")
-	@Test
-	public void testNumericRepresentation() {
-		for (Class type : TCKTestSetup.getTestConfiguration()
-				.getAmountClasses()) {
-			// Case 1
-			MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
-					.getTestConfiguration()
-					.create(type, "XXX", 0);
-			assertNotNull(amount);
-			assertEquals(0,
-					amount.getAmountFractionNumerator());
-			assertTrue(amount.getAmountFractionDenominator() > 0);
-			assertEquals(0, amount.getAmountWhole());
-			// Case 2
-			amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
-					.create(type, "XXX", -0);
-			assertNotNull(amount);
-			assertEquals(0,
-					amount.getAmountFractionNumerator());
-			assertTrue(amount.getAmountFractionDenominator() > 0);
-			assertEquals(0, amount.getAmountWhole());
-			// Case 3
-			amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
-					.create(type, "XXX", -1);
-			assertNotNull(amount);
-			assertEquals(0,
-					amount.getAmountFractionNumerator());
-			assertTrue(amount.getAmountFractionDenominator() > 0);
-			assertEquals(-1, amount.getAmountWhole());
-			// Case 4
-			amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
-					.create(type, "XXX", 1);
-			assertNotNull(amount);
-			assertEquals(0,
-					amount.getAmountFractionNumerator());
-			assertTrue(amount.getAmountFractionDenominator() > 0);
-			assertEquals(1, amount.getAmountWhole());
-			// Case 4
-			amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
-					.create(type, "XXX", 2.234);
-			assertNotNull(amount);
-			assertTrue(amount.getAmountFractionNumerator() > 0);
-			assertTrue(amount.getAmountFractionDenominator() > 0);
-			assertEquals(2, amount.getAmountWhole());
-			// Case 5
-			amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
-					.create(type, "XXX", -2.234);
-			assertNotNull(amount);
-			assertTrue(amount.getAmountFractionNumerator() < 0);
-			assertTrue(amount.getAmountFractionDenominator() > 0);
-			assertEquals(-2, amount.getAmountWhole());
-		}
-	}
+	// @SpecAssertion(
+	// section = "4.2.2",
+	// id = "AmountWhole")
+	// @Test
+	// public void testAmountWhole() {
+	// for (Class type : TCKTestSetup.getTestConfiguration()
+	// .getAmountClasses()) {
+	// double[] nums = new double[] { 0, -0, 1, -1, 0.001, -0.001, 1234,
+	// -1234 };
+	// long[] wholes = new long[] { 0, 0, 1, -1, 0, 0, 1234, -1234 };
+	// for (int i = 0; i < nums.length; i++) {
+	// MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+	// .getTestConfiguration()
+	// .create(type, "XXX", nums[i]);
+	// assertNotNull(amount);
+	// assertEquals(wholes[i], amount.getAmountWhole());
+	// }
+	// }
+	// }
+	//
+	// @SpecAssertion(
+	// section = "4.2.2",
+	// id = "AmountFractionNumber")
+	// @Test
+	// public void testAmountFractionNumber() {
+	// for (Class type : TCKTestSetup.getTestConfiguration()
+	// .getAmountClasses()) {
+	// double[] nums = new double[] { 0, -0, 1, -1, 0.001, -0.001, 1234,
+	// -1234 };
+	// int[] fractionSign = new int[] { 0, 0, 0, 0, 1, -1, 0, 0 };
+	// for (int i = 0; i < nums.length; i++) {
+	// MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+	// .getTestConfiguration()
+	// .create(type, "CHF", nums[i]);
+	// assertNotNull(amount);
+	// switch (fractionSign[i]) {
+	// case 0:
+	// assertTrue(
+	// "Expected for " + nums[i] + " numerator sign of "
+	// + fractionSign[i] + ", but was "
+	// + amount.getAmountFractionNumerator(),
+	// amount.getAmountFractionNumerator() == 0);
+	// break;
+	// case 1:
+	// assertTrue(
+	// "Expected for " + nums[i] + " numerator sign of "
+	// + fractionSign[i] + ", but was "
+	// + amount.getAmountFractionNumerator(),
+	// amount.getAmountFractionNumerator() > 0);
+	// break;
+	// case -1:
+	// assertTrue(
+	// "Expected for " + nums[i] + " numerator sign of "
+	// + fractionSign[i] + ", but was "
+	// + amount.getAmountFractionNumerator(),
+	// amount.getAmountFractionNumerator() < 0);
+	// break;
+	// }
+	// }
+	// }
+	// }
+	//
+	// @SpecAssertion(
+	// section = "4.2.2",
+	// id = "AmountFractionDenominator")
+	// @Test
+	// public void testAmountFractionDenominator() {
+	// for (Class type : TCKTestSetup.getTestConfiguration()
+	// .getAmountClasses()) {
+	// double[] nums = new double[] { 0.00, -0, 1, -1, 0.001, -0.001,
+	// 1.12,
+	// -1.123456 };
+	// for (int i = 0; i < nums.length; i++) {
+	// MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+	// .getTestConfiguration()
+	// .create(type, "CHF", nums[i]);
+	// assertNotNull(amount);
+	// assertTrue(
+	// "Expected for " + nums[i]
+	// + " denominator > 0, but was "
+	// + amount.getAmountFractionDenominator(),
+	// amount.getAmountFractionDenominator() > 0);
+	// }
+	// }
+	// }
+	//
+	// @SpecAssertion(
+	// section = "4.2.2",
+	// id = "NumericRepresentation")
+	// @Test
+	// public void testNumericRepresentation() {
+	// for (Class type : TCKTestSetup.getTestConfiguration()
+	// .getAmountClasses()) {
+	// // Case 1
+	// MonetaryAmount amount = (MonetaryAmount) TCKTestSetup
+	// .getTestConfiguration()
+	// .create(type, "XXX", 0);
+	// assertNotNull(amount);
+	// assertEquals(0,
+	// amount.getAmountFractionNumerator());
+	// assertTrue(amount.getAmountFractionDenominator() > 0);
+	// assertEquals(0, amount.getAmountWhole());
+	// // Case 2
+	// amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
+	// .create(type, "XXX", -0);
+	// assertNotNull(amount);
+	// assertEquals(0,
+	// amount.getAmountFractionNumerator());
+	// assertTrue(amount.getAmountFractionDenominator() > 0);
+	// assertEquals(0, amount.getAmountWhole());
+	// // Case 3
+	// amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
+	// .create(type, "XXX", -1);
+	// assertNotNull(amount);
+	// assertEquals(0,
+	// amount.getAmountFractionNumerator());
+	// assertTrue(amount.getAmountFractionDenominator() > 0);
+	// assertEquals(-1, amount.getAmountWhole());
+	// // Case 4
+	// amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
+	// .create(type, "XXX", 1);
+	// assertNotNull(amount);
+	// assertEquals(0,
+	// amount.getAmountFractionNumerator());
+	// assertTrue(amount.getAmountFractionDenominator() > 0);
+	// assertEquals(1, amount.getAmountWhole());
+	// // Case 4
+	// amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
+	// .create(type, "XXX", 2.234);
+	// assertNotNull(amount);
+	// assertTrue(amount.getAmountFractionNumerator() > 0);
+	// assertTrue(amount.getAmountFractionDenominator() > 0);
+	// assertEquals(2, amount.getAmountWhole());
+	// // Case 5
+	// amount = (MonetaryAmount) TCKTestSetup.getTestConfiguration()
+	// .create(type, "XXX", -2.234);
+	// assertNotNull(amount);
+	// assertTrue(amount.getAmountFractionNumerator() < 0);
+	// assertTrue(amount.getAmountFractionDenominator() > 0);
+	// assertEquals(-2, amount.getAmountWhole());
+	// }
+	// }
 
 	@SpecAssertion(
 		section = "4.2.2",
@@ -228,7 +229,7 @@ public class MonetaryAmountTest {
 					.getTestConfiguration()
 					.create(type, "XXX", 0);
 			ClassTester.testHasPublicStaticMethodOpt(type, type,
-					"equals", MonetaryAdjuster.class);
+					"equals", MonetaryOperator.class);
 			MonetaryAmount amount2 = (MonetaryAmount) TCKTestSetup
 					.getTestConfiguration()
 					.create(type, "XXX", 0);
@@ -247,7 +248,7 @@ public class MonetaryAmountTest {
 					.getTestConfiguration()
 					.create(type, "TST", 0);
 			ClassTester.testHasPublicStaticMethodOpt(type, type,
-					"hashCode", MonetaryAdjuster.class);
+					"hashCode", MonetaryOperator.class);
 			MonetaryAmount amount2 = (MonetaryAmount) TCKTestSetup
 					.getTestConfiguration()
 					.create(type, "TST", 0);
@@ -267,21 +268,21 @@ public class MonetaryAmountTest {
 					.getTestConfiguration()
 					.create(type, "XXX", 0);
 			ClassTester.testHasPublicStaticMethodOpt(type, type,
-					"hashCode", MonetaryAdjuster.class);
+					"hashCode", MonetaryOperator.class);
 			MonetaryAmount amount2 = (MonetaryAmount) TCKTestSetup
 					.getTestConfiguration()
 					.create(type, "XXX", 0);
-			assertTrue(((Comparable) amount).compareTo(amount2) == 0);
+			assertTrue("Comparable failed for: " + type.getName(),((Comparable) amount).compareTo(amount2) == 0);
 			MonetaryAmount amount3 = (MonetaryAmount) TCKTestSetup
 					.getTestConfiguration()
 					.create(type, "CHF", 1);
-			assertTrue(((Comparable) amount).compareTo(amount3) > 0);
-			assertTrue(((Comparable) amount3).compareTo(amount) < 0);
+			assertTrue("Comparable failed for: " + type.getName(),((Comparable) amount).compareTo(amount3) > 0);
+			assertTrue("Comparable failed for: " + type.getName(),((Comparable) amount3).compareTo(amount) < 0);
 			MonetaryAmount amount4 = (MonetaryAmount) TCKTestSetup
 					.getTestConfiguration()
 					.create(type, "XXX", 1);
-			assertTrue(((Comparable) amount3).compareTo(amount4) < 0);
-			assertTrue(((Comparable) amount4).compareTo(amount3) > 0);
+			assertTrue("Comparable failed for: " + type.getName(),((Comparable) amount3).compareTo(amount4) < 0);
+			assertTrue("Comparable failed for: " + type.getName(),((Comparable) amount4).compareTo(amount3) > 0);
 		}
 	}
 

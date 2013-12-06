@@ -39,10 +39,10 @@ public class TestSetupTest {
 		section = "0",
 		id = "EnsureAdjusterSetup")
 	@Test
-	public void testAdjusterTestSetup() {
+	public void testOperatorTestSetup() {
 
-		assertNotNull(TCKTestSetup.getTestConfiguration().getAdjusters());
-		assertFalse(TCKTestSetup.getTestConfiguration().getAdjusters()
+		assertNotNull(TCKTestSetup.getTestConfiguration().getOperators());
+		assertFalse(TCKTestSetup.getTestConfiguration().getOperators()
 				.isEmpty());
 	}
 
