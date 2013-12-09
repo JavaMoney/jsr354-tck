@@ -5,10 +5,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import javax.money.Currencies;
 import javax.money.CurrencyUnit;
-import javax.money.FastMoney;
-import javax.money.Money;
+import javax.money.MonetaryAmounts;
+import javax.money.MonetaryCurrencies;
+
+import org.javamoney.moneta.FastMoney;
+import org.javamoney.moneta.Money;
 
 public final class TCKTestSetup {
 
@@ -40,7 +42,7 @@ public final class TCKTestSetup {
 
 		@Override
 		public Collection<Class> getCurrencyClasses() {
-			return Arrays.asList(new Class[] { Currencies.class });
+			return Arrays.asList(new Class[] { MonetaryCurrencies.class });
 		}
 
 		@Override
@@ -64,7 +66,7 @@ public final class TCKTestSetup {
 
 		@Override
 		public <T> T create(Class<T> type, Object... params) {
-			if (Currencies.class.equals(type)) {
+			if (CurrencyUnit.class.equals(type)) {
 				return (T) getOrCreateCurrency((String) params[0]);
 			}
 			if (Money.class.equals(type)) {
@@ -81,10 +83,10 @@ public final class TCKTestSetup {
 
 		private CurrencyUnit getOrCreateCurrency(String code) {
 			try {
-				return Currencies.of(code);
+				return MonetaryCurrencies.getCurrency(code);
 			} catch (Exception e) {
-				return new Currencies.Builder().setCurrencyCode(code)
-						.build(true);
+				e.printStackTrace();
+				return null;
 			}
 		}
 	}
