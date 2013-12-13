@@ -29,12 +29,4 @@ public interface JSR354TestConfiguration {
 
 	Collection<Class> getCurrencyClasses();
 
-	Collection<Class> getOperators();
-
-	Collection<Class> getQueries();
-
-	AccessibleObject getConstructionMethod(Class type, Class... paramTypes);
-
-	<T> T create(Class<T> type, Object... params);
-
 }

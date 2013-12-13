@@ -1,8 +1,6 @@
 package org.javamoney.tck.tests;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.javamoney.tck.TCKTestSetup;
 import org.jboss.test.audit.annotations.SpecAssertion;
@@ -40,10 +38,10 @@ public class TestSetupTest {
 		id = "EnsureAdjusterSetup")
 	@Test
 	public void testOperatorTestSetup() {
-
-		assertNotNull(TCKTestSetup.getTestConfiguration().getOperators());
-		assertFalse(TCKTestSetup.getTestConfiguration().getOperators()
-				.isEmpty());
+		fail("not implemented");
+//		assertNotNull(TCKTestSetup.getTestConfiguration().getOperators());
+//		assertFalse(TCKTestSetup.getTestConfiguration().getOperators()
+//				.isEmpty());
 	}
 
 	@SpecAssertion(
@@ -51,7 +49,8 @@ public class TestSetupTest {
 		id = "EnsureQuerySetup")
 	@Test
 	public void testQueryTestSetup() {
-		assertNotNull(TCKTestSetup.getTestConfiguration().getQueries());
-		assertFalse(TCKTestSetup.getTestConfiguration().getQueries().isEmpty());
+		fail("not implemented");
+		// assertNotNull(TCKTestSetup.getTestConfiguration().getQueries());
+		// assertFalse(TCKTestSetup.getTestConfiguration().getQueries().isEmpty());
 	}
 }

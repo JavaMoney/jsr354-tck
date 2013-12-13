@@ -11,6 +11,7 @@ import java.util.Currency;
 import java.util.List;
 
 import javax.money.CurrencyUnit;
+import javax.money.MonetaryCurrencies;
 
 import org.javamoney.tck.ClassTester;
 import org.javamoney.tck.TCKTestSetup;
@@ -20,11 +21,11 @@ import org.junit.Test;
 
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class CurrencyUnitTest {
-	
+
 	@SpecAssertion(
 		section = "4.2.1",
 		id = "EnsureCurrencyUnit")
-	@Test	
+	@Test
 	public void testEnsureCurrencyUnit() {
 		assertTrue("TCK Configuration not available.",
 				TCKTestSetup.getTestConfiguration() != null);
@@ -40,8 +41,7 @@ public class CurrencyUnitTest {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getCurrencyClasses()) {
 			for (Currency currency : Currency.getAvailableCurrencies()) {
-				CurrencyUnit unit = (CurrencyUnit)TCKTestSetup.getTestConfiguration().create(
-						type,
+				CurrencyUnit unit = MonetaryCurrencies.getCurrency(
 						currency.getCurrencyCode());
 				assertNotNull(unit);
 				assertEquals(currency.getCurrencyCode(), unit.getCurrencyCode());
@@ -54,16 +54,11 @@ public class CurrencyUnitTest {
 		id = "AllowAny4NonISOCode")
 	@Test
 	public void testAllowAny4NonISOCode() {
-		for (Class type : TCKTestSetup.getTestConfiguration()
-				.getCurrencyClasses()) {
-			for (String code : new String[] { "CHF1", "BTC", "EUR3", "GBP4",
-					"YEN5", "sgd-sdl:/&%" }) {
-				CurrencyUnit unit = (CurrencyUnit)TCKTestSetup.getTestConfiguration().create(
-						type,
-						code);
-				assertNotNull(unit);
-				assertEquals(code, unit.getCurrencyCode());
-			}
+		for (String code : new String[] { "CHF1", "BTC", "EUR3", "GBP4",
+				"YEN5", "sgd-sdl:/&%" }) {
+			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+			assertNotNull(unit);
+			assertEquals(code, unit.getCurrencyCode());
 		}
 	}
 
@@ -72,18 +67,11 @@ public class CurrencyUnitTest {
 		id = "CurrencyCodeUnique")
 	@Test
 	public void testCurrencyCodeUnique() {
-		for (Class type : TCKTestSetup.getTestConfiguration()
-				.getCurrencyClasses()) {
-			CurrencyUnit unit = (CurrencyUnit)TCKTestSetup.getTestConfiguration().create(
-					type,
-					"HHH");
-			assertNotNull(unit);
-			CurrencyUnit unit2 = (CurrencyUnit)TCKTestSetup.getTestConfiguration().create(
-					type,
-					"HHH");
-			assertEquals(unit, unit2);
-			assertTrue(unit == unit2);
-		}
+		CurrencyUnit unit = MonetaryCurrencies.getCurrency("HHH");
+		assertNotNull(unit);
+		CurrencyUnit unit2 = MonetaryCurrencies.getCurrency("HHH");
+		assertEquals(unit, unit2);
+		assertTrue(unit == unit2);
 	}
 
 	@SpecAssertion(
@@ -94,12 +82,10 @@ public class CurrencyUnitTest {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getCurrencyClasses()) {
 			ClassTester.testSerializable(type);
-			for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
-				CurrencyUnit unit = (CurrencyUnit)TCKTestSetup.getTestConfiguration().create(
-						type,
-						code);
-				ClassTester.testSerializable(unit);
-			}
+		}
+		for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
+			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+			ClassTester.testSerializable(unit);
 		}
 	}
 
@@ -112,6 +98,10 @@ public class CurrencyUnitTest {
 				.getCurrencyClasses()) {
 			ClassTester.testImmutable(type);
 		}
+		for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
+			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+			ClassTester.testImmutable(unit.getClass());
+		}
 	}
 
 	@SpecAssertion(
@@ -122,6 +112,10 @@ public class CurrencyUnitTest {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getCurrencyClasses()) {
 			ClassTester.testComparable(type);
+		}
+		for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
+			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+			ClassTester.testComparable(unit.getClass());
 		}
 	}
 
@@ -134,6 +128,11 @@ public class CurrencyUnitTest {
 				.getCurrencyClasses()) {
 			ClassTester.testHasPublicMethod(type, int.class, "hashCode");
 		}
+		for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
+			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+			ClassTester.testHasPublicMethod(unit.getClass(), int.class,
+					"hashCode");
+		}
 	}
 
 	@SpecAssertion(
@@ -143,23 +142,22 @@ public class CurrencyUnitTest {
 	public void testImplementsEquals() {
 		List<CurrencyUnit> firstUnits = new ArrayList<CurrencyUnit>();
 		List<CurrencyUnit> secondUnits = new ArrayList<CurrencyUnit>();
-		for (Class type : TCKTestSetup.getTestConfiguration()
-				.getCurrencyClasses()) {
-			for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
-				ClassTester.testHasPublicMethod(type, boolean.class, "equals",
-						Object.class);
-				CurrencyUnit unit = (CurrencyUnit)TCKTestSetup.getTestConfiguration().create(
-						type,
-						code);
-				assertNotNull(unit);
-				firstUnits.add(unit);
-				CurrencyUnit unit2 = (CurrencyUnit)TCKTestSetup.getTestConfiguration()
-						.create(
-								type,
-								code);
-				assertNotNull(unit);
-				secondUnits.add(unit);
-			}
+		for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
+			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+			assertNotNull(unit);
+			ClassTester.testHasPublicMethod(unit.getClass(), boolean.class,
+					"equals",
+					Object.class);
+			firstUnits.add(unit);
+			CurrencyUnit unit2 = MonetaryCurrencies.getCurrency(code);
+			assertNotNull(unit);
+			secondUnits.add(unit);
+		}
+		for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
+			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+			ClassTester.testHasPublicMethod(unit.getClass(), boolean.class,
+					"equals",
+					Object.class);
 		}
 		for (int i = 0; i < firstUnits.size(); i++) {
 			assertEquals(firstUnits.get(i), secondUnits.get(i));
@@ -167,19 +165,16 @@ public class CurrencyUnitTest {
 	}
 
 	@SpecAssertion(
-		section = "4.2.1", 
+		section = "4.2.1",
 		id = "IsThreadSafe")
 	@Test
 	public void testIsThreadSafe() throws NoSuchMethodException,
 			SecurityException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
-		for (Class type : TCKTestSetup.getTestConfiguration()
-				.getCurrencyClasses()) {
-			for (Currency cur : Currency.getAvailableCurrencies()) {
-				CurrencyUnit unit = (CurrencyUnit)TCKTestSetup.getTestConfiguration()
-						.create(type, cur.getCurrencyCode());
-				fail("Not yet implemented: IsThreadSafe");
-			}
+		for (Currency cur : Currency.getAvailableCurrencies()) {
+			CurrencyUnit unit = MonetaryCurrencies.getCurrency(cur
+					.getCurrencyCode());
+			fail("Not yet implemented: IsThreadSafe");
 		}
 	}
 
