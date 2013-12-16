@@ -1,6 +1,9 @@
 package org.javamoney.tck.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmounts;
@@ -34,7 +37,9 @@ public class MonetaryAmountTest {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
 			for (String code : new String[] { "CHF", "hsgd", "374347&*%*ç" }) {
-				MonetaryAmount amount = MonetaryAmounts.getDefaultAmountFactory().getAmount(code, 10.15);
+				MonetaryAmount amount = MonetaryAmounts
+						.getDefaultAmountFactory().withCurrency(code)
+						.with(10.15).create();
 				assertNotNull(amount);
 				assertNotNull(amount.getCurrency());
 				assertEquals(code, amount.getCurrency().getCurrencyCode());
@@ -192,7 +197,8 @@ public class MonetaryAmountTest {
 	public void testWith() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
-			MonetaryAmount amount = MonetaryAmounts.getDefaultAmountFactory().getAmount("XXX", 0);
+			MonetaryAmount amount = MonetaryAmounts.getDefaultAmountFactory()
+					.withCurrency("XXX").with(0).create();
 			fail("not implemented.");
 			// amount.with();
 			// TODO
@@ -206,7 +212,8 @@ public class MonetaryAmountTest {
 	public void testQuery() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
-			MonetaryAmount amount = MonetaryAmounts.getDefaultAmountFactory().getAmount("XXX", 0);
+			MonetaryAmount amount = MonetaryAmounts.getDefaultAmountFactory()
+					.withCurrency("XXX").with(0).create();
 			// amount.query();
 			fail("not implemented.");
 			// TODO
@@ -220,10 +227,12 @@ public class MonetaryAmountTest {
 	public void testImplementsEquals() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
-			MonetaryAmount amount = MonetaryAmounts.getDefaultAmountFactory().getAmount("XXX", 0);
+			MonetaryAmount amount = MonetaryAmounts.getDefaultAmountFactory()
+					.withCurrency("XXX").with(0).create();
 			ClassTester.testHasPublicStaticMethodOpt(type, type,
 					"equals", MonetaryOperator.class);
-			MonetaryAmount amount2 = MonetaryAmounts.getDefaultAmountFactory().getAmount("XXX", 0);
+			MonetaryAmount amount2 = MonetaryAmounts.getDefaultAmountFactory()
+					.withCurrency("XXX").with(0).create();
 			assertEquals(amount, amount2);
 		}
 	}
@@ -235,10 +244,12 @@ public class MonetaryAmountTest {
 	public void testImplementsHashCode() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
-			MonetaryAmount amount = MonetaryAmounts.getDefaultAmountFactory().getAmount("TST", 0);
+			MonetaryAmount amount = MonetaryAmounts.getDefaultAmountFactory()
+					.withCurrency("TST").with(0).create();
 			ClassTester.testHasPublicStaticMethodOpt(type, type,
 					"hashCode", MonetaryOperator.class);
-			MonetaryAmount amount2 = MonetaryAmounts.getDefaultAmountFactory().getAmount("TST", 0);
+			MonetaryAmount amount2 = MonetaryAmounts.getDefaultAmountFactory()
+					.withCurrency("TST").with(0).create();
 			assertEquals(amount.hashCode(), amount2.hashCode());
 		}
 	}
@@ -251,17 +262,26 @@ public class MonetaryAmountTest {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getAmountClasses()) {
 			ClassTester.testComparable(type);
-			MonetaryAmount amount = MonetaryAmounts.getDefaultAmountFactory().getAmount("XXX", 0);
+			MonetaryAmount amount = MonetaryAmounts.getDefaultAmountFactory()
+					.withCurrency("XXX").with(0).create();
 			ClassTester.testHasPublicStaticMethodOpt(type, type,
 					"hashCode", MonetaryOperator.class);
-			MonetaryAmount amount2 = MonetaryAmounts.getDefaultAmountFactory().getAmount("XXX", 0);
-			assertTrue("Comparable failed for: " + type.getName(),((Comparable) amount).compareTo(amount2) == 0);
-			MonetaryAmount amount3 = MonetaryAmounts.getDefaultAmountFactory().getAmount("CHF", 1);
-			assertTrue("Comparable failed for: " + type.getName(),((Comparable) amount).compareTo(amount3) > 0);
-			assertTrue("Comparable failed for: " + type.getName(),((Comparable) amount3).compareTo(amount) < 0);
-			MonetaryAmount amount4 = MonetaryAmounts.getDefaultAmountFactory().getAmount("XXX", 1);
-			assertTrue("Comparable failed for: " + type.getName(),((Comparable) amount3).compareTo(amount4) < 0);
-			assertTrue("Comparable failed for: " + type.getName(),((Comparable) amount4).compareTo(amount3) > 0);
+			MonetaryAmount amount2 = MonetaryAmounts.getDefaultAmountFactory()
+					.withCurrency("XXX").with(0).create();
+			assertTrue("Comparable failed for: " + type.getName(),
+					((Comparable) amount).compareTo(amount2) == 0);
+			MonetaryAmount amount3 = MonetaryAmounts.getDefaultAmountFactory()
+					.withCurrency("CHF").with(1).create();
+			assertTrue("Comparable failed for: " + type.getName(),
+					((Comparable) amount).compareTo(amount3) > 0);
+			assertTrue("Comparable failed for: " + type.getName(),
+					((Comparable) amount3).compareTo(amount) < 0);
+			MonetaryAmount amount4 = MonetaryAmounts.getDefaultAmountFactory()
+					.withCurrency("XXX").with(1).create();
+			assertTrue("Comparable failed for: " + type.getName(),
+					((Comparable) amount3).compareTo(amount4) < 0);
+			assertTrue("Comparable failed for: " + type.getName(),
+					((Comparable) amount4).compareTo(amount3) > 0);
 		}
 	}
 

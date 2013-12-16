@@ -19,7 +19,7 @@ import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Test;
 
-@SpecVersion(spec = "JSR 354", version = "1.0.0")
+@SpecVersion(spec = "JSR 354", version = "0.8")
 public class CurrencyUnitTest {
 
 	@SpecAssertion(
