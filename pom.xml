@@ -475,22 +475,6 @@
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.1</version>
-					<configuration>
-						<debug>true</debug>
-						<optimize>true</optimize>
-						<verbose>true</verbose>
-						<source>${maven.compile.sourceLevel}</source>
-						<target>${maven.compile.targetLevel}</target>
-						<compilerArgument>-g</compilerArgument>
-						<encoding>${project.build.sourceEncoding}</encoding>
-						<charset>${project.build.sourceEncoding}</charset>
-						<showDeprecations>true</showDeprecations>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
 					<version>2.4</version>
 				</plugin>
@@ -513,44 +497,6 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
 					<version>2.8</version>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.9.1</version>
-					<executions>
-						<execution>
-							<id>attach-javadocs</id>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<detectLinks>true</detectLinks>
-						<!-- excludePackageNames>blabla</excludePackageNames -->
-						<keywords>true</keywords>
-						<linksource>true</linksource>
-						<!-- overview>${basedir}/overview.html</overview -->
-						<source>${project.build.sourceCompilerLevel}</source>
-						<!-- stylesheetfile>${basedir}/src/site/css/money-jdoc.css</stylesheetfile -->
-						<verbose>true</verbose>
-					</configuration>
-				</plugin>
-				<plugin>
-					<artifactId>maven-source-plugin</artifactId>
-					<groupId>org.apache.maven.plugins</groupId>
-					<version>2.2.1</version>
-					<executions>
-						<execution>
-							<id>attach-sources</id>
-							<phase>package</phase>
-							<goals>
-								<goal>jar-no-fork</goal>
-							</goals>
-						</execution>
-					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -592,11 +538,6 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
-				<plugin>
-					<artifactId>maven-site-plugin</artifactId>
-					<groupId>org.apache.maven.plugins</groupId>
-					<version>3.0</version>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -610,8 +551,7 @@
 						<processor>org.jboss.test.audit.report.CoverageProcessor</processor>
 					</processors>
 					<compilerArguments>
-						-AoutputDir=${basedir}/target/tck-report -source
-						${maven.compile.sourceLevel} -target ${maven.compile.targetLevel}
+						-AoutputDir=${basedir}/target/tck-report -source ${maven.compile.sourceLevel} -target ${maven.compile.targetLevel}
 					</compilerArguments>
 				</configuration>
 				<executions>
