@@ -702,8 +702,14 @@
 			<name>JBoss Maven 2 Brew Repository</name>
 			<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
 			<layout>default</layout>
-
 		</repository>
+		<repository>
+			<id>jboss-maven2-snapshots</id>
+			<name>JBoss Maven 2 Brew Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/snapshot</url>
+			<layout>default</layout>
+		</repository>
+		
 	</repositories>
 
 </project>
