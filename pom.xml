@@ -8,14 +8,16 @@
 	Copyright (c) 2012-2013, Credit Suisse All rights reserved. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
 	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>org.javamoney.tck</groupId>
-	<artifactId>jsr354-tck</artifactId>
+	<parent>
+		<groupId>org.javamoney</groupId>
+		<artifactId>javamoney-parent</artifactId>
+		<version>0.4-SNAPSHOT</version>
+	</parent>
+	<artifactId>money-tck</artifactId>
 	<packaging>jar</packaging>
 
-	<version>0.7</version>
+	<version>0.8-SNAPSHOT</version>
 
 	<name>JSR 354 (Money and Currency API)</name>
 	<url>http://java.net/projects/javamoney</url>
@@ -37,12 +39,8 @@
 	</licenses>
 
 	<properties>
-		<jsr.version>0.7</jsr.version>
-		<jdkVersion>1.7</jdkVersion>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
 		<maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<moduleDir>.</moduleDir>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -55,11 +53,11 @@
 		<license.licenseName>jcp_spec</license.licenseName>
 		<license.licenseResolver>src/license</license.licenseResolver>
 
-		<jboss.test.audit.version>1.1.0.Final</jboss.test.audit.version>
+		<jboss.test.audit.version>1.1.1-SNAPSHOT</jboss.test.audit.version>
 		<!-- This properties must be set for another implementation to be tested. -->
-		<impl.groupId>org.javamoney.ri</impl.groupId>
-		<impl.artifactId>jsr354-ri</impl.artifactId>
-		<impl.version>0.7</impl.version>
+		<impl.groupId>org.javamoney</impl.groupId>
+		<impl.artifactId>moneta</impl.artifactId>
+		<impl.version>0.8-SNAPSHOT</impl.version>
 		<impl.packageType>jar</impl.packageType>
 	</properties>
 
@@ -100,7 +98,7 @@
 			<id>vgrazi</id>
 			<name>Victor Grazi</name>
 			<roles>
-				<role>Expert Group Member</role>
+				<role>Expert Group Member (Emeritus)</role>
 			</roles>
 		</developer>
 		<developer>
@@ -324,8 +322,6 @@
 								</excludes>
 							</configuration>
 						</plugin>
-						<!-- TODO enable this only for major upgrades (ensure to copy LICENSE.txt 
-							to LICENSE.bak first) -->
 					</plugins>
 				</pluginManagement>
 				<plugins>
@@ -356,7 +352,7 @@
 			</dependency>
 			<dependency>
 				<groupId>javax.money</groupId>
-				<artifactId>jsr354-api</artifactId>
+				<artifactId>money-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -381,16 +377,19 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>javax.money</groupId>
+			<artifactId>money-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.javamoney.ri</groupId>
-			<artifactId>jsr354-ri</artifactId>
-			<version>${impl.version}</version>
+			<groupId>${impl.groupId}</groupId>
+			<artifactId>${impl.artifactId}</artifactId>
 			<type>${impl.packageType}</type>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.test-audit</groupId>
@@ -412,6 +411,11 @@
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ssh</artifactId>
 				<version>2.4</version>
+			</extension>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav-jackrabbit</artifactId>
+				<version>2.2</version>
 			</extension>
 		</extensions>
 
@@ -465,6 +469,7 @@
 						<useSystemClassLoader>true</useSystemClassLoader>
 						<skipTests>false</skipTests>
 						<trimStackTrace>false</trimStackTrace>
+						<testFailureIgnore>true</testFailureIgnore>
 						<forkMode>once</forkMode>
 						<includes>
 							<include>**/*Test.java</include>
@@ -593,6 +598,11 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
+				<plugin>
+					<artifactId>maven-site-plugin</artifactId>
+					<groupId>org.apache.maven.plugins</groupId>
+					<version>3.0</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -601,16 +611,14 @@
 				<groupId>org.bsc.maven</groupId>
 				<artifactId>maven-processor-plugin</artifactId>
 				<configuration>
-					<defaultOutputDirectory>${basedir}/target/coverage-report</defaultOutputDirectory>
+					<defaultOutputDirectory>${basedir}/target/tck-report</defaultOutputDirectory>
 					<processors>
 						<processor>org.jboss.test.audit.report.CoverageProcessor</processor>
 					</processors>
-					<compilerArguments>-AauditXml=tck.xml
-						-AoutputDir=${basedir}/target/coverage-report -source
-						${java.source.version}
-						-target ${java.target.version}
+					<compilerArguments>
+						-AoutputDir=${basedir}/target/tck-report -source
+						${maven.compile.sourceLevel} -target ${maven.compile.targetLevel}
 					</compilerArguments>
-					<!-- -source ${java.source.version} -target ${java.target.version} -->
 				</configuration>
 				<executions>
 					<execution>
