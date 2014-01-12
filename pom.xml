@@ -39,13 +39,7 @@
 	</licenses>
 
 	<properties>
-		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
-		<maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
 		<moduleDir>.</moduleDir>
-
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
 		<basedir>.</basedir>
 		<!-- Dependency versions -->
 		<junit.version>4.8.2</junit.version>
