@@ -3,12 +3,15 @@
 	xmlns="http://jboss.com/products/weld/tck/audit" xsi:schemaLocation="http://jboss.com/products/weld/tck/audit"
 	name="JSR 354 Money and Currency" version="1.0.0" id="JSR 354"
 	generateSectionIds="false">
-	<section id="0" title="TCK Setup" >
+	<section id="0" title="TCK Setup">
 		<assertion id="EnsureSetup">
-			<text>Ensure an implementation of org.javamoney.tck.JSR354TestConfiguration is registered using the java.util.ServiceLoader.</text>
+			<text>Ensure an implementation of
+				org.javamoney.tck.JSR354TestConfiguration is registered using the
+				java.util.ServiceLoader.</text>
 		</assertion>
 		<assertion id="EnsurePackageSetup">
-			<text>Asserts the basic implementation packages are registered.</text>
+			<text>Asserts the basic implementation packages are registered.
+			</text>
 		</assertion>
 		<assertion id="EnsureAdjusterSetup">
 			<text>Asserts adjusters to test are not empty.</text>
@@ -21,13 +24,14 @@
 	<section id="2" title="Use Cases" />
 	<section id="3" title="Requirements" />
 	<section id="4" title="Specification" />
-	<section id="4.2" title="Money and Currency API"/>
-	<section id="4.2.1" title="Interface javax.money.CurrencyUnit" >
+	<section id="4.2" title="Money and Currency Core API" />
+	<section id="4.2.1" title="Interface javax.money.CurrencyUnit">
 		<group>
 			<text>Managing the Currency code</text>
 			<assertion id="EnsureCurrencyUnit">
 				<text>Ensure at least one javax.money.CurrencyUnit implementation
-					is available.
+					is
+					available.
 				</text>
 			</assertion>
 			<assertion id="CurrencyCodeUnique">
@@ -35,7 +39,7 @@
 				</text>
 			</assertion>
 			<assertion id="Enforce3LetterCode4ISO">
-				<text>Ensure ISO codes 3-letters are available.
+				<text>Ensure ISO 3-letters codes are available.
 				</text>
 			</assertion>
 			<assertion id="AllowAny4NonISOCode">
@@ -76,37 +80,100 @@
 			<text>Preconditions</text>
 			<assertion id="EnsureMonetaryAmount">
 				<text>Ensure at least one javax.money.MonetaryAmount
-					implementation is available.
+					implementation
+					is available.
 				</text>
 			</assertion>
 		</group>
 		<group>
 			<text>Currency Code and Numeric Representation</text>
-			<assertion id="CurrencyCode">
+			<assertion id="getCurrency">
 				<text>Ensure getCurrencyCode returns correct results.</text>
 			</assertion>
-			<assertion id="AmountWhole">
+			<assertion id="getNumber">
 				<text>Ensure getAmountWhole returns correct results.</text>
 			</assertion>
-			<assertion id="AmountFractionNumber">
-				<text>Ensure getAmountFractionNumber returns correct results.
+			<assertion id="getMonetaryContext">
+				<text>Ensure getMonetaryContext returns correct results.
 				</text>
 			</assertion>
-			<assertion id="AmountFractionDenominator">
-				<text>Ensure getAmountFractionDenominator returns correct
-					results.
+			<assertion id="getFactory">
+				<text>Ensure getFactory returns a MonetaryAmountFactory and that
+					instances created are of the same type.
 				</text>
 			</assertion>
-			<assertion id="NumericRepresentation">
-				<text>The portable numeric representation constraints must be
-					followed.
+			<assertion id="isGreaterThan">
+				<text>The isGreaterThan() implemented correctly.</text>
+			</assertion>
+			<assertion id="isGreaterThanOrEqals">
+				<text>The isGreaterThanOrEqals() implemented correctly.</text>
+			</assertion>
+			<assertion id="isLessThan">
+				<text>The isLessThan() implemented correctly.</text>
+			</assertion>
+			<assertion id="isLessThanOrEqals">
+				<text>The isLessThanOrEqals() implemented correctly.</text>
+			</assertion>
+			<assertion id="isEqualTo">
+				<text>The isEqualTos() return true, regardless of display type.</text>
+			</assertion>
+			<assertion id="signum">
+				<text>The signum() function is implemented correctly.
+				</text>
+			</assertion>
+			<assertion id="isPositive">
+				<text>The isPositive() function is implemented correctly.
+				</text>
+			</assertion>
+			<assertion id="isNegative">
+				<text>The isNegative() function is implemented correctly.
+				</text>
+			</assertion>
+			<assertion id="isZero">
+				<text>The isZero() function must return true, regardless of the value's precision.
+				</text>
+			</assertion>
+			<assertion id="add">
+				<text>The add() function must add two values.
+				</text>
+			</assertion>
+			<assertion id="subtract">
+				<text>The subtract() function must subtract a value from another.
+				</text>
+			</assertion>
+			<assertion id="multiply">
+				<text>The multiply function allow to multiply numbers.
+				</text>
+			</assertion>
+			<assertion id="divide">
+				<text>The "divide" function allow to divide numbers.
+				</text>
+			</assertion>
+			<assertion id="remainder">
+				<text>The ""remainder"" function allow to calculate the remainder.
+				</text>
+			</assertion>
+			<assertion id="divideAndRemainder">
+				<text>The "divideAndRemainder" function allow to dive/remind numbers.
+				</text>
+			</assertion>
+			<assertion id="scaleByPowerOfTen">
+				<text>The "scaleByPowerOfTen" function allow to scale by power of 10.
+				</text>
+			</assertion>
+			<assertion id="abs">
+				<text>The abs() function allow to scalculate the absolute value.
+				</text>
+			</assertion>
+			<assertion id="negate">
+				<text>The negate() function allow to negate the value.
 				</text>
 			</assertion>
 		</group>
 		<group>
 			<text>Extension Points</text>
 			<assertion id="With">
-				<text>Ensure with(MonetaryAdjuster) can be called and produces
+				<text>Ensure with(MonetaryOperator) can be called and produces
 					valuable results.
 				</text>
 			</assertion>
@@ -120,21 +187,28 @@
 			<text>General Requirements</text>
 			<assertion id="ImplementsEquals">
 				<text>Implementations of MonetaryAmount must implement equals,
-					considering number, currency and implementation type.
+					considering number, currency and implementation type, monetary context.
 				</text>
 			</assertion>
 			<assertion id="ImplementsHashCode">
 				<text>Implementations of MonetaryAmount must implement hashCode,
-					considering number, currency and implementation type.
+					considering number, currency and implementation type, monetary context.
 				</text>
 			</assertion>
 			<assertion id="IsComparable">
 				<text>Implementations of MonetaryAmount must be Comparable.
 				</text>
 			</assertion>
+			<assertion id="IsSerializable">
+				<text>Implementations of MonetaryAmount must be Serializable.
+				</text>
+			</assertion>
 		</group>
 	</section>
-	<section id="4.2.3" title="Interface javax.money.MonetaryAdjuster" />
+	<section id="4.2.3" title="Interface javax.money.NumberValue" >
+	
+	</section>
+	<section id="4.2.4" title="Interface javax.money.MonetaryOperator" />
 	<section id="4.2.4" title="Interface javax.money.MonetaryQuery" />
 	<section id="4.2.5" title="Interface javax.money.MonetaryException">
 		<assertion id="Exceptions">
@@ -149,7 +223,7 @@
 			<text>Formatting different groupSizes.</text>
 		</assertion>
 	</section>
-	<section id="5" title="Recommendations"/>
+	<section id="5" title="Recommendations" />
 	<section id="5.1" title="Rounding">
 		<group>
 			<text>Access Recommendations</text>
