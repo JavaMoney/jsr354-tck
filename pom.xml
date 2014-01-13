@@ -14,7 +14,7 @@
 		<artifactId>javamoney-parent</artifactId>
 		<version>0.4-SNAPSHOT</version>
 	</parent>
-	
+
 	<artifactId>money-tck</artifactId>
 	<packaging>jar</packaging>
 
@@ -379,7 +379,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>${impl.groupId}</groupId>
@@ -431,7 +431,7 @@
 						</instructions>
 					</configuration>
 				</plugin>
-				
+
 				<!--This plugin's configuration is used to store Eclipse m2e settings 
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
@@ -500,8 +500,13 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<classesDirectory>${project.build.testOutputDirectory}</classesDirectory>
+					<excludes>
+						<exclude>org/javamoney/tck/TCKTestSetup*</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
