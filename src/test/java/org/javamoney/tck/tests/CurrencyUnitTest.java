@@ -49,30 +49,6 @@ public class CurrencyUnitTest {
 		}
 	}
 
-	@SpecAssertion(
-		section = "4.2.1",
-		id = "AllowAny4NonISOCode")
-	@Test
-	public void testAllowAny4NonISOCode() {
-		for (String code : new String[] { "CHF1", "BTC", "EUR3", "GBP4",
-				"YEN5", "sgd-sdl:/&%" }) {
-			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
-			assertNotNull(unit);
-			assertEquals(code, unit.getCurrencyCode());
-		}
-	}
-
-	@SpecAssertion(
-		section = "4.2.1",
-		id = "CurrencyCodeUnique")
-	@Test
-	public void testCurrencyCodeUnique() {
-		CurrencyUnit unit = MonetaryCurrencies.getCurrency("HHH");
-		assertNotNull(unit);
-		CurrencyUnit unit2 = MonetaryCurrencies.getCurrency("HHH");
-		assertEquals(unit, unit2);
-		assertTrue(unit == unit2);
-	}
 
 	@SpecAssertion(
 		section = "4.2.1",
