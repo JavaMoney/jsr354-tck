@@ -7,283 +7,613 @@
 		<assertion id="EnsureSetup">
 			<text>Ensure an implementation of
 				org.javamoney.tck.JSR354TestConfiguration is registered using the
-				java.util.ServiceLoader.</text>
-		</assertion>
-		<assertion id="EnsurePackageSetup">
-			<text>Asserts the basic implementation packages are registered.
+				java.util.ServiceLoader.
 			</text>
 		</assertion>
-		<assertion id="EnsureAdjusterSetup">
-			<text>Asserts adjusters to test are not empty.</text>
-		</assertion>
-		<assertion id="EnsureQuerySetup">
-			<text>Asserts queries to test are not empty.</text>
-		</assertion>
 	</section>
-	<section id="1" title="Introduction" />
-	<section id="2" title="Use Cases" />
-	<section id="3" title="Requirements" />
-	<section id="4" title="Specification" />
-	<section id="4.2" title="Money and Currency Core API" />
-	<section id="4.2.1" title="Interface javax.money.CurrencyUnit">
-		<group>
-			<text>Managing the Currency code</text>
-			<assertion id="EnsureCurrencyUnit">
-				<text>Ensure at least one javax.money.CurrencyUnit implementation
-					is
-					available.
+	<section id="1-3" title="Introduction, Use Cases, Requirements (no tests)" />
+
+	<!-- **************************************************************** **** 
+		Core API **************************************************************** -->
+	<section id="Core API" title="4.2 Money and Currency Core API">
+		<section id="4.2.1" title="Modelling of Currencies">
+			<group>
+				<text>Managing the Currency code</text>
+				<assertion id="EnsureCurrencyUnit">
+					<text>Ensure at least one javax.money.CurrencyUnit implementation
+						is available and registered/accessible from MonetaryCurrencies.
+					</text>
+				</assertion>
+				<assertion id="Currency_CodeUnique">
+					<text>Test that currencies returned for same ISO currency code are
+						equal, ensure when listing all available currencies, thath the
+						code is unique.
+					</text>
+				</assertion>
+
+				<assertion id="Currency_TestJDKCurrencies">
+					<text>Ensure all ISO 3-letters codes as defined by the JDK are also
+						available from MonetaryCurrencies.
+					</text>
+				</assertion>
+				<assertion id="Currency_JDKCurrenciesOK">
+					<text>Test that JDK currencies returned
+						match the values of
+						corresponding JDK Currency (code, numeric code,
+						default fraction
+						digits).
+					</text>
+				</assertion>
+			</group>
+			<group>
+				<text>Currency Unit Implementation Requirements</text>
+				<assertion id="Currency_ImplementsEqualsHashCode">
+					<text>CurrencyUnit must implement equals/hashCode.
+					</text>
+				</assertion>
+				<assertion id="Currency_IsComparable">
+					<text>CurrencyUnit implementation must be Comparable.
+					</text>
+				</assertion>
+				<assertion id="Currency_IsImmutable">
+					<text>CurrencyUnit implementation must be immutable.
+					</text>
+				</assertion>
+				<assertion id="Currency_IsThreadSafe">
+					<text>CurrencyUnit implementation must be thread safe.
+					</text>
+				</assertion>
+				<assertion id="Currency_IsSerializable">
+					<text>CurrencyUnit implementation must be serializable.
+					</text>
+				</assertion>
+			</group>
+		</section>
+		<section id="4.2.2" title="Modeling of Monetary Amounts">
+			<group>
+				<text>Preconditions</text>
+				<assertion id="Amount_EnsureMonetaryAmount">
+					<text>Ensure at least one javax.money.MonetaryAmount
+						implementation
+						is registered, by calling MonetaryAmounts.getAmountTypes();
+					</text>
+				</assertion>
+			</group>
+			<!-- Test the following tests for each type registered. Use MonetaryAmountFactory 
+				to create instances to be compared. -->
+			<group>
+				<text>Data Interoperability</text>
+				<assertion id="Amount_getCurrency">
+					<text>Ensure getCurrencyCode returns correct results.</text>
+				</assertion>
+				<assertion id="Amount_getNumber">
+					<text>Ensure getNumber() returns correct results.</text>
+				</assertion>
+				<assertion id="Amount_getMonetaryContext">
+					<text>Ensure getMonetaryContext() returns correct results.
+					</text>
+				</assertion>
+				<assertion id="Amount_isNegative">
+					<text>Ensure isNegative() returns correct results.</text>
+				</assertion>
+				<assertion id="Amount_isPositive">
+					<text>Ensure isPositive() returns correct results.</text>
+				</assertion>
+				<assertion id="Amount_isZero">
+					<text>Ensure isZero() returns correct results (-0, +0 == 0).</text>
+				</assertion>
+				<assertion id="Amount_signum">
+					<text>The signum() function is implemented correctly.</text>
+				</assertion>
+			</group>
+			<group>
+				<text>Prototyping Support</text>
+				<assertion id="Amount_getFactory">
+					<text>Ensure getFactory returns a MonetaryAmountFactory and that
+						instances created are of the same type.
+					</text>
+				</assertion>
+				<assertion id="Amount_createEqualInstance">
+					<text>Call getFactory(), create a new instance. The instances must
+						be equal (or even be identical!)..
+					</text>
+				</assertion>
+				<assertion id="Amount_createWithChangedNumber">
+					<text>Call getFactory(), create a new instance with a new number
+						value. The instances must
+						be non equal and have the according
+						numeric value.
+					</text>
+				</assertion>
+				<assertion id="Amount_createWithChangedCurrency">
+					<text>Call getFactory(), create a new instance with a new currency
+						value. The instances must
+						be non equal and have the according
+						currency value. Do this by code and by passing a CurrencyUnit.
+					</text>
+				</assertion>
+				<assertion id="Amount_createWithChangedContext">
+					<text>Call getFactory(), create a new instance with a new monetary
+						context (if possible - check the max context).
+						The instances must
+						be non equal (check with spec...) and have the
+						same currency and
+						number value.
+					</text>
+				</assertion>
+				<assertion id="Amount_createWithChangedAll">
+					<text>Call getFactory(), create a new instance with a new monetary
+						context, a new number and a new currency.
+						The instances must be non
+						equal.
+					</text>
+				</assertion>
+			</group>
+			<group>
+				<text>Comparison Methods</text>
+				<assertion id="Amount_isGreaterThan">
+					<text>The isGreaterThan() implemented correctly.</text>
+				</assertion>
+				<assertion id="Amount_isGreaterThanOrEqals">
+					<text>The isGreaterThanOrEqals() implemented correctly, regardless
+						of trailing zeroes.
+					</text>
+				</assertion>
+				<assertion id="Amount_isLessThan">
+					<text>The isLessThan() implemented correctly.</text>
+				</assertion>
+				<assertion id="Amount_isLessThanOrEqals">
+					<text>The isLessThanOrEqals() implemented correctly, regardless of
+						trailing zeroes.
+					</text>
+				</assertion>
+				<assertion id="Amount_isEqualTo">
+					<text>The isEqualTos() return true, regardless of trailing zeroes.
+					</text>
+				</assertion>
+			</group>
+			<group>
+				<text>Basic Arithmetic Operations</text>
+				<assertion id="Amount_add">
+					<text>The add() function must add two values.
+					</text>
+				</assertion>
+				<assertion id="Amount_addMixedCurrencies">
+					<text>The add() function with non matching currencies must throw a
+						MonetaryException.
+					</text>
+				</assertion>
+				<assertion id="Amount_subtract">
+					<text>The subtract() function must subtract a value from another.
+					</text>
+				</assertion>
+				<assertion id="Amount_subtractMixedCurrencies">
+					<text>The subtract() function with non matching currencies must
+						throw a MonetaryException.
+					</text>
+				</assertion>
+				<assertion id="Amount_multiply">
+					<text>The multiply function allow to multiply numbers.
+					</text>
+				</assertion>
+				<assertion id="Amount_divide">
+					<text>The "divide" function allow to divide numbers.
+					</text>
+				</assertion>
+				<assertion id="Amount_remainder">
+					<text>The ""remainder"" function allow to calculate the remainder.
+					</text>
+				</assertion>
+				<assertion id="Amount_divideAndRemainder">
+					<text>The "divideAndRemainder" function allow to dive/remind
+						numbers.
+					</text>
+				</assertion>
+				<assertion id="Amount_scaleByPowerOfTen">
+					<text>The "scaleByPowerOfTen" function allow to scale by power of
+						10.
+					</text>
+				</assertion>
+				<assertion id="Amount_abs">
+					<text>The abs() function allow to scalculate the absolute value.
+					</text>
+				</assertion>
+				<assertion id="Amount_negate">
+					<text>The negate() function allow to negate the value.
+					</text>
+				</assertion>
+			</group>
+			<group>
+				<text>Functional Extension Points</text>
+				<assertion id="Amount_with">
+					<text>Ensure with(MonetaryOperator) can be called and produces
+						amounts of the same type and correct value.
+					</text>
+				</assertion>
+				<assertion id="Amount_with_BadCases">
+					<text>When an invalid operator is passed (throwing any exception),
+						a MonetaryException must be thrown. When null is passed, an NPE
+						must be thrown.
+					</text>
+				</assertion>
+				<assertion id="Amount_query">
+					<text>Ensure query(MonetaryQUery) can be called and produces
+						valuable results.
+					</text>
+				</assertion>
+				<assertion id="Amount_query_BadCases">
+					<text>When an invalid query is passed (throwing any exception), a
+						MonetaryException must be thrown. When null is passed, an NPE must
+						be thrown.
+					</text>
+				</assertion>
+			</group>
+			<group>
+				<text>Monetary Amount Implementation Requirements</text>
+				<assertion id="Amount_ImplementsHashcodeEquals">
+					<text>Implementations of MonetaryAmount must implement hashCode and
+						equals,
+						considering number, currency and implementation type,
+						monetary
+						context.
+					</text>
+				</assertion>
+				<assertion id="Amount_IsComparable">
+					<text>Implementations of MonetaryAmount must be Comparable.
+					</text>
+				</assertion>
+				<assertion id="Amount_IsSerializable">
+					<text>Implementations of MonetaryAmount must be serializable.
+					</text>
+				</assertion>
+				<assertion id="Amount_0AndMinus0IsSame">
+					<text>Implementations of MonetaryAmount should implement a method
+						getAmount().
+					</text>
+				</assertion>
+			</group>
+			<group>
+				<text>Monetary Amount Implementation Recommendations</text>
+				<assertion id="Amount_ShouldBeImmutable">
+					<text>Implementations of MonetaryAmount should be immutable.
+					</text>
+				</assertion>
+				<assertion id="Amount_ShouldBeThreadSafe">
+					<text>Implementations of MonetaryAmount should be thread safe.
+					</text>
+				</assertion>
+				<assertion id="Amount_ShouldHaveFromMethod">
+					<text>Implementations of MonetaryAmount should have a static
+						MyClass from(MonetaryAmount) method.
+					</text>
+				</assertion>
+				<assertion id="Amount_ShouldNotImeplementGetAmount">
+					<text>Implementations of MonetaryAmount should implement a method
+						getAmount().
+					</text>
+				</assertion>
+			</group>
+		</section>
+
+		<section id="4.2.3" title="Externalizing the Numeric Value of an Amount">
+			<assertion id="NumberValue_CheckNumberType">
+				<text>Checks if number type is not null and returning a concrete (no
+					abstract class or interface).
 				</text>
 			</assertion>
-			<assertion id="CurrencyCodeUnique">
-				<text>Ensure at the currency code is unique.
+			<assertion id="NumberValue_intValueExact">
+				<text>Check if a correct integer value is returned, no truncation is
+					allowed to be performed.
 				</text>
 			</assertion>
-			<assertion id="Enforce3LetterCode4ISO">
-				<text>Ensure ISO 3-letters codes are available.
+			<assertion id="NumberValue_longValueExact">
+				<text>Check if a correct long value is returned, no truncation is
+					allowed to be performed.
 				</text>
 			</assertion>
-			<assertion id="AllowAny4NonISOCode">
-				<text>Allow non ISO currency codes.
+			<assertion id="NumberValue_doubleValueExact">
+				<text>Check if a correct double value is returned, no truncation is
+					allowed to be performed.
 				</text>
 			</assertion>
-		</group>
-		<group>
-			<text>General Requirements</text>
-			<assertion id="ImplementsHashCode">
-				<text>CurrencyUnit must implement hashCode.
+			<assertion id="NumberValue_numberValueExact">
+				<text>Check if a correct number value is returned, no truncation is
+					allowed to be performed.
+					Check should be done for every JDK type
+					supported.
 				</text>
 			</assertion>
-			<assertion id="ImplementsEquals">
-				<text>CurrencyUnit must implement equals.
+			<assertion id="NumberValue_intValue">
+				<text>Check if a correct integer value is returned, truncation is
+					allowed to be performed.
 				</text>
 			</assertion>
-			<assertion id="IsComparable">
-				<text>CurrencyUnit implementation must be Comparable.
+			<assertion id="NumberValue_longValue">
+				<text>Check if a correct long value is returned, truncation is
+					allowed to be performed.
 				</text>
 			</assertion>
-			<assertion id="IsImmutable">
-				<text>CurrencyUnit implementation must be immutable.
+			<assertion id="NumberValue_doubleValue">
+				<text>Check if a correct double value is returned, truncation is
+					allowed to be performed.
 				</text>
 			</assertion>
-			<assertion id="IsThreadSafe">
-				<text>CurrencyUnit implementation must be thread safe.
+			<assertion id="NumberValue_numberValue">
+				<text>Check if a correct number value is returned, truncation is
+					allowed to be performed.
+					Check should be done for every JDK type
+					supported.
 				</text>
 			</assertion>
-			<assertion id="IsSerializable">
-				<text>CurrencyUnit implementation must be serializable.
+			<assertion id="NumberValue_getPrecision">
+				<text>Test correct precision values, including border cases.
 				</text>
 			</assertion>
-		</group>
-	</section>
-	<section id="4.2.2" title="Interface javax.money.MonetaryAmount">
-		<group>
-			<text>Preconditions</text>
-			<assertion id="EnsureMonetaryAmount">
-				<text>Ensure at least one javax.money.MonetaryAmount
-					implementation
-					is available.
+			<assertion id="NumberValue_getScale">
+				<text>Test correct scale values, including border cases.
 				</text>
 			</assertion>
-		</group>
-		<group>
-			<text>Currency Code and Numeric Representation</text>
-			<assertion id="getCurrency">
-				<text>Ensure getCurrencyCode returns correct results.</text>
+		</section>
+		<section id="4.2.4" title="Functional Extension Points">
+			<group>
+				<text>Monetary Operator Implementation Requirements</text>
+				<assertion id="Operator_CheckReturnType">
+					<text>The return type of apply must be the same type as the
+						parameter
+						(amount.getClass() == result.getClass()).
+					</text>
+				</assertion>
+			</group>
+			<group>
+				<text>Monetary Operator Implementation Recommendations</text>
+				<assertion id="Operator_ShouldBeImmutable">
+					<text>Monetary operators are recommended to be immutable</text>
+				</assertion>
+				<assertion id="Operator_ShouldBeThreadSafe">
+					<text>Monetary operators are recommended to be thread-safe</text>
+				</assertion>
+				<assertion id="Query_ShouldBeImmutable">
+					<text>Monetary queries are recommended to be immutable</text>
+				</assertion>
+				<assertion id="Query_ShouldBeThreadSafe">
+					<text>Monetary queries are recommended to be thread-safe</text>
+				</assertion>
+			</group>
+		</section>
+		<section id="4.2.5" title="The Monetary Context">
+			<!-- No tests, class is part of API! -->
+		</section>
+		<!-- Theses tests must be done for every amount type registered. Factories 
+			must be accessed first using MonetaryAmounts singleton, then from a created 
+			amount. -->
+		<section id="4.2.6" title="Creating Monetary Amount Instances">
+			<assertion id="AmountFactory_CheckAmountType">
+				<text>Checks if getAmountType returns a usable type.</text>
 			</assertion>
-			<assertion id="getNumber">
-				<text>Ensure getAmountWhole returns correct results.</text>
+			<assertion id="AmountFactory_MonetaryContext">
+				<text>Checks for default and max MonetaryContext.</text>
 			</assertion>
-			<assertion id="getMonetaryContext">
-				<text>Ensure getMonetaryContext returns correct results.
+			<assertion id="AmountFactory_Create">
+				<text>Create values from a factory with currencies, numbers.</text>
+			</assertion>
+			<assertion id="AmountFactory_CreateWithContext">
+				<text>Create values from a factory with monetary contexts.</text>
+			</assertion>
+		</section>
+		<section id="4.2.7" title="Accessors">
+			<section id="MonetaryCurrencies" title="Accessing Currencies">
+				<assertion id="MonetaryCurrencies_EnsureISO">
+					<text>Test if MonetaryCurrencies provides all ISO related entries,
+						similar to the JDK.
+					</text>
+				</assertion>
+				<assertion id="MonetaryCurrencies_EnsureLocale">
+					<text>Test if MonetaryCurrencies provides all Locale related
+						entries,
+						similar to the JDK.
+					</text>
+				</assertion>
+				<assertion id="MonetaryCurrencies_IsAvailableISO">
+					<text>Test if MonetaryCurrencies provides correct check for ISO
+						codes.
+					</text>
+				</assertion>
+				<assertion id="MonetaryCurrencies_IsAvailableLocale">
+					<text>Test if MonetaryCurrencies provides correct check for
+						Locales.
+					</text>
+				</assertion>
+			</section>
+			<section id="MonetaryAmounts" title="Accessing Monetary Amount Factories">
+				<assertion id="Amounts_AccessTypes">
+					<text>Ensure the types available, must be at least one type (if one
+						has a specified AmountFlavor, 2 are recommended).
+					</text>
+				</assertion>
+				<assertion id="Amounts_AmountFactories">
+					<text>Ensure amount factories are accessible for all types
+						available,
+						providing also the
+						some test implementations with the
+						TCK..
+					</text>
+				</assertion>
+				<assertion id="Amounts_NewAmountFactories">
+					<text>Ensure amount factories are accessible for all types
+						available,
+						providing also the
+						some test implementations with the
+						TCK,
+						and that
+						every factory accessed
+						is a new instance.
+					</text>
+				</assertion>
+				<assertion id="Amounts_TestQueryFunction">
+					<text>Ensure correct query function implementations, providing also
+						the
+						some test implementations with the TCK.
+					</text>
+				</assertion>
+				<assertion id="Amounts_DefaultFactory">
+					<text>Ensure a default factory is returned. Test javamoney.config
+						for
+						configuring default value.
+					</text>
+				</assertion>
+			</section>
+			<section id="MonetaryRoundings" title="Accecssing of Roundings">
+				<!-- All roundings are MonetaryOPerator instances, so apply all MonetaryOperator 
+					tests (and recommendations) as defined in section 4.2.4 -->
+				<assertion id="Roundings_FromCurrencies">
+					<text>Access roundings using all defined currencies.</text>
+				</assertion>
+				<assertion id="Roundings_FromMonetaryContext">
+					<text>Access roundings using a MonetaryContext. Use different
+						MathContext/RoundingMode, as an attribute, when running
+						on the JDK.
+					</text>
+				</assertion>
+				<assertion id="Roundings_CheckCustomRoundings">
+					<text>Check if custom roundings are available, if yes, access and
+						test them.
+					</text>
+				</assertion>
+			</section>
+		</section>
+		<section id="4.2.8" title="Additional Functional Support" />
+	</section> <!-- end core -->
+
+	<section id="4.3" title="Money and Currency Formatting API">
+		<section id="4.3.1" title="Formatting of Monetary Amounts">
+			<group>
+				<text>Test a concrete MonetaryAmountFormat Implementation</text>
+				<assertion id="Format_formatAmounts">
+					<text>Format several amounts, created using the default factory,
+						but
+						also a test instance, provided by the TCK, to ensure no
+						implementation
+						dependencies on the implementation.
+					</text>
+				</assertion>
+				<assertion id="Format_printAmounts">
+					<text>Print several amounts, created using the default factory, but
+						also a test instance, provided by the TCK, to ensure no
+						implementation
+						dependencies on the implementation.
+					</text>
+				</assertion>
+				<assertion id="Format_parseAmounts">
+					<text>Parse back several amounts, input created using the
+						formatting
+						from 'Format_formatAmounts'.
+					</text>
+				</assertion>
+				<assertion id="Format_amountStyle">
+					<text>Get/set different amount styles (especially patterns, group
+						sizes, group characters) and compare results with results as from
+						RI.
+						Also apply patterns without currency invovled.
+					</text>
+				</assertion>
+				<assertion id="Format_monetaryContext">
+					<text>Get/set different monetary contexts and compare results with
+						results from parsed amounts.
+					</text>
+				</assertion>
+				<assertion id="Format_defaultCurrency">
+					<text>Get/set default currency, try to parse patterns without
+						currency information.
+					</text>
+				</assertion>
+			</group>
+			<group>
+				<text>Accessing Monetary Amount Formats</text>
+				<assertion id="Format_accessFormatWithLocale">
+					<text>AccessingMonetaryAmountFormat using
+						MonetaryFormats.getAmountFormat(Locale locale), all locales
+						available also from java.text.DecimalFormat must be supported.
+					</text>
+				</assertion>
+				<assertion id="Format_accessFormatWithAmountStyle">
+					<text>AccessingMonetaryAmountFormat using
+						MonetaryFormats.getAmountFormat(AmountStyle style), all locales
+						available also from java.text.DecimalFormat must be supported
+						(using AmountStyle.of(Locale)).
+					</text>
+				</assertion>
+				<assertion id="Format_accessFormatGetAvailableLocales">
+					<text>Test
+						MonetaryFormats.getAvailableLocales, all locales
+						available also from java.text.DecimalFormat must be supported
+						(using AmountStyle.of(Locale)), more locales are possible.
+					</text>
+				</assertion>
+			</group>
+		</section>
+		<section id="4.4" title="Money and Currency SPI">
+			<assertion id="SPI_testCurrencyProviderSpi">
+				<text>Test registered CurrencyProviderSpi (at least one instance
+					required). Test behaviour,
+					especially bad case behaviour for invalid
+					input.
 				</text>
 			</assertion>
-			<assertion id="getFactory">
-				<text>Ensure getFactory returns a MonetaryAmountFactory and that
-					instances created are of the same type.
+			<assertion id="SPI_testMonetaryAmountsSpi">
+				<text>Test registered MonetaryAmountsSpi (at least one instance
+					required). Test behaviour,
+					especially bad case behaviour for invalid
+					input.
 				</text>
 			</assertion>
-			<assertion id="isGreaterThan">
-				<text>The isGreaterThan() implemented correctly.</text>
-			</assertion>
-			<assertion id="isGreaterThanOrEqals">
-				<text>The isGreaterThanOrEqals() implemented correctly.</text>
-			</assertion>
-			<assertion id="isLessThan">
-				<text>The isLessThan() implemented correctly.</text>
-			</assertion>
-			<assertion id="isLessThanOrEqals">
-				<text>The isLessThanOrEqals() implemented correctly.</text>
-			</assertion>
-			<assertion id="isEqualTo">
-				<text>The isEqualTos() return true, regardless of display type.</text>
-			</assertion>
-			<assertion id="signum">
-				<text>The signum() function is implemented correctly.
+			<assertion id="SPI_testRoundingProviderSpi">
+				<text>Test registered RoundingProviderSpi (at least one instance
+					required). Test behaviour,
+					especially bad case behaviour for invalid
+					input.
 				</text>
 			</assertion>
-			<assertion id="isPositive">
-				<text>The isPositive() function is implemented correctly.
+			<assertion id="SPI_testMonetaryLogger">
+				<text>Test registered MonetaryLogger (optional, only if one is
+					registered). Test behaviour,
+					especially bad case behaviour for
+					invalid
+					input.
 				</text>
 			</assertion>
-			<assertion id="isNegative">
-				<text>The isNegative() function is implemented correctly.
+			<assertion id="SPI_testAmountFormatSymbolsSpi">
+				<text>Test registered AmountFormatSymbolsSpi (one is required).
+					Test
+					behaviour (every locale in DecimalFormatSybols must be
+					supported),
+					especially bad case behaviour for
+					invalid
+					input.
 				</text>
 			</assertion>
-			<assertion id="isZero">
-				<text>The isZero() function must return true, regardless of the value's precision.
+			<assertion id="SPI_testAmountStyleProviderSpi">
+				<text>Test registered AmountStyleProviderSpi (one is required).
+					Test
+					behaviour (every locale in DecimalFormatSybols must be
+					supported),
+					especially bad case behaviour for
+					invalid
+					input.
 				</text>
 			</assertion>
-			<assertion id="add">
-				<text>The add() function must add two values.
+			<assertion id="SPI_testMonetaryAmountFormatProviderSpi">
+				<text>Test registered MonetaryAmountFormatProviderSpi (one is
+					required),
+					especially bad case behaviour for
+					invalid
+					input.
 				</text>
 			</assertion>
-			<assertion id="subtract">
-				<text>The subtract() function must subtract a value from another.
-				</text>
-			</assertion>
-			<assertion id="multiply">
-				<text>The multiply function allow to multiply numbers.
-				</text>
-			</assertion>
-			<assertion id="divide">
-				<text>The "divide" function allow to divide numbers.
-				</text>
-			</assertion>
-			<assertion id="remainder">
-				<text>The ""remainder"" function allow to calculate the remainder.
-				</text>
-			</assertion>
-			<assertion id="divideAndRemainder">
-				<text>The "divideAndRemainder" function allow to dive/remind numbers.
-				</text>
-			</assertion>
-			<assertion id="scaleByPowerOfTen">
-				<text>The "scaleByPowerOfTen" function allow to scale by power of 10.
-				</text>
-			</assertion>
-			<assertion id="abs">
-				<text>The abs() function allow to scalculate the absolute value.
-				</text>
-			</assertion>
-			<assertion id="negate">
-				<text>The negate() function allow to negate the value.
-				</text>
-			</assertion>
-		</group>
-		<group>
-			<text>Extension Points</text>
-			<assertion id="With">
-				<text>Ensure with(MonetaryOperator) can be called and produces
-					valuable results.
-				</text>
-			</assertion>
-			<assertion id="Query">
-				<text>Ensure query(MonetaryQUery) can be called and produces
-					valuable results.
-				</text>
-			</assertion>
-		</group>
-		<group>
-			<text>General Requirements</text>
-			<assertion id="ImplementsEquals">
-				<text>Implementations of MonetaryAmount must implement equals,
-					considering number, currency and implementation type, monetary context.
-				</text>
-			</assertion>
-			<assertion id="ImplementsHashCode">
-				<text>Implementations of MonetaryAmount must implement hashCode,
-					considering number, currency and implementation type, monetary context.
-				</text>
-			</assertion>
-			<assertion id="IsComparable">
-				<text>Implementations of MonetaryAmount must be Comparable.
-				</text>
-			</assertion>
-			<assertion id="IsSerializable">
-				<text>Implementations of MonetaryAmount must be Serializable.
-				</text>
-			</assertion>
-		</group>
-	</section>
-	<section id="4.2.3" title="Interface javax.money.NumberValue" >
-	
-	</section>
-	<section id="4.2.4" title="Interface javax.money.MonetaryOperator" />
-	<section id="4.2.4" title="Interface javax.money.MonetaryQuery" />
-	<section id="4.2.5" title="Interface javax.money.MonetaryException">
-		<assertion id="Exceptions">
-			<text>All exceptions defined must extend MonetaryException.</text>
-		</assertion>
-	</section>
-	<section id="4.3" title="Formatting">
-		<assertion id="formatStandardCurrencies">
-			<text>Formatting default currencies.</text>
-		</assertion>
-		<assertion id="formatDifferentGroupSizes">
-			<text>Formatting different groupSizes.</text>
-		</assertion>
-	</section>
-	<section id="5" title="Recommendations" />
-	<section id="5.1" title="Rounding">
-		<group>
-			<text>Access Recommendations</text>
-			<assertion id="AccessRoundings4Currency">
-				<text>Roundings should be accessible/provided by passing a
-					CurrencyUnit as an argument.
-				</text>
-			</assertion>
-			<assertion id="AccessRoundings4RoundingMode">
-				<text>Roundings should be accessible/provided by passing a
-					java.math.RoundingMode as an argument.
-				</text>
-			</assertion>
-			<assertion id="AccessRoundings4MathContext">
-				<text>Roundings should be accessible/provided by passing a
-					java.math.MathContext as an argument.
-				</text>
-			</assertion>
-			<assertion id="AccessCustomRounding">
-				<text>Roundings should be accessible/provided by passing a String
-					(name) as an argument.
-				</text>
-			</assertion>
-		</group>
-		<group>
-			<text>General Recommendations</text>
-			<assertion id="CheckAdjusterIsImmutable">
-				<text>Implementations of MonetaryAdjuster should be immutable.
-				</text>
-			</assertion>
-			<assertion id="CheckAdjusterIsThreadSafe">
-				<text>Implementations of MonetaryAdjuster should be thread-safe.
-				</text>
-			</assertion>
-		</group>
-	</section>
-	<section id="5.2" title="Monetary Arithmetic">
-		<assertion id="CheckAdd">
-			<text>Adding should be possible with MonetaryAmounts only.</text>
-		</assertion>
-		<assertion id="CheckSubtract">
-			<text>Subtracting should be possible with MonetaryAmounts only.
-			</text>
-		</assertion>
-		<assertion id="CheckMultiply">
-			<text>Multiplying should be possible with Numbers only.</text>
-		</assertion>
-		<assertion id="CheckDivide">
-			<text>Divide should be possible with Numbers only.</text>
-		</assertion>
-		<assertion id="AvoidNumberArguments">
-			<text>Avoid java.lang.Number as argument type.</text>
-		</assertion>
-		<assertion id="AvoidNumberResults">
-			<text>Avoid java.lang.Number as result type.</text>
-		</assertion>
-	</section>
-	<section id="5.3" title="Numeric Precision">
-		<assertion id="CheckCapabilitiesInheritance">
-			<text>Check if numeric precision is inherited on results.</text>
-		</assertion>
+		</section>
+		<section id="5" title="Recommendations" />
+		<section id="5.1" title="Overview" />
+		<section id="5.2" title="MonetaryArithmetic" />
+		<section id="5.3" title="Numeric Precision" />
+		<section id="6" title="Examples" />
 	</section>
 </specification>
