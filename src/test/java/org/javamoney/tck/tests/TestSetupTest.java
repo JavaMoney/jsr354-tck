@@ -20,18 +20,6 @@ public class TestSetupTest {
 		assertNotNull(TCKTestSetup.getTestConfiguration());
 	}
 
-	@SpecAssertion(
-		section = "0",
-		id = "EnsurePackageSetup")
-	@Test
-	public void testExceptionClassesSetup() {
-		assertTrue(
-				"Implementation Packages not registered.",
-				TCKTestSetup.getTestConfiguration().getExceptionClasses() != null);
-		assertFalse("Implementation Packages not registered.",
-				TCKTestSetup.getTestConfiguration().getExceptionClasses()
-						.isEmpty());
-	}
 
 	@SpecAssertion(
 		section = "0",
