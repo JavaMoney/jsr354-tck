@@ -40,6 +40,12 @@
 	</licenses>
 
 	<properties>
+		<jsr.version>0.7</jsr.version>
+		<jdkVersion>1.7</jdkVersion>
+		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
+		<maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<moduleDir>.</moduleDir>
 		<basedir>.</basedir>
 		<!-- Dependency versions -->
@@ -471,7 +477,7 @@
 											maven-processor-plugin
 										</artifactId>
 										<versionRange>
-											[2.0.4,)
+											2-0-7 <!--  [2.0.4,) -->
 										</versionRange>
 										<goals>
 											<goal>process-test</goal>
@@ -498,7 +504,7 @@
 						<processor>org.jboss.test.audit.report.CoverageProcessor</processor>
 					</processors>
 					<compilerArguments>
-						-AoutputDir=${basedir}/target/tck-report -source ${maven.compile.sourceLevel} -target ${maven.compile.targetLevel}
+						-AauditXml=test-audit.xml -AoutputDir=${basedir}/target/tck-report -source ${maven.compile.sourceLevel} -target ${maven.compile.targetLevel}
 					</compilerArguments>
 				</configuration>
 				<executions>
