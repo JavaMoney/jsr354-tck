@@ -41,7 +41,8 @@
 
 	<properties>
 		<jsr.version>0.7</jsr.version>
-		<jdkVersion>1.7</jdkVersion>
+		<java.source.version>1.7</java.source.version>
+		<java.target.version>1.7</java.target.version>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
 		<maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -55,7 +56,7 @@
 		<license.licenseResolver>src/license</license.licenseResolver>
 
 		<jboss.test.audit.version>1.1.1-SNAPSHOT</jboss.test.audit.version>
-		<!-- This properties must be set for another implementation to be tested. -->
+		<!-- or 1.1.0.Final. -->
 		<impl.groupId>org.javamoney</impl.groupId>
 		<impl.artifactId>moneta</impl.artifactId>
 		<impl.version>0.8-SNAPSHOT</impl.version>
@@ -344,6 +345,11 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>org.testng</groupId>
+				<artifactId>testng</artifactId>
+				<version>6.8.5</version>
+			</dependency>
+			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>${junit.version}</version>
@@ -383,6 +389,10 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>${impl.groupId}</groupId>
@@ -435,96 +445,35 @@
 					</configuration>
 				</plugin>
 
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. 
 				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.bsc.maven</groupId>
-										<artifactId>maven-processor-plugin</artifactId>
-										<version>2.0.7</version>
-										<goals>
-											<goal>process-test</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-				-->
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.bsc.maven</groupId>
-										<artifactId>
-											maven-processor-plugin
-										</artifactId>
-										<versionRange>
-											2-0-7 <!--  [2.0.4,) -->
-										</versionRange>
-										<goals>
-											<goal>process-test</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
+                <groupId>org.bsc.maven</groupId>
+                <artifactId>maven-processor-plugin</artifactId>
+                <version>2.0.4</version>
+                <configuration>
+                    <defaultOutputDirectory>${basedir}/target/coverage-report</defaultOutputDirectory>
+                    <processors>
+                        <processor>org.jboss.test.audit.report.CoverageProcessor</processor>
+                    </processors>
+                    <!--  -AauditXml=${basedir}/src/test/resources/audit.xml -->
+                    <compilerArguments>
+                        -AoutputDir=${basedir}/target/coverage-report -source ${java.source.version}
+                        -target ${java.target.version}
+                    </compilerArguments>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>process</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>process-test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 			</plugins>
 		</pluginManagement>
 
 		<plugins>
-			<plugin>
-				<groupId>org.bsc.maven</groupId>
-				<artifactId>maven-processor-plugin</artifactId>
-				<configuration>
-					<defaultOutputDirectory>${basedir}/target/tck-report</defaultOutputDirectory>
-					<processors>
-						<processor>org.jboss.test.audit.report.CoverageProcessor</processor>
-					</processors>
-					<compilerArguments>
-						-AauditXml=test-audit.xml -AoutputDir=${basedir}/target/tck-report -source ${maven.compile.sourceLevel} -target ${maven.compile.targetLevel}
-					</compilerArguments>
-				</configuration>
-				<executions>
-					<execution>
-						<id>process</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>process-test</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>versions-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-			</plugin>
 			<!-- ======================================================= -->
 			<!-- Packaging (OSGi bundle) -->
 			<!-- ======================================================= -->
@@ -554,7 +503,6 @@
 			<name>JBoss Maven 2 Brew Repository</name>
 			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
 		</repository>
-
 	</repositories>
 
 </project>
