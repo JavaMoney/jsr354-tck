@@ -22,9 +22,7 @@ import org.junit.Test;
 @SpecVersion(spec = "JSR 354", version = "0.8")
 public class CurrencyUnitTest {
 
-	@SpecAssertion(
-		section = "4.2.1",
-		id = "EnsureCurrencyUnit")
+	@SpecAssertion(section = "4.2.1", id = "421-A1")
 	@Test
 	public void testEnsureCurrencyUnit() {
 		assertTrue("TCK Configuration not available.",
@@ -33,71 +31,54 @@ public class CurrencyUnitTest {
 				.size() > 0);
 	}
 
-	@SpecAssertion(
-		section = "4.2.1",
-		id = "Enforce3LetterCode4ISO")
+	@SpecAssertion(section = "4.2.1", id = "421-A2")
+	@Test
+	public void testEqualISOCurrencies() {
+		for (Class type : TCKTestSetup.getTestConfiguration()
+				.getCurrencyClasses()) {
+			for (Currency currency : Currency.getAvailableCurrencies()) {
+				CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency
+						.getCurrencyCode());
+				assertNotNull(unit);
+				CurrencyUnit unit2 = MonetaryCurrencies.getCurrency(currency
+						.getCurrencyCode());
+				assertNotNull(unit2);
+				assertEquals(unit, unit2);
+			}
+		}
+	}
+
+	@SpecAssertion(section = "4.2.1", id = "421-A3")
 	@Test
 	public void testEnforce3LetterCode4ISO() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getCurrencyClasses()) {
 			for (Currency currency : Currency.getAvailableCurrencies()) {
-				CurrencyUnit unit = MonetaryCurrencies.getCurrency(
-						currency.getCurrencyCode());
+				CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency
+						.getCurrencyCode());
 				assertNotNull(unit);
 				assertEquals(currency.getCurrencyCode(), unit.getCurrencyCode());
 			}
 		}
 	}
 
-
-	@SpecAssertion(
-		section = "4.2.1",
-		id = "IsSerializable")
+	@SpecAssertion(section = "4.2.1", id = "421-A4")
 	@Test
-	public void testImplementsSerializable() {
+	public void testISOCodes() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
 				.getCurrencyClasses()) {
-			ClassTester.testSerializable(type);
-		}
-		for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
-			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
-			ClassTester.testSerializable(unit);
+			for (Currency currency : Currency.getAvailableCurrencies()) {
+				CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency
+						.getCurrencyCode());
+				assertEquals(currency.getCurrencyCode(), unit.getCurrencyCode());
+				assertEquals(currency.getDefaultFractionDigits(),
+						unit.getDefaultFractionDigits());
+				assertEquals(currency.getNumericCode(), unit.getNumericCode());
+			}
 		}
 	}
 
-	@SpecAssertion(
-		section = "4.2.1",
-		id = "IsImmutable")
-	@Test
-	public void testIsImmutable() {
-		for (Class type : TCKTestSetup.getTestConfiguration()
-				.getCurrencyClasses()) {
-			ClassTester.testImmutable(type);
-		}
-		for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
-			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
-			ClassTester.testImmutable(unit.getClass());
-		}
-	}
-
-	@SpecAssertion(
-		section = "4.2.1",
-		id = "IsComparable")
-	@Test
-	public void testCurrencyClassesComparable() {
-		for (Class type : TCKTestSetup.getTestConfiguration()
-				.getCurrencyClasses()) {
-			ClassTester.testComparable(type);
-		}
-		for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
-			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
-			ClassTester.testComparable(unit.getClass());
-		}
-	}
-
-	@SpecAssertion(
-		section = "4.2.1",
-		id = "ImplementsHashCode")
+	@SpecAssertion(section = "4.2.1", id = "421-B1")
 	@Test
 	public void testCurrencyClassesEqualsHashcode() {
 		for (Class type : TCKTestSetup.getTestConfiguration()
@@ -111,9 +92,7 @@ public class CurrencyUnitTest {
 		}
 	}
 
-	@SpecAssertion(
-		section = "4.2.1",
-		id = "ImplementsEquals")
+	@SpecAssertion(section = "4.2.1", id = "421-B2")
 	@Test
 	public void testImplementsEquals() {
 		List<CurrencyUnit> firstUnits = new ArrayList<CurrencyUnit>();
@@ -122,8 +101,7 @@ public class CurrencyUnitTest {
 			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
 			assertNotNull(unit);
 			ClassTester.testHasPublicMethod(unit.getClass(), boolean.class,
-					"equals",
-					Object.class);
+					"equals", Object.class);
 			firstUnits.add(unit);
 			CurrencyUnit unit2 = MonetaryCurrencies.getCurrency(code);
 			assertNotNull(unit);
@@ -132,17 +110,40 @@ public class CurrencyUnitTest {
 		for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
 			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
 			ClassTester.testHasPublicMethod(unit.getClass(), boolean.class,
-					"equals",
-					Object.class);
+					"equals", Object.class);
 		}
 		for (int i = 0; i < firstUnits.size(); i++) {
 			assertEquals(firstUnits.get(i), secondUnits.get(i));
 		}
 	}
 
-	@SpecAssertion(
-		section = "4.2.1",
-		id = "IsThreadSafe")
+	@SpecAssertion(section = "4.2.1", id = "421-B3")
+	@Test
+	public void testCurrencyClassesComparable() {
+		for (Class type : TCKTestSetup.getTestConfiguration()
+				.getCurrencyClasses()) {
+			ClassTester.testComparable(type);
+		}
+		for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
+			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+			ClassTester.testComparable(unit.getClass());
+		}
+	}
+
+	@SpecAssertion(section = "4.2.1", id = "421-B4")
+	@Test
+	public void testIsImmutable() {
+		for (Class type : TCKTestSetup.getTestConfiguration()
+				.getCurrencyClasses()) {
+			ClassTester.testImmutable(type);
+		}
+		for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
+			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+			ClassTester.testImmutable(unit.getClass());
+		}
+	}
+
+	@SpecAssertion(section = "4.2.1", id = "421-B5")
 	@Test
 	public void testIsThreadSafe() throws NoSuchMethodException,
 			SecurityException, IllegalAccessException,
@@ -151,6 +152,19 @@ public class CurrencyUnitTest {
 			CurrencyUnit unit = MonetaryCurrencies.getCurrency(cur
 					.getCurrencyCode());
 			fail("Not yet implemented: IsThreadSafe");
+		}
+	}
+
+	@SpecAssertion(section = "4.2.1", id = "421-B6")
+	@Test
+	public void testImplementsSerializable() {
+		for (Class type : TCKTestSetup.getTestConfiguration()
+				.getCurrencyClasses()) {
+			ClassTester.testSerializable(type);
+		}
+		for (String code : new String[] { "CHF", "USD", "EUR", "GBP", "USS" }) {
+			CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+			ClassTester.testSerializable(unit);
 		}
 	}
 

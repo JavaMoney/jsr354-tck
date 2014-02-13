@@ -12,7 +12,7 @@ public class TestSetupTest {
 
 	@SpecAssertion(
 		section = "0",
-		id = "EnsureSetup")
+		id = "Setup")
 	@Test
 	public void testTestSetup() {
 		assertTrue("TCK Configuration not available.",
@@ -21,24 +21,4 @@ public class TestSetupTest {
 	}
 
 
-	@SpecAssertion(
-		section = "0",
-		id = "EnsureAdjusterSetup")
-	@Test
-	public void testOperatorTestSetup() {
-		fail("not implemented");
-//		assertNotNull(TCKTestSetup.getTestConfiguration().getOperators());
-//		assertFalse(TCKTestSetup.getTestConfiguration().getOperators()
-//				.isEmpty());
-	}
-
-	@SpecAssertion(
-		section = "0",
-		id = "EnsureQuerySetup")
-	@Test
-	public void testQueryTestSetup() {
-		fail("not implemented");
-		// assertNotNull(TCKTestSetup.getTestConfiguration().getQueries());
-		// assertFalse(TCKTestSetup.getTestConfiguration().getQueries().isEmpty());
-	}
 }
