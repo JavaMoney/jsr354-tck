@@ -842,10 +842,82 @@
 	<section id="4.2.9" title="Exception Types" />
 
 	<section id="4.3" title="Currency Conversion" />
-	<section id="4.3.1" title="MonetaryConversions Singleton" />
-	<section id="4.3.2" title="Converting Amounts" />
-	<section id="4.3.3" title="Exchange Rates and Rate Providers" />
-	<section id="4.3.4" title="Provider Chains" />
+	<section id="4.3.1" title="MonetaryConversions Singleton">
+		<group>
+			<text>A. Test Basic MonetaryConversions Accessors
+			</text>
+			<assertion id="431-A1">
+				<text>Ensure at least one conversion provider is accessible.</text>
+			</assertion>
+			<assertion id="431-A2">
+				<text>Access and test different Currency Conversions for the provider in place.</text>
+			</assertion>
+			<assertion id="431-A3">
+				<text>Access and test the provider's meta data.</text>
+			</assertion>
+			<assertion id="431-A4">
+				<text>Access the default provider chain (must be defined).</text>
+			</assertion>
+			<assertion id="431-A5">
+				<text>Access and test conversion using the default provider chain.</text>
+			</assertion>
+			<assertion id="431-A6">
+				<text>Bad case: Test access of an inexistent provider.</text>
+			</assertion>
+			<assertion id="431-A7">
+				<text>Bad case: Test inclusion of an inexistent provider in a provider chain.</text>
+			</assertion>
+		</group>
+	</section>
+	<section id="4.3.2" title="Converting Amounts" >
+		<group>
+			<text>A. Test Basic MonetaryConversions Accessors
+			</text>
+			<assertion id="432-A1">
+				<text>Test successful conversion for possible currency pairs.</text>
+			</assertion>
+			<assertion id="432-A2">
+				<text>Compare conversions done with exchange rates provided for same conversion.</text>
+			</assertion>
+			<assertion id="432-A3">
+				<text>Bad case: try converting from/to an inconvertible (custom) currency, ensure CurrencyConversionException is thrown.</text>
+			</assertion>
+			<assertion id="432-A4">
+				<text>Bad case: try converting from/to a null currency, ensure CurrencyConversionException is thrown.</text>
+			</assertion>
+		</group>
+	</section>
+	
+	<section id="4.3.3" title="Exchange Rates and Rate Providers" >
+		<group>
+			<text>A. Test Basic MonetaryConversions Accessors
+			</text>
+			<assertion id="433-A1">
+				<text>Test access to conversion rates.</text>
+			</assertion>
+			<assertion id="433-A2">
+				<text>Ensure additional ConversionContext is passed correctly to SPIs.</text>
+			</assertion>
+			<assertion id="433-A3">
+				<text>Bad case: try accessing rates with incosistent data.</text>
+			</assertion>
+		</group>
+	</section>
+	<section id="4.3.4" title="Provider Chains" >
+		<group>
+			<text>A. Test Basic MonetaryConversions Accessors
+			</text>
+			<assertion id="434-A1">
+				<text>Test correct rate evaluation for different provider chains, providers defined by the TCK.</text>
+			</assertion>
+			<assertion id="434-A2">
+				<text>Test correct rate evaluation for different provider chains, providers defined by the TCK, with historic rates.</text>
+			</assertion>
+			<assertion id="434-A3">
+				<text>Test availability of providers defined by the TCK.</text>
+			</assertion>
+		</group>
+	</section>
 
 	<section id="4.4" title="Money and Currency Formatting API" />
 	<section id="4.4.1" title="Formatting of Monetary Amounts">
