@@ -33,7 +33,7 @@ public class MonetaryAmountTest {
 	public void testCurrencyCode() {
 		for (Class type : MonetaryAmounts.getAmountTypes()) {
 			for (Currency jdkCur : Currency.getAvailableCurrencies()) {
-				MonetaryAmount amount = MonetaryAmounts.getAmountFactory()
+				MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type)
 						.setCurrency(jdkCur.getCurrencyCode()).setNumber(10.15)
 						.create();
 				assertNotNull(amount);
@@ -56,7 +56,7 @@ public class MonetaryAmountTest {
 	@Ignore
 	public void testQuery() {
 		for (Class type : MonetaryAmounts.getAmountTypes()) {
-			MonetaryAmount amount = MonetaryAmounts.getAmountFactory()
+			MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type)
 					.setCurrency("XXX").setNumber(0).create();
 			// amount.query();
 			fail("not implemented.");
@@ -68,11 +68,11 @@ public class MonetaryAmountTest {
 	@Test
 	public void testImplementsEquals() {
 		for (Class type : MonetaryAmounts.getAmountTypes()) {
-			MonetaryAmount amount = MonetaryAmounts.getAmountFactory()
+			MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type)
 					.setCurrency("XXX").setNumber(0).create();
 			ClassTester.testHasPublicStaticMethodOpt(type, type, "equals",
 					MonetaryOperator.class);
-			MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory()
+			MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory(type)
 					.setCurrency("XXX").setNumber(0).create();
 			assertEquals(amount, amount2);
 		}
@@ -82,11 +82,11 @@ public class MonetaryAmountTest {
 	@Test
 	public void testImplementsHashCode() {
 		for (Class type : MonetaryAmounts.getAmountTypes()) {
-			MonetaryAmount amount = MonetaryAmounts.getAmountFactory()
+			MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type)
 					.setCurrency("USD").setNumber(0).create();
 			ClassTester.testHasPublicStaticMethodOpt(type, type, "hashCode",
 					MonetaryOperator.class);
-			MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory()
+			MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory(type)
 					.setCurrency("USD").setNumber(0).create();
 			assertEquals(amount.hashCode(), amount2.hashCode());
 		}
@@ -97,21 +97,21 @@ public class MonetaryAmountTest {
 	public void testImplementComparable() {
 		for (Class type : MonetaryAmounts.getAmountTypes()) {
 			ClassTester.testComparable(type);
-			MonetaryAmount amount = MonetaryAmounts.getAmountFactory()
+			MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type)
 					.setCurrency("XXX").setNumber(0).create();
 			ClassTester.testHasPublicStaticMethodOpt(type, type, "hashCode",
 					MonetaryOperator.class);
-			MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory()
+			MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory(type)
 					.setCurrency("XXX").setNumber(0).create();
 			assertTrue("Comparable failed for: " + type.getName(),
 					((Comparable) amount).compareTo(amount2) == 0);
-			MonetaryAmount amount3 = MonetaryAmounts.getAmountFactory()
+			MonetaryAmount amount3 = MonetaryAmounts.getAmountFactory(type)
 					.setCurrency("CHF").setNumber(1).create();
 			assertTrue("Comparable failed for: " + type.getName(),
 					((Comparable) amount).compareTo(amount3) > 0);
 			assertTrue("Comparable failed for: " + type.getName(),
 					((Comparable) amount3).compareTo(amount) < 0);
-			MonetaryAmount amount4 = MonetaryAmounts.getAmountFactory()
+			MonetaryAmount amount4 = MonetaryAmounts.getAmountFactory(type)
 					.setCurrency("XXX").setNumber(1).create();
 			assertTrue("Comparable failed for: " + type.getName(),
 					((Comparable) amount3).compareTo(amount4) < 0);
