@@ -345,11 +345,6 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>org.testng</groupId>
-				<artifactId>testng</artifactId>
-				<version>6.8.5</version>
-			</dependency>
-			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>${junit.version}</version>
@@ -389,10 +384,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>${impl.groupId}</groupId>
