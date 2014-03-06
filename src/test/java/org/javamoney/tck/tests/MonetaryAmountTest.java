@@ -3,19 +3,18 @@ package org.javamoney.tck.tests;
 import org.javamoney.tck.ClassTester;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Ignore;
+import org.junit.Assert;
 import org.junit.Test;
 
-import javax.money.MonetaryAmount;
-import javax.money.MonetaryAmounts;
-import javax.money.MonetaryOperator;
-import javax.money.MonetaryQuery;
+import javax.money.*;
 import java.util.Currency;
 
 import static org.junit.Assert.*;
 
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class MonetaryAmountTest{
+
+    private final static String DEFAULT_CURRENCY = "CHF";
 
     @SpecAssertion(section = "4.2.2", id = "422-0")
     @Test
@@ -89,9 +88,9 @@ public class MonetaryAmountTest{
     @Test
     public void testImplementsEquals(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
-            MonetaryAmount amount = MonetaryAmounts.getAmountFactory().setCurrency("XXX").setNumber(0).create();
-            ClassTester.testHasPublicStaticMethodOpt(type, type, "equals", MonetaryOperator.class);
-            MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory().setCurrency("XXX").setNumber(0).create();
+            MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("XXX").setNumber(0).create();
+            ClassTester.testHasPublicMethod(type, type, "equals", Object.class);
+            MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory(type).setCurrency("XXX").setNumber(0).create();
             assertEquals(amount, amount2);
         }
     }
@@ -100,9 +99,9 @@ public class MonetaryAmountTest{
     @Test
     public void testImplementsHashCode(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
-            MonetaryAmount amount = MonetaryAmounts.getAmountFactory().setCurrency("USD").setNumber(0).create();
-            ClassTester.testHasPublicStaticMethodOpt(type, type, "hashCode", MonetaryOperator.class);
-            MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory().setCurrency("USD").setNumber(0).create();
+            MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("USD").setNumber(0).create();
+            ClassTester.testHasPublicMethod(type, type, "hashCode");
+            MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory(type).setCurrency("USD").setNumber(0).create();
             assertEquals(amount.hashCode(), amount2.hashCode());
         }
     }
@@ -112,17 +111,66 @@ public class MonetaryAmountTest{
     public void testImplementComparable(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             ClassTester.testComparable(type);
-            MonetaryAmount amount = MonetaryAmounts.getAmountFactory().setCurrency("XXX").setNumber(0).create();
-            ClassTester.testHasPublicStaticMethodOpt(type, type, "hashCode", MonetaryOperator.class);
-            MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory().setCurrency("XXX").setNumber(0).create();
-            assertTrue("Comparable failed for: " + type.getName(), ((Comparable) amount).compareTo(amount2) == 0);
-            MonetaryAmount amount3 = MonetaryAmounts.getAmountFactory().setCurrency("CHF").setNumber(1).create();
+            MonetaryAmountFactory factory = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmount amount = factory.setCurrency("XXX").setNumber(0).create();
+            MonetaryAmount amount2 = factory.setCurrency("XXX").setNumber(0).create();
+            MonetaryAmount amount3 = factory.setCurrency("CHF").setNumber(1).create();
+            MonetaryAmount amount4 = factory.setCurrency("XXX").setNumber(1).create();
+
             assertTrue("Comparable failed for: " + type.getName(), ((Comparable) amount).compareTo(amount3) > 0);
+
             assertTrue("Comparable failed for: " + type.getName(), ((Comparable) amount3).compareTo(amount) < 0);
-            MonetaryAmount amount4 = MonetaryAmounts.getAmountFactory().setCurrency("XXX").setNumber(1).create();
-            assertTrue("Comparable failed for: " + type.getName(), ((Comparable) amount3).compareTo(amount4) < 0);
-            assertTrue("Comparable failed for: " + type.getName(), ((Comparable) amount4).compareTo(amount3) > 0);
+
+            assertTrue("Comparable failed for: " + type.getName(), ((Comparable) amount).compareTo(amount4) < 0);
+
+            assertTrue("Comparable failed for: " + type.getName(), ((Comparable) amount4).compareTo(amount) > 0);
         }
     }
+
+    @SpecAssertion(section = "4.2.2", id = "422-D1")
+    @Test
+    public void testAddNumber(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(20).create();
+            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
+            MonetaryAmount mExpectedResult =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(30).create();
+            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+        }
+    }
+
+    @SpecAssertion(section = "4.2.2", id = "422-D1")
+    @Test
+    public void testAddDouble(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10d).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(20d).create();
+            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
+            MonetaryAmount mExpectedResult =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(30d).create();
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+        }
+    }
+
+    @SpecAssertion(section = "4.2.2", id = "422-D1")
+    @Test
+    public void testAddLong(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10l).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(20l).create();
+            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
+            MonetaryAmount mExpectedResult =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(30l).create();
+            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+        }
+    }
+
 
 }
