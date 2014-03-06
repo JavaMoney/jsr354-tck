@@ -143,17 +143,6 @@ public class CurrencyUnitTest {
 		}
 	}
 
-	@SpecAssertion(section = "4.2.1", id = "421-B5")
-	@Test
-	public void testIsThreadSafe() throws NoSuchMethodException,
-			SecurityException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException {
-		for (Currency cur : Currency.getAvailableCurrencies()) {
-			CurrencyUnit unit = MonetaryCurrencies.getCurrency(cur
-					.getCurrencyCode());
-			fail("Not yet implemented: IsThreadSafe");
-		}
-	}
 
 	@SpecAssertion(section = "4.2.1", id = "421-B6")
 	@Test
