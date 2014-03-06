@@ -78,8 +78,13 @@
 				<text>CurrencyUnit implementation must be immutable.
 				</text>
 			</assertion>
-			<assertion id="421-B5">
+			<assertion id="421-B5" testable="false">
 				<text>CurrencyUnit implementation must be thread safe.
+
+                      It is not clear how this can be tested provided that CurrencyUnit interface
+                      only provides getters.
+                      Should the test try to use reflection to find some state? And how to prove that
+                      even if CurrencyUnit has mutable state it might be thread safe.
 				</text>
 			</assertion>
 			<assertion id="421-B6">
