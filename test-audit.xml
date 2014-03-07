@@ -4,6 +4,7 @@
 	name="JSR 354 Money and Currency" version="1.0.0" id="JSR 354"
 	generateSectionIds="false">
 	<section id="0" title="TCK Setup">
+        <!-- Tests class TCKSetupTest -->
 		<group>
 			<text>Tests the correct setup of the TCK</text>
 			<assertion id="Setup">
@@ -14,23 +15,24 @@
 			</assertion>
 		</group>
 	</section>
-	<section id="1" title="Introduction, Use Cases, Requirements (no tests)" />
-	<section id="2" title="Use Cases" />
-	<section id="3" title="Requirements" />
-	<section id="3.1" title="Core Requirements" />
-	<section id="3.2" title="Formatting Requirements" />
-	<section id="3.3" title="EE and ME Support" />
-	<section id="3.4" title="Non Functional Requirements" />
+	<section id="1" title="Introduction, Use Cases, Requirements (no tests)" testable="false" />
+	<section id="2" title="Use Cases" testable="false" />
+	<section id="3" title="Requirements" testable="false" />
+	<section id="3.1" title="Core Requirements" testable="false" />
+	<section id="3.2" title="Formatting Requirements" testable="false" />
+	<section id="3.3" title="EE and ME Support" testable="false" />
+	<section id="3.4" title="Non Functional Requirements" testable="false" />
 
 	<section id="4" title="Specification" />
 
 	<!-- **************************************************************** **** 
 		Core API **************************************************************** -->
-	<section id="4.1" title="Package and Project Structure" />
-	<section id="4.1.1" title="Package Overview" />
-	<section id="4.1.2" title="Module/Repository Overview" />
-	<section id="4.2" title="Money and Currency Core API" />
+	<section id="4.1" title="Package and Project Structure" testable="false" />
+	<section id="4.1.1" title="Package Overview" testable="false" />
+	<section id="4.1.2" title="Module/Repository Overview" testable="false" />
+	<section id="4.2" title="Money and Currency Core API" testable="false" />
 	<section id="4.2.1" title="Modelling of Currencies">
+        <!-- Tests class ModellingCurrenciesTest -->
 		<group>
 			<text>A. Managing the Currency code</text>
 			<assertion id="421-A1">
@@ -89,6 +91,7 @@
 		</group>
 	</section>
 	<section id="4.2.2" title="Modeling of Monetary Amounts">
+        <!-- Tests class ModellingMonetaryAmountsTest -->
 		<group>
 			<text>Preconditions</text>
 			<assertion id="422-0">
@@ -224,26 +227,25 @@
 		<group>
 			<text>D. Basic Arithmetic Operations</text>
 			<assertion id="422-D1">
-				<text>add() must add two values.
+				<text>Tests that add() correctly adds two values.
 				</text>
 			</assertion>
 			<assertion id="422-D2">
-				<text>add() with non matching currencies must throw a
+				<text>Tests that add() with non matching currencies throws a
 					MonetaryException.
 				</text>
 			</assertion>
 			<assertion id="422-D3">
-				<text>add(0) should return itself.
+				<text>Tests that add(0) should return itself.
 				</text>
 			</assertion>
 			<assertion id="422-D4">
-				<text>add() which results in an amount exceeding the max
-					MonetaryContext must throw a
-					MonetaryException.
+				<text>Tests that add() which results in an amount exceeding the max
+					MonetaryContext throws a MonetaryException.
 				</text>
 			</assertion>
 			<assertion id="422-D5">
-				<text>add(null) must throw an NullPointerException.
+				<text>Tests that add(null) throws an NullPointerException.
 				</text>
 			</assertion>
 			<assertion id="422-D6">
@@ -1074,8 +1076,8 @@
 			</assertion>
 		</group>
 	</section>
-	<section id="4.5.3" title="The Bootstrapping Mechanism">
+	<section id="4.5.3" title="The Bootstrapping Mechanism" testable="false" >
 	</section>
-	<section id="5" title="Recommendations" />
-	<section id="6" title="Examples" />
+	<section id="5" title="Recommendations" testable="false" />
+	<section id="6" title="Examples" testable="false" />
 </specification>

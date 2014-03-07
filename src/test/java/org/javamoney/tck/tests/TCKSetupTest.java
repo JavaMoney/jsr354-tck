@@ -8,7 +8,7 @@ import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Test;
 
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
-public class TestSetupTest {
+public class TCKSetupTest{
 
 	@SpecAssertion(
 		section = "0",
