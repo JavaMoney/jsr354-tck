@@ -16,6 +16,8 @@ public class ModellingMonetaryAmountsTest{
 
     private final static String DEFAULT_CURRENCY = "CHF";
 
+    private final static String ADDITIONAL_CURRENCY = "USD";
+
     /**
      * Ensure at least one javax.money.MonetaryAmount implementation is registered,
      * by calling MonetaryAmounts.getAmountTypes();
@@ -324,7 +326,14 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D2")
     @Test(expected = MonetaryException.class)
     public void testAdd_IncompatibleCurrencies(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(ADDITIONAL_CURRENCY).setNumber(20).create();
+            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
+            fail("Exception expected");
+        }
     }
 
     /**
@@ -333,7 +342,14 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D3")
     @Test
     public void testAdd_Zero(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
+            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
+            Assert.assertEquals("Adding zero", mAmount1, mActualResult);
+        }
     }
 
     /**
@@ -353,7 +369,12 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D5")
     @Test(expected = NullPointerException.class)
     public void testAdd_Null(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mActualResult = mAmount1.add(null);
+            fail("Exception expected");
+        }
     }
 
 
@@ -423,25 +444,6 @@ public class ModellingMonetaryAmountsTest{
         fail();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Tests that subtract() correctly adds two values, using positive and negative fractions.
      */
@@ -458,7 +460,14 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D8")
     @Test(expected = MonetaryException.class)
     public void testSubtract_IncompatibleCurrencies(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(ADDITIONAL_CURRENCY).setNumber(20).create();
+            MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
+            fail("Exception expected");
+        }
     }
 
     /**
@@ -467,7 +476,14 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D7")
     @Test
     public void testSubtract_Zero(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
+            MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
+            Assert.assertEquals("Subtract zero", mAmount1, mActualResult);
+        }
     }
 
     /**
@@ -487,7 +503,12 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D10")
     @Test(expected = NullPointerException.class)
     public void testSubtract_Null(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mActualResult = mAmount1.subtract(null);
+            fail("Exception expected");
+        }
     }
 
 
