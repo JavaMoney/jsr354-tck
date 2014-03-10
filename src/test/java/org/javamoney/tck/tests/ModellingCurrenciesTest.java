@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 
-@SpecVersion(spec = "JSR 354", version = "0.8")
+@SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class ModellingCurrenciesTest{
 
     /**

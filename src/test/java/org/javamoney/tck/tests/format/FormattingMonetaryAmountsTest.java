@@ -1,5 +1,6 @@
-package org.javamoney.tck.tests;
+package org.javamoney.tck.tests.format;
 
+import org.javamoney.tck.tests.TestMonetaryAmountFactory;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Test;

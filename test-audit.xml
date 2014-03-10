@@ -402,13 +402,8 @@
 				<text>Implementations of MonetaryAmount must be serializable.
 				</text>
 			</assertion>
-			<assertion id="422-F5">
-				<text>Implementations of MonetaryAmount should implement a method
-					getAmount().
-				</text>
-			</assertion>
 		</group>
-		<group>
+		<!-- group>
 			<text>G. Monetary Amount Implementation Recommendations</text>
 			<assertion id="422-G1">
 				<text>Implementations of MonetaryAmount should be immutable.
@@ -429,7 +424,7 @@
 					getAmount().
 				</text>
 			</assertion>
-		</group>
+		</group -->
 	</section>
 	<section id="4.2.3" title="Externalizing the Numeric Value of an Amount">
 		<group>
@@ -624,7 +619,7 @@
 				</text>
 			</assertion>
 		</group>
-		<group>
+		<!-- group>
 			<text>B. Monetary Operator Implementation Recommendations</text>
 			<assertion id="4242-B1">
 				<text>Monetary operators are recommended to be immutable</text>
@@ -638,7 +633,7 @@
 			<assertion id="4242-B4"  testable="false">
 				<text>Monetary queries are recommended to be thread-safe</text>
 			</assertion>
-		</group>
+		</group -->
 	</section>
 	<section id="4.2.5" title="The Monetary Context">
 		<!-- No tests, class is part of API! -->

@@ -48,6 +48,67 @@ public class ModellingMonetaryAmountsTest{
         }
     }
 
+    /**
+     * For each MonetaryAmount implementation: Ensure getNumber()
+     * returns correct results.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-A2")
+    @Test
+    public void testGetNumber(){
+        fail();
+    }
+
+    /**
+     * For each MonetaryAmount implementation: Ensure
+     * getMonetaryContext() returns correct results.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-A3")
+    @Test
+    public void testGetMonetaryContext(){
+        fail();
+    }
+
+    /**
+     * For each MonetaryAmount implementation: Ensure isNegative()
+     * returns correct results.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-A4")
+    @Test
+    public void testIsNegative(){
+        fail();
+    }
+
+    /**
+     * For each MonetaryAmount implementation: Ensure isPositive()
+     * returns correct results.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-A5")
+    @Test
+    public void testIsZero(){
+        fail();
+    }
+
+    /**
+     * For each MonetaryAmount implementation: Ensure isZero()
+     * returns correct results (-0, +0 == 0).
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-A6")
+    @Test
+    public void testIsZeroAdvanced(){
+        fail();
+    }
+
+    /**
+     * For each MonetaryAmount implementation: signum() function is
+     * implemented correctly.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-A7")
+    @Test
+    public void testSignum(){
+        fail();
+    }
+
+
     // ********************* B. Prototyping Support *****************************
 
     /**
@@ -411,36 +472,45 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D6")
     @Test
     public void testSubtractMixedIntegers(){
-//        for(Class type : MonetaryAmounts.getAmountTypes()){
-//            MonetaryAmount mAmount1 =
-//                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
-//            MonetaryAmount mAmount2 =
-//                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(20).create();
-//            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
-//            MonetaryAmount mExpectedResult =
-//                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-//            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
-//        }
-//        for(Class type : MonetaryAmounts.getAmountTypes()){
-//            MonetaryAmount mAmount1 =
-//                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-20).create();
-//            MonetaryAmount mAmount2 =
-//                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-//            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
-//            MonetaryAmount mExpectedResult =
-//                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
-//            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
-//        }
-//        for(Class type : MonetaryAmounts.getAmountTypes()){
-//            MonetaryAmount mAmount1 =
-//                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
-//            MonetaryAmount mAmount2 =
-//                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-//            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
-//            MonetaryAmount mExpectedResult =
-//                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
-//            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
-//        }
+        //        for(Class type : MonetaryAmounts.getAmountTypes()){
+        //            MonetaryAmount mAmount1 =
+        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10)
+        // .create();
+        //            MonetaryAmount mAmount2 =
+        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(20)
+        // .create();
+        //            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
+        //            MonetaryAmount mExpectedResult =
+        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10)
+        // .create();
+        //            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+        //        }
+        //        for(Class type : MonetaryAmounts.getAmountTypes()){
+        //            MonetaryAmount mAmount1 =
+        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-20)
+        // .create();
+        //            MonetaryAmount mAmount2 =
+        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10)
+        // .create();
+        //            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
+        //            MonetaryAmount mExpectedResult =
+        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10)
+        // .create();
+        //            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+        //        }
+        //        for(Class type : MonetaryAmounts.getAmountTypes()){
+        //            MonetaryAmount mAmount1 =
+        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10)
+        // .create();
+        //            MonetaryAmount mAmount2 =
+        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10)
+        // .create();
+        //            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
+        //            MonetaryAmount mExpectedResult =
+        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0)
+        // .create();
+        //            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+        //        }
         fail();
     }
 
@@ -511,10 +581,175 @@ public class ModellingMonetaryAmountsTest{
         }
     }
 
+    /**
+     * Test multiply() allow to multiply numbers.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D11")
+    @Test
+    public void testMultiply(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test multiply(1) returns this.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D12")
+    @Test
+    public void testMultiplyOne(){
+        fail("Not yet implemented");
+    }
 
 
+    /**
+     * Test multiply, which results in an amount exceeding the max
+     * MonetaryContext must throw a
+     * MonetaryException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D13")
+    @Test
+    public void testMultiplyExceedsCapabilities(){
+        fail("Not yet implemented");
+    }
 
+    /**
+     * Test multiply(null) must throw an NullPointerException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D14")
+    @Test
+    public void testMultiplyNull(){
+        fail("Not yet implemented");
+    }
 
+    /**
+     * Test divide() function allow to divide numbers.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D15")
+    @Test
+    public void testDivide(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test divide(0) function must throw an ArithmeticException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D16")
+    @Test
+    public void testDivideZero(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test divide(1) should return this.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D17")
+    @Test
+    public void testDivideOne(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test  divide(null)must throw a NullPointerException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D18")
+    @Test
+    public void testDivideNull(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test  remainder()allow to calculate the remainder.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D19")
+    @Test
+    public void testRemainder(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test remainder(0) must throw an ArithmeticException
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D20")
+    @Test
+    public void testRemainderZero(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test remainder(null) must throw a NullPointerException
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D21")
+    @Test
+    public void testRemainderNull(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test  divideAndRemainder()allow to divide/remind numbers.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D22")
+    @Test
+    public void testDivideAndRemainder(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test  divideAndRemainder(0) throws an ArithmeticException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D23")
+    @Test
+    public void testDivideAndRemainderZero(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test  divideAndRemainder(null) throws an NullPointerException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D24")
+    @Test
+    public void testDivideAndRemainderNull(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test  divideAndRemainder(1) returns this/ZERO.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D25")
+    @Test
+    public void testDivideAndRemainderOne(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test scaleByPowerOfTen()allow to scale by power of 10.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D26")
+    @Test
+    public void testScaleByPowerOfTen(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test abs() for getting the absolute value.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D27")
+    @Test
+    public void testAbsolute(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Test negate() for negating a value.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D28")
+    @Test
+    public void testNegate(){
+        fail("Not yet implemented");
+    }
+
+    /**
+     * Ensure with(MonetaryOperator) can be called and produces
+     * amounts of the same type and correct value.
+     */
     @SpecAssertion(section = "4.2.2", id = "422-E1")
     @Test
     public void testWith(){
@@ -541,6 +776,52 @@ public class ModellingMonetaryAmountsTest{
         }
     }
 
+    /**
+     * Test with(m) throws a MonetaryException, if m throws any exception.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-E2")
+    @Test
+    public void testWithInvalidOperator(){
+        MonetaryOperator op = new MonetaryOperator(){
+            @Override
+            public <T extends MonetaryAmount> T apply(T value){
+                throw new IllegalStateException();
+            }
+        };
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory factory = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
+            try{
+                amount.with(op);
+            }
+            catch(MonetaryException e){
+                // OK, everything else makes the test fail!
+            }
+        }
+    }
+
+    /**
+     * Test with(null) throws a NullPointerException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-E2")
+    @Test
+    public void testWithNull(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory factory = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
+            try{
+                amount.with(null);
+            }
+            catch(NullPointerException e){
+                // OK, everything else makes the test fail!
+            }
+        }
+    }
+
+    /**
+     * Ensure query(MonetaryQUery) can be called and produces
+     * valuable results.
+     */
     @SpecAssertion(section = "4.2.2", id = "422-E3")
     @Test
     public void testQuery(){
@@ -560,17 +841,56 @@ public class ModellingMonetaryAmountsTest{
         }
     }
 
-    @SpecAssertion(section = "4.2.2", id = "422-F2")
+    /**
+     * Test query(q) throws a MonetaryException, if q throws any exception.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-E4")
     @Test
-    public void testImplementsEquals(){
+    public void testQueryInvalidQuery(){
+        MonetaryQuery<Integer> query = new MonetaryQuery<Integer>(){
+            @Override
+            public Integer queryFrom(MonetaryAmount amount){
+                throw new IllegalStateException();
+            }
+        };
         for(Class type : MonetaryAmounts.getAmountTypes()){
-            MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("XXX").setNumber(0).create();
-            ClassTester.testHasPublicMethod(type, type, "equals", Object.class);
-            MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory(type).setCurrency("XXX").setNumber(0).create();
-            assertEquals(amount, amount2);
+            ClassTester.testComparable(type);
+            MonetaryAmountFactory factory = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
+            try{
+                amount.query(query);
+            }
+            catch(MonetaryException e){
+                // OK, everything else makes the test fail!
+            }
         }
     }
 
+    /**
+     * Test query(null) throws a NullPointerException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-E4")
+    @Test
+    public void testQueryNull(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            ClassTester.testComparable(type);
+            MonetaryAmountFactory factory = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
+            try{
+                amount.query(null);
+            }
+            catch(NullPointerException e){
+                // OK, everything else makes the test fail!
+            }
+        }
+    }
+
+    /**
+     * Implementations of MonetaryAmount must implement hashCode,
+     * considering number, currency and implementation type,
+     * monetary
+     * context.
+     */
     @SpecAssertion(section = "4.2.2", id = "422-F1")
     @Test
     public void testImplementsHashCode(){
@@ -582,6 +902,27 @@ public class ModellingMonetaryAmountsTest{
         }
     }
 
+    /**
+     * Implementations of MonetaryAmount must implement
+     * equals,
+     * considering number, currency and implementation type,
+     * monetary
+     * context.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-F2")
+    @Test
+    public void testImplementsEquals(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("XXX").setNumber(0).create();
+            ClassTester.testHasPublicMethod(type, type, "equals", Object.class);
+            MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory(type).setCurrency("XXX").setNumber(0).create();
+            assertEquals(amount, amount2);
+        }
+    }
+
+    /**
+     * Implementations of MonetaryAmount must be Comparable.
+     */
     @SpecAssertion(section = "4.2.2", id = "422-F3")
     @Test
     public void testImplementComparable(){
@@ -600,6 +941,20 @@ public class ModellingMonetaryAmountsTest{
             assertTrue("Comparable failed for: " + type.getName(), ((Comparable) amount).compareTo(amount4) < 0);
 
             assertTrue("Comparable failed for: " + type.getName(), ((Comparable) amount4).compareTo(amount) > 0);
+        }
+    }
+
+    /**
+     * Implementations of MonetaryAmount must be Serializable.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-F4")
+    @Test
+    public void testSerializable(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            ClassTester.testComparable(type);
+            MonetaryAmountFactory factory = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
+            ClassTester.testSerializable(amount);
         }
     }
 
