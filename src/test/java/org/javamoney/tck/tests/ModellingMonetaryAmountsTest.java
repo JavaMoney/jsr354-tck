@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import javax.money.*;
+import java.math.BigDecimal;
 import java.util.Currency;
 
 import static org.junit.Assert.*;
@@ -75,8 +76,47 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-A4")
     @Test
     public void testIsNegative(){
-        fail();
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
+                    f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.00000000000000000")).create(),
+                    f.setNumber(100).create(), f.setNumber(34242344).create(), f.setNumber(23123213.435).create()};
+            for(MonetaryAmount m : moneys){
+                assertFalse("Invalid isNegative (expected false): " + m, m.isNegative());
+            }
+            moneys = new MonetaryAmount[]{f.setNumber(-100).create(), f.setNumber(-34242344).create(),
+                    f.setNumber(-23123213.435).create()};
+            for(MonetaryAmount m : moneys){
+                assertTrue("Invalid isNegative (expected true): " + m, m.isNegative());
+            }
+        }
     }
+
+    /**
+     * For each MonetaryAmount implementation: Ensure isNegative()
+     * returns correct results.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-A4")
+    @Test
+    public void testIsNegativeOrZero(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(100).create(), f.setNumber(34242344).create(),
+                    f.setNumber(23123213.435).create()};
+            for(MonetaryAmount m : moneys){
+                assertFalse("Invalid negativeOrZero (expected false): " + m, m.isNegativeOrZero());
+            }
+            moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
+                    f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.0000")).create(),
+                    f.setNumber(-100).create(), f.setNumber(-34242344).create(), f.setNumber(-23123213.435).create()};
+            for(MonetaryAmount m : moneys){
+                assertTrue("Invalid negativeOrZero (expected true): " + m, m.isNegativeOrZero());
+            }
+        }
+    }
+
 
     /**
      * For each MonetaryAmount implementation: Ensure isPositive()
@@ -105,7 +145,22 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-A7")
     @Test
     public void testSignum(){
-        fail();
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            MonetaryAmount m = f.setNumber(100).create();
+            assertEquals("signum of " + m, 1, m.signum());
+            m = f.setNumber(-100).create();
+            assertEquals("signum of " + m, -1, m.signum());
+            m = f.setNumber(100.3435).create();
+            assertEquals("signum of " + m, 1, m.signum());
+            m = f.setNumber(-100.3435).create();
+            assertEquals("signum of " + m, -1, m.signum());
+            m = f.setNumber(0).create();
+            assertEquals("signum of " + m, 0, m.signum());
+            m = f.setNumber(-0).create();
+            assertEquals("signum of " + m, 0, m.signum());
+        }
     }
 
 
@@ -118,7 +173,22 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-B1")
     @Test
     public void testMonetaryAmountFactories(){
-        fail("Not implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            assertNotNull(f);
+            MonetaryAmount m = f.setCurrency("CHF").setNumber(10).create();
+            assertEquals(m.getClass(), type);
+            m = f.setCurrency("CHF").setNumber(-10).create();
+            assertEquals(m.getClass(), type);
+            m = f.setCurrency("CHF").setNumber(10.3).create();
+            assertEquals(m.getClass(), type);
+            m = f.setCurrency("CHF").setNumber(-10.3).create();
+            assertEquals(m.getClass(), type);
+            m = f.setCurrency("CHF").setNumber(0.0).create();
+            assertEquals(m.getClass(), type);
+            m = f.setCurrency("CHF").setNumber(-0.0).create();
+            assertEquals(m.getClass(), type);
+        }
     }
 
     /**
@@ -207,7 +277,18 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-C3")
     @Test
     public void testMonetaryAmount_isLessThan(){
-        fail("Not implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            assertFalse(f.setNumber(BigDecimal.valueOf(0d)).create()
+                                .isLessThan(f.setNumber(BigDecimal.valueOf(0)).create()));
+            assertFalse(f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
+                                .isLessThan(f.setNumber(BigDecimal.valueOf(0d)).create()));
+            assertFalse(f.setNumber(15).create().isLessThan(f.setNumber(10).create()));
+            assertFalse(f.setNumber(15.546).create().isLessThan(f.setNumber(10.34).create()));
+            assertTrue(f.setNumber(5).create().isLessThan(f.setNumber(10).create()));
+            assertTrue(f.setNumber(5.546).create().isLessThan(f.setNumber(10.34).create()));
+        }
     }
 
     /**
@@ -217,7 +298,18 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-C4")
     @Test
     public void testMonetaryAmount_isLessThanOrEquals(){
-        fail("Not implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            assertTrue(f.setNumber(BigDecimal.valueOf(0d)).create()
+                               .isLessThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
+            assertFalse(f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
+                                .isLessThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create()));
+            assertFalse(f.setNumber(15).create().isLessThanOrEqualTo(f.setNumber(10).create()));
+            assertFalse(f.setNumber(15.546).create().isLessThan(f.setNumber(10.34).create()));
+            assertTrue(f.setNumber(5).create().isLessThanOrEqualTo(f.setNumber(10).create()));
+            assertTrue(f.setNumber(5.546).create().isLessThanOrEqualTo(f.setNumber(10.34).create()));
+        }
     }
 
     /**
