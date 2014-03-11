@@ -15,22 +15,22 @@
 			</assertion>
 		</group>
 	</section>
-	<section id="1" title="Introduction, Use Cases, Requirements (no tests)" testable="false" />
-	<section id="2" title="Use Cases" testable="false" />
-	<section id="3" title="Requirements" testable="false" />
-	<section id="3.1" title="Core Requirements" testable="false" />
-	<section id="3.2" title="Formatting Requirements" testable="false" />
-	<section id="3.3" title="EE and ME Support" testable="false" />
-	<section id="3.4" title="Non Functional Requirements" testable="false" />
+	<section id="1" title="Introduction, Use Cases, Requirements (no tests)" />
+	<section id="2" title="Use Cases" />
+	<section id="3" title="Requirements" />
+	<section id="3.1" title="Core Requirements"  />
+	<section id="3.2" title="Formatting Requirements"  />
+	<section id="3.3" title="EE and ME Support"  />
+	<section id="3.4" title="Non Functional Requirements"/>
 
 	<section id="4" title="Specification" />
 
 	<!-- **************************************************************** **** 
 		Core API **************************************************************** -->
-	<section id="4.1" title="Package and Project Structure" testable="false" />
-	<section id="4.1.1" title="Package Overview" testable="false" />
-	<section id="4.1.2" title="Module/Repository Overview" testable="false" />
-	<section id="4.2" title="Money and Currency Core API" testable="false" />
+	<section id="4.1" title="Package and Project Structure"  />
+	<section id="4.1.1" title="Package Overview"  />
+	<section id="4.1.2" title="Module/Repository Overview"  />
+	<section id="4.2" title="Money and Currency Core API"  />
 	<section id="4.2.1" title="Modelling of Currencies">
         <!-- Tests class ModellingCurrenciesTest -->
 		<group>
@@ -134,6 +134,14 @@
 				<text>For each MonetaryAmount implementation: signum() function is
 					implemented correctly.</text>
 			</assertion>
+            <assertion id="422-A8">
+                <text>For each MonetaryAmount implementation: Ensure isNegativeOrZero()
+                    returns correct results.</text>
+            </assertion>
+            <assertion id="422-A9">
+                <text>For each MonetaryAmount implementation: Ensure isPositiveOrZero()
+                    returns correct results.</text>
+            </assertion>
 		</group>
 		<group>
 			<text>B. Prototyping Support</text>
@@ -1071,8 +1079,8 @@
 			</assertion>
 		</group>
 	</section>
-	<section id="4.5.3" title="The Bootstrapping Mechanism" testable="false" >
+	<section id="4.5.3" title="The Bootstrapping Mechanism"  >
 	</section>
-	<section id="5" title="Recommendations" testable="false" />
-	<section id="6" title="Examples" testable="false" />
+	<section id="5" title="Recommendations"  />
+	<section id="6" title="Examples" />
 </specification>

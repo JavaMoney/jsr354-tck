@@ -56,7 +56,30 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-A2")
     @Test
     public void testGetNumber(){
-        fail();
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(100).create(), f.setNumber(34242344).create(),
+                    f.setNumber(new BigDecimal("23123213.435")).create(),
+                    f.setNumber(new BigDecimal("-23123213.435")).create(), f.setNumber(-23123213).create(),
+                    f.setNumber(0).create()};
+            BigDecimal[] numbers = new BigDecimal[]{new BigDecimal("100,34242344"), new BigDecimal("23123213.435"),
+                    new BigDecimal("-23123213.435"), new BigDecimal("-23123213"), BigDecimal.ZERO};
+            int[] intNums = new int[]{100, 23123213, -23123213, -23123213, 0};
+            long[] longNums = new long[]{100, 23123213, -23123213, -23123213, 0};
+            double[] doubleNums = new double[]{100, 34242344, 23123213.435, -23123213.435, -23123213, 0};
+            float[] floatNums = new float[]{100f, 34242344f, 23123213.435f, -23123213.435f, -23123213, 0f};
+
+            for(int i = 0; i < moneys.length; i++){
+                NumberValue nv = moneys[i].getNumber();
+                assertNotNull(nv);
+                assertEquals("getNumber() incorrect.", numbers[i], nv.numberValue(BigDecimal.class));
+                assertEquals("getNumber().intValue() incorrect.", intNums[i], nv.intValue());
+                assertEquals("getNumber().longValue() incorrect.", longNums[i], nv.longValue());
+                assertEquals("getNumber().doubleValue() incorrect.", doubleNums[i], nv.doubleValue(), 0.0d);
+                assertEquals("getNumber().floatValue() incorrect.", floatNums[i], nv.floatValue(), 0.0d);
+            }
+        }
     }
 
     /**
@@ -94,38 +117,52 @@ public class ModellingMonetaryAmountsTest{
     }
 
     /**
-     * For each MonetaryAmount implementation: Ensure isNegative()
+     * For each MonetaryAmount implementation: Ensure isPositive()
      * returns correct results.
      */
-    @SpecAssertion(section = "4.2.2", id = "422-A4")
+    @SpecAssertion(section = "4.2.2", id = "422-A5")
     @Test
-    public void testIsNegativeOrZero(){
+    public void testIsPositive(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(100).create(), f.setNumber(34242344).create(),
                     f.setNumber(23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertFalse("Invalid negativeOrZero (expected false): " + m, m.isNegativeOrZero());
+                assertTrue(m.isPositive());
             }
             moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
-                    f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.0000")).create(),
+                    f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.00000000000000000")).create(),
                     f.setNumber(-100).create(), f.setNumber(-34242344).create(), f.setNumber(-23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertTrue("Invalid negativeOrZero (expected true): " + m, m.isNegativeOrZero());
+                assertFalse(m.isPositive());
             }
         }
     }
 
 
     /**
-     * For each MonetaryAmount implementation: Ensure isPositive()
+     * For each MonetaryAmount implementation: Ensure isZero()
      * returns correct results.
      */
-    @SpecAssertion(section = "4.2.2", id = "422-A5")
+    @SpecAssertion(section = "4.2.2", id = "422-A6")
     @Test
     public void testIsZero(){
-        fail();
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(100).create(), f.setNumber(34242344).create(),
+                    f.setNumber(23123213.435).create(), f.setNumber(-100).create(),
+                    f.setNumber(-723527.36532).create()};
+            for(MonetaryAmount m : moneys){
+                assertFalse(m.isZero());
+            }
+            moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
+                    f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.00000000000000000")).create()};
+            for(MonetaryAmount m : moneys){
+                assertTrue(m.isZero());
+            }
+        }
     }
 
     /**
@@ -135,7 +172,16 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-A6")
     @Test
     public void testIsZeroAdvanced(){
-        fail();
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            MonetaryAmount[] moneys =
+                    new MonetaryAmount[]{f.setNumber(-0).create(), f.setNumber(0).create(), f.setNumber(-0.0f).create(),
+                            f.setNumber(0.0f).create(), f.setNumber(-0.0d).create(), f.setNumber(0.0d).create()};
+            for(MonetaryAmount m : moneys){
+                assertTrue(m.isZero());
+            }
+        }
     }
 
     /**
@@ -160,6 +206,54 @@ public class ModellingMonetaryAmountsTest{
             assertEquals("signum of " + m, 0, m.signum());
             m = f.setNumber(-0).create();
             assertEquals("signum of " + m, 0, m.signum());
+        }
+    }
+
+    /**
+     * For each MonetaryAmount implementation: Ensure isNegativeOrZero()
+     * returns correct results.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-A8")
+    @Test
+    public void testIsNegativeOrZero(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(100).create(), f.setNumber(34242344).create(),
+                    f.setNumber(23123213.435).create()};
+            for(MonetaryAmount m : moneys){
+                assertFalse("Invalid negativeOrZero (expected false): " + m, m.isNegativeOrZero());
+            }
+            moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
+                    f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.0000")).create(),
+                    f.setNumber(-100).create(), f.setNumber(-34242344).create(), f.setNumber(-23123213.435).create()};
+            for(MonetaryAmount m : moneys){
+                assertTrue("Invalid negativeOrZero (expected true): " + m, m.isNegativeOrZero());
+            }
+        }
+    }
+
+    /**
+     * For each MonetaryAmount implementation: Ensure isPositiveOrZero()
+     * returns correct results.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-A9")
+    @Test
+    public void testIsPositiveOrZero(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
+                    f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.00000000000000000")).create(),
+                    f.setNumber(100).create(), f.setNumber(34242344).create(), f.setNumber(23123213.435).create()};
+            for(MonetaryAmount m : moneys){
+                assertTrue("Invalid positiveOrZero (expected true): " + m, m.isPositiveOrZero());
+            }
+            moneys = new MonetaryAmount[]{f.setNumber(-100).create(), f.setNumber(-34242344).create(),
+                    f.setNumber(-23123213.435).create()};
+            for(MonetaryAmount m : moneys){
+                assertFalse("Invalid positiveOrZero (expected false): " + m, m.isPositiveOrZero());
+            }
         }
     }
 
@@ -257,7 +351,18 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-C1")
     @Test
     public void testMonetaryAmount_isGreaterThan(){
-        fail("Not implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            assertFalse(f.setNumber(BigDecimal.valueOf(0d)).create()
+                                .isGreaterThan(f.setNumber(BigDecimal.valueOf(0)).create()));
+            assertTrue(f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
+                               .isGreaterThan(f.setNumber(BigDecimal.valueOf(0d)).create()));
+            assertTrue(f.setNumber(15).create().isGreaterThan(f.setNumber(10).create()));
+            assertTrue(f.setNumber(15.546).create().isGreaterThan(f.setNumber(10.34).create()));
+            assertFalse(f.setNumber(5).create().isGreaterThan(f.setNumber(10).create()));
+            assertFalse(f.setNumber(5.546).create().isGreaterThan(f.setNumber(10.34).create()));
+        }
     }
 
     /**
@@ -267,7 +372,18 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-C2")
     @Test
     public void testMonetaryAmount_isGreaterThanOrEquals(){
-        fail("Not implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            assertTrue(f.setNumber(BigDecimal.valueOf(0d)).create()
+                               .isGreaterThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
+            assertTrue(f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
+                               .isGreaterThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create()));
+            assertTrue(f.setNumber(15).create().isGreaterThanOrEqualTo(f.setNumber(10).create()));
+            assertTrue(f.setNumber(15.546).create().isGreaterThanOrEqualTo(f.setNumber(10.34).create()));
+            assertFalse(f.setNumber(5).create().isGreaterThanOrEqualTo(f.setNumber(10).create()));
+            assertFalse(f.setNumber(5.546).create().isGreaterThanOrEqualTo(f.setNumber(10.34).create()));
+        }
     }
 
     /**
@@ -319,7 +435,42 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-C5")
     @Test
     public void testMonetaryAmount_isEqualTo(){
-        fail("Not implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            assertTrue(f.setNumber(BigDecimal.valueOf(0d)).create()
+                               .isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
+            assertFalse(f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
+                                .isEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create()));
+            assertTrue(f.setNumber(BigDecimal.valueOf(5d)).create()
+                               .isEqualTo(f.setNumber(BigDecimal.valueOf(5)).create()));
+            assertTrue(f.setNumber(BigDecimal.valueOf(1d)).create()
+                               .isEqualTo(f.setNumber(BigDecimal.valueOf(1.00)).create()));
+            assertTrue(f.setNumber(BigDecimal.valueOf(1d)).create().isEqualTo(f.setNumber(BigDecimal.ONE).create()));
+            assertTrue(f.setNumber(BigDecimal.valueOf(1)).create().isEqualTo(f.setNumber(BigDecimal.ONE).create()));
+            assertTrue(f.setNumber(new BigDecimal("1.0000")).create()
+                               .isEqualTo(f.setNumber(new BigDecimal("1.00")).create()));
+            // Test with different scales, but numeric equal values
+            assertTrue(f.setNumber(BigDecimal.valueOf(0d)).create()
+                               .isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
+            assertTrue(f.setNumber(BigDecimal.ZERO).create().isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
+            assertTrue(
+                    f.setNumber(BigDecimal.valueOf(5)).create().isEqualTo(f.setNumber(new BigDecimal("5.0")).create()));
+            assertTrue(f.setNumber(BigDecimal.valueOf(5)).create()
+                               .isEqualTo(f.setNumber(new BigDecimal("5.00")).create()));
+            assertTrue(f.setNumber(BigDecimal.valueOf(5)).create()
+                               .isEqualTo(f.setNumber(new BigDecimal("5.000")).create()));
+            assertTrue(f.setNumber(BigDecimal.valueOf(5)).create()
+                               .isEqualTo(f.setNumber(new BigDecimal("5.0000")).create()));
+            assertTrue(f.setNumber(new BigDecimal("-1.23")).create()
+                               .isEqualTo(f.setNumber(new BigDecimal("-1.230")).create()));
+            assertTrue(f.setNumber(new BigDecimal("-1.23")).create()
+                               .isEqualTo(f.setNumber(new BigDecimal("-1.2300")).create()));
+            assertTrue(f.setNumber(new BigDecimal("-1.23")).create()
+                               .isEqualTo(f.setNumber(new BigDecimal("-1.23000")).create()));
+            assertTrue(f.setNumber(new BigDecimal("-1.23")).create()
+                               .isEqualTo(f.setNumber(new BigDecimal("-1.230000000000000000000")).create()));
+        }
     }
 
     /**
