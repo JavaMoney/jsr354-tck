@@ -847,12 +847,13 @@ public class ModellingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() >= 0){
                 MonetaryContext tgtContext =
-                        new MonetaryContext.Builder().setMaxScale(maxCtx.getMaxScale() + 1).create();
+                        new MonetaryContext.Builder(maxCtx).setMaxScale(maxCtx.getMaxScale() + 1).create();
                 Class<? extends MonetaryAmount> exceedingType = null;
                 try{
                     exceedingType = MonetaryAmounts.queryAmountType(tgtContext);
                     assertNotNull(exceedingType);
-                    MonetaryAmountFactory<? extends MonetaryAmount> bigFactory = MonetaryAmounts.getAmountFactory(exceedingType);
+                    MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
+                            MonetaryAmounts.getAmountFactory(exceedingType);
                     mAmount2 = bigFactory.setCurrency("CHF").setNumber(createNumberWithScale(f, maxCtx.getMaxScale()))
                             .create();
                 }
@@ -869,17 +870,17 @@ public class ModellingMonetaryAmountsTest{
     }
 
     private BigDecimal createNumberWithScale(MonetaryAmountFactory f, int scale){
-        StringBuilder b = new StringBuilder(scale+2);
+        StringBuilder b = new StringBuilder(scale + 2);
         b.append("1.");
-        for(int i=0;i<scale;i++){
+        for(int i = 0; i < scale; i++){
             b.append(String.valueOf(i % 10));
         }
         return new BigDecimal(b.toString(), MathContext.UNLIMITED);
     }
 
     private BigDecimal createNumberWithPrecision(MonetaryAmountFactory f, int precision){
-        StringBuilder b = new StringBuilder(precision+1);
-        for(int i=0;i<precision;i++){
+        StringBuilder b = new StringBuilder(precision + 1);
+        for(int i = 0; i < precision; i++){
             b.append(String.valueOf(i % 10));
         }
         return new BigDecimal(b.toString(), MathContext.UNLIMITED);
@@ -907,7 +908,16 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D6")
     @Test
     public void testSubtractPositiveIntegers(){
-        fail();
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(20).create();
+            MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
+            MonetaryAmount mExpectedResult =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
+            Assert.assertEquals("Subtracting two simple ammounts", mExpectedResult, mActualResult);
+        }
     }
 
     /**
@@ -916,7 +926,16 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D6")
     @Test
     public void testSubtractNegativeIntegers(){
-        fail();
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-20).create();
+            MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
+            MonetaryAmount mExpectedResult =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            Assert.assertEquals("Subtracting two simple ammounts", mExpectedResult, mActualResult);
+        }
     }
 
     /**
@@ -925,7 +944,16 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D6")
     @Test
     public void testSubtractPositiveFractions(){
-        fail();
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(1.5).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(2.85).create();
+            MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
+            MonetaryAmount mExpectedResult =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-1.35).create();
+            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+        }
     }
 
     /**
@@ -934,46 +962,36 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D6")
     @Test
     public void testSubtractMixedIntegers(){
-        //        for(Class type : MonetaryAmounts.getAmountTypes()){
-        //            MonetaryAmount mAmount1 =
-        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10)
-        // .create();
-        //            MonetaryAmount mAmount2 =
-        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(20)
-        // .create();
-        //            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
-        //            MonetaryAmount mExpectedResult =
-        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10)
-        // .create();
-        //            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
-        //        }
-        //        for(Class type : MonetaryAmounts.getAmountTypes()){
-        //            MonetaryAmount mAmount1 =
-        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-20)
-        // .create();
-        //            MonetaryAmount mAmount2 =
-        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10)
-        // .create();
-        //            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
-        //            MonetaryAmount mExpectedResult =
-        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10)
-        // .create();
-        //            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
-        //        }
-        //        for(Class type : MonetaryAmounts.getAmountTypes()){
-        //            MonetaryAmount mAmount1 =
-        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10)
-        // .create();
-        //            MonetaryAmount mAmount2 =
-        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10)
-        // .create();
-        //            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
-        //            MonetaryAmount mExpectedResult =
-        //                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0)
-        // .create();
-        //            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
-        //        }
-        fail();
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(20).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
+            MonetaryAmount mExpectedResult =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+        }
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
+            MonetaryAmount mExpectedResult =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
+            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+        }
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
+            MonetaryAmount mExpectedResult =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-20).create();
+            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+        }
     }
 
     /**
@@ -982,7 +1000,36 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D6")
     @Test
     public void testSubtractMixedFractions(){
-        fail();
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(1.5).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-2.85).create();
+            MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
+            MonetaryAmount mExpectedResult =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(4.35).create();
+            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+        }
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-1.5).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(+2.85).create();
+            MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
+            MonetaryAmount mExpectedResult =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-4.35).create();
+            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+        }
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(2.85).create();
+            MonetaryAmount mAmount2 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(+2.85).create();
+            MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
+            MonetaryAmount mExpectedResult =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
+            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+        }
     }
 
     /**
@@ -1025,7 +1072,37 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D9")
     @Test(expected = MonetaryException.class)
     public void testSubtract_ExceedsCapabilities(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            MonetaryAmount mAmount1 = f.setNumber(0).create();
+            MonetaryContext maxCtx = f.getMaximalMonetaryContext();
+            MonetaryAmount mAmount2 = null;
+            if(maxCtx.getPrecision() > 0){
+                mAmount2 = f.setNumber(createNumberWithPrecision(f, maxCtx.getPrecision())).create();
+            }
+            if(maxCtx.getMaxScale() >= 0){
+                MonetaryContext tgtContext =
+                        new MonetaryContext.Builder(maxCtx).setMaxScale(maxCtx.getMaxScale() + 1).create();
+                Class<? extends MonetaryAmount> exceedingType = null;
+                try{
+                    exceedingType = MonetaryAmounts.queryAmountType(tgtContext);
+                    assertNotNull(exceedingType);
+                    MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
+                            MonetaryAmounts.getAmountFactory(exceedingType);
+                    mAmount2 = bigFactory.setCurrency("CHF").setNumber(createNumberWithScale(f, maxCtx.getMaxScale()))
+                            .create();
+                }
+                catch(MonetaryException e){
+                    // we have to abort the test...
+                }
+
+            }
+            if(mAmount2 != null){
+                mAmount1.subtract(mAmount2);
+                fail("Exception expected");
+            }
+        }
     }
 
     /**
@@ -1049,7 +1126,7 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D11")
     @Test
     public void testMultiply(){
-        fail("Not yet implemented");
+        fail("Exception expected");
     }
 
     /**
@@ -1058,7 +1135,16 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D12")
     @Test
     public void testMultiplyOne(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mActualResult = mAmount1.multiply(1);
+            assertTrue(mActualResult == mAmount1);
+            mActualResult = mAmount1.multiply(1.0);
+            assertTrue(mActualResult == mAmount1);
+            mActualResult = mAmount1.multiply(BigDecimal.ONE);
+            assertTrue(mActualResult == mAmount1);
+        }
     }
 
 
@@ -1079,7 +1165,16 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D14")
     @Test
     public void testMultiplyNull(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            try{
+                MonetaryAmount mActualResult = mAmount1.multiply(null);
+            }
+            catch(NullPointerException e){
+                // expected
+            }
+        }
     }
 
     /**
@@ -1106,7 +1201,16 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D17")
     @Test
     public void testDivideOne(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mActualResult = mAmount1.divide(1);
+            assertTrue(mActualResult == mAmount1);
+            mActualResult = mAmount1.divide(1.0);
+            assertTrue(mActualResult == mAmount1);
+            mActualResult = mAmount1.divide(BigDecimal.ONE);
+            assertTrue(mActualResult == mAmount1);
+        }
     }
 
     /**
@@ -1115,7 +1219,16 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D18")
     @Test
     public void testDivideNull(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            try{
+                MonetaryAmount mActualResult = mAmount1.divide(null);
+            }
+            catch(NullPointerException e){
+                // expected
+            }
+        }
     }
 
     /**
@@ -1142,7 +1255,16 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D21")
     @Test
     public void testRemainderNull(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            try{
+                MonetaryAmount mActualResult = mAmount1.remainder(null);
+            }
+            catch(NullPointerException e){
+                // expected
+            }
+        }
     }
 
     /**
@@ -1169,7 +1291,16 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D24")
     @Test
     public void testDivideAndRemainderNull(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            try{
+                MonetaryAmount[] mActualResult = mAmount1.divideAndRemainder(null);
+            }
+            catch(NullPointerException e){
+                // expected
+            }
+        }
     }
 
     /**
@@ -1196,7 +1327,19 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D27")
     @Test
     public void testAbsolute(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            MonetaryAmount m = f.setNumber(10).create();
+            assertEquals(m, m.abs());
+            assertTrue(m == m.abs());
+            m = f.setNumber(0).create();
+            assertEquals(m, m.abs());
+            assertTrue(m == m.abs());
+            m = f.setNumber(-10).create();
+            assertEquals(m.negate(), m.abs());
+            assertTrue(m != m.abs());
+        }
     }
 
     /**
@@ -1205,7 +1348,14 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D28")
     @Test
     public void testNegate(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            MonetaryAmount m = f.setNumber(100).create();
+            assertEquals(f.setNumber(-100), m.negate());
+            m = f.setNumber(-123.234).create();
+            assertEquals(f.setNumber(123.234), m.negate());
+        }
     }
 
     /**
