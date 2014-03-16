@@ -12,13 +12,13 @@
 	<parent>
 		<groupId>org.javamoney</groupId>
 		<artifactId>javamoney-parent</artifactId>
-		<version>0.4-SNAPSHOT</version>
+		<version>0.4</version>
 	</parent>
 
 	<artifactId>money-tck</artifactId>
 	<packaging>jar</packaging>
 
-	<version>0.8-SNAPSHOT</version>
+	<version>0.9-SNAPSHOT</version>
 
 	<name>JSR 354 (TCK)</name>
 	<url>http://java.net/projects/javamoney</url>
@@ -40,7 +40,7 @@
 	</licenses>
 
 	<properties>
-		<jsr.version>0.7</jsr.version>
+		<jsr.version>0.8</jsr.version>
 		<java.source.version>1.7</java.source.version>
 		<java.target.version>1.7</java.target.version>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
@@ -55,11 +55,12 @@
 		<license.licenseName>jcp_spec</license.licenseName>
 		<license.licenseResolver>src/license</license.licenseResolver>
 
-		<jboss.test.audit.version>1.1.1-SNAPSHOT</jboss.test.audit.version>
+		<jboss.test.audit.version>1.1.0.FINAL</jboss.test.audit.version>
+        <!-- 1.1.1-SNAPSHOT -->
 		<!-- or 1.1.0.Final. -->
 		<impl.groupId>org.javamoney</impl.groupId>
 		<impl.artifactId>moneta</impl.artifactId>
-		<impl.version>0.8-SNAPSHOT</impl.version>
+		<impl.version>0.8</impl.version>
 		<impl.packageType>jar</impl.packageType>
 	</properties>
 
@@ -353,7 +354,7 @@
 			<dependency>
 				<groupId>javax.money</groupId>
 				<artifactId>money-api</artifactId>
-				<version>${project.version}</version>
+				<version>${jsr.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${impl.groupId}</groupId>
