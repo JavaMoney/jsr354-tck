@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <specification xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://jboss.com/products/weld/tck/audit" xsi:schemaLocation="http://jboss.com/products/weld/tck/audit"
-	name="JSR 354 Money and Currency" version="1.0.0" id="JSR 354"
+	name="JSR 354 Money and Currency" version="1.0.0" name="JSR 354"
 	generateSectionIds="false">
-	<section id="5" title="Recommendations" />
-	<section id="5.1" title="Overview" />
-	<section id="5.2" title="MonetaryArithmetic" />
-	<section id="5.3" title="Numeric Precision" />
+	<section name="5" title="Recommendations" />
+	<section name="5.1" title="Overview" />
+	<section name="5.2" title="MonetaryArithmetic" />
+	<section name="5.3" title="Numeric Precision" />
 </specification>
