@@ -40,7 +40,7 @@
 	</licenses>
 
 	<properties>
-		<jsr.version>0.8</jsr.version>
+		<jsr.version>0.9-SNAPSHOT</jsr.version>
 		<java.source.version>1.7</java.source.version>
 		<java.target.version>1.7</java.target.version>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
