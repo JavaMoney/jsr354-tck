@@ -11,6 +11,7 @@
 
 package org.javamoney.tck.tests.conversion;
 
+import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,25 +23,33 @@ import org.junit.Test;
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class ProviderChainsTest{
 
-    @Test
-    public void placeholder(){
+    // ********************** A. Test Basic MonetaryConversions Accessors *********************************
+
+    /**
+     * Test correct rate evaluation for different provider chains, providers defined by the TCK.<br/>
+     * Hint do not use non TCK provider for this test, it will make results undeterministic.
+     */
+    @Test @SpecAssertion(id="434-A1", section="4.3.4")
+    public void testCorrectRateEvaluationInChain(){
         Assert.fail();
     }
 
-    /*
-    <group>
-			<text>A. Test Basic MonetaryConversions Accessors
-			</text>
-			<assertion id="434-A1">
-				<text>Test correct rate evaluation for different provider chains, providers defined by the TCK.</text>
-			</assertion>
-			<assertion id="434-A2">
-				<text>Test correct rate evaluation for different provider chains, providers defined by the TCK, with historic rates.</text>
-			</assertion>
-			<assertion id="434-A3">
-				<text>Test availability of providers defined by the TCK.</text>
-			</assertion>
-		</group>
+    /**
+     * Test correct rate evaluation for different provider chains, providers defined by the TCK, with historic rates.<br/>
+     * Hint do not use non TCK provider for this test, it will make results undeterministic.
      */
+    @Test @SpecAssertion(id="434-A2", section="4.3.4")
+    public void testCorrectRateEvaluationInChainHistoric(){
+        Assert.fail();
+    }
+
+    /**
+     * Test availability of providers defined by the TCK.<br/>
+     * Hint do not use non TCK provider for this test, it will make results undeterministic.
+     */
+    @Test @SpecAssertion(id="434-A3", section="4.3.4")
+    public void testTCKRateChainAvailability(){
+        Assert.fail();
+    }
 
 }

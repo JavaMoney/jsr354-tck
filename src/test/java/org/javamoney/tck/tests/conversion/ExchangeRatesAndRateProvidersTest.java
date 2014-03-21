@@ -11,6 +11,7 @@
 
 package org.javamoney.tck.tests.conversion;
 
+import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,25 +23,33 @@ import org.junit.Test;
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class ExchangeRatesAndRateProvidersTest{
 
-    @Test
-    public void placeholder(){
+    // *************************** A. Test Basic MonetaryConversions Accessors *********************************
+
+    /**
+     * Test access to conversion rates.<br/>
+     * Hint: this assertion will require multiple tests to be written!
+     */
+    @Test @SpecAssertion(id="433-A1", section="4.3.3")
+    public void testAccessRates(){
         Assert.fail();
     }
 
-    /*
-    <group>
-			<text>A. Test Basic MonetaryConversions Accessors
-			</text>
-			<assertion id="433-A1">
-				<text>Test access to conversion rates.</text>
-			</assertion>
-			<assertion id="433-A2">
-				<text>Ensure additional ConversionContext is passed correctly to SPIs.</text>
-			</assertion>
-			<assertion id="433-A3">
-				<text>Bad case: try accessing rates with incosistent data.</text>
-			</assertion>
-		</group>
+    /**
+     * Ensure additional ConversionContext is passed correctly to SPIs.<br/>
+     * Hint: this assertion will require some custom SPIs to be registered and selected for chain inclusion!
      */
+    @Test @SpecAssertion(id="433-A2", section="4.3.3")
+    public void testPassingOverConversionContextToSPIs(){
+        Assert.fail();
+    }
+
+    /**
+     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Hint: this assertion will require multiple tests to be written!
+     */
+    @Test @SpecAssertion(id="433-A3", section="4.3.3")
+    public void testInvalidUsage(){
+        Assert.fail();
+    }
 
 }
