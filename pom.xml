@@ -12,13 +12,13 @@
 	<parent>
 		<groupId>org.javamoney</groupId>
 		<artifactId>javamoney-parent</artifactId>
-		<version>0.4</version>
+		<version>0.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>money-tck</artifactId>
 	<packaging>jar</packaging>
 
-	<version>0.8</version>
+	<version>0.9-SNAPSHOT</version>
 
 	<name>JSR 354 (TCK)</name>
 	<url>http://java.net/projects/javamoney</url>
@@ -40,7 +40,7 @@
 	</licenses>
 
 	<properties>
-		<jsr.version>0.8</jsr.version>
+		<jsr.version>0.9-SNAPSHOT</jsr.version>
 		<java.source.version>1.7</java.source.version>
 		<java.target.version>1.7</java.target.version>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>

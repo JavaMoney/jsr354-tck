@@ -249,7 +249,7 @@ public class TestMonetaryAmountFactory {
 						return currency.getDefaultFractionDigits();
 					}
 
-                    
+                    @Override
                     public int compareTo(CurrencyUnit o){
                         return 0;
                     }
@@ -311,7 +311,7 @@ public class TestMonetaryAmountFactory {
 				return this;
 			}
 
-            
+            @Override
             public int compareTo(MonetaryAmount o){
                 return 0;
             }
