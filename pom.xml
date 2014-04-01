@@ -12,19 +12,19 @@
 	<parent>
 		<groupId>org.javamoney</groupId>
 		<artifactId>javamoney-parent</artifactId>
-		<version>0.5-SNAPSHOT</version>
+		<version>0.4</version>
 	</parent>
 
 	<artifactId>money-tck</artifactId>
 	<packaging>jar</packaging>
 
-	<version>0.9-SNAPSHOT</version>
+	<version>0.8</version>
 
 	<name>JSR 354 (TCK)</name>
 	<url>http://java.net/projects/javamoney</url>
 	<inceptionYear>2012</inceptionYear>
 	<description>JSR 354 provides an API for representing, transporting, and performing comprehensive calculations with Money and Currency. 
-	This module impelements JSR 354.</description>
+	This module implements JSR 354.</description>
 
 	<organization>
 		<name>JavaMoney</name>
@@ -40,7 +40,7 @@
 	</licenses>
 
 	<properties>
-		<jsr.version>0.9-SNAPSHOT</jsr.version>
+		<jsr.version>0.8</jsr.version>
 		<java.source.version>1.7</java.source.version>
 		<java.target.version>1.7</java.target.version>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
