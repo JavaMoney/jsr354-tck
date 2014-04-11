@@ -801,15 +801,19 @@ public class ModellingMonetaryAmountsTest{
      * MonetaryException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D2")
-    @Test(expected = MonetaryException.class)
-    public void testAdd_IncompatibleCurrencies(){
-        for(Class type : MonetaryAmounts.getAmountTypes()){
+    @Test
+    public void testAdd_IncompatibleCurrencies() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mAmount2 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(ADDITIONAL_CURRENCY).setNumber(20).create();
-            MonetaryAmount mActualResult = mAmount1.add(mAmount2);
-            fail("Exception expected");
+            try {
+                MonetaryAmount mActualResult = mAmount1.add(mAmount2);
+                fail("Exception expected");
+            } catch (MonetaryException ex) {
+                // Expected
+            }
         }
     }
 
@@ -834,37 +838,40 @@ public class ModellingMonetaryAmountsTest{
      * a MonetaryException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D4")
-    @Test(expected = MonetaryException.class)
-    public void testAdd_ExceedsCapabilities(){
-        for(Class type : MonetaryAmounts.getAmountTypes()){
+    @Test
+    public void testAdd_ExceedsCapabilities() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount mAmount1 = f.setNumber(0).create();
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             MonetaryAmount mAmount2 = null;
-            if(maxCtx.getPrecision() > 0){
+            if (maxCtx.getPrecision() > 0) {
                 mAmount2 = f.setNumber(createNumberWithPrecision(f, maxCtx.getPrecision())).create();
             }
-            if(maxCtx.getMaxScale() >= 0){
+            if (maxCtx.getMaxScale() >= 0) {
                 MonetaryContext tgtContext =
                         new MonetaryContext.Builder(maxCtx).setMaxScale(maxCtx.getMaxScale() + 1).create();
                 Class<? extends MonetaryAmount> exceedingType = null;
-                try{
+                try {
                     exceedingType = MonetaryAmounts.queryAmountType(tgtContext);
                     assertNotNull(exceedingType);
                     MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
                             MonetaryAmounts.getAmountFactory(exceedingType);
                     mAmount2 = bigFactory.setCurrency("CHF").setNumber(createNumberWithScale(f, maxCtx.getMaxScale()))
                             .create();
-                }
-                catch(MonetaryException e){
+                } catch (MonetaryException e) {
                     // we have to abort the test...
                 }
 
             }
-            if(mAmount2 != null){
-                mAmount1.add(mAmount2);
-                fail("Exception expected");
+            if (mAmount2 != null) {
+                try {
+                    mAmount1.add(mAmount2);
+                    fail("Exception expected");
+                } catch (MonetaryException ex) {
+                    // Expected
+                }
             }
         }
     }
@@ -891,13 +898,17 @@ public class ModellingMonetaryAmountsTest{
      * a MonetaryException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D5")
-    @Test(expected = NullPointerException.class)
-    public void testAdd_Null(){
-        for(Class type : MonetaryAmounts.getAmountTypes()){
+    @Test
+    public void testAdd_Null() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-            MonetaryAmount mActualResult = mAmount1.add(null);
-            fail("Exception expected");
+            try {
+                MonetaryAmount mActualResult = mAmount1.add(null);
+                fail("Exception expected");
+            } catch (NullPointerException ex) {
+                // Expected
+            }
         }
     }
 
@@ -1037,15 +1048,19 @@ public class ModellingMonetaryAmountsTest{
      * MonetaryException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D8")
-    @Test(expected = MonetaryException.class)
-    public void testSubtract_IncompatibleCurrencies(){
-        for(Class type : MonetaryAmounts.getAmountTypes()){
+    @Test
+    public void testSubtract_IncompatibleCurrencies() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mAmount2 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(ADDITIONAL_CURRENCY).setNumber(20).create();
-            MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
-            fail("Exception expected");
+            try {
+                MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
+                fail("Exception expected");
+            } catch (MonetaryException ex) {
+                // Expected
+            }
         }
     }
 
@@ -1070,37 +1085,40 @@ public class ModellingMonetaryAmountsTest{
      * a MonetaryException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D9")
-    @Test(expected = MonetaryException.class)
-    public void testSubtract_ExceedsCapabilities(){
-        for(Class type : MonetaryAmounts.getAmountTypes()){
+    @Test
+    public void testSubtract_ExceedsCapabilities() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount mAmount1 = f.setNumber(0).create();
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             MonetaryAmount mAmount2 = null;
-            if(maxCtx.getPrecision() > 0){
+            if (maxCtx.getPrecision() > 0) {
                 mAmount2 = f.setNumber(createNumberWithPrecision(f, maxCtx.getPrecision())).create();
             }
-            if(maxCtx.getMaxScale() >= 0){
+            if (maxCtx.getMaxScale() >= 0) {
                 MonetaryContext tgtContext =
                         new MonetaryContext.Builder(maxCtx).setMaxScale(maxCtx.getMaxScale() + 1).create();
                 Class<? extends MonetaryAmount> exceedingType = null;
-                try{
+                try {
                     exceedingType = MonetaryAmounts.queryAmountType(tgtContext);
                     assertNotNull(exceedingType);
                     MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
                             MonetaryAmounts.getAmountFactory(exceedingType);
                     mAmount2 = bigFactory.setCurrency("CHF").setNumber(createNumberWithScale(f, maxCtx.getMaxScale()))
                             .create();
-                }
-                catch(MonetaryException e){
+                } catch (MonetaryException e) {
                     // we have to abort the test...
                 }
 
             }
-            if(mAmount2 != null){
-                mAmount1.subtract(mAmount2);
-                fail("Exception expected");
+            if (mAmount2 != null) {
+                try {
+                    mAmount1.subtract(mAmount2);
+                    fail("Exception expected");
+                } catch (MonetaryException ex) {
+                    // Expected
+                }
             }
         }
     }
@@ -1110,13 +1128,17 @@ public class ModellingMonetaryAmountsTest{
      * a MonetaryException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D10")
-    @Test(expected = NullPointerException.class)
-    public void testSubtract_Null(){
-        for(Class type : MonetaryAmounts.getAmountTypes()){
+    @Test
+    public void testSubtract_Null() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-            MonetaryAmount mActualResult = mAmount1.subtract(null);
-            fail("Exception expected");
+            try {
+                MonetaryAmount mActualResult = mAmount1.subtract(null);
+                fail("Exception expected");
+            } catch (NullPointerException ex) {
+                // Expected
+            }
         }
     }
 
@@ -1170,6 +1192,7 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 MonetaryAmount mActualResult = mAmount1.multiply(null);
+                fail("Exception expected");
             }
             catch(NullPointerException e){
                 // expected
@@ -1191,8 +1214,17 @@ public class ModellingMonetaryAmountsTest{
      */
     @SpecAssertion(section = "4.2.2", id = "422-D16")
     @Test
-    public void testDivideZero(){
-        fail("Not yet implemented");
+    public void testDivideZero() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
+            MonetaryAmount mAmount1 =
+                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            try {
+                MonetaryAmount mActualResult = mAmount1.divide(0);
+                fail("Exception expected");
+            } catch (ArithmeticException ex) {
+                // expected
+            }
+        }
     }
 
     /**
