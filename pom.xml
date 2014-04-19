@@ -60,7 +60,7 @@
 		<!-- or 1.1.0.Final. -->
 		<impl.groupId>org.javamoney</impl.groupId>
 		<impl.artifactId>moneta</impl.artifactId>
-		<impl.version>0.8</impl.version>
+		<impl.version>0.9-SNAPSHOT</impl.version>
 		<impl.packageType>jar</impl.packageType>
 	</properties>
 

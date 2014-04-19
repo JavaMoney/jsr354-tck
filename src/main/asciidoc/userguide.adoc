@@ -1,0 +1,61 @@
+JSR 354 Money & Currency TCK Guide
+==================================
+Anatole Tresch <atsticks@gmail.com>
+:Author Initials: ATR
+:source-highlighter: coderay
+:toc:
+:icons:
+:numbered:
+:website: http://javamoney.org/
+
+
+JSR 354 'Java Money' defines the Java API for managing monetary amounts and currencies in Java. As other
+ JSRs beside the reference implementations also other third parties can provide their implementations. This document will
+describe how this technical compatibility kit (TCK) can be configured and used to determine the compatibility of an implementation
+with the specification and reference implementation.
+
+.This document
+**********************************************************************
+This is a user guide that describes all relevant aspects of the JSR 354
+Java Money TCK, for using this TCK with any reference implementation.
+
+For a shorter introduction you may check out the quick start guide (tbd).
+
+**********************************************************************
+
+
+Introduction to Java Money
+--------------------------
+
+[NOTE]
+You may also read the JSR 354 API specification available https://jcp.org/en/jsr/detail?id=354[here].
+
+Overview
+~~~~~~~~
+
+Main Design Decisions
+~~~~~~~~~~~~~~~~~~~~~
+
+Component Loading and Bootstrapping
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Setup of the TCK
+----------------
+
+Downloading and Installing
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Configuring the TCK
+~~~~~~~~~~~~~~~~~~~
+
+Running the Tests
+~~~~~~~~~~~~~~~~~
+
+Checking the Results
+~~~~~~~~~~~~~~~~~~~~
+
+Contacts
+~~~~~~~~
+
+Basically you can use the JSR's public mailing list to get in contact or write an email to the JSR's mailto:atsticks@java.net[spec lead].
