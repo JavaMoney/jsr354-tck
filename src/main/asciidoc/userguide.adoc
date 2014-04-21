@@ -7,6 +7,9 @@ Anatole Tresch <atsticks@gmail.com>
 :icons:
 :numbered:
 :website: http://javamoney.org/
+:imagesdir: src\main\asciidoc\images
+:iconsdir: src\main\asciidoc\images/icons
+:data-uri:
 
 
 JSR 354 'Java Money' defines the Java API for managing monetary amounts and currencies in Java. As other
