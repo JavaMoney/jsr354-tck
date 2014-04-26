@@ -32,7 +32,15 @@ public final class TestAmount implements MonetaryAmount, Serializable{
 
     @Override
     public MonetaryAmount with(MonetaryOperator operator){
-        return operator.apply(this);
+        try{
+            return operator.apply(this);
+        }
+        catch(MonetaryException e){
+            throw e;
+        }
+        catch(Exception e){
+            throw new MonetaryException("Exception during operator execution.", e);
+        }
     }
 
     @Override
@@ -259,28 +267,33 @@ public final class TestAmount implements MonetaryAmount, Serializable{
     }
 
     @Override
-    public boolean isLessThanOrEqualTo(MonetaryAmount amt){
-        return false;
+    public boolean isLessThanOrEqualTo(MonetaryAmount amount){
+        return this.value.stripTrailingZeros()
+                .compareTo(amount.getNumber().numberValue(BigDecimal.class).stripTrailingZeros()) == 0;
     }
 
     @Override
     public boolean isLessThan(MonetaryAmount amount){
-        return false;
+        return this.value.stripTrailingZeros()
+                .compareTo(amount.getNumber().numberValue(BigDecimal.class).stripTrailingZeros()) < 0;
     }
 
     @Override
     public boolean isGreaterThanOrEqualTo(MonetaryAmount amount){
-        return false;
+        return this.value.stripTrailingZeros()
+                .compareTo(amount.getNumber().numberValue(BigDecimal.class).stripTrailingZeros()) >= 0;
     }
 
     @Override
     public boolean isGreaterThan(MonetaryAmount amount){
-        return false;
+        return this.value.stripTrailingZeros()
+                .compareTo(amount.getNumber().numberValue(BigDecimal.class).stripTrailingZeros()) > 0;
     }
 
     @Override
     public boolean isEqualTo(MonetaryAmount amount){
-        return false;
+        return this.value.stripTrailingZeros()
+                .compareTo(amount.getNumber().numberValue(BigDecimal.class).stripTrailingZeros()) == 0;
     }
 
     @Override

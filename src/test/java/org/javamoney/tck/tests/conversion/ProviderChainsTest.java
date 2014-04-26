@@ -29,7 +29,7 @@ public class ProviderChainsTest{
      */
     @Test @SpecAssertion(id="434-A1", section="4.3.4")
     public void testCorrectRateEvaluationInChain(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
     /**
@@ -38,7 +38,7 @@ public class ProviderChainsTest{
      */
     @Test @SpecAssertion(id="434-A2", section="4.3.4")
     public void testCorrectRateEvaluationInChainHistoric(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
     /**
@@ -47,7 +47,7 @@ public class ProviderChainsTest{
      */
     @Test @SpecAssertion(id="434-A3", section="4.3.4")
     public void testTCKRateChainAvailability(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
 }

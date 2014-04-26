@@ -35,7 +35,7 @@ public class ConvertingAmountsTest{
      */
     @Test @SpecAssertion(id = "432-A1", section="4.3.2")
     public void testConversion(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
     /**
@@ -43,7 +43,7 @@ public class ConvertingAmountsTest{
     */
     @Test @SpecAssertion(id = "432-A2", section="4.3.2")
     public void testConversionComparedWithRate(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
     /**
@@ -52,7 +52,7 @@ public class ConvertingAmountsTest{
      */
     @Test(expected=CurrencyConversionException.class) @SpecAssertion(id = "432-A3", section="4.3.2")
     public void testUnsupportedConversion(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
     /**

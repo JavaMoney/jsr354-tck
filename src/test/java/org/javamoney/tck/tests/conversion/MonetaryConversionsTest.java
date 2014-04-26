@@ -30,7 +30,7 @@ public class MonetaryConversionsTest{
      */
     @Test @SpecAssertion(id="431-A1", section="4.3.1")
     public void testProvidersAvailable(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
     /**
@@ -40,7 +40,7 @@ public class MonetaryConversionsTest{
      */
     @Test @SpecAssertion(id="431-A2", section="4.3.1")
     public void testConversionsAreAvailable(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
     /**
@@ -49,7 +49,7 @@ public class MonetaryConversionsTest{
      */
     @Test @SpecAssertion(id="431-A3", section="4.3.1")
     public void testProviderMetadata(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
     /**
@@ -57,7 +57,7 @@ public class MonetaryConversionsTest{
      */
     @Test @SpecAssertion(id="431-A4", section="4.3.1")
     public void testDefaultProviderChainIsDefined(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
     /**
@@ -66,7 +66,7 @@ public class MonetaryConversionsTest{
      */
     @Test @SpecAssertion(id="431-A5", section="4.3.1")
     public void testDefaultProviderChain(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
     /**
@@ -74,7 +74,7 @@ public class MonetaryConversionsTest{
      */
     @Test(expected=MonetaryException.class) @SpecAssertion(id="431-A6", section="4.3.1")
     public void testUseInvalidProvider(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
     /**
@@ -83,7 +83,7 @@ public class MonetaryConversionsTest{
      */
     @Test(expected=MonetaryException.class) @SpecAssertion(id="431-A7", section="4.3.1")
     public void testUseInvalidProviderWithinChain(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
 }

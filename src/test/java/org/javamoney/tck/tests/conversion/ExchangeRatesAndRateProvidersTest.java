@@ -29,7 +29,7 @@ public class ExchangeRatesAndRateProvidersTest{
      */
     @Test @SpecAssertion(id="433-A1", section="4.3.3")
     public void testAccessRates(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
     /**
@@ -38,7 +38,7 @@ public class ExchangeRatesAndRateProvidersTest{
      */
     @Test @SpecAssertion(id="433-A2", section="4.3.3")
     public void testPassingOverConversionContextToSPIs(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
     /**
@@ -47,7 +47,7 @@ public class ExchangeRatesAndRateProvidersTest{
      */
     @Test @SpecAssertion(id="433-A3", section="4.3.3")
     public void testInvalidUsage(){
-        Assert.fail();
+        Assert.fail("Not implemenmted.");
     }
 
 }

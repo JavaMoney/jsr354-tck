@@ -10,6 +10,7 @@
 package org.javamoney.tck.tests;
 
 import org.javamoney.tck.ClassTester;
+import org.javamoney.tck.tests.internal.TestAmount;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Assert;
@@ -69,6 +70,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testGetNumber(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(100).create(), f.setNumber(34242344).create(),
@@ -85,11 +89,14 @@ public class ModellingMonetaryAmountsTest{
             for(int i = 0; i < moneys.length; i++){
                 NumberValue nv = moneys[i].getNumber();
                 assertNotNull(nv);
-                assertEquals("getNumber() incorrect.", numbers[i], nv.numberValue(BigDecimal.class));
-                assertEquals("getNumber().intValue() incorrect.", intNums[i], nv.intValue());
-                assertEquals("getNumber().longValue() incorrect.", longNums[i], nv.longValue());
-                assertEquals("getNumber().doubleValue() incorrect.", doubleNums[i], nv.doubleValue(), 0.0d);
-                assertEquals("getNumber().floatValue() incorrect.", floatNums[i], nv.floatValue(), 0.0d);
+                assertEquals("getNumber().numberValue(BigDecimal.class) incorrect for " + type.getName(), numbers[i],
+                             nv.numberValue(BigDecimal.class));
+                assertEquals("getNumber().intValue() incorrect for " + type.getName(), intNums[i], nv.intValue());
+                assertEquals("getNumber().longValue() incorrect for " + type.getName(), longNums[i], nv.longValue());
+                assertEquals("getNumber().doubleValue() incorrect for " + type.getName(), doubleNums[i],
+                             nv.doubleValue(), 0.0d);
+                assertEquals("getNumber().floatValue() incorrect for " + type.getName(), floatNums[i], nv.floatValue(),
+                             0.0d);
             }
         }
     }
@@ -102,27 +109,41 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testGetMonetaryContext(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryContext defCtx = f.getDefaultMonetaryContext();
             MonetaryContext maxCtx = f.getDefaultMonetaryContext();
             MonetaryContext mc = f.setNumber(0).create().getMonetaryContext();
-            assertEquals(mc.getAmountType(), type);
-            assertEquals(mc.getAmountFlavor(), defCtx.getAmountFlavor());
-            assertTrue(mc.getPrecision() <= maxCtx.getPrecision());
-            assertTrue(mc.getMaxScale() <= maxCtx.getMaxScale());
-            assertEquals(f.setNumber(0.34746d).create().getMonetaryContext().getAmountType(), type);
+            assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(), mc.getAmountType(), type);
+            assertEquals("Invalid MonetaryContext(amountFlavor) for " + type.getName(), mc.getAmountFlavor(),
+                         defCtx.getAmountFlavor());
+            assertTrue("Invalid MonetaryContext(precision) for " + type.getName(),
+                       mc.getPrecision() <= maxCtx.getPrecision());
+            assertTrue("Invalid MonetaryContext(maxScale) for " + type.getName(),
+                       mc.getMaxScale() <= maxCtx.getMaxScale());
+            assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(),
+                         f.setNumber(0.34746d).create().getMonetaryContext().getAmountType(), type);
             mc = f.setNumber(0).create().getMonetaryContext();
-            assertEquals(mc.getAmountType(), type);
-            assertEquals(mc.getAmountFlavor(), defCtx.getAmountFlavor());
-            assertTrue(mc.getPrecision() <= maxCtx.getPrecision());
-            assertTrue(mc.getMaxScale() <= maxCtx.getMaxScale());
-            assertEquals(f.setNumber(100034L).create().getMonetaryContext().getAmountType(), type);
+            assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(), mc.getAmountType(), type);
+            assertEquals("Invalid MonetaryContext(amountFlavor) for " + type.getName(), mc.getAmountFlavor(),
+                         defCtx.getAmountFlavor());
+            assertTrue("Invalid MonetaryContext(precision) for " + type.getName(),
+                       mc.getPrecision() <= maxCtx.getPrecision());
+            assertTrue("Invalid MonetaryContext(maxScale) for " + type.getName(),
+                       mc.getMaxScale() <= maxCtx.getMaxScale());
+            assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(),
+                         f.setNumber(100034L).create().getMonetaryContext().getAmountType(), type);
             mc = f.setNumber(0).create().getMonetaryContext();
-            assertEquals(mc.getAmountType(), type);
-            assertEquals(mc.getAmountFlavor(), defCtx.getAmountFlavor());
-            assertTrue(mc.getPrecision() <= maxCtx.getPrecision());
-            assertTrue(mc.getMaxScale() <= maxCtx.getMaxScale());
+            assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(), mc.getAmountType(), type);
+            assertEquals("Invalid MonetaryContext(amountFlavor) for " + type.getName(), mc.getAmountFlavor(),
+                         defCtx.getAmountFlavor());
+            assertTrue("Invalid MonetaryContext(precision) for " + type.getName(),
+                       mc.getPrecision() <= maxCtx.getPrecision());
+            assertTrue("Invalid MonetaryContext(maxScale) for " + type.getName(),
+                       mc.getMaxScale() <= maxCtx.getMaxScale());
         }
     }
 
@@ -134,18 +155,21 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testIsNegative(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
                     f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.00000000000000000")).create(),
                     f.setNumber(100).create(), f.setNumber(34242344).create(), f.setNumber(23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertFalse("Invalid isNegative (expected false): " + m, m.isNegative());
+                assertFalse("Invalid isNegative (expected false) for " + type.getName(), m.isNegative());
             }
             moneys = new MonetaryAmount[]{f.setNumber(-100).create(), f.setNumber(-34242344).create(),
                     f.setNumber(-23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertTrue("Invalid isNegative (expected true): " + m, m.isNegative());
+                assertTrue("Invalid isNegative (expected true) for " + type.getName(), m.isNegative());
             }
         }
     }
@@ -158,18 +182,21 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testIsPositive(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(100).create(), f.setNumber(34242344).create(),
                     f.setNumber(23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertTrue(m.isPositive());
+                assertTrue("Invalid isPositive (expected true) for " + type.getName(), m.isPositive());
             }
             moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
                     f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.00000000000000000")).create(),
                     f.setNumber(-100).create(), f.setNumber(-34242344).create(), f.setNumber(-23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertFalse(m.isPositive());
+                assertFalse("Invalid isPositive (expected false) for " + type.getName(), m.isPositive());
             }
         }
     }
@@ -183,18 +210,21 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testIsZero(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(100).create(), f.setNumber(34242344).create(),
                     f.setNumber(23123213.435).create(), f.setNumber(-100).create(),
                     f.setNumber(-723527.36532).create()};
             for(MonetaryAmount m : moneys){
-                assertFalse(m.isZero());
+                assertFalse("Invalid isZero (expected false) for " + type.getName(), m.isZero());
             }
             moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
                     f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.00000000000000000")).create()};
             for(MonetaryAmount m : moneys){
-                assertTrue(m.isZero());
+                assertTrue("Invalid isZero (expected true) for " + type.getName(), m.isZero());
             }
         }
     }
@@ -207,13 +237,16 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testIsZeroAdvanced(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount[] moneys =
                     new MonetaryAmount[]{f.setNumber(-0).create(), f.setNumber(0).create(), f.setNumber(-0.0f).create(),
                             f.setNumber(0.0f).create(), f.setNumber(-0.0d).create(), f.setNumber(0.0d).create()};
             for(MonetaryAmount m : moneys){
-                assertTrue(m.isZero());
+                assertTrue("Invalid isZero (expected true) for " + type.getName(), m.isZero());
             }
         }
     }
@@ -229,17 +262,17 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount m = f.setNumber(100).create();
-            assertEquals("signum of " + m, 1, m.signum());
+            assertEquals("Invalid signum of 100 for " + type.getName(), 1, m.signum());
             m = f.setNumber(-100).create();
-            assertEquals("signum of " + m, -1, m.signum());
+            assertEquals("signum of -100 for " + type.getName(), -1, m.signum());
             m = f.setNumber(100.3435).create();
-            assertEquals("signum of " + m, 1, m.signum());
+            assertEquals("signum of 100.3435 for " + type.getName(), 1, m.signum());
             m = f.setNumber(-100.3435).create();
-            assertEquals("signum of " + m, -1, m.signum());
+            assertEquals("signum of -100.3435 for " + type.getName(), -1, m.signum());
             m = f.setNumber(0).create();
-            assertEquals("signum of " + m, 0, m.signum());
+            assertEquals("signum of 0 for " + type.getName(), 0, m.signum());
             m = f.setNumber(-0).create();
-            assertEquals("signum of " + m, 0, m.signum());
+            assertEquals("signum of - for " + type.getName(), 0, m.signum());
         }
     }
 
@@ -251,18 +284,21 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testIsNegativeOrZero(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(100).create(), f.setNumber(34242344).create(),
                     f.setNumber(23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertFalse("Invalid negativeOrZero (expected false): " + m, m.isNegativeOrZero());
+                assertFalse("Invalid negativeOrZero (expected false) for " + type.getName(), m.isNegativeOrZero());
             }
             moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
                     f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.0000")).create(),
                     f.setNumber(-100).create(), f.setNumber(-34242344).create(), f.setNumber(-23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertTrue("Invalid negativeOrZero (expected true): " + m, m.isNegativeOrZero());
+                assertTrue("Invalid negativeOrZero (expected true) for " + type.getName(), m.isNegativeOrZero());
             }
         }
     }
@@ -275,18 +311,21 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testIsPositiveOrZero(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
                     f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.00000000000000000")).create(),
                     f.setNumber(100).create(), f.setNumber(34242344).create(), f.setNumber(23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertTrue("Invalid positiveOrZero (expected true): " + m, m.isPositiveOrZero());
+                assertTrue("Invalid positiveOrZero (expected true): for " + type.getName(), m.isPositiveOrZero());
             }
             moneys = new MonetaryAmount[]{f.setNumber(-100).create(), f.setNumber(-34242344).create(),
                     f.setNumber(-23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertFalse("Invalid positiveOrZero (expected false): " + m, m.isPositiveOrZero());
+                assertFalse("Invalid positiveOrZero (expected false) for " + type.getName() + m, m.isPositiveOrZero());
             }
         }
     }
@@ -305,17 +344,17 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             assertNotNull(f);
             MonetaryAmount m = f.setCurrency("CHF").setNumber(10).create();
-            assertEquals(m.getClass(), type);
+            assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
             m = f.setCurrency("CHF").setNumber(-10).create();
-            assertEquals(m.getClass(), type);
+            assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
             m = f.setCurrency("CHF").setNumber(10.3).create();
-            assertEquals(m.getClass(), type);
+            assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
             m = f.setCurrency("CHF").setNumber(-10.3).create();
-            assertEquals(m.getClass(), type);
+            assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
             m = f.setCurrency("CHF").setNumber(0.0).create();
-            assertEquals(m.getClass(), type);
+            assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
             m = f.setCurrency("CHF").setNumber(-0.0).create();
-            assertEquals(m.getClass(), type);
+            assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
         }
     }
 
@@ -328,27 +367,36 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testMonetaryAmountFactories_InstancesMustBeEqual(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(10).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("CHF").setNumber(10).create();
-            assertEquals(m1, m2);
+            assertEquals("Expected equal instances for " + type.getName(), m1, m2);
         }
 
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(10.5d).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("CHF").setNumber(10.5d).create();
-            assertEquals(m1, m2);
+            assertEquals("Expected equal types created by same factory for " + type.getName(), m1, m2);
         }
 
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(new BigDecimal("10.52")).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("CHF").setNumber(new BigDecimal("10.52")).create();
-            assertEquals(m1, m2);
+            assertEquals("Expected equal types created by same factory for " + type.getName(), m1, m2);
         }
     }
 
@@ -368,7 +416,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(10).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("CHF").setNumber(11).create();
-            assertNotSame(m1, m2);
+            assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
         }
 
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -376,7 +424,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(10.5d).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("CHF").setNumber(10.4d).create();
-            assertNotSame(m1, m2);
+            assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
         }
 
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -384,7 +432,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(new BigDecimal("10.52")).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("CHF").setNumber(new BigDecimal("10.11")).create();
-            assertNotSame(m1, m2);
+            assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
         }
     }
 
@@ -402,7 +450,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(10).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("USD").setNumber(10).create();
-            assertNotSame(m1, m2);
+            assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
         }
 
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -410,7 +458,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(10.5d).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("USD").setNumber(10.5d).create();
-            assertNotSame(m1, m2);
+            assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
         }
 
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -418,7 +466,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(new BigDecimal("10.52")).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("USD").setNumber(new BigDecimal("10.52")).create();
-            assertNotSame(m1, m2);
+            assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
         }
     }
 
@@ -440,15 +488,15 @@ public class ModellingMonetaryAmountsTest{
                 // In this cases both amount must be equals
                 m1 = f.setCurrency("CHF").setContext(mc1).setNumber(10).create();
                 m2 = f.setCurrency("CHF").setContext(mc2).setNumber(10).create();
-                assertNotSame(m1, m2);
+                assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
             }else{
                 // In this cases both amount must be non equals
                 m1 = f.setCurrency("CHF").setContext(mc1).setNumber(10).create();
                 m2 = f.setCurrency("CHF").setContext(mc2).setNumber(10).create();
-                assertNotSame(m1, m2);
+                assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
             }
-            assertTrue(m1.equals(m1));
-            assertTrue(m2.equals(m2));
+            assertTrue("Expected equality for " + type.getName(), m1.equals(m1));
+            assertTrue("Expected equality for " + type.getName(), m2.equals(m2));
         }
     }
 
@@ -460,16 +508,19 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testMonetaryAmountFactories_CreateWithMonetaryContextNumberAndCurrency(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             MonetaryContext mc1 = f.getDefaultMonetaryContext();
             MonetaryContext mc2 = f.getMaximalMonetaryContext();
             MonetaryAmount m1 = f.setCurrency("CHF").setContext(mc1).setNumber(10).create();
             MonetaryAmount m2 = f.setCurrency("USD").setContext(mc2).setNumber(11).create();
-            assertNotSame(m1, m2);
-            assertTrue(m1.isEqualTo(m1));
-            assertTrue(m2.isEqualTo(m2));
-            assertTrue(m1.equals(m1));
-            assertTrue(m2.equals(m2));
+            assertNotSame("Expected not same for " + type.getName(), m1, m2);
+            assertTrue("Expected isEqualTo==true for " + type.getName(), m1.isEqualTo(m1));
+            assertTrue("Expected isEqualTo==true for " + type.getName(), m2.isEqualTo(m2));
+            assertTrue("Expected equality for " + type.getName(), m1.equals(m1));
+            assertTrue("Expected equality for " + type.getName(), m2.equals(m2));
         }
     }
 
@@ -484,14 +535,20 @@ public class ModellingMonetaryAmountsTest{
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
-            assertFalse(f.setNumber(BigDecimal.valueOf(0d)).create()
-                                .isGreaterThan(f.setNumber(BigDecimal.valueOf(0)).create()));
-            assertTrue(f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
-                               .isGreaterThan(f.setNumber(BigDecimal.valueOf(0d)).create()));
-            assertTrue(f.setNumber(15).create().isGreaterThan(f.setNumber(10).create()));
-            assertTrue(f.setNumber(15.546).create().isGreaterThan(f.setNumber(10.34).create()));
-            assertFalse(f.setNumber(5).create().isGreaterThan(f.setNumber(10).create()));
-            assertFalse(f.setNumber(5.546).create().isGreaterThan(f.setNumber(10.34).create()));
+            assertFalse("isGreaterThan failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(0d)).create()
+                    .isGreaterThan(f.setNumber(BigDecimal.valueOf(0)).create()));
+            assertTrue("isGreaterThan failed for " + type.getName(),
+                       f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
+                               .isGreaterThan(f.setNumber(BigDecimal.valueOf(0d)).create())
+            );
+            assertTrue("isGreaterThan failed for " + type.getName(),
+                       f.setNumber(15).create().isGreaterThan(f.setNumber(10).create()));
+            assertTrue("isGreaterThan failed for " + type.getName(),
+                       f.setNumber(15.546).create().isGreaterThan(f.setNumber(10.34).create()));
+            assertFalse("isGreaterThan failed for " + type.getName(),
+                        f.setNumber(5).create().isGreaterThan(f.setNumber(10).create()));
+            assertFalse("isGreaterThan failed for " + type.getName(),
+                        f.setNumber(5.546).create().isGreaterThan(f.setNumber(10.34).create()));
         }
     }
 
@@ -505,14 +562,22 @@ public class ModellingMonetaryAmountsTest{
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
-            assertTrue(f.setNumber(BigDecimal.valueOf(0d)).create()
-                               .isGreaterThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
-            assertTrue(f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
-                               .isGreaterThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create()));
-            assertTrue(f.setNumber(15).create().isGreaterThanOrEqualTo(f.setNumber(10).create()));
-            assertTrue(f.setNumber(15.546).create().isGreaterThanOrEqualTo(f.setNumber(10.34).create()));
-            assertFalse(f.setNumber(5).create().isGreaterThanOrEqualTo(f.setNumber(10).create()));
-            assertFalse(f.setNumber(5.546).create().isGreaterThanOrEqualTo(f.setNumber(10.34).create()));
+            assertTrue("isGreaterThanOrEqualTo failed for " + type.getName(),
+                       f.setNumber(BigDecimal.valueOf(0d)).create()
+                               .isGreaterThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0)).create())
+            );
+            assertTrue("isGreaterThanOrEqualTo failed for " + type.getName(),
+                       f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
+                               .isGreaterThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create())
+            );
+            assertTrue("isGreaterThanOrEqualTo failed for " + type.getName(),
+                       f.setNumber(15).create().isGreaterThanOrEqualTo(f.setNumber(10).create()));
+            assertTrue("isGreaterThanOrEqualTo failed for " + type.getName(),
+                       f.setNumber(15.546).create().isGreaterThanOrEqualTo(f.setNumber(10.34).create()));
+            assertFalse("isGreaterThanOrEqualTo failed for " + type.getName(),
+                        f.setNumber(5).create().isGreaterThanOrEqualTo(f.setNumber(10).create()));
+            assertFalse("isGreaterThanOrEqualTo failed for " + type.getName(),
+                        f.setNumber(5.546).create().isGreaterThanOrEqualTo(f.setNumber(10.34).create()));
         }
     }
 
@@ -526,14 +591,20 @@ public class ModellingMonetaryAmountsTest{
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
-            assertFalse(f.setNumber(BigDecimal.valueOf(0d)).create()
-                                .isLessThan(f.setNumber(BigDecimal.valueOf(0)).create()));
-            assertFalse(f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
-                                .isLessThan(f.setNumber(BigDecimal.valueOf(0d)).create()));
-            assertFalse(f.setNumber(15).create().isLessThan(f.setNumber(10).create()));
-            assertFalse(f.setNumber(15.546).create().isLessThan(f.setNumber(10.34).create()));
-            assertTrue(f.setNumber(5).create().isLessThan(f.setNumber(10).create()));
-            assertTrue(f.setNumber(5.546).create().isLessThan(f.setNumber(10.34).create()));
+            assertFalse("isLessThan failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(0d)).create()
+                    .isLessThan(f.setNumber(BigDecimal.valueOf(0)).create()));
+            assertFalse("isLessThan failed for " + type.getName(),
+                        f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
+                                .isLessThan(f.setNumber(BigDecimal.valueOf(0d)).create())
+            );
+            assertFalse("isLessThan failed for " + type.getName(),
+                        f.setNumber(15).create().isLessThan(f.setNumber(10).create()));
+            assertFalse("isLessThan failed for " + type.getName(),
+                        f.setNumber(15.546).create().isLessThan(f.setNumber(10.34).create()));
+            assertTrue("isLessThan failed for " + type.getName(),
+                       f.setNumber(5).create().isLessThan(f.setNumber(10).create()));
+            assertTrue("isLessThan failed for " + type.getName(),
+                       f.setNumber(5.546).create().isLessThan(f.setNumber(10.34).create()));
         }
     }
 
@@ -543,18 +614,27 @@ public class ModellingMonetaryAmountsTest{
      */
     @SpecAssertion(section = "4.2.2", id = "422-C4")
     @Test
-    public void testMonetaryAmount_isLessThanOrEquals(){
+    public void testMonetaryAmount_isLessThanOrEqualTo(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
-            assertTrue(f.setNumber(BigDecimal.valueOf(0d)).create()
-                               .isLessThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
-            assertFalse(f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
-                                .isLessThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create()));
-            assertFalse(f.setNumber(15).create().isLessThanOrEqualTo(f.setNumber(10).create()));
-            assertFalse(f.setNumber(15.546).create().isLessThan(f.setNumber(10.34).create()));
-            assertTrue(f.setNumber(5).create().isLessThanOrEqualTo(f.setNumber(10).create()));
-            assertTrue(f.setNumber(5.546).create().isLessThanOrEqualTo(f.setNumber(10.34).create()));
+            assertTrue("isLessThanOrEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(0d)).create()
+                    .isLessThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
+            assertFalse("isLessThanOrEqualTo failed for " + type.getName(),
+                        f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
+                                .isLessThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create())
+            );
+            assertFalse("isLessThanOrEqualTo failed for " + type.getName(),
+                        f.setNumber(15).create().isLessThanOrEqualTo(f.setNumber(10).create()));
+            assertFalse("isLessThan failed for " + type.getName(),
+                        f.setNumber(15.546).create().isLessThan(f.setNumber(10.34).create()));
+            assertTrue("isLessThanOrEqualTo failed for " + type.getName(),
+                       f.setNumber(5).create().isLessThanOrEqualTo(f.setNumber(10).create()));
+            assertTrue("isLessThanOrEqualTo failed for " + type.getName(),
+                       f.setNumber(5.546).create().isLessThanOrEqualTo(f.setNumber(10.34).create()));
         }
     }
 
@@ -566,40 +646,48 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testMonetaryAmount_isEqualTo(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
-            assertTrue(f.setNumber(BigDecimal.valueOf(0d)).create()
-                               .isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
-            assertFalse(f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
-                                .isEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create()));
-            assertTrue(f.setNumber(BigDecimal.valueOf(5d)).create()
-                               .isEqualTo(f.setNumber(BigDecimal.valueOf(5)).create()));
-            assertTrue(f.setNumber(BigDecimal.valueOf(1d)).create()
-                               .isEqualTo(f.setNumber(BigDecimal.valueOf(1.00)).create()));
-            assertTrue(f.setNumber(BigDecimal.valueOf(1d)).create().isEqualTo(f.setNumber(BigDecimal.ONE).create()));
-            assertTrue(f.setNumber(BigDecimal.valueOf(1)).create().isEqualTo(f.setNumber(BigDecimal.ONE).create()));
-            assertTrue(f.setNumber(new BigDecimal("1.0000")).create()
-                               .isEqualTo(f.setNumber(new BigDecimal("1.00")).create()));
+            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(0d)).create()
+                    .isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
+            assertFalse("isEqualTo failed for " + type.getName(),
+                        f.setNumber(BigDecimal.valueOf(0.00000000001d)).create()
+                                .isEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create())
+            );
+            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5d)).create()
+                    .isEqualTo(f.setNumber(BigDecimal.valueOf(5)).create()));
+            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(1d)).create()
+                    .isEqualTo(f.setNumber(BigDecimal.valueOf(1.00)).create()));
+            assertTrue("isEqualTo failed for " + type.getName(),
+                       f.setNumber(BigDecimal.valueOf(1d)).create().isEqualTo(f.setNumber(BigDecimal.ONE).create()));
+            assertTrue("isEqualTo failed for " + type.getName(),
+                       f.setNumber(BigDecimal.valueOf(1)).create().isEqualTo(f.setNumber(BigDecimal.ONE).create()));
+            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("1.0000")).create()
+                    .isEqualTo(f.setNumber(new BigDecimal("1.00")).create()));
             // Test with different scales, but numeric equal values
-            assertTrue(f.setNumber(BigDecimal.valueOf(0d)).create()
-                               .isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
-            assertTrue(f.setNumber(BigDecimal.ZERO).create().isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
-            assertTrue(
-                    f.setNumber(BigDecimal.valueOf(5)).create().isEqualTo(f.setNumber(new BigDecimal("5.0")).create()));
-            assertTrue(f.setNumber(BigDecimal.valueOf(5)).create()
-                               .isEqualTo(f.setNumber(new BigDecimal("5.00")).create()));
-            assertTrue(f.setNumber(BigDecimal.valueOf(5)).create()
-                               .isEqualTo(f.setNumber(new BigDecimal("5.000")).create()));
-            assertTrue(f.setNumber(BigDecimal.valueOf(5)).create()
-                               .isEqualTo(f.setNumber(new BigDecimal("5.0000")).create()));
-            assertTrue(f.setNumber(new BigDecimal("-1.23")).create()
-                               .isEqualTo(f.setNumber(new BigDecimal("-1.230")).create()));
-            assertTrue(f.setNumber(new BigDecimal("-1.23")).create()
-                               .isEqualTo(f.setNumber(new BigDecimal("-1.2300")).create()));
-            assertTrue(f.setNumber(new BigDecimal("-1.23")).create()
-                               .isEqualTo(f.setNumber(new BigDecimal("-1.23000")).create()));
-            assertTrue(f.setNumber(new BigDecimal("-1.23")).create()
-                               .isEqualTo(f.setNumber(new BigDecimal("-1.230000000000000000000")).create()));
+            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(0d)).create()
+                    .isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
+            assertTrue("isEqualTo failed for " + type.getName(),
+                       f.setNumber(BigDecimal.ZERO).create().isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
+            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5)).create()
+                    .isEqualTo(f.setNumber(new BigDecimal("5.0")).create()));
+            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5)).create()
+                    .isEqualTo(f.setNumber(new BigDecimal("5.00")).create()));
+            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5)).create()
+                    .isEqualTo(f.setNumber(new BigDecimal("5.000")).create()));
+            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5)).create()
+                    .isEqualTo(f.setNumber(new BigDecimal("5.0000")).create()));
+            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
+                    .isEqualTo(f.setNumber(new BigDecimal("-1.230")).create()));
+            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
+                    .isEqualTo(f.setNumber(new BigDecimal("-1.2300")).create()));
+            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
+                    .isEqualTo(f.setNumber(new BigDecimal("-1.23000")).create()));
+            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
+                    .isEqualTo(f.setNumber(new BigDecimal("-1.230000000000000000000")).create()));
         }
     }
 
@@ -611,6 +699,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testMonetaryAmount_isEqualToRegardlessMonetaryContext(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             MonetaryContext mc1 = f.getDefaultMonetaryContext();
             MonetaryContext mc2 = f.getMaximalMonetaryContext();
@@ -682,6 +773,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testAddPositiveIntegers(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mAmount2 =
@@ -700,6 +794,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testAddNegativeIntegers(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
             MonetaryAmount mAmount2 =
@@ -718,6 +815,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testAddPositiveFractions(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(1.5).create();
             MonetaryAmount mAmount2 =
@@ -736,6 +836,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testAddMixedIntegers(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
             MonetaryAmount mAmount2 =
@@ -746,6 +849,9 @@ public class ModellingMonetaryAmountsTest{
             Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-20).create();
             MonetaryAmount mAmount2 =
@@ -756,6 +862,9 @@ public class ModellingMonetaryAmountsTest{
             Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
             MonetaryAmount mAmount2 =
@@ -774,6 +883,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testAddMixedFractions(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(1.5).create();
             MonetaryAmount mAmount2 =
@@ -784,6 +896,9 @@ public class ModellingMonetaryAmountsTest{
             Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-1.5).create();
             MonetaryAmount mAmount2 =
@@ -794,6 +909,9 @@ public class ModellingMonetaryAmountsTest{
             Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-2.85).create();
             MonetaryAmount mAmount2 =
@@ -811,16 +929,20 @@ public class ModellingMonetaryAmountsTest{
      */
     @SpecAssertion(section = "4.2.2", id = "422-D2")
     @Test
-    public void testAdd_IncompatibleCurrencies() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+    public void testAdd_IncompatibleCurrencies(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mAmount2 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(ADDITIONAL_CURRENCY).setNumber(20).create();
-            try {
+            try{
                 MonetaryAmount mActualResult = mAmount1.add(mAmount2);
                 fail("Exception expected");
-            } catch (MonetaryException ex) {
+            }
+            catch(MonetaryException ex){
                 // Expected
             }
         }
@@ -833,6 +955,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testAdd_Zero(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mAmount2 =
@@ -848,37 +973,42 @@ public class ModellingMonetaryAmountsTest{
      */
     @SpecAssertion(section = "4.2.2", id = "422-D4")
     @Test
-    public void testAdd_ExceedsCapabilities() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+    public void testAdd_ExceedsCapabilities(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount mAmount1 = f.setNumber(0).create();
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             MonetaryAmount mAmount2 = null;
-            if (maxCtx.getPrecision() > 0) {
+            if(maxCtx.getPrecision() > 0){
                 mAmount2 = f.setNumber(createNumberWithPrecision(f, maxCtx.getPrecision())).create();
             }
-            if (maxCtx.getMaxScale() >= 0) {
+            if(maxCtx.getMaxScale() >= 0){
                 MonetaryContext tgtContext =
                         new MonetaryContext.Builder(maxCtx).setMaxScale(maxCtx.getMaxScale() + 1).create();
                 Class<? extends MonetaryAmount> exceedingType = null;
-                try {
+                try{
                     exceedingType = MonetaryAmounts.queryAmountType(tgtContext);
                     assertNotNull(exceedingType);
                     MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
                             MonetaryAmounts.getAmountFactory(exceedingType);
                     mAmount2 = bigFactory.setCurrency("CHF").setNumber(createNumberWithScale(f, maxCtx.getMaxScale()))
                             .create();
-                } catch (MonetaryException e) {
+                }
+                catch(MonetaryException e){
                     // we have to abort the test...
                 }
 
             }
-            if (mAmount2 != null) {
-                try {
+            if(mAmount2 != null){
+                try{
                     mAmount1.add(mAmount2);
                     fail("Exception expected");
-                } catch (MonetaryException ex) {
+                }
+                catch(MonetaryException ex){
                     // Expected
                 }
             }
@@ -908,14 +1038,18 @@ public class ModellingMonetaryAmountsTest{
      */
     @SpecAssertion(section = "4.2.2", id = "422-D5")
     @Test
-    public void testAdd_Null() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+    public void testAdd_Null(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-            try {
+            try{
                 MonetaryAmount mActualResult = mAmount1.add(null);
                 fail("Exception expected");
-            } catch (NullPointerException ex) {
+            }
+            catch(NullPointerException ex){
                 // Expected
             }
         }
@@ -929,6 +1063,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testSubtractPositiveIntegers(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mAmount2 =
@@ -947,6 +1084,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testSubtractNegativeIntegers(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
             MonetaryAmount mAmount2 =
@@ -965,6 +1105,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testSubtractPositiveFractions(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(1.5).create();
             MonetaryAmount mAmount2 =
@@ -983,6 +1126,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testSubtractMixedIntegers(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(20).create();
             MonetaryAmount mAmount2 =
@@ -993,6 +1139,9 @@ public class ModellingMonetaryAmountsTest{
             Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mAmount2 =
@@ -1003,6 +1152,9 @@ public class ModellingMonetaryAmountsTest{
             Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
             MonetaryAmount mAmount2 =
@@ -1021,6 +1173,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testSubtractMixedFractions(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(1.5).create();
             MonetaryAmount mAmount2 =
@@ -1031,6 +1186,9 @@ public class ModellingMonetaryAmountsTest{
             Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-1.5).create();
             MonetaryAmount mAmount2 =
@@ -1041,6 +1199,9 @@ public class ModellingMonetaryAmountsTest{
             Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(2.85).create();
             MonetaryAmount mAmount2 =
@@ -1058,16 +1219,20 @@ public class ModellingMonetaryAmountsTest{
      */
     @SpecAssertion(section = "4.2.2", id = "422-D8")
     @Test
-    public void testSubtract_IncompatibleCurrencies() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+    public void testSubtract_IncompatibleCurrencies(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mAmount2 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(ADDITIONAL_CURRENCY).setNumber(20).create();
-            try {
+            try{
                 MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
                 fail("Exception expected");
-            } catch (MonetaryException ex) {
+            }
+            catch(MonetaryException ex){
                 // Expected
             }
         }
@@ -1080,6 +1245,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testSubtract_Zero(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mAmount2 =
@@ -1095,37 +1263,42 @@ public class ModellingMonetaryAmountsTest{
      */
     @SpecAssertion(section = "4.2.2", id = "422-D9")
     @Test
-    public void testSubtract_ExceedsCapabilities() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+    public void testSubtract_ExceedsCapabilities(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount mAmount1 = f.setNumber(0).create();
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             MonetaryAmount mAmount2 = null;
-            if (maxCtx.getPrecision() > 0) {
+            if(maxCtx.getPrecision() > 0){
                 mAmount2 = f.setNumber(createNumberWithPrecision(f, maxCtx.getPrecision())).create();
             }
-            if (maxCtx.getMaxScale() >= 0) {
+            if(maxCtx.getMaxScale() >= 0){
                 MonetaryContext tgtContext =
                         new MonetaryContext.Builder(maxCtx).setMaxScale(maxCtx.getMaxScale() + 1).create();
                 Class<? extends MonetaryAmount> exceedingType = null;
-                try {
+                try{
                     exceedingType = MonetaryAmounts.queryAmountType(tgtContext);
                     assertNotNull(exceedingType);
                     MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
                             MonetaryAmounts.getAmountFactory(exceedingType);
                     mAmount2 = bigFactory.setCurrency("CHF").setNumber(createNumberWithScale(f, maxCtx.getMaxScale()))
                             .create();
-                } catch (MonetaryException e) {
+                }
+                catch(MonetaryException e){
                     // we have to abort the test...
                 }
 
             }
-            if (mAmount2 != null) {
-                try {
+            if(mAmount2 != null){
+                try{
                     mAmount1.subtract(mAmount2);
                     fail("Exception expected");
-                } catch (MonetaryException ex) {
+                }
+                catch(MonetaryException ex){
                     // Expected
                 }
             }
@@ -1138,14 +1311,18 @@ public class ModellingMonetaryAmountsTest{
      */
     @SpecAssertion(section = "4.2.2", id = "422-D10")
     @Test
-    public void testSubtract_Null() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+    public void testSubtract_Null(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-            try {
+            try{
                 MonetaryAmount mActualResult = mAmount1.subtract(null);
                 fail("Exception expected");
-            } catch (NullPointerException ex) {
+            }
+            catch(NullPointerException ex){
                 // Expected
             }
         }
@@ -1167,14 +1344,20 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testMultiplyOne(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mActualResult = mAmount1.multiply(1);
-            assertTrue(mActualResult == mAmount1);
+            assertTrue("Multiplication with 1 does not return identity value for " + type.getName(),
+                       mActualResult == mAmount1);
             mActualResult = mAmount1.multiply(1.0);
-            assertTrue(mActualResult == mAmount1);
+            assertTrue("Multiplication with 1 does not return identity value for " + type.getName(),
+                       mActualResult == mAmount1);
             mActualResult = mAmount1.multiply(BigDecimal.ONE);
-            assertTrue(mActualResult == mAmount1);
+            assertTrue("Multiplication with 1 does not return identity value for " + type.getName(),
+                       mActualResult == mAmount1);
         }
     }
 
@@ -1197,6 +1380,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testMultiplyNull(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
@@ -1223,14 +1409,18 @@ public class ModellingMonetaryAmountsTest{
      */
     @SpecAssertion(section = "4.2.2", id = "422-D16")
     @Test
-    public void testDivideZero() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+    public void testDivideZero(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-            try {
+            try{
                 MonetaryAmount mActualResult = mAmount1.divide(0);
                 fail("Exception expected");
-            } catch (ArithmeticException ex) {
+            }
+            catch(ArithmeticException ex){
                 // expected
             }
         }
@@ -1243,14 +1433,17 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testDivideOne(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mActualResult = mAmount1.divide(1);
-            assertTrue(mActualResult == mAmount1);
+            assertTrue("Division by 1 does not return identity value for " + type.getName(), mActualResult == mAmount1);
             mActualResult = mAmount1.divide(1.0);
-            assertTrue(mActualResult == mAmount1);
+            assertTrue("Division by 1 does not return identity value for " + type.getName(), mActualResult == mAmount1);
             mActualResult = mAmount1.divide(BigDecimal.ONE);
-            assertTrue(mActualResult == mAmount1);
+            assertTrue("Division by 1 does not return identity value for " + type.getName(), mActualResult == mAmount1);
         }
     }
 
@@ -1261,6 +1454,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testDivideNull(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
@@ -1297,6 +1493,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testRemainderNull(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
@@ -1333,6 +1532,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testDivideAndRemainderNull(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
@@ -1369,6 +1571,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testAbsolute(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount m = f.setNumber(10).create();
@@ -1390,6 +1595,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testNegate(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount m = f.setNumber(100).create();
@@ -1413,6 +1621,9 @@ public class ModellingMonetaryAmountsTest{
             }
         };
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("CHF").setNumber(10).create();
             MonetaryAmount amount2 = amount.with(op);
             assertTrue(amount == amount2);
@@ -1442,6 +1653,9 @@ public class ModellingMonetaryAmountsTest{
             }
         };
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory factory = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
             try{
@@ -1460,6 +1674,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testWithNull(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmountFactory factory = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
             try{
@@ -1485,6 +1702,9 @@ public class ModellingMonetaryAmountsTest{
             }
         };
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("CHF").setNumber(10).create();
             Integer value = amount.query(query);
             assertTrue(value == 10);
@@ -1507,6 +1727,9 @@ public class ModellingMonetaryAmountsTest{
             }
         };
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             ClassTester.testComparable(type);
             MonetaryAmountFactory factory = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
@@ -1526,6 +1749,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testQueryNull(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             ClassTester.testComparable(type);
             MonetaryAmountFactory factory = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
@@ -1548,6 +1774,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testImplementsHashCode(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("USD").setNumber(0).create();
             ClassTester.testHasPublicMethod(type, type, "hashCode");
             MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory(type).setCurrency("USD").setNumber(0).create();
@@ -1566,6 +1795,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testImplementsEquals(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("XXX").setNumber(0).create();
             ClassTester.testHasPublicMethod(type, type, "equals", Object.class);
             MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory(type).setCurrency("XXX").setNumber(0).create();
@@ -1580,6 +1812,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testImplementComparable(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             ClassTester.testComparable(type);
             MonetaryAmountFactory factory = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(0).create();
@@ -1604,6 +1839,9 @@ public class ModellingMonetaryAmountsTest{
     @Test
     public void testSerializable(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
             ClassTester.testComparable(type);
             MonetaryAmountFactory factory = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();

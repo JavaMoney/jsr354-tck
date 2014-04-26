@@ -11,6 +11,7 @@
 
 package org.javamoney.tck.tests.spi;
 
+import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,55 +24,99 @@ import org.junit.Test;
 public class CoreSPITests{
 
 
+    // ***************************************** A. Registering Currencies ***********************************
+
+    /**
+     * Test registered CurrencyProviderSpi (at least one instance
+     * required). Test behaviour,
+     * especially bad case behaviour for invalid
+     * input.
+     */
     @Test
-    public void placeholder(){
-        Assert.fail();
+    @SpecAssertion(id = "451-A1", section = "4.5.1")
+    public void testCurrencyProviderSpi(){
+        Assert.fail("Not implemenmted.");
     }
 
-    /*
-    <group>
-			<text>A. Registering Currencies</text>
-			<assertion id="451-A1">
-				<text>Test registered CurrencyProviderSpi (at least one instance
-					required). Test behaviour,
-					especially bad case behaviour for invalid
-					input.
-				</text>
-			</assertion>
-		</group>
-		<group>
-			<text>B. Registering Monetary Amount Factories</text>
-			<assertion id="451-B1">
-				<text>Test registered MonetaryAmountsSpi (at least one instance
-					required). Test behaviour,
-					especially bad case behaviour for invalid
-					input.
-				</text>
-			</assertion>
-		</group>
-		<group>
-			<text>C. Backing the MonetaryAmounts Singleton</text>
-			<assertion id="451-C1">
-				<text>Test registered RoundingProviderSpi (at least one instance
-					required). Test behaviour,
-					especially bad case behaviour for invalid
-					input.
-				</text>
-			</assertion>
-		</group>
-		<group>
-			<text>D. Registering Roundings</text>
-			<assertion id="451-D1">
-				<text>Test registered RoundingProviderSpi (at least one instance
-					required). Test behaviour,
-					especially bad case behaviour for invalid
-					input.
-				</text>
-			</assertion>
-		</group>
-		<group>
-			<text>E. Adapting Currency Conversion</text>
-		</group>
+    /**
+     * Test registered MonetaryCurrenciesSingletonSpi (at least one instance
+     * required). Test behaviour,
+     * especially bad case behaviour for invalid
+     * input.
      */
+    @Test
+    @SpecAssertion(id = "451-A2", section = "4.5.1")
+    public void testMonetaryCurrenciesSingletonSpi(){
+        Assert.fail("Not implemenmted.");
+    }
+
+
+    // ***************************************** A. Registering Monetary Amount Factories **************************
+
+    /**
+     * Test registered MonetaryAmountsSpi (at least one instance
+     * required). Test behaviour,
+     * especially bad case behaviour for invalid
+     * input.
+     */
+    @Test
+    @SpecAssertion(id = "451-B1", section = "4.5.1")
+    public void testMonetaryAmountFactories(){
+        Assert.fail("Not implemenmted.");
+    }
+
+    // ************************************ C. Backing the MonetaryAmounts Singleton ******************************
+
+    /**
+     * Test registered MonetaryAmountsSingletonSpi (at least one instance
+     * required). Test behaviour,
+     * especially bad case behaviour for invalid
+     * input.
+     */
+    @Test
+    @SpecAssertion(id = "451-C1", section = "4.5.1")
+    public void testMonetaryAmountsSingletonSpi(){
+        Assert.fail("Not implemenmted.");
+    }
+
+    // ************************************ D. Registering Roundings ******************************
+
+    /**
+     * Test registered RoundingProviderSpi (at least one instance
+     * required). Test behaviour,
+     * especially bad case behaviour for invalid
+     * input.
+     */
+    @Test
+    @SpecAssertion(id = "451-D1", section = "4.5.1")
+    public void testRoundingProviderSpi(){
+        Assert.fail("Not implemenmted.");
+    }
+
+    // ************************************ E. Adapting Currency Conversion ******************************
+
+    /**
+     * Test registered ConversionProviderSpi (at least one instance
+     * required). Test behaviour,
+     * especially bad case behaviour for invalid
+     * input.
+     */
+    @Test
+    @SpecAssertion(id = "451-E1", section = "4.5.1")
+    public void testConversionProviderSpi(){
+        Assert.fail("Not implemenmted.");
+    }
+
+    /**
+     * Test registered MonetaryConversionsSingletonSpi (at least one instance
+     * required). Test behaviour,
+     * especially bad case behaviour for invalid
+     * input.
+     */
+    @Test
+    @SpecAssertion(id = "451-E2", section = "4.5.1")
+    public void testMonetaryConversionsSingletonSpi(){
+        Assert.fail("Not implemenmted.");
+    }
 
 }
