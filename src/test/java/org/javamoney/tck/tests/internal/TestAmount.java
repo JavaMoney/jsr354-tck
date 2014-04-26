@@ -13,6 +13,7 @@ import javax.money.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Objects;
 
 /**
  * Created by Anatole on 19.04.2014.
@@ -31,12 +32,84 @@ public final class TestAmount implements MonetaryAmount, Serializable{
 
     @Override
     public MonetaryAmount with(MonetaryOperator operator){
-        return this;
+        return operator.apply(this);
     }
 
     @Override
     public MonetaryAmountFactory<? extends MonetaryAmount> getFactory(){
-        return null;
+
+
+        return new MonetaryAmountFactory<TestAmount>(){
+
+            private CurrencyUnit currency = TestAmount.this.currencyUnit;
+            private BigDecimal number = TestAmount.this.value;
+
+            @Override
+            public Class<? extends MonetaryAmount> getAmountType(){
+                return TestAmount.class;
+            }
+
+            @Override
+            public MonetaryAmountFactory setCurrency(String currencyCode){
+                this.currency = MonetaryCurrencies.getCurrency(currencyCode);
+                return this;
+            }
+
+            @Override
+            public MonetaryAmountFactory setCurrency(CurrencyUnit currency){
+                Objects.requireNonNull(currency);
+                this.currency = currency;
+                return this;
+            }
+
+            @Override
+            public MonetaryAmountFactory setNumber(double number){
+                Objects.requireNonNull(number);
+                this.number = new BigDecimal(String.valueOf(number));
+                return this;
+            }
+
+            @Override
+            public MonetaryAmountFactory setNumber(long number){
+                Objects.requireNonNull(number);
+                this.number = new BigDecimal(String.valueOf(number));
+                return this;
+            }
+
+            @Override
+            public MonetaryAmountFactory setNumber(Number number){
+                Objects.requireNonNull(number);
+                this.number = new BigDecimal(String.valueOf(number));
+                return this;
+            }
+
+            @Override
+            public MonetaryAmountFactory setContext(MonetaryContext monetaryContext){
+                return this;
+            }
+
+            @Override
+            public MonetaryAmountFactory setAmount(MonetaryAmount amount){
+                this.currency = amount.getCurrency();
+                this.number = amount.getNumber().numberValue(BigDecimal.class);
+                return this;
+            }
+
+            @Override
+            public TestAmount create(){
+                return new TestAmount(number, currency);
+            }
+
+            @Override
+            public MonetaryContext getDefaultMonetaryContext(){
+                return MONETARY_CONTEXT;
+            }
+
+            @Override
+            public MonetaryContext getMaximalMonetaryContext(){
+                return MONETARY_CONTEXT;
+            }
+        };
     }
 
     @Override
@@ -223,6 +296,11 @@ public final class TestAmount implements MonetaryAmount, Serializable{
     @Override
     public int compareTo(MonetaryAmount o){
         return 0;
+    }
+
+    @Override
+    public String toString(){
+        return currencyUnit.getCurrencyCode() + ' ' + String.valueOf(value);
     }
 
     @Override

@@ -19,10 +19,17 @@ import java.util.Objects;
 public final class TestCurrencyUnit implements CurrencyUnit, Serializable{
 
     private String code;
+    private int defsultFractionUnits = 11;
 
     public TestCurrencyUnit(String code){
         Objects.requireNonNull(code);
         this.code = code;
+    }
+
+    public TestCurrencyUnit(String code, int defsultFractionUnits){
+        Objects.requireNonNull(code);
+        this.code = code;
+        this.defsultFractionUnits = defsultFractionUnits;
     }
 
     public TestCurrencyUnit(){
@@ -41,7 +48,7 @@ public final class TestCurrencyUnit implements CurrencyUnit, Serializable{
 
     @Override
     public int getDefaultFractionDigits(){
-        return 11;
+        return defsultFractionUnits;
     }
 
     @Override
