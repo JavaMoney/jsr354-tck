@@ -9,15 +9,20 @@
  */
 package org.javamoney.tck.tests.conversion;
 
+import org.javamoney.moneta.BuildableCurrencyUnit;
+import org.javamoney.tck.tests.internal.TestCurrencyUnit;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Assert;
 import org.junit.Test;
 
 import javax.money.CurrencyUnit;
-import javax.money.convert.ConversionContext;
-import javax.money.convert.CurrencyConversionException;
-import javax.money.convert.MonetaryConversions;
+import javax.money.MonetaryAmount;
+import javax.money.MonetaryAmounts;
+import javax.money.MonetaryCurrencies;
+import javax.money.convert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test for converting amounts.
@@ -35,7 +40,13 @@ public class ConvertingAmountsTest{
      */
     @Test @SpecAssertion(id = "432-A1", section="4.3.2")
     public void testConversion(){
-        Assert.fail("Not implemenmted.");
+        CurrencyUnit cu = new TestCurrencyUnit("FOO");
+        CurrencyConversion conv = MonetaryConversions.getConversion(cu, "TestConversionProvider");
+        MonetaryAmount m = MonetaryAmounts.of(10, "CHF");
+        MonetaryAmount m2 = m.with(conv);
+        m2 = m.with(conv);
+        assertEquals(m2.getCurrency().getCurrencyCode(), "FOO");
+        assertEquals(m2.getNumber().longValueExact(), 20L);
     }
 
     /**
@@ -43,7 +54,12 @@ public class ConvertingAmountsTest{
     */
     @Test @SpecAssertion(id = "432-A2", section="4.3.2")
     public void testConversionComparedWithRate(){
-        Assert.fail("Not implemenmted.");
+        final CurrencyUnit FOO = new BuildableCurrencyUnit.Builder("FOO").create();
+        ExchangeRate rate = MonetaryConversions.getExchangeRateProvider("TestConversionProvider").getExchangeRate(MonetaryCurrencies.getCurrency("CHF"), FOO);
+        assertEquals(rate.getBase(),MonetaryCurrencies.getCurrency("CHF") );
+        assertEquals(rate.getTerm().getCurrencyCode(), FOO.getCurrencyCode());
+        assertEquals(rate.getFactor().intValueExact(), 2);
+        assertEquals("TestConversionProvider", rate.getConversionContext().getProvider());
     }
 
     /**
@@ -52,7 +68,10 @@ public class ConvertingAmountsTest{
      */
     @Test(expected=CurrencyConversionException.class) @SpecAssertion(id = "432-A3", section="4.3.2")
     public void testUnsupportedConversion(){
-        Assert.fail("Not implemenmted.");
+        MonetaryAmount m = MonetaryAmounts.of(10, "CHF");
+        CurrencyUnit cu = new BuildableCurrencyUnit.Builder("FOOANY").create();
+        CurrencyConversion conv = MonetaryConversions.getConversion(cu);
+        m.with(conv);
     }
 
     /**

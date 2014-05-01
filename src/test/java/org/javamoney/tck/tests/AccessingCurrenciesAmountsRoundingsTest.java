@@ -167,7 +167,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
 
     /**
      * Ensure the types available, must be at least one type (if one
-     * has a specified AmountFlavor, 2 are recommended).
+     * has a specified AmountFlavor.java, 2 are recommended).
      */
     @Test
     @SpecAssertion(section = "4.2.7", id = "427-B1")
@@ -247,13 +247,13 @@ public class AccessingCurrenciesAmountsRoundingsTest{
         Class type = MonetaryAmounts.queryAmountType(ctx);
         assertNotNull("Amount type query should return explicitly queried type", type);
         assertEquals("Amount type query should return same explicitly queried type", TestAmount.class, type);
-        ctx = new MonetaryContext.Builder().setFlavor(MonetaryContext.AmountFlavor.PRECISION).create();
+        ctx = new MonetaryContext.Builder().setFlavor(AmountFlavor.PRECISION).create();
         type = MonetaryAmounts.queryAmountType(ctx);
         assertNotNull("Amount type for PRECISION amount flavor must be provided", type);
-        ctx = new MonetaryContext.Builder().setFlavor(MonetaryContext.AmountFlavor.PERFORMANCE).create();
+        ctx = new MonetaryContext.Builder().setFlavor(AmountFlavor.PERFORMANCE).create();
         type = MonetaryAmounts.queryAmountType(ctx);
         assertNotNull("Amount type for PERFORMANCE amount flavor must be provided", type);
-        ctx = new MonetaryContext.Builder().setFlavor(MonetaryContext.AmountFlavor.UNDEFINED).create();
+        ctx = new MonetaryContext.Builder().setFlavor(AmountFlavor.UNDEFINED).create();
         type = MonetaryAmounts.queryAmountType(ctx);
         assertNotNull("Amount type for UNDEFINED amount flavor must be provided", type);
     }
@@ -352,8 +352,8 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      */
     @Test
     @SpecAssertion(section = "4.2.7", id = "427-C2")
-    public void testAccessRoundingsWithMonetaryContext(){
-        MonetaryContext ctx = new MonetaryContext.Builder().setMaxScale(1).setAttribute(RoundingMode.UP).create();
+    public void testAccessRoundingsWithRoundingContext(){
+        RoundingContext ctx = new RoundingContext.Builder().setScale(1).setObject(RoundingMode.UP).create();
         MonetaryOperator r = MonetaryRoundings.getRounding(ctx);
         assertNotNull("No rounding provided for MonetaryContext", r);
         MonetaryAmount m =
@@ -363,14 +363,12 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     }
 
     /**
-     * Access roundings using a MonetaryContext. Use different
-     * MathContext/RoundingMode, as an attribute, when running
-     * on the JDK.
+     * Access roundings using a RoundingContext, that is null.
      */
     @Test(expected = NullPointerException.class)
     @SpecAssertion(section = "4.2.7", id = "427-C2")
     public void testAccessRoundingsWithMonetaryContext_Null(){
-        MonetaryOperator r = MonetaryRoundings.getRounding((MonetaryContext) null);
+        MonetaryOperator r = MonetaryRoundings.getRounding((RoundingContext) null);
     }
 
     /**

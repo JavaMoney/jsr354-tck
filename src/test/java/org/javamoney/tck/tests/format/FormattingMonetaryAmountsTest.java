@@ -18,7 +18,7 @@ import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmounts;
 import javax.money.MonetaryCurrencies;
-import javax.money.format.AmountStyle;
+import javax.money.format.AmountFormatContext;
 import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.text.DecimalFormat;
@@ -106,46 +106,48 @@ public class FormattingMonetaryAmountsTest{
         for(Locale jdkDecimalFormatLocale : jdkDecimalFormatLocales){
             MonetaryAmountFormat amountFormat = MonetaryFormats.getAmountFormat(jdkDecimalFormatLocale);
             assertNotNull(amountFormat);
-            assertEquals(jdkDecimalFormatLocale, amountFormat.getAmountStyle().getLocale());
+            assertEquals(jdkDecimalFormatLocale, amountFormat.getAmountFormatContext().getLocale());
         }
     }
 
     /**
      * AccessingMonetaryAmountFormat using
-     * MonetaryFormats.getAmountFormat(AmountStyle style), all locales
+     * MonetaryFormats.getAmountFormat(AmountFormatContext style), all locales
      * available also from java.text.DecimalFormat must be supported
-     * (using AmountStyle.of(Locale)).
+     * (using AmountFormatContext.of(Locale)).
      */
     @Test
     @SpecAssertion(section = "4.4.1", id = "441-B2")
     public void testGetAmountFormat(){
         for(Locale locale : DecimalFormat.getAvailableLocales()){
-            assertNotNull(MonetaryFormats.getAmountFormat(AmountStyle.of(locale)));
+            assertNotNull(MonetaryFormats.getAmountFormat(AmountFormatContext.of(locale)));
         }
     }
 
     /**
      * Test MonetaryFormats.getAvailableLocales, all locales available also from java.text.DecimalFormat must be
-     * supported (using AmountStyle.of(Locale)), more locales are possible.
+     * supported (using AmountFormatContext.of(Locale)), more locales are possible.
      */
     @Test
     @SpecAssertion(section = "4.4.1", id = "441-B3")
     public void testGetAvailableLocales(){
         Set<Locale> locales = MonetaryFormats.getAvailableLocales();
         for(Locale locale : DecimalFormat.getAvailableLocales()){
-            assertTrue(locales.contains(locale));
+            assertTrue(
+                    "MonetaryFormats.getAvailableLocales(); Locale supported by JDKs DecimalFormat is not available: " +
+                            locale, locales.contains(locale));
         }
     }
 
     /**
      * Test MonetaryFormats.getAvailableLocales, all locales available also from java.text.DecimalFormat must be
-     * supported (using AmountStyle.of(Locale)), more locales are possible.
+     * supported (using AmountFormatContext.of(Locale)), more locales are possible.
      */
     @Test
     @SpecAssertion(section = "4.4.1", id = "441-B3")
     public void testAmountStyleOf(){
         for(Locale locale : DecimalFormat.getAvailableLocales()){
-            assertNotNull(AmountStyle.of(locale));
+            assertNotNull(AmountFormatContext.of(locale));
         }
     }
 }

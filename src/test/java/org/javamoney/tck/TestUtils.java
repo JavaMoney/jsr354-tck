@@ -16,18 +16,41 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Arrays;
 
 import junit.framework.Assert;
 
+import javax.money.MonetaryAmountFactory;
 
-public class ClassTester {
+
+public class TestUtils{
 
 	private static final StringBuffer warnings = new StringBuffer();
 
-	private ClassTester() {
+	private TestUtils() {
 
 	}
+
+
+    public static final BigDecimal createNumberWithPrecision(MonetaryAmountFactory f, int precision){
+        StringBuilder b = new StringBuilder(precision + 1);
+        for(int i = 0; i < precision; i++){
+            b.append(String.valueOf(i % 10));
+        }
+        return new BigDecimal(b.toString(), MathContext.UNLIMITED);
+    }
+
+    public static final BigDecimal createNumberWithScale(MonetaryAmountFactory f, int scale){
+        StringBuilder b = new StringBuilder(scale + 2);
+        b.append("9.");
+        for(int i = 0; i < scale; i++){
+            b.append(String.valueOf(i % 10));
+        }
+        return new BigDecimal(b.toString(), MathContext.UNLIMITED);
+    }
+
 
 	public static void testSerializable(Class c) {
 		if (!Serializable.class.isAssignableFrom(c)) {

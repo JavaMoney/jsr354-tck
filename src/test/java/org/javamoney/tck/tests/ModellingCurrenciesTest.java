@@ -9,7 +9,7 @@
  */
 package org.javamoney.tck.tests;
 
-import org.javamoney.tck.ClassTester;
+import org.javamoney.tck.TestUtils;
 import org.javamoney.tck.TCKTestSetup;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
@@ -98,11 +98,11 @@ public class ModellingCurrenciesTest{
     @Test
     public void testCurrencyClassesEqualsHashcode(){
         for(Class type : TCKTestSetup.getTestConfiguration().getCurrencyClasses()){
-            ClassTester.testHasPublicMethod(type, int.class, "hashCode");
+            TestUtils.testHasPublicMethod(type, int.class, "hashCode");
         }
         for(String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
-            ClassTester.testHasPublicMethod(unit.getClass(), int.class, "hashCode");
+            TestUtils.testHasPublicMethod(unit.getClass(), int.class, "hashCode");
         }
     }
 
@@ -117,7 +117,7 @@ public class ModellingCurrenciesTest{
         for(String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
             assertNotNull(unit);
-            ClassTester.testHasPublicMethod(unit.getClass(), boolean.class, "equals", Object.class);
+            TestUtils.testHasPublicMethod(unit.getClass(), boolean.class, "equals", Object.class);
             firstUnits.add(unit);
             CurrencyUnit unit2 = MonetaryCurrencies.getCurrency(code);
             assertNotNull(unit);
@@ -125,7 +125,7 @@ public class ModellingCurrenciesTest{
         }
         for(String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
-            ClassTester.testHasPublicMethod(unit.getClass(), boolean.class, "equals", Object.class);
+            TestUtils.testHasPublicMethod(unit.getClass(), boolean.class, "equals", Object.class);
         }
         for(int i = 0; i < firstUnits.size(); i++){
             assertEquals(firstUnits.get(i), secondUnits.get(i));
@@ -139,11 +139,11 @@ public class ModellingCurrenciesTest{
     @Test
     public void testCurrencyClassesComparable(){
         for(Class type : TCKTestSetup.getTestConfiguration().getCurrencyClasses()){
-            ClassTester.testComparable(type);
+            TestUtils.testComparable(type);
         }
         for(String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
-            ClassTester.testComparable(unit.getClass());
+            TestUtils.testComparable(unit.getClass());
         }
     }
 
@@ -154,11 +154,11 @@ public class ModellingCurrenciesTest{
     @Test
     public void testIsImmutable(){
         for(Class type : TCKTestSetup.getTestConfiguration().getCurrencyClasses()){
-            ClassTester.testImmutable(type);
+            TestUtils.testImmutable(type);
         }
         for(String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
-            ClassTester.testImmutable(unit.getClass());
+            TestUtils.testImmutable(unit.getClass());
         }
     }
 
@@ -169,11 +169,11 @@ public class ModellingCurrenciesTest{
     @Test
     public void testImplementsSerializable(){
         for(Class type : TCKTestSetup.getTestConfiguration().getCurrencyClasses()){
-            ClassTester.testSerializable(type);
+            TestUtils.testSerializable(type);
         }
         for(String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
-            ClassTester.testSerializable(unit);
+            TestUtils.testSerializable(unit);
         }
     }
 
