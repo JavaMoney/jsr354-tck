@@ -56,7 +56,7 @@
 		<license.licenseResolver>src/license</license.licenseResolver>
 
 		<jboss.test.audit.version>1.1.0.FINAL</jboss.test.audit.version>
-        <!-- 1.1.1-SNAPSHOT -->
+		<!-- 1.1.1-SNAPSHOT -->
 		<!-- or 1.1.0.Final. -->
 		<impl.groupId>org.javamoney</impl.groupId>
 		<impl.artifactId>moneta</impl.artifactId>
@@ -438,30 +438,30 @@
 				</plugin>
 
 				<plugin>
-                <groupId>org.bsc.maven</groupId>
-                <artifactId>maven-processor-plugin</artifactId>
-                <version>2.0.4</version>
-                <configuration>
-                    <defaultOutputDirectory>${basedir}/target/coverage-report</defaultOutputDirectory>
-                    <processors>
-                        <processor>org.jboss.test.audit.report.CoverageProcessor</processor>
-                    </processors>
-                    <!--  -AauditXml=${basedir}/src/test/resources/audit.xml -->
-                    <compilerArguments>
-                        -AoutputDir=${basedir}/target/coverage-report -source ${java.source.version}
-                        -target ${java.target.version}
-                    </compilerArguments>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>process</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>process-test</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+					<groupId>org.bsc.maven</groupId>
+					<artifactId>maven-processor-plugin</artifactId>
+					<version>2.0.4</version>
+					<configuration>
+						<defaultOutputDirectory>${basedir}/target/coverage-report</defaultOutputDirectory>
+						<processors>
+							<processor>org.jboss.test.audit.report.CoverageProcessor</processor>
+						</processors>
+						<!-- -AauditXml=${basedir}/src/test/resources/audit.xml -->
+						<compilerArguments>
+							-AoutputDir=${basedir}/target/coverage-report -source ${java.source.version}
+							-target ${java.target.version}
+						</compilerArguments>
+					</configuration>
+					<executions>
+						<execution>
+							<id>process</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>process-test</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -481,6 +481,30 @@
 						<exclude>org/javamoney/tck/TCKTestSetup*</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.asciidoctor</groupId>
+				<artifactId>asciidoctor-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>output-html</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>process-asciidoc</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/docs</outputDirectory>
+							<sourceHighlighter>highlightjs</sourceHighlighter> <!-- coderay -->
+							<backend>html</backend>
+							<embedAssets>true</embedAssets>
+							<imagesDir>arc/main/asciidoc/images</imagesDir>
+						</configuration>
+					</execution>
+					<!-- execution> <id>output-pdf</id> <phase>generate-resources</phase> 
+						<goals> <goal>process-asciidoc</goal> </goals> <configuration> <outputDirectory>target/docs</outputDirectory> 
+						<sourceHighlighter>highlightjs</sourceHighlighter> <backend>pdf</backend> 
+						</configuration> </execution -->
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
