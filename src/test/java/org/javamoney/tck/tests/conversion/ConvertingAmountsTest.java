@@ -13,7 +13,6 @@ import org.javamoney.moneta.BuildableCurrencyUnit;
 import org.javamoney.tck.tests.internal.TestCurrencyUnit;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Assert;
 import org.junit.Test;
 
 import javax.money.CurrencyUnit;
