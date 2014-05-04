@@ -8,6 +8,7 @@ import javax.money.convert.*;
 /**
  * Created by Anatole on 26.04.2014.
  */
+// TODO why not call it TestRateProvider?
 public class TestConversionProvider implements ExchangeRateProvider{
 
     private ProviderContext PC = new ProviderContext.Builder("TestConversionProvider").create();
