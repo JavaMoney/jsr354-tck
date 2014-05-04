@@ -15,7 +15,6 @@ import org.javamoney.tck.tests.internal.TestCurrencyUnit;
 import org.javamoney.tck.tests.internal.TestMonetaryAmountFactory;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Assert;
 import org.junit.Test;
 
 import javax.money.*;
@@ -378,7 +377,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     @Test
     @SpecAssertion(section = "4.2.7", id = "427-C3")
     public void testAccessCustomRoundings(){
-        Set<String> ids = MonetaryRoundings.getCustomRoundingIds();
+        Set<String> ids = MonetaryRoundings.getRoundingIds();
         assertNotNull("Custom Rounding key are null", ids);
         assertTrue("At least NOSCALE custom rounding must be present", ids.contains("NOSCALE"));
     }
