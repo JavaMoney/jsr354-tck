@@ -243,17 +243,17 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     @Test
     @SpecAssertion(section = "4.2.7", id = "427-B4")
     public void testAmountQueryType(){
-        MonetaryContext ctx = new MonetaryContext.Builder(TestAmount.class).create();
+        MonetaryContext ctx = new MonetaryContext.Builder(TestAmount.class).build();
         Class type = MonetaryAmounts.queryAmountType(ctx);
         assertNotNull("Amount type query should return explicitly queried type", type);
         assertEquals("Amount type query should return same explicitly queried type", TestAmount.class, type);
-        ctx = new MonetaryContext.Builder().setFlavor(AmountFlavor.PRECISION).create();
+        ctx = new MonetaryContext.Builder().setFlavor(AmountFlavor.PRECISION).build();
         type = MonetaryAmounts.queryAmountType(ctx);
         assertNotNull("Amount type for PRECISION amount flavor must be provided", type);
-        ctx = new MonetaryContext.Builder().setFlavor(AmountFlavor.PERFORMANCE).create();
+        ctx = new MonetaryContext.Builder().setFlavor(AmountFlavor.PERFORMANCE).build();
         type = MonetaryAmounts.queryAmountType(ctx);
         assertNotNull("Amount type for PERFORMANCE amount flavor must be provided", type);
-        ctx = new MonetaryContext.Builder().setFlavor(AmountFlavor.UNDEFINED).create();
+        ctx = new MonetaryContext.Builder().setFlavor(AmountFlavor.UNDEFINED).build();
         type = MonetaryAmounts.queryAmountType(ctx);
         assertNotNull("Amount type for UNDEFINED amount flavor must be provided", type);
     }
@@ -353,7 +353,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     @Test
     @SpecAssertion(section = "4.2.7", id = "427-C2")
     public void testAccessRoundingsWithRoundingContext(){
-        RoundingContext ctx = new RoundingContext.Builder().setScale(1).setObject(RoundingMode.UP).create();
+        RoundingContext ctx = new RoundingContext.Builder().setScale(1).setObject(RoundingMode.UP).build();
         MonetaryOperator r = MonetaryRoundings.getRounding(ctx);
         assertNotNull("No rounding provided for MonetaryContext", r);
         MonetaryAmount m =

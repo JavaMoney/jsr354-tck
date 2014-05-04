@@ -998,7 +998,7 @@ public class ModellingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() >= 0){
                 MonetaryContext tgtContext =
-                        new MonetaryContext.Builder(maxCtx).setMaxScale(maxCtx.getMaxScale() + 1).create();
+                        new MonetaryContext.Builder(maxCtx).setMaxScale(maxCtx.getMaxScale() + 1).build();
                 Class<? extends MonetaryAmount> exceedingType = null;
                 try{
                     exceedingType = MonetaryAmounts.queryAmountType(tgtContext);
@@ -1281,7 +1281,7 @@ public class ModellingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() >= 0){
                 MonetaryContext tgtContext =
-                        new MonetaryContext.Builder(maxCtx).setMaxScale(maxCtx.getMaxScale() + 1).create();
+                        new MonetaryContext.Builder(maxCtx).setMaxScale(maxCtx.getMaxScale() + 1).build();
                 Class<? extends MonetaryAmount> exceedingType = null;
                 try{
                     exceedingType = MonetaryAmounts.queryAmountType(tgtContext);

@@ -11,8 +11,8 @@ import javax.money.convert.*;
 // TODO why not call it TestRateProvider?
 public class TestConversionProvider implements ExchangeRateProvider{
 
-    private ProviderContext PC = new ProviderContext.Builder("TestConversionProvider").create();
-    private ConversionContext CC = new ConversionContext.Builder(PC, RateType.OTHER).create();
+    private ProviderContext PC = new ProviderContext.Builder("TestConversionProvider").build();
+    private ConversionContext CC = new ConversionContext.Builder(PC, RateType.OTHER).build();
     private CurrencyUnit TERM = new TestCurrencyUnit("FOO");
 
     private CurrencyConversion CONVERSION = new CurrencyConversion(){
@@ -30,7 +30,7 @@ public class TestConversionProvider implements ExchangeRateProvider{
         @Override
         public ExchangeRate getExchangeRate(MonetaryAmount sourceAmount){
             return new ExchangeRate.Builder(CC).setFactor(new TestNumberValue(2)).setBase(sourceAmount.getCurrency())
-                    .setTerm(TERM).create();
+                    .setTerm(TERM).build();
         }
 
         @Override
@@ -73,7 +73,7 @@ public class TestConversionProvider implements ExchangeRateProvider{
     public ExchangeRate getExchangeRate(CurrencyUnit base, CurrencyUnit term){
         if(isAvailable(base, term)){
             return new ExchangeRate.Builder(CC).setFactor(new TestNumberValue(2)).setBase(base)
-                    .setTerm(TERM).create();
+                    .setTerm(TERM).build();
         }
         return null;
     }

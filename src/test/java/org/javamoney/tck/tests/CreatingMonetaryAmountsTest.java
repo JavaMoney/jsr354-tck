@@ -122,7 +122,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 ||
@@ -130,7 +130,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
@@ -139,14 +139,14 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the scale set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
@@ -172,7 +172,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 ||
@@ -180,7 +180,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
@@ -189,14 +189,14 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the scale set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
@@ -222,7 +222,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 ||
@@ -230,7 +230,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
@@ -239,14 +239,14 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the scale set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
@@ -298,13 +298,13 @@ public class CreatingMonetaryAmountsTest{
                 f.setCurrency("USD");
                 MonetaryContext maxCtx = f.getMaximalMonetaryContext();
                 if(maxCtx.getPrecision() != 0){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(maxCtx.getPrecision() + 1).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(maxCtx.getPrecision() + 1).build());
                     fail("Factory should throw MonetaryException for invalid context (exceeding precision), " +
                                  "type was " +
                                  type.getName());
                 }
                 if(maxCtx.getMaxScale() != -1){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(maxCtx.getMaxScale() + 1).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(maxCtx.getMaxScale() + 1).build());
                     fail("Factory should throw MonetaryException for invalid context (exceeding scale), type was " +
                                  type.getName());
                 }
@@ -364,7 +364,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 ||
@@ -372,7 +372,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
@@ -381,14 +381,14 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the scale set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
@@ -414,7 +414,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 ||
@@ -422,7 +422,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
@@ -431,14 +431,14 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the scale set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
@@ -464,7 +464,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 ||
@@ -472,7 +472,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
@@ -481,14 +481,14 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the scale set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
@@ -590,7 +590,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 ||
@@ -598,7 +598,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
@@ -607,14 +607,14 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the scale set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
@@ -640,7 +640,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 ||
@@ -648,7 +648,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
@@ -657,14 +657,14 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the scale set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
@@ -690,7 +690,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 ||
@@ -698,7 +698,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(new MonetaryContext.Builder().setPrecision(p).create());
+                    f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
@@ -707,14 +707,14 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the scale set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).create());
+                    f.setContext(new MonetaryContext.Builder().setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
                                m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
