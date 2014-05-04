@@ -53,7 +53,7 @@ public class ConvertingAmountsTest{
     */
     @Test @SpecAssertion(id = "432-A2", section="4.3.2")
     public void testConversionComparedWithRate(){
-        final CurrencyUnit FOO = new BuildableCurrencyUnit.Builder("FOO").create();
+        final CurrencyUnit FOO = new BuildableCurrencyUnit.Builder("FOO").build();
         ExchangeRate rate = MonetaryConversions.getExchangeRateProvider("TestConversionProvider").getExchangeRate(MonetaryCurrencies.getCurrency("CHF"), FOO);
         assertEquals(rate.getBase(),MonetaryCurrencies.getCurrency("CHF") );
         assertEquals(rate.getTerm().getCurrencyCode(), FOO.getCurrencyCode());
@@ -68,7 +68,7 @@ public class ConvertingAmountsTest{
     @Test(expected=CurrencyConversionException.class) @SpecAssertion(id = "432-A3", section="4.3.2")
     public void testUnsupportedConversion(){
         MonetaryAmount m = MonetaryAmounts.of(10, "CHF");
-        CurrencyUnit cu = new BuildableCurrencyUnit.Builder("FOOANY").create();
+        CurrencyUnit cu = new BuildableCurrencyUnit.Builder("FOOANY").build();
         CurrencyConversion conv = MonetaryConversions.getConversion(cu);
         m.with(conv);
     }
