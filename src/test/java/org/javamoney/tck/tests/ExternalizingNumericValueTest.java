@@ -9,11 +9,18 @@
  */
 package org.javamoney.tck.tests;
 
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+
+import org.javamoney.tck.tests.internal.TestAmount;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
+import javax.money.MonetaryAmount;
+import javax.money.MonetaryAmounts;
+import javax.money.NumberValue;
 
 /**
  * Testing Numeric Externalization for numeric values of MonetaryAmount instances.
@@ -22,14 +29,24 @@ import static org.junit.Assert.fail;
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class ExternalizingNumericValueTest{
 
+    private final static String DEFAULT_CURRENCY = "CHF";
+
     /**
-     * Checks if number type is not null and returning a concrete (no
-     abstract class or interface).
+     * Checks if number type is not null
      */
     @SpecAssertion(section = "4.2.3", id = "423-A1")
     @Test
-    public void testValidNumberType(){
-        fail("Not yet implemented");
+    public void testReturningNumberValueIsNotNull(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
+            MonetaryAmount mAmount1 =
+                MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+
+                NumberValue result = mAmount1.getNumber();
+                assertThat(result, notNullValue());
+        }
     }
 
     /**
