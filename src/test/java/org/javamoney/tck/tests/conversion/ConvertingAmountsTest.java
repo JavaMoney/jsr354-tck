@@ -41,7 +41,7 @@ public class ConvertingAmountsTest{
     public void testConversion(){
         CurrencyUnit cu = new TestCurrencyUnit("FOO");
         CurrencyConversion conv = MonetaryConversions.getConversion(cu, "TestConversionProvider");
-        MonetaryAmount m = MonetaryAmounts.of(10, "CHF");
+        MonetaryAmount m = MonetaryAmounts.getAmountFactory().setNumber(10).setCurrency("CHF").create();
         MonetaryAmount m2 = m.with(conv);
         m2 = m.with(conv);
         assertEquals(m2.getCurrency().getCurrencyCode(), "FOO");
@@ -67,7 +67,7 @@ public class ConvertingAmountsTest{
      */
     @Test(expected=CurrencyConversionException.class) @SpecAssertion(id = "432-A3", section="4.3.2")
     public void testUnsupportedConversion(){
-        MonetaryAmount m = MonetaryAmounts.of(10, "CHF");
+        MonetaryAmount m = MonetaryAmounts.getAmountFactory().setNumber(10).setCurrency("CHF").create();
         CurrencyUnit cu = new BuildableCurrencyUnit.Builder("FOOANY").build();
         CurrencyConversion conv = MonetaryConversions.getConversion(cu);
         m.with(conv);

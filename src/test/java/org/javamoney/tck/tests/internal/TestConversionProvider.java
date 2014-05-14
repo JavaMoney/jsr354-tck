@@ -1,5 +1,7 @@
 package org.javamoney.tck.tests.internal;
 
+import org.javamoney.tck.tests.conversion.TestExchangeRate;
+
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
 import javax.money.MonetaryCurrencies;
@@ -29,7 +31,7 @@ public class TestConversionProvider implements ExchangeRateProvider{
 
         @Override
         public ExchangeRate getExchangeRate(MonetaryAmount sourceAmount){
-            return new ExchangeRate.Builder(CC).setFactor(new TestNumberValue(2)).setBase(sourceAmount.getCurrency())
+            return new TestExchangeRate.Builder(CC).setFactor(new TestNumberValue(2)).setBase(sourceAmount.getCurrency())
                     .setTerm(TERM).build();
         }
 
@@ -39,8 +41,8 @@ public class TestConversionProvider implements ExchangeRateProvider{
         }
 
         @Override
-        public <T extends MonetaryAmount> T apply(T value){
-            return (T)value.multiply(2).getFactory().setCurrency(TERM).create();
+        public MonetaryAmount apply(MonetaryAmount value){
+            return value.multiply(2).getFactory().setCurrency(TERM).create();
         }
     };
 
@@ -72,7 +74,7 @@ public class TestConversionProvider implements ExchangeRateProvider{
     @Override
     public ExchangeRate getExchangeRate(CurrencyUnit base, CurrencyUnit term){
         if(isAvailable(base, term)){
-            return new ExchangeRate.Builder(CC).setFactor(new TestNumberValue(2)).setBase(base)
+            return new TestExchangeRate.Builder(CC).setFactor(new TestNumberValue(2)).setBase(base)
                     .setTerm(TERM).build();
         }
         return null;

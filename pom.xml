@@ -41,8 +41,8 @@
 
 	<properties>
 		<jsr.version>0.9-SNAPSHOT</jsr.version>
-		<java.source.version>1.7</java.source.version>
-		<java.target.version>1.7</java.target.version>
+		<java.source.version>1.8</java.source.version>
+		<java.target.version>1.8</java.target.version>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
 		<maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -55,7 +55,7 @@
 		<license.licenseName>jcp_spec</license.licenseName>
 		<license.licenseResolver>src/license</license.licenseResolver>
 
-		<jboss.test.audit.version>1.1.0.FINAL</jboss.test.audit.version>
+		<jboss.test.audit.version>1.1.1.CR1</jboss.test.audit.version>
 		<!-- 1.1.1-SNAPSHOT -->
 		<!-- or 1.1.0.Final. -->
 		<impl.groupId>org.javamoney</impl.groupId>

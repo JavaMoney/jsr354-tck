@@ -118,8 +118,6 @@ public class ModellingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             MonetaryContext mc = f.setNumber(0).create().getMonetaryContext();
             assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(), mc.getAmountType(), type);
-            assertEquals("Invalid MonetaryContext(amountFlavor) for " + type.getName(), defCtx.getAmountFlavor(),
-                         mc.getAmountFlavor());
             if(maxCtx.getPrecision() > 0){
                 assertTrue("Invalid MonetaryContext(precision) for " + type.getName(),
                            mc.getPrecision() <= maxCtx.getPrecision());
@@ -132,8 +130,6 @@ public class ModellingMonetaryAmountsTest{
                          f.setNumber(0.34746d).create().getMonetaryContext().getAmountType(), type);
             mc = f.setNumber(0).create().getMonetaryContext();
             assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(), mc.getAmountType(), type);
-            assertEquals("Invalid MonetaryContext(amountFlavor) for " + type.getName(), mc.getAmountFlavor(),
-                         defCtx.getAmountFlavor());
             if(maxCtx.getPrecision() > 0){
                 assertTrue("Invalid MonetaryContext(precision) for " + type.getName(),
                            mc.getPrecision() <= maxCtx.getPrecision());
@@ -146,8 +142,6 @@ public class ModellingMonetaryAmountsTest{
                          f.setNumber(100034L).create().getMonetaryContext().getAmountType(), type);
             mc = f.setNumber(0).create().getMonetaryContext();
             assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(), mc.getAmountType(), type);
-            assertEquals("Invalid MonetaryContext(amountFlavor) for " + type.getName(), mc.getAmountFlavor(),
-                         defCtx.getAmountFlavor());
             if(maxCtx.getPrecision() > 0){
                 assertTrue("Invalid MonetaryContext(precision) for " + type.getName(),
                            mc.getPrecision() <= maxCtx.getPrecision());
@@ -1321,7 +1315,7 @@ public class ModellingMonetaryAmountsTest{
             }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-            try{
+                try{
                 MonetaryAmount mActualResult = mAmount1.subtract(null);
                 fail("Exception expected");
             }
@@ -1874,12 +1868,7 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-E1")
     @Test
     public void testWith(){
-        MonetaryOperator op = new MonetaryOperator(){
-            @Override
-            public <T extends MonetaryAmount> T apply(T value){
-                return value;
-            }
-        };
+        MonetaryOperator op = (amount) -> amount;
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
                 continue;
@@ -1889,12 +1878,7 @@ public class ModellingMonetaryAmountsTest{
             assertTrue(amount == amount2);
             final MonetaryAmount result =
                     MonetaryAmounts.getAmountFactory(type).setCurrency("CHF").setNumber(4).create();
-            MonetaryOperator op2 = new MonetaryOperator(){
-                @Override
-                public <T extends MonetaryAmount> T apply(T value){
-                    return (T) result;
-                }
-            };
+            MonetaryOperator op2 = (m) -> result;
             amount2 = amount.with(op);
             assertTrue(amount == amount2);
         }
@@ -1908,7 +1892,7 @@ public class ModellingMonetaryAmountsTest{
     public void testWithInvalidOperator(){
         MonetaryOperator op = new MonetaryOperator(){
             @Override
-            public <T extends MonetaryAmount> T apply(T value){
+            public MonetaryAmount apply(MonetaryAmount value){
                 throw new IllegalStateException();
             }
         };

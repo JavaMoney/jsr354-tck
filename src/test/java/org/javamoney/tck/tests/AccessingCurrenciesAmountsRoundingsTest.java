@@ -246,15 +246,9 @@ public class AccessingCurrenciesAmountsRoundingsTest{
         Class type = MonetaryAmounts.queryAmountType(ctx);
         assertNotNull("Amount type query should return explicitly queried type", type);
         assertEquals("Amount type query should return same explicitly queried type", TestAmount.class, type);
-        ctx = new MonetaryContext.Builder().setFlavor(AmountFlavor.PRECISION).build();
+        ctx = new MonetaryContext.Builder().build();
         type = MonetaryAmounts.queryAmountType(ctx);
-        assertNotNull("Amount type for PRECISION amount flavor must be provided", type);
-        ctx = new MonetaryContext.Builder().setFlavor(AmountFlavor.PERFORMANCE).build();
-        type = MonetaryAmounts.queryAmountType(ctx);
-        assertNotNull("Amount type for PERFORMANCE amount flavor must be provided", type);
-        ctx = new MonetaryContext.Builder().setFlavor(AmountFlavor.UNDEFINED).build();
-        type = MonetaryAmounts.queryAmountType(ctx);
-        assertNotNull("Amount type for UNDEFINED amount flavor must be provided", type);
+        assertNotNull("Amount type must be provided", type);
     }
 
     /**

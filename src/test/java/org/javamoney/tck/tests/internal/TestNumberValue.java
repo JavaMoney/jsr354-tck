@@ -44,6 +44,16 @@ public final class TestNumberValue extends NumberValue{
     }
 
     @Override
+    public long getAmountFractionNumerator(){
+        return 0;
+    }
+
+    @Override
+    public long getAmountFractionDenominator(){
+        return 0;
+    }
+
+    @Override
     public <T extends Number> T numberValue(Class<T> numberType){
         if(numberType.equals(Integer.class)){
             return (T) Integer.valueOf(value.intValue());
