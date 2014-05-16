@@ -10,8 +10,7 @@ import javax.money.convert.*;
 /**
  * Created by Anatole on 26.04.2014.
  */
-// TODO why not call it TestRateProvider?
-public class TestConversionProvider implements ExchangeRateProvider{
+public class TestRateProvider implements ExchangeRateProvider{
 
     private ProviderContext PC = new ProviderContext.Builder("TestConversionProvider").build();
     private ConversionContext CC = new ConversionContext.Builder(PC, RateType.OTHER).build();
@@ -53,12 +52,12 @@ public class TestConversionProvider implements ExchangeRateProvider{
 
     @Override
     public boolean isAvailable(CurrencyUnit base, CurrencyUnit term){
-        return "FOO".equals(term.getCurrencyCode());
+        return "FOO".equals(term.getCurrencyCode()) || "XXX".equals(term.getCurrencyCode());
     }
 
     @Override
     public boolean isAvailable(CurrencyUnit base, CurrencyUnit term, ConversionContext conversionContext){
-        return "FOO".equals(term.getCurrencyCode());
+        return "FOO".equals(term.getCurrencyCode()) || "XXX".equals(term.getCurrencyCode());
     }
 
     @Override
@@ -75,23 +74,24 @@ public class TestConversionProvider implements ExchangeRateProvider{
     public ExchangeRate getExchangeRate(CurrencyUnit base, CurrencyUnit term){
         if(isAvailable(base, term)){
             return new TestExchangeRate.Builder(CC).setFactor(new TestNumberValue(2)).setBase(base)
-                    .setTerm(TERM).build();
+                    .setTerm(term).build();
         }
         return null;
     }
 
     @Override
     public ExchangeRate getExchangeRate(CurrencyUnit base, CurrencyUnit term, ConversionContext conversionContext){
-        if(isAvailable(base, term)){
-            return getExchangeRate(base,term);
+        if(isAvailable(base, term, conversionContext)){
+            return new TestExchangeRate.Builder(conversionContext).setFactor(new TestNumberValue(2)).setBase(base)
+                    .setTerm(term).build();
         }
         return null;
     }
 
     @Override
     public ExchangeRate getExchangeRate(String baseCode, String termCode){
-        if(TERM.getCurrencyCode().equals(termCode)){
-            return getExchangeRate(MonetaryCurrencies.getCurrency(baseCode),TERM);
+        if(isAvailable(baseCode, termCode)){
+            return getExchangeRate(MonetaryCurrencies.getCurrency(baseCode), TERM);
         }
         return null;
     }

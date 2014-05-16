@@ -41,10 +41,9 @@
 
 	<properties>
 		<jsr.version>0.9-SNAPSHOT</jsr.version>
-		<java.source.version>1.8</java.source.version>
-		<java.target.version>1.8</java.target.version>
-		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
-		<maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
+        <jdkVersion>1.8</jdkVersion>
+        <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
+        <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<moduleDir>.</moduleDir>
@@ -448,8 +447,8 @@
 						</processors>
 						<!-- -AauditXml=${basedir}/src/test/resources/audit.xml -->
 						<compilerArguments>
-							-AoutputDir=${basedir}/target/coverage-report -source ${java.source.version}
-							-target ${java.target.version}
+							-AoutputDir=${basedir}/target/coverage-report -source ${jdkVersion}
+							-target ${jdkVersion}
 						</compilerArguments>
 					</configuration>
 					<executions>
