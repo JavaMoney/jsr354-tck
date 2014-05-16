@@ -6,13 +6,14 @@ import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
 import javax.money.MonetaryCurrencies;
 import javax.money.convert.*;
+import java.util.Objects;
 
 /**
  * Created by Anatole on 26.04.2014.
  */
 public class TestRateProvider implements ExchangeRateProvider{
 
-    private ProviderContext PC = new ProviderContext.Builder("TestConversionProvider").build();
+    private ProviderContext PC = new ProviderContext.Builder("TestConversionProvider", RateType.OTHER).build();
     private ConversionContext CC = new ConversionContext.Builder(PC, RateType.OTHER).build();
     private CurrencyUnit TERM = new TestCurrencyUnit("FOO");
 
@@ -52,6 +53,8 @@ public class TestRateProvider implements ExchangeRateProvider{
 
     @Override
     public boolean isAvailable(CurrencyUnit base, CurrencyUnit term){
+        Objects.requireNonNull(base);
+        Objects.requireNonNull(term);
         return "FOO".equals(term.getCurrencyCode()) || "XXX".equals(term.getCurrencyCode());
     }
 
@@ -62,7 +65,7 @@ public class TestRateProvider implements ExchangeRateProvider{
 
     @Override
     public boolean isAvailable(String baseCode, String termCode){
-        return false;
+        return "Foo".equals(termCode) || "XXX".equals(termCode);
     }
 
     @Override
@@ -119,7 +122,7 @@ public class TestRateProvider implements ExchangeRateProvider{
 
     @Override
     public CurrencyConversion getCurrencyConversion(CurrencyUnit term, ConversionContext conversionContext){
-        if(TERM.getCurrencyCode().equals(term.getCurrencyCode())){
+        if(TERM.getCurrencyCode().equals(term.getCurrencyCode()) || "XXX".equals(term.getCurrencyCode())){
             return CONVERSION;
         }
         return null;

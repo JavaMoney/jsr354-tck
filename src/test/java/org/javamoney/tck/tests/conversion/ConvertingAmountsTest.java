@@ -45,7 +45,7 @@ public class ConvertingAmountsTest{
         MonetaryAmount m2 = m.with(conv);
         m2 = m.with(conv);
         assertEquals(m2.getCurrency().getCurrencyCode(), "FOO");
-        assertEquals(m2.getNumber().longValueExact(), 20L);
+        assertEquals(20L, m2.getNumber().longValueExact());
     }
 
     /**
