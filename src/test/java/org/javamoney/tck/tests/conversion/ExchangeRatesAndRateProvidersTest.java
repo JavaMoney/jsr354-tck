@@ -123,7 +123,7 @@ public class ExchangeRatesAndRateProvidersTest{
             ExchangeRate rate = prov.getExchangeRate(base.getCurrencyCode(), "XXX", ConversionContext.ANY_CONVERSION);
             assertNotNull("Identity rate, accessed by getExchangeRate(String, String, ConversionContext), " +
                                   "is not defined for " +
-                                  base.getCurrencyCode() + " -> " + FOO_UNIT.getCurrencyCode()
+                                  base.getCurrencyCode() + " -> " + FOO_UNIT.getCurrencyCode(), rate
             );
             assertEquals(rate.getBase().getCurrencyCode(), base.getCurrencyCode());
             assertEquals(rate.getTerm().getCurrencyCode(), "XXX");

@@ -70,7 +70,7 @@ public class TestRateProvider implements ExchangeRateProvider{
 
     @Override
     public boolean isAvailable(String baseCode, String termCode, ConversionContext conversionContext){
-        return false;
+        return "Foo".equals(termCode) || "XXX".equals(termCode);
     }
 
     @Override
@@ -101,8 +101,8 @@ public class TestRateProvider implements ExchangeRateProvider{
 
     @Override
     public ExchangeRate getExchangeRate(String baseCode, String termCode, ConversionContext conversionContext){
-        if(TERM.getCurrencyCode().equals(termCode)){
-            return getExchangeRate(MonetaryCurrencies.getCurrency(baseCode),TERM);
+        if(isAvailable(baseCode, termCode, conversionContext)){
+            return getExchangeRate(MonetaryCurrencies.getCurrency(baseCode),MonetaryCurrencies.getCurrency(termCode));
         }
         return null;
     }

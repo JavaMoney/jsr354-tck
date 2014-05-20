@@ -82,14 +82,21 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-A3")
     @Test
     public void testValidLong(){
-        long[] nums = new long[]{-3, -1, 0, 1, 3};
+        long[] nums = new long[]{1, 3, 11, 123, 12345, 1223345566, 1234523462532753243L};
         for(long num : nums){
             for(Class type : MonetaryAmounts.getAmountTypes()){
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 =
-                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // could be that the number exceeds the amount's capabilities...
+                    continue;
+                }
                 NumberValue result = mAmount1.getNumber();
                 assertThat("Amount creation failed for " + type, result, notNullValue());
                 assertEquals("Number value (long) returned is not correct for " + type.getName(), num,
@@ -108,7 +115,7 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-A4")
     @Test
     public void testValidDouble(){
-        double[] nums = new double[]{-3, -3.5 - 1, -1.2, 0, 0.3, 1, 1.3453};
+        double[] nums = new double[]{0, 0.3, 1, 1.3453};
         for(double num : nums){
             for(Class type : MonetaryAmounts.getAmountTypes()){
                 if(type.equals(TestAmount.class)){
@@ -224,7 +231,7 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-A7")
     @Test
     public void testValidLongWithTruncation(){
-        double[] nums = new double[]{-3.12334, -1.23345, 0.4343, 1.3343435, 5.345454};
+        double[] nums = new double[]{0.4343, 1.3343435, 5.345454};
         for(double num : nums){
             for(Class type : MonetaryAmounts.getAmountTypes()){
                 if(type.equals(TestAmount.class)){
@@ -261,7 +268,27 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-A8")
     @Test
     public void testValidDoubleWithTruncation(){
-        fail("Not yet implemented");
+        Number[] nums = new Number[]{new BigDecimal("26353527352735725372357.287362873287362836283"), 3232232334423L,
+                33434243242342342434.5d, 1L, 1.24355354543534545d, (short) 0, 0.3, (byte) 1, 1.3453, 32432532};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // can happen if capabilities are exceeded
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
+            }
+        }
     }
 
     /**
@@ -270,8 +297,153 @@ public class ExternalizingNumericValueTest{
      */
     @SpecAssertion(section = "4.2.3", id = "423-A9")
     @Test
-    public void testValidNumberWithTruncation(){
-        fail("Not yet implemented");
+    public void testValidNumberWithTruncation_Byte(){
+        Number[] nums = new Number[]{-3232423, -3.5f - 1L, -1.2d, (short) 0, 0.3, (byte) 1, 1.3453, 32432532};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // can happen if capabilities are exceeded
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (Byte, truncating) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).byteValue(),
+                             result.numberValue(Byte.class).byteValue());
+            }
+        }
+    }
+
+    /**
+     * Check if a correct Number value is returned, truncation is
+     * allowed to be performed.
+     */
+    @SpecAssertion(section = "4.2.3", id = "423-A9")
+    @Test
+    public void testValidNumberWithTruncation_Short(){
+        Number[] nums = new Number[]{-3232423, -3.5f - 1L, -1.2d, (short) 0, 0.3, (byte) 1, 1.3453, 32432532};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // can happen if capabilities are exceeded
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (Short, truncating) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).shortValue(),
+                             result.numberValue(Short.class).shortValue());
+            }
+        }
+    }
+
+    /**
+     * Check if a correct Number value is returned, truncation is
+     * allowed to be performed.
+     */
+    @SpecAssertion(section = "4.2.3", id = "423-A9")
+    @Test
+    public void testValidNumberWithTruncation_Float(){
+        Number[] nums =
+                new Number[]{-3232232334423L, -33434243242342342434.5d - 1L, -1.24355354543534545d, (short) 0, 0.3,
+                        (byte) 1, 1.3453, 32432532};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // can happen if capabilities are exceeded
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (Float, truncating) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).floatValue(),
+                             result.numberValue(Float.class).floatValue());
+            }
+        }
+    }
+
+    /**
+     * Check if a correct Number value is returned, truncation is
+     * allowed to be performed.
+     */
+    @SpecAssertion(section = "4.2.3", id = "423-A9")
+    @Test
+    public void testValidNumberWithTruncation_Double(){
+        Number[] nums = new Number[]{new BigDecimal("26353527352735725372357.287362873287362836283"),
+                new BigDecimal("-26353527352735725372357.287362873287362836283"), -3232232334423L,
+                -33434243242342342434.5d - 1L, -1.24355354543534545d, (short) 0, 0.3, (byte) 1, 1.3453, 32432532};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // can happen if capabilities are exceeded
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).doubleValue(),
+                             result.numberValue(Double.class).floatValue());
+            }
+        }
+    }
+
+
+    /**
+     * Check if a correct Number value is returned, truncation is
+     * allowed to be performed.
+     */
+    @SpecAssertion(section = "4.2.3", id = "423-A9")
+    @Test
+    public void testValidNumberWithTruncation_Integer(){
+        Number[] nums = new Number[]{-3232423, -3.5f - 1L, -1.2d, (short) 0, 0.3, (byte) 1, 1.3453, 32432532};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // can happen if capabilities are exceeded
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (short, truncating) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).intValue(),
+                             result.numberValue(Integer.class).intValue());
+            }
+        }
     }
 
     /**
@@ -350,7 +522,23 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-B1")
     @Test
     public void testNumberTypeNegative(){
-        fail("Not yet implemented");
+        Number[] nums = new Number[]{-1213243544435L, -3, -3.5f - 1L, -1.2d, -21323234324324.23};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 =
+                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (BigDecimal) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).stripTrailingZeros(),
+                             result.numberValue(BigDecimal.class).stripTrailingZeros());
+                assertEquals("Exact number value (BigDecimal) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).stripTrailingZeros(),
+                             result.numberValue(BigDecimal.class).stripTrailingZeros());
+            }
+        }
     }
 
     /**
@@ -360,7 +548,22 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-B2")
     @Test
     public void testIntegerNegative(){
-        fail("Not yet implemented");
+        int[] nums = new int[]{-1, -3, -11, -123, -12345, -1223345566};
+        for(long num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 =
+                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                NumberValue result = mAmount1.getNumber();
+                assertThat("Amount creation failed for " + type, result, notNullValue());
+                assertEquals("Number value (int) returned is not correct for " + type.getName(), num,
+                             result.intValue());
+                assertEquals("Exact number (int) returned is not correct for " + type.getName(), num,
+                             result.intValueExact());
+            }
+        }
     }
 
     /**
@@ -370,7 +573,29 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-B3")
     @Test
     public void testLongNegative(){
-        fail("Not yet implemented");
+        long[] nums = new long[]{-1, -3, -11, -123, -12345, -1223345566, -1234523462532753243L};
+        for(long num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // can happen, if number exceeds capabilities.
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertThat("Amount creation failed for " + type, result, notNullValue());
+                assertEquals("Number value (long) returned is not correct for " + type.getName(), num,
+                             result.longValue());
+                assertEquals("Exact number (long) returned is not correct for " + type.getName(), num,
+                             result.longValueExact());
+            }
+        }
     }
 
     /**
@@ -380,7 +605,7 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-B4")
     @Test
     public void testDoubleNegative(){
-        double[] nums = new double[]{-3.12334, -1.235, -0.43, -1.35, -52.4, -12345,123, -1223243.342325435};
+        double[] nums = new double[]{-3.12334, -1.235, -0.43, -1.35, -52.4, -12345, 123, -1223243.342325435};
         for(double num : nums){
             for(Class type : MonetaryAmounts.getAmountTypes()){
                 if(type.equals(TestAmount.class)){
@@ -396,16 +621,8 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (double, truncated) returned is not correct for " + type.getName(), (int) num,
+                assertEquals("Number value (double, truncated) returned is not correct for " + type.getName(), num,
                              result.doubleValue(), 0.0d);
-                try{
-                    result.doubleValueExact();
-                    fail("Number value (double, exact -> truncated) must throw ArithemticException on truncation for " +
-                                 type.getName());
-                }
-                catch(ArithmeticException e){
-                    // OK
-                }
             }
         }
     }
@@ -429,7 +646,26 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-B6")
     @Test
     public void testIntegerWithTruncationNegative(){
-        fail("Not yet implemented");
+        double[] nums = new double[]{-1.1, -3.12, -11.123, -123.1234, -12345.12233, -1223345566.2332432};
+        for(double num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // can hhappen if number exceeds capabilities
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (int) returned is not correct for " + type.getName(), (int) num,
+                             result.intValue());
+            }
+        }
     }
 
     /**
@@ -439,7 +675,34 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-B7")
     @Test
     public void testLongWithTruncationNegative(){
-        fail("Not yet implemented");
+        double[] nums = new double[]{-3.12334, -1.23345, -1223234.23};
+        for(double num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(MonetaryException | ArithmeticException e){
+                    // It is possible, that our test may exceed the capabilities, so in that case, we just continue
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (long, truncated) returned is not correct for " + type.getName(), (long) num,
+                             result.intValue());
+                try{
+                    result.longValueExact();
+                    fail("Number value (long, exact -> truncated) must throw ArithemticException on truncation for " +
+                                 type.getName());
+                }
+                catch(ArithmeticException e){
+                    // OK
+                }
+            }
+        }
     }
 
     /**
@@ -449,7 +712,27 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-B8")
     @Test
     public void testDoubleWithTruncationNegative(){
-        fail("Not yet implemented");
+        Number[] nums = new Number[]{new BigDecimal("-26353527352735725372357.287362873287362836283"), -3232232334423L,
+                -33434243242342342434.5d, -1L, -1.24355354543534545d, (short) -0, -0.3, (byte) -1, -1.3453, 32432532};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // can happen if capabilities are exceeded
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
+            }
+        }
     }
 
     /**
@@ -460,7 +743,139 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-B9")
     @Test
     public void testNumberValueWithTruncationNegative(){
-        fail("Not yet implemented");
+        Number[] nums = new Number[]{-1213243544435L, -3234, -3.5f - 1.1, -1.2d, -21323234324324.23};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 =
+                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                             (long) new BigDecimal(String.valueOf(num)).byteValue(),
+                             (long) result.numberValue(Byte.class));
+            }
+        }
+    }
+
+    /**
+     * Check if a correct double value is returned, truncation is
+     * allowed to be performed. Check should be done for every JDK type
+     * supported.
+     */
+    @SpecAssertion(section = "4.2.3", id = "423-B9")
+    @Test
+    public void testNumberValueWithTruncationNegative_Short(){
+        Number[] nums = new Number[]{-1213243544435L, -3234, -3.5f - 1.1, -1.2d, -21323234324324.23};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 =
+                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                             (long) new BigDecimal(String.valueOf(num)).shortValue(),
+                             (long) result.numberValue(Short.class));
+            }
+        }
+    }
+
+    /**
+     * Check if a correct double value is returned, truncation is
+     * allowed to be performed. Check should be done for every JDK type
+     * supported.
+     */
+    @SpecAssertion(section = "4.2.3", id = "423-B9")
+    @Test
+    public void testNumberValueWithTruncationNegative_Integer(){
+        Number[] nums = new Number[]{-1213243544435L, -3234, -3.5f - 1.1, -1.2d, -21323234324324.23};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 =
+                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                             (long) new BigDecimal(String.valueOf(num)).intValue(),
+                             (long) result.numberValue(Integer.class));
+            }
+        }
+    }
+
+    /**
+     * Check if a correct double value is returned, truncation is
+     * allowed to be performed. Check should be done for every JDK type
+     * supported.
+     */
+    @SpecAssertion(section = "4.2.3", id = "423-B9")
+    @Test
+    public void testNumberValueWithTruncationNegative_Long(){
+        Number[] nums = new Number[]{-1213243544435L, -3234, -3.5f - 1.1, -1.2d, -21323234324324.23};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 =
+                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                             (long) new BigDecimal(String.valueOf(num)).longValue(),
+                             (long) result.numberValue(Long.class));
+            }
+        }
+    }
+
+    /**
+     * Check if a correct double value is returned, truncation is
+     * allowed to be performed. Check should be done for every JDK type
+     * supported.
+     */
+    @SpecAssertion(section = "4.2.3", id = "423-B9")
+    @Test
+    public void testNumberValueWithTruncationNegative_Float(){
+        Number[] nums = new Number[]{-1213243544435L, -3234, -3.5f - 1.1, -1.2d, -21323234324324.23};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 =
+                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).floatValue(),
+                             result.numberValue(Float.class).floatValue(), 0.0d);
+            }
+        }
+    }
+
+    /**
+     * Check if a correct double value is returned, truncation is
+     * allowed to be performed. Check should be done for every JDK type
+     * supported.
+     */
+    @SpecAssertion(section = "4.2.3", id = "423-B9")
+    @Test
+    public void testNumberValueWithTruncationNegative_Double(){
+        Number[] nums = new Number[]{-1213243544435L, -3234, -3.5f - 1.1, -1.2d, -21323234324324.23};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 =
+                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (BigDecimal -> double) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).floatValue(), result.numberValue(Double.class), 0.0d);
+            }
+        }
     }
 
     /**
@@ -536,7 +951,38 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-C1")
     @Test
     public void testNumberTypeZero(){
-        fail("Not yet implemented");
+        Number[] nums =
+                new Number[]{new BigDecimal("-0.0"), new BigDecimal("0"), new BigInteger("0"), 0, 0L, (byte) 0, 0.0f,
+                        0.0d};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // can happen if capabilities are exceeded
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (byte) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).byteValue(), (byte)0, result.numberValue(Byte.class).byteValue());
+                assertEquals("Number value (short) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).shortValue(), (short)0, result.numberValue(Short.class).shortValue());
+                assertEquals("Number value (int) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).intValue(), 0, result.numberValue(Integer.class).intValue());
+                assertEquals("Number value (long) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).longValue(), (long)0, result.numberValue(Long.class).longValue());
+                assertEquals("Number value (float) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).floatValue(), 0.0f, result.numberValue(Float.class).floatValue());
+                assertEquals("Number value (double) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).doubleValue(), 0.0f, result.numberValue(Double.class).doubleValue());
+            }
+        }
     }
 
     /**
@@ -563,8 +1009,8 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (double, truncating) returned is not correct for " + num + ", type; " +
-                                     type.getName(), 0.0d, result.doubleValue(), 0.0d);
+                assertEquals("Number value (int, truncating) returned is not correct for " + num + ", type; " +
+                                     type.getName(), 0, result.intValue());
             }
         }
     }
@@ -576,7 +1022,29 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-C3")
     @Test
     public void testLongZero(){
-        fail("Not yet implemented");
+        Number[] nums = new Number[]{0, 0.0, -0.0, new BigDecimal("0.00000000000000000000000000000"),
+                new BigDecimal("-0.00000000000000000000000000000"), new BigInteger("0")};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(MonetaryException | ArithmeticException e){
+                    // It is possible, that our test may exceed the capabilities, so in that case, we just continue
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (long, truncating) returned is not correct for " + num + ", type; " +
+                                     type.getName(), 0L, result.longValue());
+                assertEquals("Number value (long, exact) returned is not correct for " + num + ", type; " +
+                                     type.getName(), 0L, result.longValue());
+            }
+        }
     }
 
     /**
@@ -586,7 +1054,26 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-C4")
     @Test
     public void testDoubleZero(){
-        fail("Not yet implemented");
+        double[] nums = new double[]{0.0, -0.0};
+        for(double num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(MonetaryException | ArithmeticException e){
+                    // It is possible, that our test may exceed the capabilities, so in that case, we just continue
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (double, truncated) returned is not correct for " + type.getName(), num,
+                             result.doubleValue(), 0.0d);
+            }
+        }
     }
 
     /**
@@ -598,7 +1085,38 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-C5")
     @Test
     public void testNumberValueZero(){
-        fail("Not yet implemented");
+        Number[] nums = new Number[]{0.0, -0.0, new BigDecimal("0.00000"), new BigDecimal("-0.000000000000000000000"),
+                new BigInteger("0")};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(MonetaryException | ArithmeticException e){
+                    // It is possible, that our test may exceed the capabilities, so in that case, we just continue
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (Number, long) returned is not correct for " + num + ", type; " +
+                                     type.getName(), 0L, result.numberValue(BigDecimal.class).longValueExact());
+                assertEquals("Number value (Number, short) returned is not correct for " + num + ", type; " +
+                                     type.getName(), 0.0f, result.numberValue(Short.class).floatValue(), 0.0f);
+                assertEquals("Number value (Number, int) returned is not correct for " + num + ", type; " +
+                                     type.getName(), 0, result.numberValue(Short.class).intValue());
+                assertEquals("Number value (Number, double) returned is not correct for " + num + ", type; " +
+                                     type.getName(), 0.0d, result.numberValue(Double.class).doubleValue(), 0.0f);
+                assertEquals("Number value (Number, BigInteger) returned is not correct for " + num + ", type; " +
+                                     type.getName(), 0L, result.numberValue(BigInteger.class).longValueExact());
+                assertEquals("Number value (Number, BigDecimal) returned is not correct for " + num + ", type; " +
+                                     type.getName(), 0L, result.numberValue(BigDecimal.class).longValueExact());
+                result.numberValueExact(BigDecimal.class);
+            }
+        }
     }
 
     /**
@@ -610,7 +1128,35 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-C6")
     @Test
     public void testIntegerValueWithTruncationZero(){
-        fail("Not yet implemented");
+        Number[] nums =
+                new Number[]{0.01, -0.02, new BigDecimal("0.000001"), new BigDecimal("-0.0000000000000000000001")};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(MonetaryException | ArithmeticException e){
+                    // It is possible, that our test may exceed the capabilities, so in that case, we just continue
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (int, truncating) returned is not correct for " + num + ", type; " +
+                                     type.getName(), 0L, result.intValue());
+                try{
+                    result.intValueExact();
+                    fail("Number value (int, exact) should throw ArithmeticException for " + num + ", type; " +
+                                 type.getName());
+                }
+                catch(ArithmeticException e){
+                    // OK, as expected!
+                }
+            }
+        }
     }
 
     /**
@@ -622,7 +1168,35 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-C7")
     @Test
     public void testLongValueWithTruncationZero(){
-        fail("Not yet implemented");
+        Number[] nums =
+                new Number[]{0.01, -0.02, new BigDecimal("0.000001"), new BigDecimal("-0.0000000000000000000001")};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(MonetaryException | ArithmeticException e){
+                    // It is possible, that our test may exceed the capabilities, so in that case, we just continue
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (long, truncating) returned is not correct for " + num + ", type; " +
+                                     type.getName(), 0L, result.longValue());
+                try{
+                    result.longValueExact();
+                    fail("Number value (long, exact) should throw ArithmeticException for " + num + ", type; " +
+                                 type.getName());
+                }
+                catch(ArithmeticException e){
+                    // OK, as expected!
+                }
+            }
+        }
     }
 
     /**
@@ -634,7 +1208,29 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-C8")
     @Test
     public void testDoubleValueWithTruncationZero(){
-        fail("Not yet implemented");
+        Number[] nums = new Number[]{new BigDecimal("0.00000000000000000000000000000000000000000000000000000000000000000000000000000000001"),
+                new BigDecimal("-0.00000000000000000000000000000000000000000000000000000000000000000000000000000000001")};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // can happen if capabilities are exceeded
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
+                assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(), 0.0d,
+                             result.doubleValue(), 0.0d);
+            }
+        }
     }
 
     /**
@@ -646,7 +1242,26 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-C9")
     @Test
     public void testNumberValueWithTruncationZero(){
-        fail("Not yet implemented");
+        Number[] nums = new Number[]{new BigDecimal("-0000000000000000.00000000000000000000000000000000000001234")};
+        for(Number num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // can happen if capabilities are exceeded
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
+            }
+        }
     }
 
     /**
@@ -657,7 +1272,9 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-C10")
     @Test
     public void testPrecisionZero(){
-        String[] nums = new String[]{"-0", "0", "-0.0", "0.0", "-0.00", "0.00", "-0.000", "0.0000", "0.00000", "-0.0000000", "-0.000000000", "-0.00000000000"};
+        String[] nums =
+                new String[]{"-0", "0", "-0.0", "0.0", "-0.00", "0.00", "-0.000", "0.0000", "0.00000", "-0.0000000",
+                        "-0.000000000", "-0.00000000000"};
         for(String num : nums){
             for(Class type : MonetaryAmounts.getAmountTypes()){
                 if(type.equals(TestAmount.class)){
@@ -674,8 +1291,8 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Amount's scale does not match for " + bd + " correct for " + type.getName(), bd.scale(),
-                             result.getScale());
+                assertEquals("Amount's scale does not match for " + bd + " correct for " + type.getName(), bd.precision(),
+                             result.getPrecision());
             }
         }
     }
