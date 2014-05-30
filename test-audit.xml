@@ -572,11 +572,10 @@
 					allowed to be performed.
 				</text>
 			</assertion>
-			<assertion id="423-C4">
-				<text>Check if a correct double value is returned, no truncation is
-					allowed to be performed.
-				</text>
-			</assertion>
+            <assertion id="423-C4" testable="false">
+                <text>This test aspect was removed.
+                </text>
+            </assertion>
 			<assertion id="423-C5">
 				<text>Check if a correct number value is returned, no truncation is
 					allowed to be performed.

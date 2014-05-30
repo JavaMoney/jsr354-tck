@@ -14,7 +14,7 @@ import org.javamoney.tck.tests.internal.TestAmount;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Assert;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import javax.money.*;
 import java.math.BigDecimal;

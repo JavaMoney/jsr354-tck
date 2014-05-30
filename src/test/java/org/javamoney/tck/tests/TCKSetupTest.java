@@ -12,7 +12,7 @@ package org.javamoney.tck.tests;
 import org.javamoney.tck.TCKTestSetup;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import java.util.Collection;
 

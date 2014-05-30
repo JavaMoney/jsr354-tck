@@ -14,7 +14,7 @@ package org.javamoney.tck.tests.spi;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Assert;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 /**
  * Tests for the core SPI implementation.

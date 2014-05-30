@@ -12,7 +12,7 @@ package org.javamoney.tck.tests.conversion;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Assert;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import javax.money.MonetaryCurrencies;
 import javax.money.MonetaryException;
@@ -240,7 +240,7 @@ public class MonetaryConversionsTest{
     /**
      * Bad case: Test access of an inexistent provider. Should throw a MonetaryException
      */
-    @Test(expected = MonetaryException.class)
+    @Test(expectedExceptions = MonetaryException.class)
     @SpecAssertion(id = "431-A6", section = "4.3.1",
                    note = "Accessing an invalid provider name, should throw a MonetaryException.")
     public void testUseInvalidProvider(){
@@ -251,7 +251,7 @@ public class MonetaryConversionsTest{
      * Bad case: Test access of an inexistent provider within a chain of providers (all other providers must be valid).
      * Should throw a MonetaryException
      */
-    @Test(expected = MonetaryException.class)
+    @Test(expectedExceptions = MonetaryException.class)
     @SpecAssertion(id = "431-A7", section = "4.3.1",
                    note = "Accessing an invalid provider name within a name chain, should throw a MonetaryException.")
     public void testUseInvalidProviderWithinChain(){

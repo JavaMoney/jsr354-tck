@@ -13,7 +13,7 @@ import org.javamoney.moneta.BuildableCurrencyUnit;
 import org.javamoney.tck.tests.internal.TestCurrencyUnit;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
@@ -84,7 +84,7 @@ public class ConvertingAmountsTest{
     /**
      * Bad case: try converting from/to a null currency, ensure NullPointerException is thrown.
      */
-    @Test(expected=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
+    @Test(expectedExceptions=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
     public void testNullConversion1(){
         MonetaryConversions.getConversion((CurrencyUnit)null);
     }
@@ -92,7 +92,7 @@ public class ConvertingAmountsTest{
     /**
      * Bad case: try converting from/to a null currency, ensure NullPointerException is thrown.
      */
-    @Test(expected=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
+    @Test(expectedExceptions=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
     public void testNullConversion2(){
         MonetaryConversions.getConversion((String)null);
     }
@@ -100,7 +100,7 @@ public class ConvertingAmountsTest{
     /**
      * Bad case: try converting from/to a null currency, ensure NullPointerException is thrown.
      */
-    @Test(expected=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
+    @Test(expectedExceptions=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
     public void testNullConversion3(){
         MonetaryConversions.getConversion((CurrencyUnit) null, ConversionContext.of());
     }
@@ -108,7 +108,7 @@ public class ConvertingAmountsTest{
     /**
      * Bad case: try converting from/to a null currency, ensure NullPointerException is thrown.
      */
-    @Test(expected=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
+    @Test(expectedExceptions=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
     public void testNullConversion4(){
         MonetaryConversions.getConversion((String)null, ConversionContext.of());
     }

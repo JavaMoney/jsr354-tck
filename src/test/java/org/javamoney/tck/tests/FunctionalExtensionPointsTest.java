@@ -13,7 +13,7 @@ import junit.extensions.TestSetup;
 import org.javamoney.tck.TCKTestSetup;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import javax.money.MonetaryOperator;
 import java.util.Collection;

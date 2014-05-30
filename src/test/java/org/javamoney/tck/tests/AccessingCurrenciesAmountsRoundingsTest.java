@@ -15,7 +15,7 @@ import org.javamoney.tck.tests.internal.TestCurrencyUnit;
 import org.javamoney.tck.tests.internal.TestMonetaryAmountFactory;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import javax.money.*;
 import java.math.BigDecimal;
@@ -331,7 +331,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Access roundings using all defined currencies, including TCK
      * custom currencies.
      */
-    @Test(expected = NullPointerException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     @SpecAssertion(section = "4.2.7", id = "427-C1")
     public void testAccessRoundingsForCustomCurrencies_Explicit_Null(){
         MonetaryRoundings.getRounding((CurrencyUnit) null);
@@ -358,7 +358,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     /**
      * Access roundings using a RoundingContext, that is null.
      */
-    @Test(expected = NullPointerException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     @SpecAssertion(section = "4.2.7", id = "427-C2")
     public void testAccessRoundingsWithMonetaryContext_Null(){
         MonetaryOperator r = MonetaryRoundings.getRounding((RoundingContext) null);
@@ -393,7 +393,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     /**
      * Test TCK custom roundings.
      */
-    @Test(expected = NullPointerException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     @SpecAssertion(section = "4.2.7", id = "427-C4")
     public void testCustomRoundings_Null(){
         MonetaryRoundings.getRounding((String) null);
@@ -402,7 +402,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     /**
      * Test TCK custom roundings.
      */
-    @Test(expected = MonetaryException.class)
+    @Test(expectedExceptions = MonetaryException.class)
     @SpecAssertion(section = "4.2.7", id = "427-C4")
     public void testCustomRoundings_Foo(){
         MonetaryRoundings.getRounding("foo");

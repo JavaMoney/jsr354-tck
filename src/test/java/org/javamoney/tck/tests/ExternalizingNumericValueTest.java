@@ -12,12 +12,13 @@ package org.javamoney.tck.tests;
 import org.javamoney.tck.tests.internal.TestAmount;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmounts;
 import javax.money.MonetaryException;
 import javax.money.NumberValue;
+import javax.money.spi.MonetaryAmountFactoryProviderSpi;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -378,7 +379,7 @@ public class ExternalizingNumericValueTest{
                 NumberValue result = mAmount1.getNumber();
                 assertEquals("Number value (Float, truncating) returned is not correct for " + type.getName(),
                              new BigDecimal(String.valueOf(num)).floatValue(),
-                             result.numberValue(Float.class).floatValue());
+                             result.numberValue(Float.class).floatValue(),0.0f);
             }
         }
     }
@@ -410,7 +411,7 @@ public class ExternalizingNumericValueTest{
                 NumberValue result = mAmount1.getNumber();
                 assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
                              new BigDecimal(String.valueOf(num)).doubleValue(),
-                             result.numberValue(Double.class).floatValue());
+                             result.numberValue(Double.class).doubleValue(),0.0d);
             }
         }
     }
@@ -1199,39 +1200,6 @@ public class ExternalizingNumericValueTest{
         }
     }
 
-    /**
-     * Check if a correct double value is returned, truncation is
-     * allowed to be performed.
-     * Check should be done for every JDK type
-     * supported.
-     */
-    @SpecAssertion(section = "4.2.3", id = "423-C8")
-    @Test
-    public void testDoubleValueWithTruncationZero(){
-        Number[] nums = new Number[]{new BigDecimal("0.00000000000000000000000000000000000000000000000000000000000000000000000000000000001"),
-                new BigDecimal("-0.00000000000000000000000000000000000000000000000000000000000000000000000000000000001")};
-        for(Number num : nums){
-            for(Class type : MonetaryAmounts.getAmountTypes()){
-                if(type.equals(TestAmount.class)){
-                    continue;
-                }
-                MonetaryAmount mAmount1 = null;
-                try{
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
-                            .create();
-                }
-                catch(ArithmeticException | MonetaryException e){
-                    // can happen if capabilities are exceeded
-                    continue;
-                }
-                NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
-                assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(), 0.0d,
-                             result.doubleValue(), 0.0d);
-            }
-        }
-    }
 
     /**
      * Check if a correct Number value is returned, truncation is
@@ -1298,9 +1266,7 @@ public class ExternalizingNumericValueTest{
     }
 
     /**
-     * Check if a correct precision value is returned.
-     * Check should be done for every JDK type
-     * supported.
+     * Check if a correct scale value is returned. For 0 the scale should always be 0.
      */
     @SpecAssertion(section = "4.2.3", id = "423-C11")
     @Test
@@ -1322,7 +1288,7 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Amount's scale does not match for " + bd + " correct for " + type.getName(), bd.scale(),
+                assertEquals("Amount's scale does not match for " + num + " correct for " + type.getName(), 0,
                              result.getScale());
             }
         }
