@@ -18,7 +18,6 @@ import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmounts;
 import javax.money.MonetaryException;
 import javax.money.NumberValue;
-import javax.money.spi.MonetaryAmountFactoryProviderSpi;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -33,6 +32,12 @@ import static org.junit.Assert.*;
 public class ExternalizingNumericValueTest{
 
     private final static String DEFAULT_CURRENCY = "CHF";
+
+    private Class[] requiredJdkTykes =
+            new Class[]{Integer.class, Long.class, Double.class, BigDecimal.class, BigInteger.class};
+
+    private Class[] optionalJdkTykes = new Class[]{Byte.class, Short.class, Float.class};
+
 
     /**
      * Checks if number type is not null
@@ -379,7 +384,7 @@ public class ExternalizingNumericValueTest{
                 NumberValue result = mAmount1.getNumber();
                 assertEquals("Number value (Float, truncating) returned is not correct for " + type.getName(),
                              new BigDecimal(String.valueOf(num)).floatValue(),
-                             result.numberValue(Float.class).floatValue(),0.0f);
+                             result.numberValue(Float.class).floatValue(), 0.0f);
             }
         }
     }
@@ -411,7 +416,7 @@ public class ExternalizingNumericValueTest{
                 NumberValue result = mAmount1.getNumber();
                 assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
                              new BigDecimal(String.valueOf(num)).doubleValue(),
-                             result.numberValue(Double.class).doubleValue(),0.0d);
+                             result.numberValue(Double.class).doubleValue(), 0.0d);
             }
         }
     }
@@ -629,7 +634,7 @@ public class ExternalizingNumericValueTest{
     }
 
     /**
-     * Check if a correct number value is returned, no truncation is
+     * Check if a correct number value is returned, truncation is
      * allowed to be performed.
      * Check should be done for every JDK type
      * supported.
@@ -637,7 +642,53 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-B5")
     @Test
     public void testNumberWithTruncationNegative(){
-        fail("Not yet implemented");
+        double[] nums = new double[]{-1, -1.1, -1111111111111111111111111111111111111111.11111111111111111111111d};
+        for(double num : nums){
+            for(Class type : MonetaryAmounts.getAmountTypes()){
+                if(type.equals(TestAmount.class)){
+                    continue;
+                }
+                MonetaryAmount mAmount1 = null;
+                BigDecimal dec = new BigDecimal(String.valueOf(num));
+                try{
+                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                            .create();
+                }
+                catch(ArithmeticException | MonetaryException e){
+                    // can hhappen if number exceeds capabilities
+                    continue;
+                }
+                NumberValue result = mAmount1.getNumber();
+                for(Class numType : requiredJdkTykes){
+                    if(Byte.class.equals(numType)){
+                        assertEquals("Truncating conversion to byte failed for type " + type.getName(), dec.byteValue(),
+                                     result.byteValue());
+                    }else if(Short.class.equals(numType)){
+                        assertEquals("Truncating conversion to short failed for type " + type.getName(),
+                                     dec.shortValue(), result.shortValue());
+                    }else if(Integer.class.equals(numType)){
+                        assertEquals("Truncating conversion to int failed for type " + type.getName(), dec.intValue(),
+                                     result.intValue());
+                    }else if(Long.class.equals(numType)){
+                        assertEquals("Truncating conversion to long failed for type " + type.getName(), dec.longValue(),
+                                     result.longValue());
+                    }else if(Float.class.equals(numType)){
+                        assertEquals("Truncating conversion to float failed for type " + type.getName(),
+                                     dec.floatValue(), result.floatValue(), 0.0f);
+                    }else if(Double.class.equals(numType)){
+                        assertEquals("Truncating conversion to double failed for type " + type.getName(),
+                                     dec.doubleValue(), result.doubleValue(), 0.0d);
+                    }else if(BigDecimal.class.equals(numType)){
+                        assertEquals("Truncating conversion to BigDecimal failed for type " + type.getName(),
+                                     dec.stripTrailingZeros(),
+                                     result.numberValue(BigDecimal.class).stripTrailingZeros());
+                    }else if(BigInteger.class.equals(numType)){
+                        assertEquals("Truncating conversion to BigInteger failed for type " + type.getName(),
+                                     dec.toBigInteger(), result.numberValue(BigInteger.class));
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -780,6 +831,8 @@ public class ExternalizingNumericValueTest{
                 assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
                              (long) new BigDecimal(String.valueOf(num)).shortValue(),
                              (long) result.numberValue(Short.class));
+                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                             (long) new BigDecimal(String.valueOf(num)).shortValue(), (long) result.shortValue());
             }
         }
     }
@@ -804,6 +857,8 @@ public class ExternalizingNumericValueTest{
                 assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
                              (long) new BigDecimal(String.valueOf(num)).intValue(),
                              (long) result.numberValue(Integer.class));
+                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                             (long) new BigDecimal(String.valueOf(num)).intValue(), (long) result.intValue());
             }
         }
     }
@@ -828,6 +883,8 @@ public class ExternalizingNumericValueTest{
                 assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
                              (long) new BigDecimal(String.valueOf(num)).longValue(),
                              (long) result.numberValue(Long.class));
+                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                             (long) new BigDecimal(String.valueOf(num)).longValue(), (long) result.longValue());
             }
         }
     }
@@ -852,6 +909,8 @@ public class ExternalizingNumericValueTest{
                 assertEquals("Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
                              new BigDecimal(String.valueOf(num)).floatValue(),
                              result.numberValue(Float.class).floatValue(), 0.0d);
+                assertEquals("Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).floatValue(), result.floatValue(), 0.0d);
             }
         }
     }
@@ -874,7 +933,10 @@ public class ExternalizingNumericValueTest{
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
                 assertEquals("Number value (BigDecimal -> double) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).floatValue(), result.numberValue(Double.class), 0.0d);
+                             new BigDecimal(String.valueOf(num)).doubleValue(),
+                             result.numberValue(Double.class).doubleValue(), 0.0d);
+                assertEquals("Number value (BigDecimal -> double) returned is not correct for " + type.getName(),
+                             new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
             }
         }
     }
@@ -971,17 +1033,23 @@ public class ExternalizingNumericValueTest{
                 }
                 NumberValue result = mAmount1.getNumber();
                 assertEquals("Number value (byte) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).byteValue(), (byte)0, result.numberValue(Byte.class).byteValue());
+                             new BigDecimal(String.valueOf(num)).byteValue(), (byte) 0,
+                             result.numberValue(Byte.class).byteValue());
                 assertEquals("Number value (short) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).shortValue(), (short)0, result.numberValue(Short.class).shortValue());
+                             new BigDecimal(String.valueOf(num)).shortValue(), (short) 0,
+                             result.numberValue(Short.class).shortValue());
                 assertEquals("Number value (int) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).intValue(), 0, result.numberValue(Integer.class).intValue());
+                             new BigDecimal(String.valueOf(num)).intValue(), 0,
+                             result.numberValue(Integer.class).intValue());
                 assertEquals("Number value (long) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).longValue(), (long)0, result.numberValue(Long.class).longValue());
+                             new BigDecimal(String.valueOf(num)).longValue(), (long) 0,
+                             result.numberValue(Long.class).longValue());
                 assertEquals("Number value (float) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).floatValue(), 0.0f, result.numberValue(Float.class).floatValue());
+                             new BigDecimal(String.valueOf(num)).floatValue(), 0.0f,
+                             result.numberValue(Float.class).floatValue());
                 assertEquals("Number value (double) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).doubleValue(), 0.0f, result.numberValue(Double.class).doubleValue());
+                             new BigDecimal(String.valueOf(num)).doubleValue(), 0.0f,
+                             result.numberValue(Double.class).doubleValue());
             }
         }
     }
@@ -1259,8 +1327,8 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Amount's scale does not match for " + bd + " correct for " + type.getName(), bd.precision(),
-                             result.getPrecision());
+                assertEquals("Amount's scale does not match for " + bd + " correct for " + type.getName(),
+                             bd.precision(), result.getPrecision());
             }
         }
     }
@@ -1271,7 +1339,9 @@ public class ExternalizingNumericValueTest{
     @SpecAssertion(section = "4.2.3", id = "423-C11")
     @Test
     public void testScaleZero(){
-        String[] nums = new String[]{"-0", "-0.0", "-0.00", "-0.000", "-0.0000", "-0.0000", "-0.000000", "-0.00000000"};
+        String[] nums =
+                new String[]{"-0", "-0.0", "-0.00", "-0.000", "-0.0000", "-0.00000", "-0.000000", "-0.00000000"};
+        int i = 0;
         for(String num : nums){
             for(Class type : MonetaryAmounts.getAmountTypes()){
                 if(type.equals(TestAmount.class)){
@@ -1288,9 +1358,10 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Amount's scale does not match for " + num + " correct for " + type.getName(), 0,
-                             result.getScale());
+                assertTrue("Amount's scale is < 0 for " + num + ", was " +
+                                   result.getScale() + " for " + type.getName(), 0 <= result.getScale());
             }
+            i++;
         }
     }
 

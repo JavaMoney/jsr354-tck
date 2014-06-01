@@ -16,6 +16,14 @@ import org.jboss.test.audit.annotations.SpecVersion;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 
+import javax.money.MonetaryAmountFactory;
+import javax.money.convert.ExchangeRateProvider;
+import javax.money.spi.*;
+import java.util.ServiceLoader;
+
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
+
 /**
  * Tests for the core SPI implementation.
  * Created by Anatole on 10.03.14.
@@ -35,7 +43,15 @@ public class CoreSPITests{
     @Test
     @SpecAssertion(id = "451-A1", section = "4.5.1")
     public void testCurrencyProviderSpi(){
-        Assert.fail("Not implemenmted.");
+        ServiceLoader l = null;
+        try{
+            l = ServiceLoader.load(CurrencyProviderSpi.class);
+        }
+        catch(Exception e){
+            fail("Failure during check for loaded CurrencyProviderSpi.", e);
+        }
+        assertTrue(l.iterator().hasNext(),
+                   "No instance of CurrencyProviderSpi provided by implementation.");
     }
 
     /**
@@ -47,7 +63,13 @@ public class CoreSPITests{
     @Test
     @SpecAssertion(id = "451-A2", section = "4.5.1")
     public void testMonetaryCurrenciesSingletonSpi(){
-        Assert.fail("Not implemenmted.");
+        ServiceLoader l = null;
+        try{
+            l = ServiceLoader.load(MonetaryCurrenciesSingletonSpi.class);
+        }
+        catch(Exception e){
+            fail("Failure during check for loadable MonetaryCurrenciesSingletonSpi.", e);
+        }
     }
 
 
@@ -61,8 +83,16 @@ public class CoreSPITests{
      */
     @Test
     @SpecAssertion(id = "451-B1", section = "4.5.1")
-    public void testMonetaryAmountFactories(){
-        Assert.fail("Not implemenmted.");
+    public void testMonetaryAmountFactoryProviderSpis(){
+        ServiceLoader l = null;
+        try{
+            l = ServiceLoader.load(MonetaryAmountFactoryProviderSpi.class);
+        }
+        catch(Exception e){
+            fail("Failure during check for loaded MonetaryAmountFactoryProviderSpi.", e);
+        }
+        assertTrue(l.iterator().hasNext(),
+                   "No instance of MonetaryAmountFactoryProviderSpi provided by implementation.");
     }
 
     // ************************************ C. Backing the MonetaryAmounts Singleton ******************************
@@ -76,7 +106,15 @@ public class CoreSPITests{
     @Test
     @SpecAssertion(id = "451-C1", section = "4.5.1")
     public void testMonetaryAmountsSingletonSpi(){
-        Assert.fail("Not implemenmted.");
+        ServiceLoader l = null;
+        try{
+            l = ServiceLoader.load(MonetaryAmountsSingletonSpi.class);
+        }
+        catch(Exception e){
+            fail("Failure during check for loaded MonetaryAmountsSingletonSpi.", e);
+        }
+        assertTrue(l.iterator().hasNext(),
+                   "No instance of MonetaryAmountsSingletonSpi provided by implementation.");
     }
 
     // ************************************ D. Registering Roundings ******************************
@@ -90,7 +128,15 @@ public class CoreSPITests{
     @Test
     @SpecAssertion(id = "451-D1", section = "4.5.1")
     public void testRoundingProviderSpi(){
-        Assert.fail("Not implemenmted.");
+        ServiceLoader l = null;
+        try{
+            l = ServiceLoader.load(RoundingProviderSpi.class);
+        }
+        catch(Exception e){
+            fail("Failure during check for loaded RoundingProviderSpi.", e);
+        }
+        assertTrue(l.iterator().hasNext(),
+                   "No instance of RoundingProviderSpi provided by implementation.");
     }
 
     // ************************************ E. Adapting Currency Conversion ******************************
@@ -103,8 +149,15 @@ public class CoreSPITests{
      */
     @Test
     @SpecAssertion(id = "451-E1", section = "4.5.1")
-    public void testConversionProviderSpi(){
-        Assert.fail("Not implemenmted.");
+    public void testExchangeRateProviderSpi(){
+        ServiceLoader l = null;
+        try{
+            l = ServiceLoader.load(ExchangeRateProvider.class);
+        }
+        catch(Exception e){
+            fail("Failure during check for loaded ExchangeRateProvider.", e);
+        }
+        assertTrue(l.iterator().hasNext(), "No instance of ExchangeRateProvider provided by implementation.");
     }
 
     /**
@@ -116,7 +169,15 @@ public class CoreSPITests{
     @Test
     @SpecAssertion(id = "451-E2", section = "4.5.1")
     public void testMonetaryConversionsSingletonSpi(){
-        Assert.fail("Not implemenmted.");
+        ServiceLoader l = null;
+        try{
+            l = ServiceLoader.load(MonetaryConversionsSingletonSpi.class);
+        }
+        catch(Exception e){
+            fail("Failure during check for loaded MonetaryConversionsSingletonSpi.", e);
+        }
+        assertTrue(l.iterator().hasNext(),
+                   "No instance of MonetaryConversionsSingletonSpi provided by implementation.");
     }
 
 }
