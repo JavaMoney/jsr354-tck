@@ -12,8 +12,18 @@ package org.javamoney.tck.tests.conversion;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.testng.Assert;
-import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
+
+import javax.money.convert.ConversionContext;
+import javax.money.convert.ExchangeRate;
+import javax.money.convert.ExchangeRateProvider;
+import javax.money.convert.MonetaryConversions;
+
+import java.util.Collection;
+import java.util.Set;
+
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertTrue;
 
 /**
  * Tests for conversion provider chains.
@@ -28,27 +38,110 @@ public class ProviderChainsTest{
      * Test correct rate evaluation for different provider chains, providers defined by the TCK.<br/>
      * Hint do not use non TCK provider for this test, it will make results undeterministic.
      */
-    @Test @SpecAssertion(id="434-A1", section="4.3.4")
-    public void testCorrectRateEvaluationInChain(){
-        Assert.fail("Not implemenmted.");
+    @Test
+    @SpecAssertion(id = "434-A1", section = "4.3.4")
+    public void testCorrectRateEvaluationInChain_diffProviders(){
+        ExchangeRateProvider prov1 = MonetaryConversions
+                .getExchangeRateProvider("TestConversionProvider1", "TestConversionProvider2",
+                                         "TestConversionProvider3");
+        ExchangeRate rate = prov1.getExchangeRate("CHF", "EUR");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider1", "TestConversionProvider2");
+        rate = prov1.getExchangeRate("EUR", "USD");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 2);
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider3");
+        rate = prov1.getExchangeRate("USD", "INR");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 3);
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider1", "TestConversionProvider3",
+                                                            "TestConversionProvider2");
+        rate = prov1.getExchangeRate("CHF", "EUR");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
+        rate = prov1.getExchangeRate("EUR", "USD");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 2);
+        rate = prov1.getExchangeRate("USD", "INR");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 3);
+
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider3", "TestConversionProvider2",
+                                                            "TestConversionProvider1");
+        rate = prov1.getExchangeRate("CHF", "EUR");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider2", "TestConversionProvider1",
+                                                            "TestConversionProvider3");
+        rate = prov1.getExchangeRate("EUR", "USD");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 2);
+        rate = prov1.getExchangeRate("USD", "INR");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 3);
+
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider3", "TestConversionProvider2",
+                                                            "TestConversionProvider1", "TestConversionProvider0.2");
+        rate = prov1.getExchangeRate("CHF", "EUR");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
+        rate = prov1.getExchangeRate("EUR", "USD");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 2);
+        rate = prov1.getExchangeRate("USD", "INR");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 3);
+        rate = prov1.getExchangeRate("INR", "GBP");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().doubleValue(), 0.2);
     }
 
     /**
-     * Test correct rate evaluation for different provider chains, providers defined by the TCK, with historic rates.<br/>
+     * Test correct rate evaluation for different provider chains, providers defined by the TCK.<br/>
      * Hint do not use non TCK provider for this test, it will make results undeterministic.
      */
-    @Test @SpecAssertion(id="434-A2", section="4.3.4")
+    @Test
+    @SpecAssertion(id = "434-A1", section = "4.3.4")
+    public void testCorrectRateEvaluationInChain_sameProviders(){
+        ExchangeRateProvider prov1 = MonetaryConversions
+                .getExchangeRateProvider("TestConversionProvider1", "TestConversionProvider1",
+                                         "TestConversionProvider1");
+        ExchangeRate rate = prov1.getExchangeRate("CHF", "EUR");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider1", "TestConversionProvider1");
+        rate = prov1.getExchangeRate("CHF", "EUR");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider1");
+        rate = prov1.getExchangeRate("CHF", "EUR");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
+    }
+
+
+    /**
+     * Test correct rate evaluation for different provider chains, providers defined by the TCK,
+     * with historic rates.<br/>
+     * Hint do not use non TCK provider for this test, it will make results undeterministic.
+     */
+    @Test
+    @SpecAssertion(id = "434-A2", section = "4.3.4")
     public void testCorrectRateEvaluationInChainHistoric(){
-        Assert.fail("Not implemenmted.");
+        ExchangeRateProvider prov1 = MonetaryConversions
+                .getExchangeRateProvider("TestConversionProvider1", "TestConversionProvider2",
+                                         "TestConversionProvider3");
+        ExchangeRate rate = prov1.getExchangeRate("CHF", "EUR");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
+        rate = prov1.getExchangeRate("EUR", "USD");
+        assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 2);
+        rate = prov1.getExchangeRate("EUR", "USD", new ConversionContext.Builder().setTimestampMillis(10L).build());
+        assertEquals("Invalid ExchangeRateProvider selected.", 200, rate.getFactor().intValueExact());
     }
 
     /**
      * Test availability of providers defined by the TCK.<br/>
      * Hint do not use non TCK provider for this test, it will make results undeterministic.
      */
-    @Test @SpecAssertion(id="434-A3", section="4.3.4")
+    @Test
+    @SpecAssertion(id = "434-A3", section = "4.3.4")
     public void testTCKRateChainAvailability(){
-        Assert.fail("Not implemenmted.");
+        Collection<String> provNames = MonetaryConversions.getProviderNames();
+        assertTrue("TCK ExchangeRateProvider is not registered: TestConversionProvider",
+                   provNames.contains("TestConversionProvider"));
+        assertTrue("TCK ExchangeRateProvider is not registered: TestConversionProvider1",
+                   provNames.contains("TestConversionProvider1"));
+        assertTrue("TCK ExchangeRateProvider is not registered: TestConversionProvider2",
+                   provNames.contains("TestConversionProvider2"));
+        assertTrue("TCK ExchangeRateProvider is not registered: TestConversionProvider3",
+                   provNames.contains("TestConversionProvider3"));
+        assertTrue("TCK ExchangeRateProvider is not registered: TestConversionProvider0.2",
+                   provNames.contains("TestConversionProvider0.2"));
     }
 
 }

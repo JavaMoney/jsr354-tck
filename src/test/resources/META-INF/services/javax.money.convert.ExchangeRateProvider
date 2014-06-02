@@ -1,1 +1,5 @@
 org.javamoney.tck.tests.internal.TestRateProvider
+org.javamoney.tck.tests.internal.TestRateProvider1
+org.javamoney.tck.tests.internal.TestRateProvider2
+org.javamoney.tck.tests.internal.TestRateProvider3
+org.javamoney.tck.tests.internal.TestRateProvider02
