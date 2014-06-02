@@ -59,11 +59,17 @@ public class TestRateProvider2 implements ExchangeRateProvider{
 
     @Override
     public boolean isAvailable(CurrencyUnit base, CurrencyUnit term, ConversionContext conversionContext){
+        Objects.requireNonNull(conversionContext);
+        Objects.requireNonNull(base);
+        Objects.requireNonNull(term);
         return "EUR".equals(base.getCurrencyCode());
     }
 
     @Override
     public ExchangeRate getExchangeRate(CurrencyUnit base, CurrencyUnit term, ConversionContext conversionContext){
+        Objects.requireNonNull(conversionContext);
+        Objects.requireNonNull(base);
+        Objects.requireNonNull(term);
         if(isAvailable(base, term, conversionContext)){
             if(conversionContext.getTimestampMillis()!=null){
                 return new TestExchangeRate.Builder(conversionContext).setFactor(new TestNumberValue(FACTOR * 100)).setBase(base)
@@ -77,6 +83,8 @@ public class TestRateProvider2 implements ExchangeRateProvider{
 
     @Override
     public CurrencyConversion getCurrencyConversion(CurrencyUnit term, ConversionContext conversionContext){
+        Objects.requireNonNull(conversionContext);
+        Objects.requireNonNull(term);
         return new Conversion(term);
     }
 

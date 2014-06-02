@@ -60,6 +60,8 @@ public class TestRateProvider implements ExchangeRateProvider{
 
     @Override
     public boolean isAvailable(CurrencyUnit base, CurrencyUnit term, ConversionContext conversionContext){
+        Objects.requireNonNull(conversionContext);
+        Objects.requireNonNull(base);
         return "FOO".equals(term.getCurrencyCode()) || "XXX".equals(term.getCurrencyCode());
     }
 
@@ -70,6 +72,9 @@ public class TestRateProvider implements ExchangeRateProvider{
 
     @Override
     public boolean isAvailable(String baseCode, String termCode, ConversionContext conversionContext){
+        Objects.requireNonNull(conversionContext);
+        Objects.requireNonNull(baseCode);
+        Objects.requireNonNull(termCode);
         return "Foo".equals(termCode) || "XXX".equals(termCode);
     }
 
@@ -84,6 +89,9 @@ public class TestRateProvider implements ExchangeRateProvider{
 
     @Override
     public ExchangeRate getExchangeRate(CurrencyUnit base, CurrencyUnit term, ConversionContext conversionContext){
+        Objects.requireNonNull(conversionContext);
+        Objects.requireNonNull(base);
+        Objects.requireNonNull(term);
         if(isAvailable(base, term, conversionContext)){
             return new TestExchangeRate.Builder(conversionContext).setFactor(new TestNumberValue(2)).setBase(base)
                     .setTerm(term).build();

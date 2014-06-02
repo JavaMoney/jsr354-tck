@@ -610,6 +610,12 @@ public class CreatingMonetaryAmountsTest{
             catch(MonetaryException e){
                 // OK
             }
+            catch(Exception e){
+                fail("MonetaryAmountFactory must throw a MonetaryException, when a positive amount without a currency" +
+                             " is" +
+                             " tried to be created, but threw " + e.getClass() + " type: " +
+                             type.getName());
+            }
         }
     }
 
@@ -934,6 +940,11 @@ public class CreatingMonetaryAmountsTest{
             }
             catch(MonetaryException e){
                 // OK
+            }
+            catch(Exception e){
+                fail("MonetaryAmountFactory must throw a MonetaryException, when an amount without a currency is" +
+                             " tried to be created, but threw " + e.getClass() + " type: " +
+                             type.getName());
             }
         }
     }

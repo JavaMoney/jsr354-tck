@@ -13,7 +13,6 @@ import org.javamoney.tck.TestUtils;
 import org.javamoney.tck.tests.internal.TestAmount;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import javax.money.*;
@@ -39,8 +38,9 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-0")
     @Test
     public void testEnsureMonetaryAmount(){
-        assertNotNull(MonetaryAmounts.getAmountTypes());
-        assertTrue(MonetaryAmounts.getAmountTypes().size() > 0);
+        assertNotNull("MonetaryAmounts.getAmountTypes() must never return null.", MonetaryAmounts.getAmountTypes());
+        assertTrue("At least one type must be registered with MonetaryAmounts (see getAmountTypes()).",
+                   MonetaryAmounts.getAmountTypes().size() > 0);
     }
 
     /**
@@ -55,9 +55,9 @@ public class ModellingMonetaryAmountsTest{
                 MonetaryAmount amount =
                         MonetaryAmounts.getAmountFactory().setCurrency(jdkCur.getCurrencyCode()).setNumber(10.15)
                                 .create();
-                assertNotNull(amount);
-                assertNotNull(amount.getCurrency());
-                assertEquals(jdkCur.getCurrencyCode(), amount.getCurrency().getCurrencyCode());
+                assertNotNull("Amount factory returned null for new amount,m type: " + type.getName(), amount);
+                assertNotNull("Amount factory returned new amount with null currency, type: " + type.getName(), amount.getCurrency());
+                assertEquals("Amount factory returned new amount with invalid currency, type: " + type.getName(), jdkCur.getCurrencyCode(), amount.getCurrency().getCurrencyCode());
             }
         }
     }
@@ -88,7 +88,7 @@ public class ModellingMonetaryAmountsTest{
 
             for(int i = 0; i < moneys.length; i++){
                 NumberValue nv = moneys[i].getNumber();
-                assertNotNull(nv);
+                assertNotNull("Amount returned returns null for getNumber(), type: " + moneys[i].getClass().getName(), nv);
                 assertEquals("getNumber().numberValue(BigDecimal.class) incorrect for " + type.getName(),
                              numbers[i].stripTrailingZeros(), nv.numberValue(BigDecimal.class).stripTrailingZeros());
                 assertEquals("getNumber().intValue() incorrect for " + type.getName(), intNums[i], nv.intValue());
@@ -983,34 +983,38 @@ public class ModellingMonetaryAmountsTest{
             }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
-            MonetaryAmount mAmount1 = f.setNumber(100).create();
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
-            MonetaryAmount mAmount2 = null;
             if(maxCtx.getPrecision() > 0){
-                mAmount2 = f.setNumber(TestUtils.createNumberWithPrecision(f, maxCtx.getPrecision() - maxCtx.getMaxScale() - 1))
-                        .create();
+                MonetaryAmount m = f.setNumber(TestUtils.createNumberWithPrecision(f, maxCtx.getPrecision())).create();
+                MonetaryAmount ms = m;
+                try{
+                    for(int i = 0; i < 20; i++){
+                        ms = ms.add(m);
+                    }
+                    fail("Exception expected, since adding 20x " + m + " to " + m +
+                                 " exceeds capabilities (precision) for " +
+                                 type.getName());
+                }
+                catch(MonetaryException ex){
+                    // Expected
+                }
             }
+        }
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getMaxScale() >= 0){
-                MonetaryContext tgtContext =
-                        new MonetaryContext.Builder(maxCtx).setMaxScale(maxCtx.getMaxScale() + 1).build();
-                Class<? extends MonetaryAmount> exceedingType = null;
                 try{
-                    exceedingType = MonetaryAmounts.queryAmountType(tgtContext);
-                    assertNotNull(exceedingType);
-                    MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
-                            MonetaryAmounts.getAmountFactory(exceedingType);
-                    mAmount2 = bigFactory.setCurrency("CHF").setNumber(createNumberWithScale(f, maxCtx.getMaxScale()))
-                            .create();
-                }
-                catch(MonetaryException e){
-                    // we have to abort the test...
-                }
-
-            }
-            if(mAmount2 != null){
-                try{
-                    mAmount1.add(mAmount2);
-                    fail("Exception expected, since adding exceeds capabilities for " + type.getName());
+                    MonetaryAmount m = f.setNumber(1).create();
+                    MonetaryAmount m2 =
+                            f.setNumber(TestUtils.createNumberWithScale(f, maxCtx.getMaxScale() + 5)).create();
+                    m.add(m2);
+                    fail("Exception expected, since adding " + m2 + " to " + m + " exceeds capabilities (scale) for " +
+                                 type.getName());
                 }
                 catch(MonetaryException ex){
                     // Expected
@@ -1271,7 +1275,8 @@ public class ModellingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             MonetaryAmount mAmount2 = null;
             if(maxCtx.getPrecision() > 0){
-                mAmount2 = f.setNumber(TestUtils.createNumberWithPrecision(f, maxCtx.getPrecision()-maxCtx.getMaxScale())).create();
+                mAmount2 = f.setNumber(
+                        TestUtils.createNumberWithPrecision(f, maxCtx.getPrecision() - maxCtx.getMaxScale())).create();
             }
             if(maxCtx.getMaxScale() >= 0){
                 MonetaryContext tgtContext =
@@ -1315,7 +1320,7 @@ public class ModellingMonetaryAmountsTest{
             }
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-                try{
+            try{
                 MonetaryAmount mActualResult = mAmount1.subtract(null);
                 fail("Exception expected");
             }
@@ -1416,7 +1421,60 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-D13")
     @Test
     public void testMultiplyExceedsCapabilities(){
-        fail("Not yet implemented");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
+            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryContext ctx = f.getMaximalMonetaryContext();
+            if(ctx.getMaxScale() >= 0){
+                BigDecimal num = TestUtils.createNumberWithScale(f, ctx.getMaxScale() + 5);
+                MonetaryAmount m = f.setNumber(10).setCurrency("USD").create();
+                try{
+                    m.multiply(num);
+                    fail("Multiplication of amount 10 with " + num + " exceeds max monetary context (scale), " +
+                                 "but did not throw an ArithmeticException, type was " +
+                                 type);
+                }
+                catch(MonetaryException e){
+                    // OK
+                }
+                catch(Exception e){
+                    fail("Multiplication of amount 10 with " + num + " exceeds max monetary context(scale), " +
+                                 "but did not throw an ArithmeticException (exception thrown was " +
+                                 e.getClass().getName() + "), type was " +
+                                 type);
+                }
+            }
+        }
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
+            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryContext ctx = f.getMaximalMonetaryContext();
+            if(ctx.getPrecision() > 0){
+                BigDecimal num = TestUtils.createNumberWithPrecision(f, ctx.getPrecision());
+                MonetaryAmount m = f.setNumber(num).setCurrency("USD").create();
+                try{
+                    m.multiply(10000000);
+                    fail("Multiplication of amount " + num +
+                                 " with 10000000 exceeds max monetary context(precision), " +
+                                 "but did not throw an ArithmeticException, type was " +
+                                 type.getName());
+                }
+                catch(ArithmeticException e){
+                    // OK
+                }
+                catch(Exception e){
+                    fail("Multiplication of amount " + num +
+                                 " with 10000000 exceeds max monetary context(precision), " +
+                                 "but did not throw an ArithmeticException (exception thrown was " +
+                                 e.getClass().getName() + "), type was " +
+                                 type.getName());
+                }
+            }
+        }
     }
 
     /**
@@ -1433,7 +1491,7 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 MonetaryAmount mActualResult = mAmount1.multiply(null);
-                fail("Exception expected");
+                fail("NullPointerException expected for multiplication with null, type was " + type.getName());
             }
             catch(NullPointerException e){
                 // expected
@@ -1454,8 +1512,9 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount m2 = m.divide(10);
-            assertEquals(DEFAULT_CURRENCY, m2.getCurrency().getCurrencyCode());
-            assertEquals(1, m2.getNumber().longValueExact());
+            assertEquals("Currency not equal after division, type was " + type.getName(), DEFAULT_CURRENCY,
+                         m2.getCurrency().getCurrencyCode());
+            assertEquals("Division result is not correct for " + type.getName(), 1, m2.getNumber().longValueExact());
             // TODO iterate over array of different numbers and divisors, use BD to check results
         }
     }
@@ -1501,7 +1560,7 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 MonetaryAmount mActualResult = mAmount1.divide(0);
-                fail("Exception expected");
+                fail("ArithmeticException expected on division by 0, type was " + type.getName());
             }
             catch(ArithmeticException ex){
                 // expected
@@ -1544,6 +1603,7 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 MonetaryAmount mActualResult = mAmount1.divide(null);
+                fail("NullPointerException expected for division by null, type was " + type.getName());
             }
             catch(NullPointerException e){
                 // expected
@@ -1677,6 +1737,7 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 MonetaryAmount mActualResult = mAmount1.remainder(null);
+                fail("NullPointerException expected for remainder with null, type was " + type.getName());
             }
             catch(NullPointerException e){
                 // expected
@@ -1756,6 +1817,7 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 MonetaryAmount[] mActualResult = mAmount1.divideAndRemainder(null);
+                fail("NullPointerException expected for divideAndRemainder with null, type was " + type.getName());
             }
             catch(NullPointerException e){
                 // expected
@@ -1775,11 +1837,13 @@ public class ModellingMonetaryAmountsTest{
             }
             MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m = f.setNumber(100).setCurrency("CHF").create();
-            assertEquals(BigDecimal.valueOf(33),
+            assertEquals("DivideAndRemainder not returning correct result for type: " + type.getName(),
+                         BigDecimal.valueOf(33),
                          m.divideAndRemainder(3)[0].getNumber().numberValue(BigDecimal.class).stripTrailingZeros());
-            assertEquals(BigDecimal.valueOf(1),
+            assertEquals("DivideAndRemainder not returning correct result for type: " + type.getName(),
+                         BigDecimal.valueOf(1),
                          m.divideAndRemainder(3)[1].getNumber().numberValue(BigDecimal.class).stripTrailingZeros());
-            assertEquals(BigDecimal.ONE,
+            assertEquals("DivideAndRemainder not returning correct result for type: " + type.getName(), BigDecimal.ONE,
                          m.divideAndRemainder(BigDecimal.valueOf(3))[1].getNumber().numberValue(BigDecimal.class)
                                  .stripTrailingZeros()
             );
@@ -1831,14 +1895,14 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount m = f.setNumber(10).create();
-            assertEquals(m, m.abs());
-            assertTrue(m == m.abs());
+            assertEquals("abs(m) !equals m, if m > 0 for type: " + type.getName(), m, m.abs());
+            assertTrue("abs(m) != m, if m > 0 for type: " + type.getName(), m == m.abs());
             m = f.setNumber(0).create();
-            assertEquals(m, m.abs());
-            assertTrue(m == m.abs());
+            assertEquals("abs(m) != equals, if m == 0 for type: " + type.getName(), m, m.abs());
+            assertTrue("abs(m) != m, if m == 0 for type: " + type.getName(), m == m.abs());
             m = f.setNumber(-10).create();
-            assertEquals(m.negate(), m.abs());
-            assertTrue(m != m.abs());
+            assertEquals("abs(m) == m, if m < 0 for type: " + type.getName(), m.negate(), m.abs());
+            assertTrue("abs(m) == m, if m < 0 for type: " + type.getName(), m != m.abs());
         }
     }
 
@@ -1875,12 +1939,14 @@ public class ModellingMonetaryAmountsTest{
             }
             MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("CHF").setNumber(10).create();
             MonetaryAmount amount2 = amount.with(op);
-            assertTrue(amount == amount2);
+            assertTrue("MonetaryAmount returned from operator is wrapped by implementation of type: " + type.getName(),
+                       amount == amount2);
             final MonetaryAmount result =
                     MonetaryAmounts.getAmountFactory(type).setCurrency("CHF").setNumber(4).create();
             MonetaryOperator op2 = (m) -> result;
             amount2 = amount.with(op);
-            assertTrue(amount == amount2);
+            assertTrue("MonetaryAmount returned from operator is wrapped by implementation of type: " + type.getName(),
+                       amount == amount2);
         }
     }
 
@@ -1904,6 +1970,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
             try{
                 amount.with(op);
+                fail("MonetaryException expected as operator fails, type was " + type.getName());
             }
             catch(MonetaryException e){
                 // OK, everything else makes the test fail!
@@ -1925,6 +1992,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
             try{
                 amount.with(null);
+                fail("NullPointerException expected as operator applied is null, type was " + type.getName());
             }
             catch(NullPointerException e){
                 // OK, everything else makes the test fail!
@@ -1951,10 +2019,10 @@ public class ModellingMonetaryAmountsTest{
             }
             MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("CHF").setNumber(10).create();
             Integer value = amount.query(query);
-            assertTrue(value == 10);
+            assertTrue("Value returned from MonetaryAmount Query is not correct for " + type.getName(), value == 10);
             amount = MonetaryAmounts.getAmountFactory(type).setCurrency("CHF").setNumber(4.5).create();
             value = amount.query(query);
-            assertTrue(value == 4);
+            assertTrue("Value returned from MonetaryAmount Query is not correct for " + type.getName(), value == 4);
         }
     }
 
@@ -1979,6 +2047,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
             try{
                 amount.query(query);
+                fail("MonetaryException expected as query applied is failing, type was " + type.getName());
             }
             catch(MonetaryException e){
                 // OK, everything else makes the test fail!
@@ -2001,6 +2070,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
             try{
                 amount.query(null);
+                fail("NullPointerException expected as query applied is null, type was " + type.getName());
             }
             catch(NullPointerException e){
                 // OK, everything else makes the test fail!
@@ -2024,7 +2094,8 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("USD").setNumber(0).create();
             TestUtils.testHasPublicMethod(type, type, "hashCode");
             MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory(type).setCurrency("USD").setNumber(0).create();
-            assertEquals(amount.hashCode(), amount2.hashCode());
+            assertEquals("hashCode() for equal amounts differ for type " + type.getName(), amount.hashCode(),
+                         amount2.hashCode());
         }
     }
 
@@ -2045,7 +2116,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("XXX").setNumber(0).create();
             TestUtils.testHasPublicMethod(type, type, "equals", Object.class);
             MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory(type).setCurrency("XXX").setNumber(0).create();
-            assertEquals(amount, amount2);
+            assertEquals("equals(Object) for equal amounts returns false for " + type.getName(), amount, amount2);
         }
     }
 
