@@ -25,7 +25,8 @@ import java.util.Currency;
 import java.util.Locale;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.testng.AssertJUnit.*;
+
 
 /**
  * Created by Anatole on 10.03.14.

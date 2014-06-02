@@ -11,9 +11,17 @@
 
 package org.javamoney.tck.tests.spi;
 
+import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Assert;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
+
+import javax.money.convert.ExchangeRateProvider;
+import javax.money.spi.MonetaryAmountFormatProviderSpi;
+import java.util.ServiceLoader;
+
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 /**
  * Created by Anatole on 10.03.14.
@@ -21,49 +29,26 @@ import org.testng.annotations.Test;
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class FormattingSPITest{
 
-    @Test
-    public void placeholder(){
-        Assert.fail();
-    }
+    // ********************************* C. Prodivding Amount Formats
 
-    /*
-    <group>
-			<text>A. Prodivding Monetary Amount Format Symbols</text>
-			<assertion id="452-A1">
-				<text>Test registered AmountFormatSymbolsSpi (one is required).
-					Test
-					behaviour (every locale in DecimalFormatSybols must be
-					supported),
-					especially bad case behaviour for
-					invalid
-					input.
-				</text>
-			</assertion>
-		</group>
-		<group>
-			<text>B. Prodivding Amount Styles</text>
-			<assertion id="452-B1">
-				<text>Test registered AmountStyleProviderSpi (one is required).
-					Test
-					behaviour (every locale in DecimalFormatSybols must be
-					supported),
-					especially bad case behaviour for
-					invalid
-					input.
-				</text>
-			</assertion>
-		</group>
-		<group>
-			<text>C. Prodivding Amount Formats</text>
-			<assertion id="452-C1">
-				<text>Test registered MonetaryAmountFormatProviderSpi (one is
-					required),
-					especially bad case behaviour for
-					invalid
-					input.
-				</text>
-			</assertion>
-		</group>
+    /**
+     * Test registered MonetaryAmountFormatProviderSpi (one is
+     required),
+     especially bad case behaviour for
+     invalid
+     input.
      */
+    @Test
+    @SpecAssertion(id="452-A1", section="4.5.2")
+    public void testMonetaryAmountFormatProviderSpiIsRegistered(){
+        ServiceLoader l = null;
+        try{
+            l = ServiceLoader.load(MonetaryAmountFormatProviderSpi.class);
+        }
+        catch(Exception e){
+            fail("Failure during check for loaded MonetaryAmountFormatProviderSpi.", e);
+        }
+        assertTrue(l.iterator().hasNext(), "No instance of MonetaryAmountFormatProviderSpi provided by implementation.");
+    }
 
 }

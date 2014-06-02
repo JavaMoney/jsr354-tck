@@ -11,14 +11,14 @@ package org.javamoney.tck.tests.conversion;
 
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Assert;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import javax.money.MonetaryCurrencies;
 import javax.money.MonetaryException;
 import javax.money.convert.*;
 
-import static org.junit.Assert.*;
+import static org.testng.AssertJUnit.*;
 
 /**
  * Created by Anatole on 10.03.14.

@@ -1041,39 +1041,10 @@
 	</section>
 	<section id="4.5.2" title="Formatting SPI">
 		<group>
-			<text>A. Prodivding Monetary Amount Format Symbols</text>
+			<text>A. Prodivding Amount Formats</text>
 			<assertion id="452-A1">
-				<text>Test registered AmountFormatSymbolsSpi (one is required).
-					Test
-					behaviour (every locale in DecimalFormatSybols must be
-					supported),
-					especially bad case behaviour for
-					invalid
-					input.
-				</text>
-			</assertion>
-		</group>
-		<group>
-			<text>B. Prodivding Amount Styles</text>
-			<assertion id="452-B1">
-				<text>Test registered AmountStyleProviderSpi (one is required).
-					Test
-					behaviour (every locale in DecimalFormatSybols must be
-					supported),
-					especially bad case behaviour for
-					invalid
-					input.
-				</text>
-			</assertion>
-		</group>
-		<group>
-			<text>C. Prodivding Amount Formats</text>
-			<assertion id="452-C1">
 				<text>Test registered MonetaryAmountFormatProviderSpi (one is
-					required),
-					especially bad case behaviour for
-					invalid
-					input.
+					required), especially bad case behaviour for invalid input.
 				</text>
 			</assertion>
 		</group>

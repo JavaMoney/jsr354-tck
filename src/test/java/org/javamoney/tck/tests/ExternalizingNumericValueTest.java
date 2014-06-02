@@ -13,6 +13,7 @@ import org.javamoney.tck.tests.internal.TestAmount;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.testng.annotations.Test;
+import org.testng.AssertJUnit.*;
 
 import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmounts;
@@ -21,8 +22,7 @@ import javax.money.NumberValue;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.*;
+import static org.testng.AssertJUnit.*;
 
 /**
  * Testing Numeric Externalization for numeric values of MonetaryAmount instances.
@@ -52,7 +52,7 @@ public class ExternalizingNumericValueTest{
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             NumberValue result = mAmount1.getNumber();
-            assertThat("Amount type does not return a NumberValue (null); " + type.getName(), result, notNullValue());
+            assertNotNull("Amount type does not return a NumberValue (null); " + type.getName(), result);
         }
     }
 
@@ -72,7 +72,7 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertThat("Amount creation failed for " + type, result, notNullValue());
+                assertNotNull("Amount creation failed for " + type, result);
                 assertEquals("Number value (int) returned is not correct for " + type.getName(), num,
                              result.intValue());
                 assertEquals("Exact number value (int) returned is not correct for " + type.getName(), num,
@@ -104,7 +104,7 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertThat("Amount creation failed for " + type, result, notNullValue());
+                assertNotNull("Amount creation failed for " + type, result);
                 assertEquals("Number value (long) returned is not correct for " + type.getName(), num,
                              result.longValue());
                 assertEquals("Exact number (long) (double) returned is not correct for " + type.getName(), num,
@@ -130,7 +130,7 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertThat("Amount creation failed for " + type, result, notNullValue());
+                assertNotNull("Amount creation failed for " + type, result);
                 assertEquals("Number value (double) returned is not correct for " + type.getName(), num,
                              result.doubleValue(), 0d);
                 assertEquals("Exact number value (double) returned is not correct for " + type.getName(), num,
@@ -563,7 +563,7 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertThat("Amount creation failed for " + type, result, notNullValue());
+                assertNotNull("Amount creation failed for " + type, result);
                 assertEquals("Number value (int) returned is not correct for " + type.getName(), num,
                              result.intValue());
                 assertEquals("Exact number (int) returned is not correct for " + type.getName(), num,
@@ -595,7 +595,7 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertThat("Amount creation failed for " + type, result, notNullValue());
+                assertNotNull("Amount creation failed for " + type, result);
                 assertEquals("Number value (long) returned is not correct for " + type.getName(), num,
                              result.longValue());
                 assertEquals("Exact number (long) returned is not correct for " + type.getName(), num,

@@ -21,7 +21,7 @@ import javax.money.MonetaryAmounts;
 import javax.money.MonetaryCurrencies;
 import javax.money.convert.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.AssertJUnit.assertEquals;
 
 /**
  * Test for converting amounts.

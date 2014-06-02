@@ -13,7 +13,7 @@ import org.javamoney.tck.TestUtils;
 import org.javamoney.tck.tests.internal.TestAmount;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Assert;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import javax.money.*;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.testng.AssertJUnit.*;
 
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class ModellingMonetaryAmountsTest{
@@ -786,7 +786,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(30).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -807,7 +807,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-30).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -828,7 +828,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(4.35).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -849,7 +849,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -862,7 +862,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -875,7 +875,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -896,7 +896,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-1.35).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -909,7 +909,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(1.35).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -922,7 +922,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -966,7 +966,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mAmount2 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
-            Assert.assertEquals("Adding zero", mAmount1, mActualResult);
+            assertEquals("Adding zero", mAmount1, mActualResult);
         }
     }
 
@@ -1070,7 +1070,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
-            Assert.assertEquals("Subtracting two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Subtracting two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -1091,7 +1091,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-            Assert.assertEquals("Subtracting two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Subtracting two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -1112,7 +1112,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-1.35).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -1133,7 +1133,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1146,7 +1146,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1159,7 +1159,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-20).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -1180,7 +1180,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(4.35).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1193,7 +1193,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-4.35).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1206,7 +1206,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
-            Assert.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -1250,7 +1250,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mAmount2 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
-            Assert.assertEquals("Subtract zero", mAmount1, mActualResult);
+            assertEquals("Subtract zero", mAmount1, mActualResult);
         }
     }
 

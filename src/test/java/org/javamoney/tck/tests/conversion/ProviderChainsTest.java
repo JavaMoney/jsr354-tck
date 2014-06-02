@@ -11,7 +11,8 @@ package org.javamoney.tck.tests.conversion;
 
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Assert;
+import org.testng.Assert;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 /**

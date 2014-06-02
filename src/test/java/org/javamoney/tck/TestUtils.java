@@ -24,6 +24,8 @@ import junit.framework.Assert;
 
 import javax.money.MonetaryAmountFactory;
 
+import static org.testng.Assert.fail;
+
 
 public class TestUtils{
 
@@ -145,8 +147,7 @@ public class TestUtils{
 				return;
 			}
 		}
-		org.junit.Assert.fail("Class must implement " + iface.getName() + ", but does not: " + type.getName()
-        );
+		fail("Class must implement " + iface.getName() + ", but does not: " + type.getName());
 	}
 
 	public static void testHasPublicMethod(Class type, Class returnType,

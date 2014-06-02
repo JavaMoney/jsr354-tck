@@ -13,7 +13,7 @@ package org.javamoney.tck.tests.spi;
 
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Assert;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import javax.money.MonetaryAmountFactory;
@@ -70,6 +70,8 @@ public class CoreSPITests{
         catch(Exception e){
             fail("Failure during check for loadable MonetaryCurrenciesSingletonSpi.", e);
         }
+        // this spi is optional, a default will be installed if missing, which will cover the currencies bsed
+        // on java.util.Currency.
     }
 
 

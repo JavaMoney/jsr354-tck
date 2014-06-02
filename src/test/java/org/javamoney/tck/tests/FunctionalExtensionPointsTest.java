@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 import javax.money.MonetaryOperator;
 import java.util.Collection;
 
-import static org.junit.Assert.fail;
+import static org.testng.AssertJUnit.fail;
 
 /**
  * Created by Anatole on 10.03.14.

@@ -13,14 +13,13 @@ import org.javamoney.tck.TestUtils;
 import org.javamoney.tck.tests.internal.TestAmount;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Assert;
 import org.testng.annotations.Test;
 
 import javax.money.*;
 import java.math.BigDecimal;
 import java.util.Currency;
 
-import static org.junit.Assert.*;
+import static org.testng.AssertJUnit.*;
 
 /**
  * Created by Anatole on 10.03.14.
@@ -73,6 +72,50 @@ public class CreatingMonetaryAmountsTest{
         }
     }
 
+    /**
+     * Checks if capabilities of default MonetaryContext are less than Max MonetaryContext.
+     */
+    @Test
+    @SpecAssertion(section = "4.2.6", id = "426-A4")
+    public void testMonetaryAmountFactoryMinMaxCapabilities_Compare(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryContext defCtx = f.getDefaultMonetaryContext();
+            MonetaryContext maxCtx = f.getMaximalMonetaryContext();
+            if(f.getDefaultMonetaryContext().getMaxScale() > -1){
+                assertTrue("MonetaryAmountFactory maximal MonetaryContext cannot be less capable than the default " +
+                                   "(maxScale default/max=" +
+                                   f.getDefaultMonetaryContext().getMaxScale() + '/' +
+                                   f.getMaximalMonetaryContext().getMaxScale() + " for " + type.getName(),
+                           maxCtx.getMaxScale() == -1 || defCtx.getMaxScale() <= maxCtx.getMaxScale()
+                );
+            }
+            if(f.getDefaultMonetaryContext().getMaxScale() == -1){
+                assertTrue("MonetaryAmountFactory maximal MonetaryContext cannot be less capable than the default " +
+                                   "(maxScale default/max=" +
+                                   f.getDefaultMonetaryContext().getMaxScale() + '/' +
+                                   f.getMaximalMonetaryContext().getMaxScale() + " for " + type.getName(),
+                           maxCtx.getMaxScale() == -1
+                );
+            }
+            if(f.getDefaultMonetaryContext().getPrecision() > 0){
+                assertTrue("MonetaryAmountFactory maximal MonetaryContext cannot be less capable than the default " +
+                                   "(precision default/max=" +
+                                   f.getDefaultMonetaryContext().getPrecision() + '/' +
+                                   f.getMaximalMonetaryContext().getPrecision() + " for " + type.getName(),
+                           maxCtx.getPrecision() == 0 || defCtx.getPrecision() <= maxCtx.getPrecision()
+                );
+            }
+            if(f.getDefaultMonetaryContext().getPrecision() == 0){
+                assertTrue("MonetaryAmountFactory maximal MonetaryContext cannot be less capable than the default " +
+                                   "(precision default/max=" +
+                                   f.getDefaultMonetaryContext().getPrecision() + '/' +
+                                   f.getMaximalMonetaryContext().getPrecision() + " for " + type.getName(),
+                           maxCtx.getPrecision() == 0
+                );
+            }
+        }
+    }
 
     // **************** B. Testing Creation of Amounts with zero values ******************
 
@@ -125,16 +168,16 @@ public class CreatingMonetaryAmountsTest{
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 ||
-                                       m.getMonetaryContext().getPrecision() >= p);
+                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
+                    );
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
-                    );
+                               m.getMonetaryContext().getPrecision() == 0 ||
+                                       m.getMonetaryContext().getPrecision() >= p);
                 }
             }
             if(maxCtx.getMaxScale() != -1){
@@ -175,16 +218,16 @@ public class CreatingMonetaryAmountsTest{
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 ||
-                                       m.getMonetaryContext().getPrecision() >= p);
+                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
+                    );
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
-                    );
+                               m.getMonetaryContext().getPrecision() == 0 ||
+                                       m.getMonetaryContext().getPrecision() >= p);
                 }
             }
             if(maxCtx.getMaxScale() != -1){
@@ -225,16 +268,16 @@ public class CreatingMonetaryAmountsTest{
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 ||
-                                       m.getMonetaryContext().getPrecision() >= p);
+                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
+                    );
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
-                    );
+                               m.getMonetaryContext().getPrecision() == 0 ||
+                                       m.getMonetaryContext().getPrecision() >= p);
                 }
             }
             if(maxCtx.getMaxScale() != -1){
@@ -367,16 +410,16 @@ public class CreatingMonetaryAmountsTest{
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 ||
-                                       m.getMonetaryContext().getPrecision() >= p);
+                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
+                    );
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
-                    );
+                               m.getMonetaryContext().getPrecision() == 0 ||
+                                       m.getMonetaryContext().getPrecision() >= p);
                 }
             }
             if(maxCtx.getMaxScale() != -1){
@@ -417,16 +460,16 @@ public class CreatingMonetaryAmountsTest{
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 ||
-                                       m.getMonetaryContext().getPrecision() >= p);
+                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
+                    );
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
-                    );
+                               m.getMonetaryContext().getPrecision() == 0 ||
+                                       m.getMonetaryContext().getPrecision() >= p);
                 }
             }
             if(maxCtx.getMaxScale() != -1){
@@ -467,16 +510,16 @@ public class CreatingMonetaryAmountsTest{
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 ||
-                                       m.getMonetaryContext().getPrecision() >= p);
+                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
+                    );
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
-                    );
+                               m.getMonetaryContext().getPrecision() == 0 ||
+                                       m.getMonetaryContext().getPrecision() >= p);
                 }
             }
             if(maxCtx.getMaxScale() != -1){
@@ -541,6 +584,105 @@ public class CreatingMonetaryAmountsTest{
         }
     }
 
+    /**
+     * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an no currency.
+     */
+    @Test
+    @SpecAssertion(section = "4.2.6", id = "426-C4")
+    public void testMonetaryAmountFactoryCreatePositiveNoCurrency_BadCase(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
+            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            try{
+                if(f.getDefaultMonetaryContext().getPrecision() == 0){
+                    f.setNumber(TestUtils.createNumberWithPrecision(f, 5));
+                }else{
+                    f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision()));
+                }
+                f.create();
+                fail("MonetaryAmountFactory must throw a MonetaryException, when a positive amount without a currency" +
+                             " is" +
+                             " tried to be created, type: " +
+                             type.getName());
+            }
+            catch(MonetaryException e){
+                // OK
+            }
+        }
+    }
+
+    /**
+     * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an invalid currency.
+     */
+    @Test
+    @SpecAssertion(section = "4.2.6", id = "426-C4")
+    public void testMonetaryAmountFactoryCreatePositiveInvalidCurrency_BadCase(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
+            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            try{
+                if(f.getDefaultMonetaryContext().getPrecision() == 0){
+                    f.setNumber(TestUtils.createNumberWithPrecision(f, 5));
+                }else{
+                    f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision()));
+                }
+                f.setCurrency("FooBar_foobar_fOobAr_foObaR");
+                f.create();
+                fail("MonetaryAmountFactory must throw a MonetaryException, when a positive amount with an invalid " +
+                             "currency" +
+                             " is" +
+                             " tried to be created, type: " +
+                             type.getName());
+            }
+            catch(MonetaryException e){
+                // OK
+            }
+        }
+    }
+
+    /**
+     * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an invalid currency.
+     */
+    @Test
+    @SpecAssertion(section = "4.2.6", id = "426-C5")
+    public void testMonetaryAmountFactoryCreatePositiveInvalidContext_BadCase(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
+            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryContext mc = f.getMaximalMonetaryContext();
+            try{
+                MonetaryContext.Builder b = new MonetaryContext.Builder(mc);
+                boolean runTest = false; // only run check, if we are able to construct an exceeding MonetaryContext
+                if(mc.getMaxScale() != -1){
+                    b.setMaxScale(mc.getMaxScale() + 10);
+                    runTest = true;
+                }
+                if(mc.getPrecision() != -0){
+                    b.setPrecision(mc.getPrecision() + 10);
+                    runTest = true;
+                }
+                if(runTest){
+                    f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision()));
+                    f.setCurrency("FooBar_foobar_fOobAr_foObaR");
+                    f.create();
+                    fail("MonetaryAmountFactory must throw a MonetaryException, when a positive amount without an " +
+                                 "invalid MonetaryContext is" +
+                                 " tried to be created, type: " +
+                                 type.getName());
+                }
+            }
+            catch(MonetaryException e){
+                // OK
+            }
+        }
+    }
+
 
     // **************  D. Testing Creation of Amounts with negative values *******************
 
@@ -593,16 +735,16 @@ public class CreatingMonetaryAmountsTest{
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 ||
-                                       m.getMonetaryContext().getPrecision() >= p);
+                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
+                    );
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
-                    );
+                               m.getMonetaryContext().getPrecision() == 0 ||
+                                       m.getMonetaryContext().getPrecision() >= p);
                 }
             }
             if(maxCtx.getMaxScale() != -1){
@@ -643,16 +785,16 @@ public class CreatingMonetaryAmountsTest{
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 ||
-                                       m.getMonetaryContext().getPrecision() >= p);
+                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
+                    );
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
-                    );
+                               m.getMonetaryContext().getPrecision() == 0 ||
+                                       m.getMonetaryContext().getPrecision() >= p);
                 }
             }
             if(maxCtx.getMaxScale() != -1){
@@ -693,16 +835,16 @@ public class CreatingMonetaryAmountsTest{
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 ||
-                                       m.getMonetaryContext().getPrecision() >= p);
+                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
+                    );
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
                     f.setContext(new MonetaryContext.Builder().setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     assertTrue("Factory did not honor the precision set on the context for " + type.getName(),
-                               m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p
-                    );
+                               m.getMonetaryContext().getPrecision() == 0 ||
+                                       m.getMonetaryContext().getPrecision() >= p);
                 }
             }
             if(maxCtx.getMaxScale() != -1){
@@ -763,6 +905,108 @@ public class CreatingMonetaryAmountsTest{
                 catch(ArithmeticException e){
                     // OK
                 }
+            }
+        }
+    }
+
+    /**
+     * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an no currency.
+     */
+    @Test
+    @SpecAssertion(section = "4.2.6", id = "426-D4")
+    public void testMonetaryAmountFactoryCreateNegativeNoCurrency_BadCase(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
+            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            try{
+                if(f.getDefaultMonetaryContext().getPrecision() == 0){
+                    f.setNumber(TestUtils.createNumberWithPrecision(f, 5).negate());
+                }else{
+                    f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision())
+                                        .negate());
+                }
+                f.create();
+                fail("MonetaryAmountFactory must throw a MonetaryException, when an amount without a currency is" +
+                             " tried to be created, type: " +
+                             type.getName());
+            }
+            catch(MonetaryException e){
+                // OK
+            }
+        }
+    }
+
+    /**
+     * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an invalid currency.
+     */
+    @Test
+    @SpecAssertion(section = "4.2.6", id = "426-D4")
+    public void testMonetaryAmountFactoryCreateNegativeInvalidCurrency_BadCase(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
+            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            try{
+                if(f.getDefaultMonetaryContext().getPrecision() == 0){
+                    f.setNumber(TestUtils.createNumberWithPrecision(f, 5).negate());
+                }else{
+                    f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision())
+                                        .negate());
+                }
+                f.setCurrency("FooBar_foobar_fOobAr_foObaR");
+                f.create();
+                fail("MonetaryAmountFactory must throw a MonetaryException, when an amount with an invalid " +
+                             "currency is tried to be created, type: " +
+                             type.getName());
+            }
+            catch(MonetaryException e){
+                // OK
+            }
+        }
+    }
+
+    /**
+     * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an invalid currency.
+     */
+    @Test
+    @SpecAssertion(section = "4.2.6", id = "426-D5")
+    public void testMonetaryAmountFactoryCreateNegativeInvalidContext_BadCase(){
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
+            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryContext mc = f.getMaximalMonetaryContext();
+            try{
+                MonetaryContext.Builder b = new MonetaryContext.Builder(mc);
+                boolean runTest = false; // only run check, if we are able to construct an exceeding MonetaryContext
+                if(mc.getMaxScale() != -1){
+                    b.setMaxScale(mc.getMaxScale() + 10);
+                    runTest = true;
+                }
+                if(mc.getPrecision() != -0){
+                    b.setPrecision(mc.getPrecision() + 10);
+                    runTest = true;
+                }
+                if(runTest){
+                    if(f.getDefaultMonetaryContext().getPrecision() == 0){
+                        f.setNumber(TestUtils.createNumberWithPrecision(f, 5).negate());
+                    }else{
+                        f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision())
+                                            .negate());
+                    }
+                    f.setCurrency("FooBar_foobar_fOobAr_foObaR");
+                    f.create();
+                    fail("MonetaryAmountFactory must throw a MonetaryException, when an amount with an invalid " +
+                                 "MonetaryContext is tried to be created, type: " +
+                                 type.getName());
+                }
+            }
+            catch(MonetaryException e){
+                // OK
             }
         }
     }

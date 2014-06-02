@@ -12,7 +12,8 @@ package org.javamoney.tck.tests.conversion;
 import org.javamoney.tck.tests.internal.TestCurrencyUnit;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.junit.Assert;
+import org.testng.Assert;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import javax.money.CurrencyUnit;
@@ -24,8 +25,8 @@ import javax.money.convert.ExchangeRateProvider;
 import javax.money.convert.MonetaryConversions;
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertNotNull;
 
 /**
  * Tests for Exchange Rates and Rate Providers.

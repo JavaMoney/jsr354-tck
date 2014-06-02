@@ -25,7 +25,7 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.testng.AssertJUnit.*;
 
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class FormattingMonetaryAmountsTest{
@@ -133,6 +133,9 @@ public class FormattingMonetaryAmountsTest{
     public void testGetAvailableLocales(){
         Set<Locale> locales = MonetaryFormats.getAvailableLocales();
         for(Locale locale : DecimalFormat.getAvailableLocales()){
+            if(Locale.ROOT.equals(locale)){
+                continue;
+            }
             assertTrue(
                     "MonetaryFormats.getAvailableLocales(); Locale supported by JDKs DecimalFormat is not available: " +
                             locale, locales.contains(locale));

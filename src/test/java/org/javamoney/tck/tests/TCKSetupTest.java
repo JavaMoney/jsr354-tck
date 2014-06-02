@@ -16,7 +16,7 @@ import org.testng.annotations.Test;
 
 import java.util.Collection;
 
-import static org.junit.Assert.*;
+import static org.testng.AssertJUnit.*;
 
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class TCKSetupTest{
