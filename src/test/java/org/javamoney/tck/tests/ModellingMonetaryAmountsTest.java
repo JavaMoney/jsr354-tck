@@ -684,13 +684,20 @@ public class ModellingMonetaryAmountsTest{
             assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5)).create()
                     .isEqualTo(f.setNumber(new BigDecimal("5.0000")).create()));
             assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
-                    .isEqualTo(f.setNumber(new BigDecimal("-1.230")).create()));
-            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
-                    .isEqualTo(f.setNumber(new BigDecimal("-1.2300")).create()));
-            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
-                    .isEqualTo(f.setNumber(new BigDecimal("-1.23000")).create()));
-            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
-                    .isEqualTo(f.setNumber(new BigDecimal("-1.230000000000000000000")).create()));
+                    .isEqualTo(f.setNumber(new BigDecimal("-1.23")).create()));
+            try{
+                assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
+                        .isEqualTo(f.setNumber(new BigDecimal("-1.230")).create()));
+                assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
+                        .isEqualTo(f.setNumber(new BigDecimal("-1.2300")).create()));
+                assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
+                        .isEqualTo(f.setNumber(new BigDecimal("-1.23000")).create()));
+                assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
+                        .isEqualTo(f.setNumber(new BigDecimal("-1.230000000000000000000")).create()));
+            }
+            catch(MonetaryException e){
+                // happens if we exceed the limits...
+            }
         }
     }
 
@@ -1276,8 +1283,28 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mAmount2 = null;
             if(maxCtx.getPrecision() > 0){
                 mAmount2 = f.setNumber(
-                        TestUtils.createNumberWithPrecision(f, maxCtx.getPrecision() - maxCtx.getMaxScale())).create();
+                        TestUtils.createNumberWithPrecision(f, maxCtx.getPrecision())).create();
+                try{
+                    for(int i = 0; i < 10; i++){
+                        mAmount1 = mAmount1.subtract(mAmount2);
+                        fail("Exception expected on subtraction that exceeds capabilities for " + type.getName());
+                    }
+                }
+                catch(MonetaryException ex){
+                    // Expected
+                }
             }
+        }
+
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
+                continue;
+            }
+            MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
+            f.setCurrency("CHF");
+            MonetaryAmount mAmount1 = f.setNumber(0).create();
+            MonetaryContext maxCtx = f.getMaximalMonetaryContext();
+            MonetaryAmount mAmount2 = null;
             if(maxCtx.getMaxScale() >= 0){
                 MonetaryContext tgtContext =
                         new MonetaryContext.Builder(maxCtx).setMaxScale(maxCtx.getMaxScale() + 1).build();
@@ -1292,8 +1319,8 @@ public class ModellingMonetaryAmountsTest{
                 }
                 catch(MonetaryException e){
                     // we have to abort the test...
+                    continue;
                 }
-
             }
             if(mAmount2 != null){
                 try{
@@ -1454,16 +1481,16 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
             MonetaryContext ctx = f.getMaximalMonetaryContext();
             if(ctx.getPrecision() > 0){
-                BigDecimal num = TestUtils.createNumberWithPrecision(f, ctx.getPrecision());
-                MonetaryAmount m = f.setNumber(num).setCurrency("USD").create();
+                BigDecimal num = TestUtils.createNumberWithPrecision(f, ctx.getPrecision()+5);
+                MonetaryAmount m = f.setNumber(10).setCurrency("USD").create();
                 try{
-                    m.multiply(10000000);
+                    m.multiply(num);
                     fail("Multiplication of amount " + num +
                                  " with 10000000 exceeds max monetary context(precision), " +
                                  "but did not throw an ArithmeticException, type was " +
                                  type.getName());
                 }
-                catch(ArithmeticException e){
+                catch(MonetaryException e){
                     // OK
                 }
                 catch(Exception e){
