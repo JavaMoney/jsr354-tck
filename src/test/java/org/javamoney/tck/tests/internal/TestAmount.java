@@ -91,6 +91,16 @@ public final class TestAmount implements MonetaryAmount, Serializable{
             }
 
             @Override
+            public NumberValue getMaxNumber(){
+                return null;
+            }
+
+            @Override
+            public NumberValue getMinNumber(){
+                return null;
+            }
+
+            @Override
             public MonetaryAmountFactory setContext(MonetaryContext monetaryContext){
                 return this;
             }

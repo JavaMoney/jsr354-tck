@@ -63,6 +63,16 @@ public final class TestMonetaryAmountFactory implements MonetaryAmountFactory<Te
     }
 
     @Override
+    public NumberValue getMaxNumber(){
+        return null;
+    }
+
+    @Override
+    public NumberValue getMinNumber(){
+        return null;
+    }
+
+    @Override
     public MonetaryAmountFactory<TestAmount> setContext(MonetaryContext monetaryContext){
         return this;
     }

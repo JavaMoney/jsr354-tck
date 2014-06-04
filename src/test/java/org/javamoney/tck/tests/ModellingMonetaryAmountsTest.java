@@ -56,8 +56,10 @@ public class ModellingMonetaryAmountsTest{
                         MonetaryAmounts.getAmountFactory().setCurrency(jdkCur.getCurrencyCode()).setNumber(10.15)
                                 .create();
                 assertNotNull("Amount factory returned null for new amount,m type: " + type.getName(), amount);
-                assertNotNull("Amount factory returned new amount with null currency, type: " + type.getName(), amount.getCurrency());
-                assertEquals("Amount factory returned new amount with invalid currency, type: " + type.getName(), jdkCur.getCurrencyCode(), amount.getCurrency().getCurrencyCode());
+                assertNotNull("Amount factory returned new amount with null currency, type: " + type.getName(),
+                              amount.getCurrency());
+                assertEquals("Amount factory returned new amount with invalid currency, type: " + type.getName(),
+                             jdkCur.getCurrencyCode(), amount.getCurrency().getCurrencyCode());
             }
         }
     }
@@ -88,7 +90,8 @@ public class ModellingMonetaryAmountsTest{
 
             for(int i = 0; i < moneys.length; i++){
                 NumberValue nv = moneys[i].getNumber();
-                assertNotNull("Amount returned returns null for getNumber(), type: " + moneys[i].getClass().getName(), nv);
+                assertNotNull("Amount returned returns null for getNumber(), type: " + moneys[i].getClass().getName(),
+                              nv);
                 assertEquals("getNumber().numberValue(BigDecimal.class) incorrect for " + type.getName(),
                              numbers[i].stripTrailingZeros(), nv.numberValue(BigDecimal.class).stripTrailingZeros());
                 assertEquals("getNumber().intValue() incorrect for " + type.getName(), intNums[i], nv.intValue());
@@ -116,7 +119,7 @@ public class ModellingMonetaryAmountsTest{
             f.setCurrency("CHF");
             MonetaryContext defCtx = f.getDefaultMonetaryContext();
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
-            MonetaryContext mc = f.setNumber(0).create().getMonetaryContext();
+            MonetaryContext mc = f.setNumber(1).create().getMonetaryContext();
             assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(), mc.getAmountType(), type);
             if(maxCtx.getPrecision() > 0){
                 assertTrue("Invalid MonetaryContext(precision) for " + type.getName(),
@@ -992,11 +995,11 @@ public class ModellingMonetaryAmountsTest{
             f.setCurrency("CHF");
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() > 0){
-                MonetaryAmount m = f.setNumber(TestUtils.createNumberWithPrecision(f, maxCtx.getPrecision())).create();
+                MonetaryAmount m = f.setNumber(f.getMaxNumber()).create();
                 MonetaryAmount ms = m;
                 try{
                     for(int i = 0; i < 20; i++){
-                        ms = ms.add(m);
+                        ms = ms.add(ms);
                     }
                     fail("Exception expected, since adding 20x " + m + " to " + m +
                                  " exceeds capabilities (precision) for " +
@@ -1278,17 +1281,14 @@ public class ModellingMonetaryAmountsTest{
             }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
-            MonetaryAmount mAmount1 = f.setNumber(0).create();
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
-            MonetaryAmount mAmount2 = null;
+            MonetaryAmount m = null;
             if(maxCtx.getPrecision() > 0){
-                mAmount2 = f.setNumber(
-                        TestUtils.createNumberWithPrecision(f, maxCtx.getPrecision())).create();
+                MonetaryAmount mAmount1 = f.setNumber(f.getMinNumber()).create().negate();
+                m = TestUtils.createAmountWithPrecision(maxCtx.getPrecision() + 1);
                 try{
-                    for(int i = 0; i < 10; i++){
-                        mAmount1 = mAmount1.subtract(mAmount2);
-                        fail("Exception expected on subtraction that exceeds capabilities for " + type.getName());
-                    }
+                    mAmount1 = mAmount1.subtract(m);
+                    fail("Exception expected on subtraction that exceeds capabilities for " + type.getName());
                 }
                 catch(MonetaryException ex){
                     // Expected
@@ -1304,27 +1304,13 @@ public class ModellingMonetaryAmountsTest{
             f.setCurrency("CHF");
             MonetaryAmount mAmount1 = f.setNumber(0).create();
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
-            MonetaryAmount mAmount2 = null;
+            MonetaryAmount m = null;
             if(maxCtx.getMaxScale() >= 0){
-                MonetaryContext tgtContext =
-                        new MonetaryContext.Builder(maxCtx).setMaxScale(maxCtx.getMaxScale() + 1).build();
-                Class<? extends MonetaryAmount> exceedingType = null;
-                try{
-                    exceedingType = MonetaryAmounts.queryAmountType(tgtContext);
-                    assertNotNull(exceedingType);
-                    MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
-                            MonetaryAmounts.getAmountFactory(exceedingType);
-                    mAmount2 = bigFactory.setCurrency("CHF").setNumber(createNumberWithScale(f, maxCtx.getMaxScale()))
-                            .create();
-                }
-                catch(MonetaryException e){
-                    // we have to abort the test...
-                    continue;
-                }
+                m = TestUtils.createAmountWithScale(maxCtx.getMaxScale() + 1);
             }
-            if(mAmount2 != null){
+            if(m != null){
                 try{
-                    mAmount1.subtract(mAmount2);
+                    mAmount1.subtract(m);
                     fail("Exception expected on subtraction that exceeds capabilities for " + type.getName());
                 }
                 catch(MonetaryException ex){
@@ -1481,7 +1467,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
             MonetaryContext ctx = f.getMaximalMonetaryContext();
             if(ctx.getPrecision() > 0){
-                BigDecimal num = TestUtils.createNumberWithPrecision(f, ctx.getPrecision()+5);
+                BigDecimal num = TestUtils.createNumberWithPrecision(f, ctx.getPrecision() + 5);
                 MonetaryAmount m = f.setNumber(10).setCurrency("USD").create();
                 try{
                     m.multiply(num);

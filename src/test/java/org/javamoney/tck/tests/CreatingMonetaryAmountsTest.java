@@ -565,7 +565,7 @@ public class CreatingMonetaryAmountsTest{
                                  " being created, type: " +
                                  type.getName());
                 }
-                catch(ArithmeticException e){
+                catch(MonetaryException e){
                     // OK
                 }
             }
@@ -577,7 +577,7 @@ public class CreatingMonetaryAmountsTest{
                                  " being created, type: " +
                                  type.getName());
                 }
-                catch(ArithmeticException e){
+                catch(MonetaryException e){
                     // OK
                 }
             }
@@ -896,7 +896,7 @@ public class CreatingMonetaryAmountsTest{
                                  " being created, type: " +
                                  type.getName());
                 }
-                catch(ArithmeticException e){
+                catch(MonetaryException e){
                     // OK
                 }
             }
@@ -908,7 +908,7 @@ public class CreatingMonetaryAmountsTest{
                                  " being created, type: " +
                                  type.getName());
                 }
-                catch(ArithmeticException e){
+                catch(MonetaryException e){
                     // OK
                 }
             }

@@ -22,9 +22,10 @@ import java.util.Arrays;
 
 import junit.framework.Assert;
 
-import javax.money.MonetaryAmountFactory;
+import javax.money.*;
 
 import static org.testng.Assert.fail;
+import static org.testng.AssertJUnit.assertNotNull;
 
 
 public class TestUtils{
@@ -281,4 +282,38 @@ public class TestUtils{
 	public static String getWarnings() {
 		return warnings.toString();
 	}
+
+    public static MonetaryAmount createAmountWithScale(int scale){
+        MonetaryContext tgtContext =
+                new MonetaryContext.Builder().setMaxScale(scale).build();
+        Class<? extends MonetaryAmount> exceedingType = null;
+        try{
+            exceedingType = MonetaryAmounts.queryAmountType(tgtContext);
+            assertNotNull(exceedingType);
+            MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
+                    MonetaryAmounts.getAmountFactory(exceedingType);
+            return bigFactory.setCurrency("CHF").setNumber(createNumberWithScale(bigFactory, scale))
+                    .create();
+        }
+        catch(MonetaryException e){
+            return null;
+        }
+    }
+
+    public static MonetaryAmount createAmountWithPrecision(int precision){
+        MonetaryContext tgtContext =
+                new MonetaryContext.Builder().setPrecision(precision).build();
+        Class<? extends MonetaryAmount> exceedingType = null;
+        try{
+            exceedingType = MonetaryAmounts.queryAmountType(tgtContext);
+            assertNotNull(exceedingType);
+            MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
+                    MonetaryAmounts.getAmountFactory(exceedingType);
+            return bigFactory.setCurrency("CHF").setNumber(createNumberWithPrecision(bigFactory, precision))
+                    .create();
+        }
+        catch(MonetaryException e){
+            return null;
+        }
+    }
 }
