@@ -21,6 +21,7 @@ import java.math.MathContext;
 import java.util.Arrays;
 
 import junit.framework.Assert;
+import org.testng.AssertJUnit;
 
 import javax.money.*;
 
@@ -148,7 +149,7 @@ public class TestUtils{
 				return;
 			}
 		}
-		fail("Class must implement " + iface.getName() + ", but does not: " + type.getName());
+		Assert.fail("Class must implement " + iface.getName() + ", but does not: " + type.getName());
 	}
 
 	public static void testHasPublicMethod(Class type, Class returnType,
@@ -289,7 +290,7 @@ public class TestUtils{
         Class<? extends MonetaryAmount> exceedingType = null;
         try{
             exceedingType = MonetaryAmounts.queryAmountType(tgtContext);
-            assertNotNull(exceedingType);
+            AssertJUnit.assertNotNull(exceedingType);
             MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
                     MonetaryAmounts.getAmountFactory(exceedingType);
             return bigFactory.setCurrency("CHF").setNumber(createNumberWithScale(bigFactory, scale))
@@ -306,7 +307,7 @@ public class TestUtils{
         Class<? extends MonetaryAmount> exceedingType = null;
         try{
             exceedingType = MonetaryAmounts.queryAmountType(tgtContext);
-            assertNotNull(exceedingType);
+            AssertJUnit.assertNotNull(exceedingType);
             MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
                     MonetaryAmounts.getAmountFactory(exceedingType);
             return bigFactory.setCurrency("CHF").setNumber(createNumberWithPrecision(bigFactory, precision))

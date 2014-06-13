@@ -9,12 +9,6 @@
  */
 package org.javamoney.tck.tests.internal;
 
-import org.javamoney.tck.tests.internal.TestAmount;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Currency;
-
 import javax.money.*;
 
 public final class TestMonetaryAmountFactory implements MonetaryAmountFactory<TestAmount>{

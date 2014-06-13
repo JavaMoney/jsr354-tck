@@ -13,6 +13,7 @@ import org.javamoney.tck.TestUtils;
 import org.javamoney.tck.tests.internal.TestAmount;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import javax.money.*;
@@ -38,9 +39,10 @@ public class ModellingMonetaryAmountsTest{
     @SpecAssertion(section = "4.2.2", id = "422-0")
     @Test
     public void testEnsureMonetaryAmount(){
-        assertNotNull("MonetaryAmounts.getAmountTypes() must never return null.", MonetaryAmounts.getAmountTypes());
-        assertTrue("At least one type must be registered with MonetaryAmounts (see getAmountTypes()).",
-                   MonetaryAmounts.getAmountTypes().size() > 0);
+        AssertJUnit.assertNotNull("MonetaryAmounts.getAmountTypes() must never return null.",
+                                  MonetaryAmounts.getAmountTypes());
+        AssertJUnit.assertTrue("At least one type must be registered with MonetaryAmounts (see getAmountTypes()).",
+                               MonetaryAmounts.getAmountTypes().size() > 0);
     }
 
     /**
@@ -55,11 +57,14 @@ public class ModellingMonetaryAmountsTest{
                 MonetaryAmount amount =
                         MonetaryAmounts.getAmountFactory().setCurrency(jdkCur.getCurrencyCode()).setNumber(10.15)
                                 .create();
-                assertNotNull("Amount factory returned null for new amount,m type: " + type.getName(), amount);
-                assertNotNull("Amount factory returned new amount with null currency, type: " + type.getName(),
-                              amount.getCurrency());
-                assertEquals("Amount factory returned new amount with invalid currency, type: " + type.getName(),
-                             jdkCur.getCurrencyCode(), amount.getCurrency().getCurrencyCode());
+                AssertJUnit
+                        .assertNotNull("Amount factory returned null for new amount,m type: " + type.getName(), amount);
+                AssertJUnit
+                        .assertNotNull("Amount factory returned new amount with null currency, type: " + type.getName(),
+                                       amount.getCurrency());
+                AssertJUnit.assertEquals(
+                        "Amount factory returned new amount with invalid currency, type: " + type.getName(),
+                        jdkCur.getCurrencyCode(), amount.getCurrency().getCurrencyCode());
             }
         }
     }
@@ -90,16 +95,19 @@ public class ModellingMonetaryAmountsTest{
 
             for(int i = 0; i < moneys.length; i++){
                 NumberValue nv = moneys[i].getNumber();
-                assertNotNull("Amount returned returns null for getNumber(), type: " + moneys[i].getClass().getName(),
-                              nv);
-                assertEquals("getNumber().numberValue(BigDecimal.class) incorrect for " + type.getName(),
-                             numbers[i].stripTrailingZeros(), nv.numberValue(BigDecimal.class).stripTrailingZeros());
-                assertEquals("getNumber().intValue() incorrect for " + type.getName(), intNums[i], nv.intValue());
-                assertEquals("getNumber().longValue() incorrect for " + type.getName(), longNums[i], nv.longValue());
-                assertEquals("getNumber().doubleValue() incorrect for " + type.getName(), doubleNums[i],
-                             nv.doubleValue(), 0.0d);
-                assertEquals("getNumber().floatValue() incorrect for " + type.getName(), floatNums[i], nv.floatValue(),
-                             0.0d);
+                AssertJUnit.assertNotNull(
+                        "Amount returned returns null for getNumber(), type: " + moneys[i].getClass().getName(), nv);
+                AssertJUnit.assertEquals("getNumber().numberValue(BigDecimal.class) incorrect for " + type.getName(),
+                                         numbers[i].stripTrailingZeros(),
+                                         nv.numberValue(BigDecimal.class).stripTrailingZeros());
+                AssertJUnit.assertEquals("getNumber().intValue() incorrect for " + type.getName(), intNums[i],
+                                         nv.intValue());
+                AssertJUnit.assertEquals("getNumber().longValue() incorrect for " + type.getName(), longNums[i],
+                                         nv.longValue());
+                AssertJUnit.assertEquals("getNumber().doubleValue() incorrect for " + type.getName(), doubleNums[i],
+                                         nv.doubleValue(), 0.0d);
+                AssertJUnit.assertEquals("getNumber().floatValue() incorrect for " + type.getName(), floatNums[i],
+                                         nv.floatValue(), 0.0d);
             }
         }
     }
@@ -120,38 +128,42 @@ public class ModellingMonetaryAmountsTest{
             MonetaryContext defCtx = f.getDefaultMonetaryContext();
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             MonetaryContext mc = f.setNumber(1).create().getMonetaryContext();
-            assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(), mc.getAmountType(), type);
+            AssertJUnit
+                    .assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(), mc.getAmountType(), type);
             if(maxCtx.getPrecision() > 0){
-                assertTrue("Invalid MonetaryContext(precision) for " + type.getName(),
-                           mc.getPrecision() <= maxCtx.getPrecision());
+                AssertJUnit.assertTrue("Invalid MonetaryContext(precision) for " + type.getName(),
+                                       mc.getPrecision() <= maxCtx.getPrecision());
             }
             if(maxCtx.getMaxScale() > 0){
-                assertTrue("Invalid MonetaryContext(maxScale) for " + type.getName(),
-                           mc.getMaxScale() <= maxCtx.getMaxScale());
+                AssertJUnit.assertTrue("Invalid MonetaryContext(maxScale) for " + type.getName(),
+                                       mc.getMaxScale() <= maxCtx.getMaxScale());
             }
-            assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(),
-                         f.setNumber(0.34746d).create().getMonetaryContext().getAmountType(), type);
+            AssertJUnit.assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(),
+                                     f.setNumber(0.34746d).create().getMonetaryContext().getAmountType(), type);
             mc = f.setNumber(0).create().getMonetaryContext();
-            assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(), mc.getAmountType(), type);
+            AssertJUnit
+                    .assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(), mc.getAmountType(),
+                                  type);
             if(maxCtx.getPrecision() > 0){
-                assertTrue("Invalid MonetaryContext(precision) for " + type.getName(),
-                           mc.getPrecision() <= maxCtx.getPrecision());
+                AssertJUnit.assertTrue("Invalid MonetaryContext(precision) for " + type.getName(),
+                                       mc.getPrecision() <= maxCtx.getPrecision());
             }
             if(maxCtx.getMaxScale() > 0){
-                assertTrue("Invalid MonetaryContext(maxScale) for " + type.getName(),
-                           mc.getMaxScale() <= maxCtx.getMaxScale());
+                AssertJUnit.assertTrue("Invalid MonetaryContext(maxScale) for " + type.getName(),
+                                       mc.getMaxScale() <= maxCtx.getMaxScale());
             }
-            assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(),
-                         f.setNumber(100034L).create().getMonetaryContext().getAmountType(), type);
+            AssertJUnit.assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(),
+                                     f.setNumber(100034L).create().getMonetaryContext().getAmountType(), type);
             mc = f.setNumber(0).create().getMonetaryContext();
-            assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(), mc.getAmountType(), type);
+            AssertJUnit
+                    .assertEquals("Invalid MonetaryContext(amountType) for " + type.getName(), mc.getAmountType(), type);
             if(maxCtx.getPrecision() > 0){
-                assertTrue("Invalid MonetaryContext(precision) for " + type.getName(),
-                           mc.getPrecision() <= maxCtx.getPrecision());
+                AssertJUnit.assertTrue("Invalid MonetaryContext(precision) for " + type.getName(),
+                                       mc.getPrecision() <= maxCtx.getPrecision());
             }
             if(maxCtx.getMaxScale() > 0){
-                assertTrue("Invalid MonetaryContext(maxScale) for " + type.getName(),
-                           mc.getMaxScale() <= maxCtx.getMaxScale());
+                AssertJUnit.assertTrue("Invalid MonetaryContext(maxScale) for " + type.getName(),
+                                       mc.getMaxScale() <= maxCtx.getMaxScale());
             }
         }
     }
@@ -173,12 +185,12 @@ public class ModellingMonetaryAmountsTest{
                     f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.00000000000000000")).create(),
                     f.setNumber(100).create(), f.setNumber(34242344).create(), f.setNumber(23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertFalse("Invalid isNegative (expected false) for " + type.getName(), m.isNegative());
+                AssertJUnit.assertFalse("Invalid isNegative (expected false) for " + type.getName(), m.isNegative());
             }
             moneys = new MonetaryAmount[]{f.setNumber(-100).create(), f.setNumber(-34242344).create(),
                     f.setNumber(-23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertTrue("Invalid isNegative (expected true) for " + type.getName(), m.isNegative());
+                AssertJUnit.assertTrue("Invalid isNegative (expected true) for " + type.getName(), m.isNegative());
             }
         }
     }
@@ -199,13 +211,13 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(100).create(), f.setNumber(34242344).create(),
                     f.setNumber(23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertTrue("Invalid isPositive (expected true) for " + type.getName(), m.isPositive());
+                AssertJUnit.assertTrue("Invalid isPositive (expected true) for " + type.getName(), m.isPositive());
             }
             moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
                     f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.00000000000000000")).create(),
                     f.setNumber(-100).create(), f.setNumber(-34242344).create(), f.setNumber(-23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertFalse("Invalid isPositive (expected false) for " + type.getName(), m.isPositive());
+                AssertJUnit.assertFalse("Invalid isPositive (expected false) for " + type.getName(), m.isPositive());
             }
         }
     }
@@ -228,12 +240,12 @@ public class ModellingMonetaryAmountsTest{
                     f.setNumber(23123213.435).create(), f.setNumber(-100).create(),
                     f.setNumber(-723527.36532).create()};
             for(MonetaryAmount m : moneys){
-                assertFalse("Invalid isZero (expected false) for " + type.getName(), m.isZero());
+                AssertJUnit.assertFalse("Invalid isZero (expected false) for " + type.getName(), m.isZero());
             }
             moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
                     f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.00000000000000000")).create()};
             for(MonetaryAmount m : moneys){
-                assertTrue("Invalid isZero (expected true) for " + type.getName(), m.isZero());
+                AssertJUnit.assertTrue("Invalid isZero (expected true) for " + type.getName(), m.isZero());
             }
         }
     }
@@ -255,7 +267,7 @@ public class ModellingMonetaryAmountsTest{
                     new MonetaryAmount[]{f.setNumber(-0).create(), f.setNumber(0).create(), f.setNumber(-0.0f).create(),
                             f.setNumber(0.0f).create(), f.setNumber(-0.0d).create(), f.setNumber(0.0d).create()};
             for(MonetaryAmount m : moneys){
-                assertTrue("Invalid isZero (expected true) for " + type.getName(), m.isZero());
+                AssertJUnit.assertTrue("Invalid isZero (expected true) for " + type.getName(), m.isZero());
             }
         }
     }
@@ -271,17 +283,17 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount m = f.setNumber(100).create();
-            assertEquals("Invalid signum of 100 for " + type.getName(), 1, m.signum());
+            AssertJUnit.assertEquals("Invalid signum of 100 for " + type.getName(), 1, m.signum());
             m = f.setNumber(-100).create();
-            assertEquals("signum of -100 for " + type.getName(), -1, m.signum());
+            AssertJUnit.assertEquals("signum of -100 for " + type.getName(), -1, m.signum());
             m = f.setNumber(100.3435).create();
-            assertEquals("signum of 100.3435 for " + type.getName(), 1, m.signum());
+            AssertJUnit.assertEquals("signum of 100.3435 for " + type.getName(), 1, m.signum());
             m = f.setNumber(-100.3435).create();
-            assertEquals("signum of -100.3435 for " + type.getName(), -1, m.signum());
+            AssertJUnit.assertEquals("signum of -100.3435 for " + type.getName(), -1, m.signum());
             m = f.setNumber(0).create();
-            assertEquals("signum of 0 for " + type.getName(), 0, m.signum());
+            AssertJUnit.assertEquals("signum of 0 for " + type.getName(), 0, m.signum());
             m = f.setNumber(-0).create();
-            assertEquals("signum of - for " + type.getName(), 0, m.signum());
+            AssertJUnit.assertEquals("signum of - for " + type.getName(), 0, m.signum());
         }
     }
 
@@ -301,13 +313,15 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount[] moneys = new MonetaryAmount[]{f.setNumber(100).create(), f.setNumber(34242344).create(),
                     f.setNumber(23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertFalse("Invalid negativeOrZero (expected false) for " + type.getName(), m.isNegativeOrZero());
+                AssertJUnit.assertFalse("Invalid negativeOrZero (expected false) for " + type.getName(),
+                                        m.isNegativeOrZero());
             }
             moneys = new MonetaryAmount[]{f.setNumber(0).create(), f.setNumber(0.0).create(),
                     f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.0000")).create(),
                     f.setNumber(-100).create(), f.setNumber(-34242344).create(), f.setNumber(-23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertTrue("Invalid negativeOrZero (expected true) for " + type.getName(), m.isNegativeOrZero());
+                AssertJUnit.assertTrue("Invalid negativeOrZero (expected true) for " + type.getName(),
+                                       m.isNegativeOrZero());
             }
         }
     }
@@ -329,12 +343,14 @@ public class ModellingMonetaryAmountsTest{
                     f.setNumber(BigDecimal.ZERO).create(), f.setNumber(new BigDecimal("0.00000000000000000")).create(),
                     f.setNumber(100).create(), f.setNumber(34242344).create(), f.setNumber(23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertTrue("Invalid positiveOrZero (expected true): for " + type.getName(), m.isPositiveOrZero());
+                AssertJUnit.assertTrue("Invalid positiveOrZero (expected true): for " + type.getName(),
+                                       m.isPositiveOrZero());
             }
             moneys = new MonetaryAmount[]{f.setNumber(-100).create(), f.setNumber(-34242344).create(),
                     f.setNumber(-23123213.435).create()};
             for(MonetaryAmount m : moneys){
-                assertFalse("Invalid positiveOrZero (expected false) for " + type.getName() + m, m.isPositiveOrZero());
+                AssertJUnit.assertFalse("Invalid positiveOrZero (expected false) for " + type.getName() + m,
+                                        m.isPositiveOrZero());
             }
         }
     }
@@ -351,19 +367,25 @@ public class ModellingMonetaryAmountsTest{
     public void testMonetaryAmountFactories(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
-            assertNotNull(f);
+            AssertJUnit.assertNotNull(f);
             MonetaryAmount m = f.setCurrency("CHF").setNumber(10).create();
-            assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
+            AssertJUnit
+                    .assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
             m = f.setCurrency("CHF").setNumber(-10).create();
-            assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
+            AssertJUnit
+                    .assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
             m = f.setCurrency("CHF").setNumber(10.3).create();
-            assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
+            AssertJUnit
+                    .assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
             m = f.setCurrency("CHF").setNumber(-10.3).create();
-            assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
+            AssertJUnit
+                    .assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
             m = f.setCurrency("CHF").setNumber(0.0).create();
-            assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
+            AssertJUnit
+                    .assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
             m = f.setCurrency("CHF").setNumber(-0.0).create();
-            assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
+            AssertJUnit
+                    .assertEquals("Invalid class for created amount, expected: " + type.getName(), m.getClass(), type);
         }
     }
 
@@ -383,7 +405,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(10).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("CHF").setNumber(10).create();
-            assertEquals("Expected equal instances for " + type.getName(), m1, m2);
+            AssertJUnit.assertEquals("Expected equal instances for " + type.getName(), m1, m2);
         }
 
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -394,7 +416,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(10.5d).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("CHF").setNumber(10.5d).create();
-            assertEquals("Expected equal types created by same factory for " + type.getName(), m1, m2);
+            AssertJUnit.assertEquals("Expected equal types created by same factory for " + type.getName(), m1, m2);
         }
 
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -405,7 +427,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(new BigDecimal("10.52")).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("CHF").setNumber(new BigDecimal("10.52")).create();
-            assertEquals("Expected equal types created by same factory for " + type.getName(), m1, m2);
+            AssertJUnit.assertEquals("Expected equal types created by same factory for " + type.getName(), m1, m2);
         }
     }
 
@@ -425,7 +447,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(10).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("CHF").setNumber(11).create();
-            assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
+            AssertJUnit.assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
         }
 
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -433,7 +455,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(10.5d).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("CHF").setNumber(10.4d).create();
-            assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
+            AssertJUnit.assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
         }
 
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -441,7 +463,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(new BigDecimal("10.52")).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("CHF").setNumber(new BigDecimal("10.11")).create();
-            assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
+            AssertJUnit.assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
         }
     }
 
@@ -459,7 +481,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(10).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("USD").setNumber(10).create();
-            assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
+            AssertJUnit.assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
         }
 
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -467,7 +489,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(10.5d).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("USD").setNumber(10.5d).create();
-            assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
+            AssertJUnit.assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
         }
 
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -475,7 +497,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m1 = f.setCurrency("CHF").setNumber(new BigDecimal("10.52")).create();
             f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m2 = f.setCurrency("USD").setNumber(new BigDecimal("10.52")).create();
-            assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
+            AssertJUnit.assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
         }
     }
 
@@ -497,15 +519,15 @@ public class ModellingMonetaryAmountsTest{
                 // In this cases both amount must be equals
                 m1 = f.setCurrency("CHF").setContext(mc1).setNumber(10).create();
                 m2 = f.setCurrency("CHF").setContext(mc2).setNumber(10).create();
-                assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
+                AssertJUnit.assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
             }else{
                 // In this cases both amount must be non equals
                 m1 = f.setCurrency("CHF").setContext(mc1).setNumber(10).create();
                 m2 = f.setCurrency("CHF").setContext(mc2).setNumber(10).create();
-                assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
+                AssertJUnit.assertNotSame("Expected non equal instances for " + type.getName(), m1, m2);
             }
-            assertTrue("Expected equality for " + type.getName(), m1.equals(m1));
-            assertTrue("Expected equality for " + type.getName(), m2.equals(m2));
+            AssertJUnit.assertTrue("Expected equality for " + type.getName(), m1.equals(m1));
+            AssertJUnit.assertTrue("Expected equality for " + type.getName(), m2.equals(m2));
         }
     }
 
@@ -525,11 +547,11 @@ public class ModellingMonetaryAmountsTest{
             MonetaryContext mc2 = f.getMaximalMonetaryContext();
             MonetaryAmount m1 = f.setCurrency("CHF").setContext(mc1).setNumber(10).create();
             MonetaryAmount m2 = f.setCurrency("USD").setContext(mc2).setNumber(11).create();
-            assertNotSame("Expected not same for " + type.getName(), m1, m2);
-            assertTrue("Expected isEqualTo==true for " + type.getName(), m1.isEqualTo(m1));
-            assertTrue("Expected isEqualTo==true for " + type.getName(), m2.isEqualTo(m2));
-            assertTrue("Expected equality for " + type.getName(), m1.equals(m1));
-            assertTrue("Expected equality for " + type.getName(), m2.equals(m2));
+            AssertJUnit.assertNotSame("Expected not same for " + type.getName(), m1, m2);
+            AssertJUnit.assertTrue("Expected isEqualTo==true for " + type.getName(), m1.isEqualTo(m1));
+            AssertJUnit.assertTrue("Expected isEqualTo==true for " + type.getName(), m2.isEqualTo(m2));
+            AssertJUnit.assertTrue("Expected equality for " + type.getName(), m1.equals(m1));
+            AssertJUnit.assertTrue("Expected equality for " + type.getName(), m2.equals(m2));
         }
     }
 
@@ -544,19 +566,21 @@ public class ModellingMonetaryAmountsTest{
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
-            assertFalse("isGreaterThan failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(0d)).create()
-                    .isGreaterThan(f.setNumber(BigDecimal.valueOf(0)).create()));
-            assertTrue("isGreaterThan failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(0.00001d)).create()
-                               .isGreaterThan(f.setNumber(BigDecimal.valueOf(0d)).create())
+            AssertJUnit.assertFalse("isGreaterThan failed for " + type.getName(),
+                                    f.setNumber(BigDecimal.valueOf(0d)).create()
+                                            .isGreaterThan(f.setNumber(BigDecimal.valueOf(0)).create()));
+            AssertJUnit.assertTrue("isGreaterThan failed for " + type.getName(),
+                                   f.setNumber(BigDecimal.valueOf(0.00001d)).create()
+                                           .isGreaterThan(f.setNumber(BigDecimal.valueOf(0d)).create())
             );
-            assertTrue("isGreaterThan failed for " + type.getName(),
-                       f.setNumber(15).create().isGreaterThan(f.setNumber(10).create()));
-            assertTrue("isGreaterThan failed for " + type.getName(),
-                       f.setNumber(15.546).create().isGreaterThan(f.setNumber(10.34).create()));
-            assertFalse("isGreaterThan failed for " + type.getName(),
-                        f.setNumber(5).create().isGreaterThan(f.setNumber(10).create()));
-            assertFalse("isGreaterThan failed for " + type.getName(),
-                        f.setNumber(5.546).create().isGreaterThan(f.setNumber(10.34).create()));
+            AssertJUnit.assertTrue("isGreaterThan failed for " + type.getName(),
+                                   f.setNumber(15).create().isGreaterThan(f.setNumber(10).create()));
+            AssertJUnit.assertTrue("isGreaterThan failed for " + type.getName(),
+                                   f.setNumber(15.546).create().isGreaterThan(f.setNumber(10.34).create()));
+            AssertJUnit.assertFalse("isGreaterThan failed for " + type.getName(),
+                                    f.setNumber(5).create().isGreaterThan(f.setNumber(10).create()));
+            AssertJUnit.assertFalse("isGreaterThan failed for " + type.getName(),
+                                    f.setNumber(5.546).create().isGreaterThan(f.setNumber(10.34).create()));
         }
     }
 
@@ -570,22 +594,22 @@ public class ModellingMonetaryAmountsTest{
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
-            assertTrue("isGreaterThanOrEqualTo failed for " + type.getName(),
-                       f.setNumber(BigDecimal.valueOf(0d)).create()
-                               .isGreaterThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0)).create())
+            AssertJUnit.assertTrue("isGreaterThanOrEqualTo failed for " + type.getName(),
+                                   f.setNumber(BigDecimal.valueOf(0d)).create()
+                                           .isGreaterThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0)).create())
             );
-            assertTrue("isGreaterThanOrEqualTo failed for " + type.getName(),
-                       f.setNumber(BigDecimal.valueOf(0.00001d)).create()
-                               .isGreaterThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create())
+            AssertJUnit.assertTrue("isGreaterThanOrEqualTo failed for " + type.getName(),
+                                   f.setNumber(BigDecimal.valueOf(0.00001d)).create()
+                                           .isGreaterThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create())
             );
-            assertTrue("isGreaterThanOrEqualTo failed for " + type.getName(),
-                       f.setNumber(15).create().isGreaterThanOrEqualTo(f.setNumber(10).create()));
-            assertTrue("isGreaterThanOrEqualTo failed for " + type.getName(),
-                       f.setNumber(15.546).create().isGreaterThanOrEqualTo(f.setNumber(10.34).create()));
-            assertFalse("isGreaterThanOrEqualTo failed for " + type.getName(),
-                        f.setNumber(5).create().isGreaterThanOrEqualTo(f.setNumber(10).create()));
-            assertFalse("isGreaterThanOrEqualTo failed for " + type.getName(),
-                        f.setNumber(5.546).create().isGreaterThanOrEqualTo(f.setNumber(10.34).create()));
+            AssertJUnit.assertTrue("isGreaterThanOrEqualTo failed for " + type.getName(),
+                                   f.setNumber(15).create().isGreaterThanOrEqualTo(f.setNumber(10).create()));
+            AssertJUnit.assertTrue("isGreaterThanOrEqualTo failed for " + type.getName(),
+                                   f.setNumber(15.546).create().isGreaterThanOrEqualTo(f.setNumber(10.34).create()));
+            AssertJUnit.assertFalse("isGreaterThanOrEqualTo failed for " + type.getName(),
+                                    f.setNumber(5).create().isGreaterThanOrEqualTo(f.setNumber(10).create()));
+            AssertJUnit.assertFalse("isGreaterThanOrEqualTo failed for " + type.getName(),
+                                    f.setNumber(5.546).create().isGreaterThanOrEqualTo(f.setNumber(10.34).create()));
         }
     }
 
@@ -599,19 +623,21 @@ public class ModellingMonetaryAmountsTest{
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
-            assertFalse("isLessThan failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(0d)).create()
-                    .isLessThan(f.setNumber(BigDecimal.valueOf(0)).create()));
-            assertFalse("isLessThan failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(0.00001d)).create()
-                                .isLessThan(f.setNumber(BigDecimal.valueOf(0d)).create())
+            AssertJUnit.assertFalse("isLessThan failed for " + type.getName(),
+                                    f.setNumber(BigDecimal.valueOf(0d)).create()
+                                            .isLessThan(f.setNumber(BigDecimal.valueOf(0)).create()));
+            AssertJUnit.assertFalse("isLessThan failed for " + type.getName(),
+                                    f.setNumber(BigDecimal.valueOf(0.00001d)).create()
+                                            .isLessThan(f.setNumber(BigDecimal.valueOf(0d)).create())
             );
-            assertFalse("isLessThan failed for " + type.getName(),
-                        f.setNumber(15).create().isLessThan(f.setNumber(10).create()));
-            assertFalse("isLessThan failed for " + type.getName(),
-                        f.setNumber(15.546).create().isLessThan(f.setNumber(10.34).create()));
-            assertTrue("isLessThan failed for " + type.getName(),
-                       f.setNumber(5).create().isLessThan(f.setNumber(10).create()));
-            assertTrue("isLessThan failed for " + type.getName(),
-                       f.setNumber(5.546).create().isLessThan(f.setNumber(10.34).create()));
+            AssertJUnit.assertFalse("isLessThan failed for " + type.getName(),
+                                    f.setNumber(15).create().isLessThan(f.setNumber(10).create()));
+            AssertJUnit.assertFalse("isLessThan failed for " + type.getName(),
+                                    f.setNumber(15.546).create().isLessThan(f.setNumber(10.34).create()));
+            AssertJUnit.assertTrue("isLessThan failed for " + type.getName(),
+                                   f.setNumber(5).create().isLessThan(f.setNumber(10).create()));
+            AssertJUnit.assertTrue("isLessThan failed for " + type.getName(),
+                                   f.setNumber(5.546).create().isLessThan(f.setNumber(10.34).create()));
         }
     }
 
@@ -628,20 +654,21 @@ public class ModellingMonetaryAmountsTest{
             }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
-            assertTrue("isLessThanOrEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(0d)).create()
-                    .isLessThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
-            assertFalse("isLessThanOrEqualTo failed for " + type.getName(),
-                        f.setNumber(BigDecimal.valueOf(0.00001d)).create()
-                                .isLessThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create())
+            AssertJUnit.assertTrue("isLessThanOrEqualTo failed for " + type.getName(),
+                                   f.setNumber(BigDecimal.valueOf(0d)).create()
+                                           .isLessThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
+            AssertJUnit.assertFalse("isLessThanOrEqualTo failed for " + type.getName(),
+                                    f.setNumber(BigDecimal.valueOf(0.00001d)).create()
+                                            .isLessThanOrEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create())
             );
-            assertFalse("isLessThanOrEqualTo failed for " + type.getName(),
-                        f.setNumber(15).create().isLessThanOrEqualTo(f.setNumber(10).create()));
-            assertFalse("isLessThan failed for " + type.getName(),
-                        f.setNumber(15.546).create().isLessThan(f.setNumber(10.34).create()));
-            assertTrue("isLessThanOrEqualTo failed for " + type.getName(),
-                       f.setNumber(5).create().isLessThanOrEqualTo(f.setNumber(10).create()));
-            assertTrue("isLessThanOrEqualTo failed for " + type.getName(),
-                       f.setNumber(5.546).create().isLessThanOrEqualTo(f.setNumber(10.34).create()));
+            AssertJUnit.assertFalse("isLessThanOrEqualTo failed for " + type.getName(),
+                                    f.setNumber(15).create().isLessThanOrEqualTo(f.setNumber(10).create()));
+            AssertJUnit.assertFalse("isLessThan failed for " + type.getName(),
+                                    f.setNumber(15.546).create().isLessThan(f.setNumber(10.34).create()));
+            AssertJUnit.assertTrue("isLessThanOrEqualTo failed for " + type.getName(),
+                                   f.setNumber(5).create().isLessThanOrEqualTo(f.setNumber(10).create()));
+            AssertJUnit.assertTrue("isLessThanOrEqualTo failed for " + type.getName(),
+                                   f.setNumber(5.546).create().isLessThanOrEqualTo(f.setNumber(10.34).create()));
         }
     }
 
@@ -658,45 +685,57 @@ public class ModellingMonetaryAmountsTest{
             }
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
-            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(0d)).create()
-                    .isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
-            assertFalse("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(0.00001d)).create()
-                                .isEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create())
+            AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(),
+                                   f.setNumber(BigDecimal.valueOf(0d)).create()
+                                           .isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
+            AssertJUnit.assertFalse("isEqualTo failed for " + type.getName(),
+                                    f.setNumber(BigDecimal.valueOf(0.00001d)).create()
+                                            .isEqualTo(f.setNumber(BigDecimal.valueOf(0d)).create())
             );
-            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5d)).create()
-                    .isEqualTo(f.setNumber(BigDecimal.valueOf(5)).create()));
-            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(1d)).create()
-                    .isEqualTo(f.setNumber(BigDecimal.valueOf(1.00)).create()));
-            assertTrue("isEqualTo failed for " + type.getName(),
-                       f.setNumber(BigDecimal.valueOf(1d)).create().isEqualTo(f.setNumber(BigDecimal.ONE).create()));
-            assertTrue("isEqualTo failed for " + type.getName(),
-                       f.setNumber(BigDecimal.valueOf(1)).create().isEqualTo(f.setNumber(BigDecimal.ONE).create()));
-            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("1.0000")).create()
-                    .isEqualTo(f.setNumber(new BigDecimal("1.00")).create()));
+            AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(),
+                                   f.setNumber(BigDecimal.valueOf(5d)).create()
+                                           .isEqualTo(f.setNumber(BigDecimal.valueOf(5)).create()));
+            AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(),
+                                   f.setNumber(BigDecimal.valueOf(1d)).create()
+                                           .isEqualTo(f.setNumber(BigDecimal.valueOf(1.00)).create()));
+            AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(),
+                                   f.setNumber(BigDecimal.valueOf(1d)).create()
+                                           .isEqualTo(f.setNumber(BigDecimal.ONE).create()));
+            AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(1)).create()
+                    .isEqualTo(f.setNumber(BigDecimal.ONE).create()));
+            AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(),
+                                   f.setNumber(new BigDecimal("1.0000")).create()
+                                           .isEqualTo(f.setNumber(new BigDecimal("1.00")).create()));
             // Test with different scales, but numeric equal values
-            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(0d)).create()
+            AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(),
+                                   f.setNumber(BigDecimal.valueOf(0d)).create()
+                                           .isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
+            AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.ZERO).create()
                     .isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
-            assertTrue("isEqualTo failed for " + type.getName(),
-                       f.setNumber(BigDecimal.ZERO).create().isEqualTo(f.setNumber(BigDecimal.valueOf(0)).create()));
-            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5)).create()
+            AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5)).create()
                     .isEqualTo(f.setNumber(new BigDecimal("5.0")).create()));
-            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5)).create()
+            AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5)).create()
                     .isEqualTo(f.setNumber(new BigDecimal("5.00")).create()));
-            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5)).create()
+            AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5)).create()
                     .isEqualTo(f.setNumber(new BigDecimal("5.000")).create()));
-            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5)).create()
+            AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(BigDecimal.valueOf(5)).create()
                     .isEqualTo(f.setNumber(new BigDecimal("5.0000")).create()));
-            assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
-                    .isEqualTo(f.setNumber(new BigDecimal("-1.23")).create()));
+            AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(),
+                                   f.setNumber(new BigDecimal("-1.23")).create()
+                                           .isEqualTo(f.setNumber(new BigDecimal("-1.23")).create()));
             try{
-                assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
-                        .isEqualTo(f.setNumber(new BigDecimal("-1.230")).create()));
-                assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
-                        .isEqualTo(f.setNumber(new BigDecimal("-1.2300")).create()));
-                assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
-                        .isEqualTo(f.setNumber(new BigDecimal("-1.23000")).create()));
-                assertTrue("isEqualTo failed for " + type.getName(), f.setNumber(new BigDecimal("-1.23")).create()
-                        .isEqualTo(f.setNumber(new BigDecimal("-1.230000000000000000000")).create()));
+                AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(),
+                                       f.setNumber(new BigDecimal("-1.23")).create()
+                                               .isEqualTo(f.setNumber(new BigDecimal("-1.230")).create()));
+                AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(),
+                                       f.setNumber(new BigDecimal("-1.23")).create()
+                                               .isEqualTo(f.setNumber(new BigDecimal("-1.2300")).create()));
+                AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(),
+                                       f.setNumber(new BigDecimal("-1.23")).create()
+                                               .isEqualTo(f.setNumber(new BigDecimal("-1.23000")).create()));
+                AssertJUnit.assertTrue("isEqualTo failed for " + type.getName(),
+                                       f.setNumber(new BigDecimal("-1.23")).create().isEqualTo(
+                                               f.setNumber(new BigDecimal("-1.230000000000000000000")).create()));
             }
             catch(MonetaryException e){
                 // happens if we exceed the limits...
@@ -724,33 +763,33 @@ public class ModellingMonetaryAmountsTest{
                 // In this cases both amount must be equals
                 m1 = f.setCurrency("CHF").setContext(mc1).setNumber(10).create();
                 m2 = f.setCurrency("CHF").setContext(mc2).setNumber(10).create();
-                assertEquals(m1, m2);
+                AssertJUnit.assertEquals(m1, m2);
                 m1 = f.setCurrency("CHF").setContext(mc1).setNumber(10.5d).create();
                 m2 = f.setCurrency("CHF").setContext(mc2).setNumber(10.5d).create();
-                assertEquals(m1, m2);
+                AssertJUnit.assertEquals(m1, m2);
                 m1 = f.setCurrency("CHF").setContext(mc1).setNumber(BigDecimal.TEN).create();
                 m2 = f.setCurrency("CHF").setContext(mc2).setNumber(BigDecimal.TEN).create();
-                assertEquals(m1, m2);
+                AssertJUnit.assertEquals(m1, m2);
             }else{
                 // In this cases both amount must be non equals
                 m1 = f.setCurrency("CHF").setContext(mc1).setNumber(10).create();
                 m2 = f.setCurrency("CHF").setContext(mc2).setNumber(10).create();
-                assertNotSame(m1, m2);
-                assertTrue(m1.isEqualTo(m2));
-                assertTrue(m2.isEqualTo(m1));
+                AssertJUnit.assertNotSame(m1, m2);
+                AssertJUnit.assertTrue(m1.isEqualTo(m2));
+                AssertJUnit.assertTrue(m2.isEqualTo(m1));
                 m1 = f.setCurrency("CHF").setContext(mc1).setNumber(10.5d).create();
                 m2 = f.setCurrency("CHF").setContext(mc2).setNumber(10.5d).create();
-                assertNotSame(m1, m2);
-                assertTrue(m1.isEqualTo(m2));
-                assertTrue(m2.isEqualTo(m1));
+                AssertJUnit.assertNotSame(m1, m2);
+                AssertJUnit.assertTrue(m1.isEqualTo(m2));
+                AssertJUnit.assertTrue(m2.isEqualTo(m1));
                 m1 = f.setCurrency("CHF").setContext(mc1).setNumber(BigDecimal.TEN).create();
                 m2 = f.setCurrency("CHF").setContext(mc2).setNumber(BigDecimal.TEN).create();
-                assertNotSame(m1, m2);
-                assertTrue(m1.isEqualTo(m2));
-                assertTrue(m2.isEqualTo(m1));
+                AssertJUnit.assertNotSame(m1, m2);
+                AssertJUnit.assertTrue(m1.isEqualTo(m2));
+                AssertJUnit.assertTrue(m2.isEqualTo(m1));
             }
-            assertTrue(m1.isEqualTo(m1));
-            assertTrue(m2.isEqualTo(m2));
+            AssertJUnit.assertTrue(m1.isEqualTo(m1));
+            AssertJUnit.assertTrue(m2.isEqualTo(m2));
         }
     }
 
@@ -774,7 +813,7 @@ public class ModellingMonetaryAmountsTest{
             for(int j = 0; j < instances.size(); j++){
                 MonetaryAmount mi = instances.get(i);
                 MonetaryAmount mj = instances.get(j);
-                assertTrue(mi.isEqualTo(mj));
+                AssertJUnit.assertTrue(mi.isEqualTo(mj));
             }
         }
     }
@@ -796,7 +835,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(30).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -817,7 +856,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-30).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -838,7 +877,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(4.35).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -859,7 +898,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -872,7 +911,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -885,7 +924,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -906,7 +945,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-1.35).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -919,7 +958,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(1.35).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -932,7 +971,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -953,7 +992,7 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(ADDITIONAL_CURRENCY).setNumber(20).create();
             try{
                 MonetaryAmount mActualResult = mAmount1.add(mAmount2);
-                fail("Exception expected");
+                AssertJUnit.fail("Exception expected");
             }
             catch(MonetaryException ex){
                 // Expected
@@ -976,7 +1015,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mAmount2 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
             MonetaryAmount mActualResult = mAmount1.add(mAmount2);
-            assertEquals("Adding zero", mAmount1, mActualResult);
+            AssertJUnit.assertEquals("Adding zero", mAmount1, mActualResult);
         }
     }
 
@@ -1001,9 +1040,9 @@ public class ModellingMonetaryAmountsTest{
                     for(int i = 0; i < 20; i++){
                         ms = ms.add(ms);
                     }
-                    fail("Exception expected, since adding 20x " + m + " to " + m +
-                                 " exceeds capabilities (precision) for " +
-                                 type.getName());
+                    AssertJUnit.fail("Exception expected, since adding 20x " + m + " to " + m +
+                                             " exceeds capabilities (precision) for " +
+                                             type.getName());
                 }
                 catch(MonetaryException ex){
                     // Expected
@@ -1023,8 +1062,9 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmount m2 =
                             f.setNumber(TestUtils.createNumberWithScale(f, maxCtx.getMaxScale() + 5)).create();
                     m.add(m2);
-                    fail("Exception expected, since adding " + m2 + " to " + m + " exceeds capabilities (scale) for " +
-                                 type.getName());
+                    AssertJUnit.fail("Exception expected, since adding " + m2 + " to " + m +
+                                             " exceeds capabilities (scale) for " +
+                                             type.getName());
                 }
                 catch(MonetaryException ex){
                     // Expected
@@ -1058,7 +1098,7 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 MonetaryAmount mActualResult = mAmount1.add(null);
-                fail("Exception expected");
+                AssertJUnit.fail("Exception expected");
             }
             catch(NullPointerException ex){
                 // Expected
@@ -1084,7 +1124,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-10).create();
-            assertEquals("Subtracting two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Subtracting two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -1105,7 +1145,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-            assertEquals("Subtracting two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Subtracting two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -1126,7 +1166,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-1.35).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -1147,7 +1187,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1160,7 +1200,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1173,7 +1213,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-20).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -1194,7 +1234,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(4.35).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1207,7 +1247,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(-4.35).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1220,7 +1260,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
             MonetaryAmount mExpectedResult =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
-            assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
+            AssertJUnit.assertEquals("Adding two simple ammounts", mExpectedResult, mActualResult);
         }
     }
 
@@ -1241,7 +1281,7 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(ADDITIONAL_CURRENCY).setNumber(20).create();
             try{
                 MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
-                fail("Exception expected");
+                AssertJUnit.fail("Exception expected");
             }
             catch(MonetaryException ex){
                 // Expected
@@ -1264,7 +1304,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mAmount2 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
             MonetaryAmount mActualResult = mAmount1.subtract(mAmount2);
-            assertEquals("Subtract zero", mAmount1, mActualResult);
+            AssertJUnit.assertEquals("Subtract zero", mAmount1, mActualResult);
         }
     }
 
@@ -1288,7 +1328,8 @@ public class ModellingMonetaryAmountsTest{
                 m = TestUtils.createAmountWithPrecision(maxCtx.getPrecision() + 1);
                 try{
                     mAmount1 = mAmount1.subtract(m);
-                    fail("Exception expected on subtraction that exceeds capabilities for " + type.getName());
+                    AssertJUnit
+                            .fail("Exception expected on subtraction that exceeds capabilities for " + type.getName());
                 }
                 catch(MonetaryException ex){
                     // Expected
@@ -1311,7 +1352,8 @@ public class ModellingMonetaryAmountsTest{
             if(m != null){
                 try{
                     mAmount1.subtract(m);
-                    fail("Exception expected on subtraction that exceeds capabilities for " + type.getName());
+                    AssertJUnit
+                            .fail("Exception expected on subtraction that exceeds capabilities for " + type.getName());
                 }
                 catch(MonetaryException ex){
                     // Expected
@@ -1335,7 +1377,7 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 MonetaryAmount mActualResult = mAmount1.subtract(null);
-                fail("Exception expected");
+                AssertJUnit.fail("Exception expected");
             }
             catch(NullPointerException ex){
                 // Expected
@@ -1356,19 +1398,19 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mActualResult = mAmount1.multiply(2L);
-            assertTrue("Multiplication with 2 does not return correct value for " + type.getName(),
-                       mActualResult.getNumber().longValueExact() == 20);
+            AssertJUnit.assertTrue("Multiplication with 2 does not return correct value for " + type.getName(),
+                                   mActualResult.getNumber().longValueExact() == 20);
             mActualResult = mAmount1.multiply(Double.valueOf(-3));
-            assertTrue("Multiplication with -3 does not return correct value for " + type.getName(),
-                       mActualResult.getNumber().longValueExact() == -30);
+            AssertJUnit.assertTrue("Multiplication with -3 does not return correct value for " + type.getName(),
+                                   mActualResult.getNumber().longValueExact() == -30);
             mActualResult = mAmount1.multiply(BigDecimal.ONE);
-            assertTrue("Multiplication with 1 does not return correct value for " + type.getName(),
-                       mActualResult.getNumber().longValueExact() == 10);
-            assertTrue("Multiplication with 1 does not return identity value for " + type.getName(),
-                       mActualResult == mAmount1);
+            AssertJUnit.assertTrue("Multiplication with 1 does not return correct value for " + type.getName(),
+                                   mActualResult.getNumber().longValueExact() == 10);
+            AssertJUnit.assertTrue("Multiplication with 1 does not return identity value for " + type.getName(),
+                                   mActualResult == mAmount1);
             mActualResult = mAmount1.multiply(BigDecimal.ZERO);
-            assertTrue("Multiplication with 0 does not return correct value for " + type.getName(),
-                       mActualResult.getNumber().longValueExact() == 0);
+            AssertJUnit.assertTrue("Multiplication with 0 does not return correct value for " + type.getName(),
+                                   mActualResult.getNumber().longValueExact() == 0);
         }
     }
 
@@ -1385,19 +1427,19 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mActualResult = mAmount1.multiply(1.5d);
-            assertTrue("Multiplication with 1.5 does not return correct value for " + type.getName(),
-                       mActualResult.getNumber().longValueExact() == 15);
+            AssertJUnit.assertTrue("Multiplication with 1.5 does not return correct value for " + type.getName(),
+                                   mActualResult.getNumber().longValueExact() == 15);
             mActualResult = mAmount1.multiply(Double.valueOf(-1.5));
-            assertTrue("Multiplication with -3 does not return correct value for " + type.getName(),
-                       mActualResult.getNumber().longValueExact() == -15);
+            AssertJUnit.assertTrue("Multiplication with -3 does not return correct value for " + type.getName(),
+                                   mActualResult.getNumber().longValueExact() == -15);
             mActualResult = mAmount1.multiply(0.0);
-            assertTrue("Multiplication with 0 does not return correct value for " + type.getName(),
-                       mActualResult.getNumber().longValueExact() == 0);
+            AssertJUnit.assertTrue("Multiplication with 0 does not return correct value for " + type.getName(),
+                                   mActualResult.getNumber().longValueExact() == 0);
             mActualResult = mAmount1.multiply(1.0);
-            assertTrue("Multiplication with 0 does not return correct value for " + type.getName(),
-                       mActualResult.getNumber().longValueExact() == 10);
-            assertTrue("Multiplication with 0 does not return identity value for " + type.getName(),
-                       mActualResult == mAmount1);
+            AssertJUnit.assertTrue("Multiplication with 0 does not return correct value for " + type.getName(),
+                                   mActualResult.getNumber().longValueExact() == 10);
+            AssertJUnit.assertTrue("Multiplication with 0 does not return identity value for " + type.getName(),
+                                   mActualResult == mAmount1);
         }
     }
 
@@ -1414,14 +1456,14 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mActualResult = mAmount1.multiply(1);
-            assertTrue("Multiplication with 1 does not return identity value for " + type.getName(),
-                       mActualResult == mAmount1);
+            AssertJUnit.assertTrue("Multiplication with 1 does not return identity value for " + type.getName(),
+                                   mActualResult == mAmount1);
             mActualResult = mAmount1.multiply(1.0);
-            assertTrue("Multiplication with 1 does not return identity value for " + type.getName(),
-                       mActualResult == mAmount1);
+            AssertJUnit.assertTrue("Multiplication with 1 does not return identity value for " + type.getName(),
+                                   mActualResult == mAmount1);
             mActualResult = mAmount1.multiply(BigDecimal.ONE);
-            assertTrue("Multiplication with 1 does not return identity value for " + type.getName(),
-                       mActualResult == mAmount1);
+            AssertJUnit.assertTrue("Multiplication with 1 does not return identity value for " + type.getName(),
+                                   mActualResult == mAmount1);
         }
     }
 
@@ -1445,18 +1487,20 @@ public class ModellingMonetaryAmountsTest{
                 MonetaryAmount m = f.setNumber(10).setCurrency("USD").create();
                 try{
                     m.multiply(num);
-                    fail("Multiplication of amount 10 with " + num + " exceeds max monetary context (scale), " +
-                                 "but did not throw an ArithmeticException, type was " +
-                                 type);
+                    AssertJUnit.fail("Multiplication of amount 10 with " + num +
+                                             " exceeds max monetary context (scale), " +
+                                             "but did not throw an ArithmeticException, type was " +
+                                             type);
                 }
                 catch(MonetaryException e){
                     // OK
                 }
                 catch(Exception e){
-                    fail("Multiplication of amount 10 with " + num + " exceeds max monetary context(scale), " +
-                                 "but did not throw an ArithmeticException (exception thrown was " +
-                                 e.getClass().getName() + "), type was " +
-                                 type);
+                    AssertJUnit
+                            .fail("Multiplication of amount 10 with " + num + " exceeds max monetary context(scale), " +
+                                          "but did not throw an ArithmeticException (exception thrown was " +
+                                          e.getClass().getName() + "), type was " +
+                                          type);
                 }
             }
         }
@@ -1471,20 +1515,20 @@ public class ModellingMonetaryAmountsTest{
                 MonetaryAmount m = f.setNumber(10).setCurrency("USD").create();
                 try{
                     m.multiply(num);
-                    fail("Multiplication of amount " + num +
-                                 " with 10000000 exceeds max monetary context(precision), " +
-                                 "but did not throw an ArithmeticException, type was " +
-                                 type.getName());
+                    AssertJUnit.fail("Multiplication of amount " + num +
+                                             " with 10000000 exceeds max monetary context(precision), " +
+                                             "but did not throw an ArithmeticException, type was " +
+                                             type.getName());
                 }
                 catch(MonetaryException e){
                     // OK
                 }
                 catch(Exception e){
-                    fail("Multiplication of amount " + num +
-                                 " with 10000000 exceeds max monetary context(precision), " +
-                                 "but did not throw an ArithmeticException (exception thrown was " +
-                                 e.getClass().getName() + "), type was " +
-                                 type.getName());
+                    AssertJUnit.fail("Multiplication of amount " + num +
+                                             " with 10000000 exceeds max monetary context(precision), " +
+                                             "but did not throw an ArithmeticException (exception thrown was " +
+                                             e.getClass().getName() + "), type was " +
+                                             type.getName());
                 }
             }
         }
@@ -1504,7 +1548,8 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 MonetaryAmount mActualResult = mAmount1.multiply(null);
-                fail("NullPointerException expected for multiplication with null, type was " + type.getName());
+                AssertJUnit
+                        .fail("NullPointerException expected for multiplication with null, type was " + type.getName());
             }
             catch(NullPointerException e){
                 // expected
@@ -1525,9 +1570,10 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount m =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount m2 = m.divide(10);
-            assertEquals("Currency not equal after division, type was " + type.getName(), DEFAULT_CURRENCY,
-                         m2.getCurrency().getCurrencyCode());
-            assertEquals("Division result is not correct for " + type.getName(), 1, m2.getNumber().longValueExact());
+            AssertJUnit.assertEquals("Currency not equal after division, type was " + type.getName(), DEFAULT_CURRENCY,
+                                     m2.getCurrency().getCurrencyCode());
+            AssertJUnit.assertEquals("Division result is not correct for " + type.getName(), 1,
+                                     m2.getNumber().longValueExact());
             // TODO iterate over array of different numbers and divisors, use BD to check results
         }
     }
@@ -1546,16 +1592,16 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount money1 =
                     MonetaryAmounts.getAmountFactory(type).setNumber(BigDecimal.ONE).setCurrency(euro).create();
             MonetaryAmount result = money1.divideToIntegralValue(new BigDecimal("0.5001"));
-            assertEquals("divideToIntegralValue returned incorrect result for " + type.getName(),
-                         result.getNumber().numberValue(BigDecimal.class).stripTrailingZeros(),
-                         new BigDecimal("1.0").stripTrailingZeros());
+            AssertJUnit.assertEquals("divideToIntegralValue returned incorrect result for " + type.getName(),
+                                     result.getNumber().numberValue(BigDecimal.class).stripTrailingZeros(),
+                                     new BigDecimal("1.0").stripTrailingZeros());
             result = money1.divideToIntegralValue(new BigDecimal("0.2001"));
-            assertEquals("divideToIntegralValue returned incorrect result for " + type.getName(),
-                         result.getNumber().numberValue(BigDecimal.class).stripTrailingZeros(),
-                         new BigDecimal("4.0").stripTrailingZeros());
+            AssertJUnit.assertEquals("divideToIntegralValue returned incorrect result for " + type.getName(),
+                                     result.getNumber().numberValue(BigDecimal.class).stripTrailingZeros(),
+                                     new BigDecimal("4.0").stripTrailingZeros());
             result = money1.divideToIntegralValue(new BigDecimal("5.0"));
-            assertTrue("divideToIntegralValue returned incorrect result for " + type.getName(),
-                       result.getNumber().numberValue(BigDecimal.class).intValueExact() == 0);
+            AssertJUnit.assertTrue("divideToIntegralValue returned incorrect result for " + type.getName(),
+                                   result.getNumber().numberValue(BigDecimal.class).intValueExact() == 0);
         }
     }
 
@@ -1573,7 +1619,7 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 MonetaryAmount mActualResult = mAmount1.divide(0);
-                fail("ArithmeticException expected on division by 0, type was " + type.getName());
+                AssertJUnit.fail("ArithmeticException expected on division by 0, type was " + type.getName());
             }
             catch(ArithmeticException ex){
                 // expected
@@ -1594,11 +1640,14 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             MonetaryAmount mActualResult = mAmount1.divide(1);
-            assertTrue("Division by 1 does not return identity value for " + type.getName(), mActualResult == mAmount1);
+            AssertJUnit.assertTrue("Division by 1 does not return identity value for " + type.getName(),
+                                   mActualResult == mAmount1);
             mActualResult = mAmount1.divide(1.0);
-            assertTrue("Division by 1 does not return identity value for " + type.getName(), mActualResult == mAmount1);
+            AssertJUnit.assertTrue("Division by 1 does not return identity value for " + type.getName(),
+                                   mActualResult == mAmount1);
             mActualResult = mAmount1.divide(BigDecimal.ONE);
-            assertTrue("Division by 1 does not return identity value for " + type.getName(), mActualResult == mAmount1);
+            AssertJUnit.assertTrue("Division by 1 does not return identity value for " + type.getName(),
+                                   mActualResult == mAmount1);
         }
     }
 
@@ -1616,7 +1665,7 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 MonetaryAmount mActualResult = mAmount1.divide(null);
-                fail("NullPointerException expected for division by null, type was " + type.getName());
+                AssertJUnit.fail("NullPointerException expected for division by null, type was " + type.getName());
             }
             catch(NullPointerException e){
                 // expected
@@ -1640,21 +1689,25 @@ public class ModellingMonetaryAmountsTest{
                     f.setNumber(23123213.435).create(), f.setNumber(0).create(), f.setNumber(-100).create(),
                     f.setNumber(-723527.36532).create()};
             for(MonetaryAmount m : moneys){
-                assertEquals("Invalid remainder of " + 10.50 + " for " + type.getName(), m.getFactory().setNumber(
-                                     m.getNumber().numberValue(BigDecimal.class).remainder(BigDecimal.valueOf(10.50)))
-                                     .create(), m.remainder(10.50)
+                AssertJUnit.assertEquals("Invalid remainder of " + 10.50 + " for " + type.getName(), m.getFactory()
+                                                 .setNumber(m.getNumber().numberValue(BigDecimal.class)
+                                                                    .remainder(BigDecimal.valueOf(10.50))).create(),
+                                         m.remainder(10.50)
                 );
-                assertEquals("Invalid remainder of " + -30.20 + " for " + type.getName(), m.getFactory().setNumber(
-                                     m.getNumber().numberValue(BigDecimal.class).remainder(BigDecimal.valueOf(-30.20)))
-                                     .create(), m.remainder(-30.20)
+                AssertJUnit.assertEquals("Invalid remainder of " + -30.20 + " for " + type.getName(), m.getFactory()
+                                                 .setNumber(m.getNumber().numberValue(BigDecimal.class)
+                                                                    .remainder(BigDecimal.valueOf(-30.20))).create(),
+                                         m.remainder(-30.20)
                 );
-                assertEquals("Invalid remainder of " + -3 + " for " + type.getName(), m.getFactory().setNumber(
-                                     m.getNumber().numberValue(BigDecimal.class).remainder(BigDecimal.valueOf(-3)))
-                                     .create(), m.remainder(-3)
+                AssertJUnit.assertEquals("Invalid remainder of " + -3 + " for " + type.getName(), m.getFactory()
+                                                 .setNumber(m.getNumber().numberValue(BigDecimal.class)
+                                                                    .remainder(BigDecimal.valueOf(-3))).create(),
+                                         m.remainder(-3)
                 );
-                assertEquals("Invalid remainder of " + 3 + " for " + type.getName(), m.getFactory().setNumber(
-                                     m.getNumber().numberValue(BigDecimal.class).remainder(BigDecimal.valueOf(3)))
-                                     .create(), m.remainder(3)
+                AssertJUnit.assertEquals("Invalid remainder of " + 3 + " for " + type.getName(), m.getFactory()
+                                                 .setNumber(m.getNumber().numberValue(BigDecimal.class)
+                                                                    .remainder(BigDecimal.valueOf(3))).create(),
+                                         m.remainder(3)
                 );
             }
         }
@@ -1674,13 +1727,15 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 m.remainder(0.0d);
-                fail("remainder(0) did not throw an ArithmeticException for " + type.getName());
+                AssertJUnit.fail("remainder(0) did not throw an ArithmeticException for " + type.getName());
             }
             catch(ArithmeticException e){
                 // OK, ignore
             }
             catch(Exception e){
-                fail("remainder(0.0d) did not throw an ArithmeticException for " + type.getName() + ", but " + e);
+                AssertJUnit
+                        .fail("remainder(0.0d) did not throw an ArithmeticException for " + type.getName() + ", but " +
+                                      e);
             }
         }
     }
@@ -1699,13 +1754,14 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 m.remainder(0L);
-                fail("remainder(0L) did not throw an ArithmeticException for " + type.getName());
+                AssertJUnit.fail("remainder(0L) did not throw an ArithmeticException for " + type.getName());
             }
             catch(ArithmeticException e){
                 // OK, ignore
             }
             catch(Exception e){
-                fail("remainder(0L) did not throw an ArithmeticException for " + type.getName() + ", but " + e);
+                AssertJUnit
+                        .fail("remainder(0L) did not throw an ArithmeticException for " + type.getName() + ", but " + e);
             }
         }
     }
@@ -1724,14 +1780,16 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 m.remainder(BigDecimal.ZERO);
-                fail("remainder(BigDecimal.ZERO) did not throw an ArithmeticException for " + type.getName());
+                AssertJUnit
+                        .fail("remainder(BigDecimal.ZERO) did not throw an ArithmeticException for " + type.getName());
             }
             catch(ArithmeticException e){
                 // OK, ignore
             }
             catch(Exception e){
-                fail("remainder(BigDecimal.ZERO) did not throw an ArithmeticException for " + type.getName() +
-                             ", but " + e);
+                AssertJUnit
+                        .fail("remainder(BigDecimal.ZERO) did not throw an ArithmeticException for " + type.getName() +
+                                      ", but " + e);
             }
         }
     }
@@ -1750,7 +1808,7 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 MonetaryAmount mActualResult = mAmount1.remainder(null);
-                fail("NullPointerException expected for remainder with null, type was " + type.getName());
+                AssertJUnit.fail("NullPointerException expected for remainder with null, type was " + type.getName());
             }
             catch(NullPointerException e){
                 // expected
@@ -1772,20 +1830,20 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount money1 = f.setNumber(BigDecimal.ONE).setCurrency("EUR").create();
             if(f.getDefaultMonetaryContext().getMaxScale() < 5){
                 MonetaryAmount[] divideAndRemainder = money1.divideAndRemainder(new BigDecimal("0.6"));
-                assertEquals("divideAndRemainder(0.6)[0] failed for " + type.getName(),
-                             divideAndRemainder[0].getNumber().numberValue(BigDecimal.class).stripTrailingZeros(),
-                             BigDecimal.ONE.stripTrailingZeros());
-                assertEquals("divideAndRemainder(0.6)[1] failed for " + type.getName(),
-                             divideAndRemainder[1].getNumber().numberValue(BigDecimal.class).stripTrailingZeros(),
-                             new BigDecimal("0.4").stripTrailingZeros());
+                AssertJUnit.assertEquals("divideAndRemainder(0.6)[0] failed for " + type.getName(),
+                                         divideAndRemainder[0].getNumber().numberValue(BigDecimal.class)
+                                                 .stripTrailingZeros(), BigDecimal.ONE.stripTrailingZeros());
+                AssertJUnit.assertEquals("divideAndRemainder(0.6)[1] failed for " + type.getName(),
+                                         divideAndRemainder[1].getNumber().numberValue(BigDecimal.class)
+                                                 .stripTrailingZeros(), new BigDecimal("0.4").stripTrailingZeros());
             }else{
                 MonetaryAmount[] divideAndRemainder = money1.divideAndRemainder(new BigDecimal("0.50001"));
-                assertEquals("divideAndRemainder(0.50001)[0] failed for " + type.getName(),
-                             divideAndRemainder[0].getNumber().numberValue(BigDecimal.class).stripTrailingZeros(),
-                             BigDecimal.ONE.stripTrailingZeros());
-                assertEquals("divideAndRemainder(0.50001)[1] failed for " + type.getName(),
-                             divideAndRemainder[1].getNumber().numberValue(BigDecimal.class).stripTrailingZeros(),
-                             new BigDecimal("0.49999").stripTrailingZeros());
+                AssertJUnit.assertEquals("divideAndRemainder(0.50001)[0] failed for " + type.getName(),
+                                         divideAndRemainder[0].getNumber().numberValue(BigDecimal.class)
+                                                 .stripTrailingZeros(), BigDecimal.ONE.stripTrailingZeros());
+                AssertJUnit.assertEquals("divideAndRemainder(0.50001)[1] failed for " + type.getName(),
+                                         divideAndRemainder[1].getNumber().numberValue(BigDecimal.class)
+                                                 .stripTrailingZeros(), new BigDecimal("0.49999").stripTrailingZeros());
             }
         }
     }
@@ -1804,14 +1862,14 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 mAmount1.divideAndRemainder(BigDecimal.ZERO);
-                fail("divideAndRemainder(0) for " + type.getName() + ", should throw ArithmeticException!");
+                AssertJUnit.fail("divideAndRemainder(0) for " + type.getName() + ", should throw ArithmeticException!");
             }
             catch(ArithmeticException e){
                 // expected
             }
             catch(Exception e){
-                fail("Unexpected exception for divideAndRemainder(0) for " + type.getName() +
-                             ", should be ArithmeticException, but was " + e);
+                AssertJUnit.fail("Unexpected exception for divideAndRemainder(0) for " + type.getName() +
+                                         ", should be ArithmeticException, but was " + e);
             }
         }
     }
@@ -1830,7 +1888,8 @@ public class ModellingMonetaryAmountsTest{
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             try{
                 MonetaryAmount[] mActualResult = mAmount1.divideAndRemainder(null);
-                fail("NullPointerException expected for divideAndRemainder with null, type was " + type.getName());
+                AssertJUnit.fail("NullPointerException expected for divideAndRemainder with null, type was " +
+                                         type.getName());
             }
             catch(NullPointerException e){
                 // expected
@@ -1850,15 +1909,17 @@ public class ModellingMonetaryAmountsTest{
             }
             MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
             MonetaryAmount m = f.setNumber(100).setCurrency("CHF").create();
-            assertEquals("DivideAndRemainder not returning correct result for type: " + type.getName(),
-                         BigDecimal.valueOf(33),
-                         m.divideAndRemainder(3)[0].getNumber().numberValue(BigDecimal.class).stripTrailingZeros());
-            assertEquals("DivideAndRemainder not returning correct result for type: " + type.getName(),
-                         BigDecimal.valueOf(1),
-                         m.divideAndRemainder(3)[1].getNumber().numberValue(BigDecimal.class).stripTrailingZeros());
-            assertEquals("DivideAndRemainder not returning correct result for type: " + type.getName(), BigDecimal.ONE,
-                         m.divideAndRemainder(BigDecimal.valueOf(3))[1].getNumber().numberValue(BigDecimal.class)
-                                 .stripTrailingZeros()
+            AssertJUnit.assertEquals("DivideAndRemainder not returning correct result for type: " + type.getName(),
+                                     BigDecimal.valueOf(33),
+                                     m.divideAndRemainder(3)[0].getNumber().numberValue(BigDecimal.class)
+                                             .stripTrailingZeros());
+            AssertJUnit.assertEquals("DivideAndRemainder not returning correct result for type: " + type.getName(),
+                                     BigDecimal.valueOf(1),
+                                     m.divideAndRemainder(3)[1].getNumber().numberValue(BigDecimal.class)
+                                             .stripTrailingZeros());
+            AssertJUnit.assertEquals("DivideAndRemainder not returning correct result for type: " + type.getName(),
+                                     BigDecimal.ONE, m.divideAndRemainder(BigDecimal.valueOf(3))[1].getNumber()
+                            .numberValue(BigDecimal.class).stripTrailingZeros()
             );
         }
     }
@@ -1884,11 +1945,13 @@ public class ModellingMonetaryAmountsTest{
                     BigDecimal bdExpected = m.scaleByPowerOfTen(p).getNumber().numberValue(BigDecimal.class);
                     BigDecimal bdCalculated = m.getNumber().numberValue(BigDecimal.class).scaleByPowerOfTen(p);
                     if(bdExpected.signum() == 0){
-                        assertTrue("Invalid " + m + " -> scaleByPowerOfTen(" + p + ") for " + type.getName(),
-                                   bdCalculated.signum() == 0);
+                        AssertJUnit
+                                .assertTrue("Invalid " + m + " -> scaleByPowerOfTen(" + p + ") for " + type.getName(),
+                                            bdCalculated.signum() == 0);
                     }else{
-                        assertEquals("Invalid " + m + " -> scaleByPowerOfTen(" + p + ") for " + type.getName(),
-                                     bdExpected.stripTrailingZeros(), bdCalculated.stripTrailingZeros());
+                        AssertJUnit
+                                .assertEquals("Invalid " + m + " -> scaleByPowerOfTen(" + p + ") for " + type.getName(),
+                                              bdExpected.stripTrailingZeros(), bdCalculated.stripTrailingZeros());
                     }
                 }
             }
@@ -1908,14 +1971,14 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount m = f.setNumber(10).create();
-            assertEquals("abs(m) !equals m, if m > 0 for type: " + type.getName(), m, m.abs());
-            assertTrue("abs(m) != m, if m > 0 for type: " + type.getName(), m == m.abs());
+            AssertJUnit.assertEquals("abs(m) !equals m, if m > 0 for type: " + type.getName(), m, m.abs());
+            AssertJUnit.assertTrue("abs(m) != m, if m > 0 for type: " + type.getName(), m == m.abs());
             m = f.setNumber(0).create();
-            assertEquals("abs(m) != equals, if m == 0 for type: " + type.getName(), m, m.abs());
-            assertTrue("abs(m) != m, if m == 0 for type: " + type.getName(), m == m.abs());
+            AssertJUnit.assertEquals("abs(m) != equals, if m == 0 for type: " + type.getName(), m, m.abs());
+            AssertJUnit.assertTrue("abs(m) != m, if m == 0 for type: " + type.getName(), m == m.abs());
             m = f.setNumber(-10).create();
-            assertEquals("abs(m) == m, if m < 0 for type: " + type.getName(), m.negate(), m.abs());
-            assertTrue("abs(m) == m, if m < 0 for type: " + type.getName(), m != m.abs());
+            AssertJUnit.assertEquals("abs(m) == m, if m < 0 for type: " + type.getName(), m.negate(), m.abs());
+            AssertJUnit.assertTrue("abs(m) == m, if m < 0 for type: " + type.getName(), m != m.abs());
         }
     }
 
@@ -1932,9 +1995,10 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmountFactory<MonetaryAmount> f = MonetaryAmounts.getAmountFactory(type);
             f.setCurrency("CHF");
             MonetaryAmount m = f.setNumber(100).create();
-            assertEquals("negate(-x) failed for " + type.getName(), f.setNumber(-100).create(), m.negate());
+            AssertJUnit.assertEquals("negate(-x) failed for " + type.getName(), f.setNumber(-100).create(), m.negate());
             m = f.setNumber(-123.234).create();
-            assertEquals("negate(+x) failed for " + type.getName(), f.setNumber(123.234).create(), m.negate());
+            AssertJUnit
+                    .assertEquals("negate(+x) failed for " + type.getName(), f.setNumber(123.234).create(), m.negate());
         }
     }
 
@@ -1952,14 +2016,16 @@ public class ModellingMonetaryAmountsTest{
             }
             MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("CHF").setNumber(10).create();
             MonetaryAmount amount2 = amount.with(op);
-            assertTrue("MonetaryAmount returned from operator is wrapped by implementation of type: " + type.getName(),
-                       amount == amount2);
+            AssertJUnit.assertTrue(
+                    "MonetaryAmount returned from operator is wrapped by implementation of type: " + type.getName(),
+                    amount == amount2);
             final MonetaryAmount result =
                     MonetaryAmounts.getAmountFactory(type).setCurrency("CHF").setNumber(4).create();
             MonetaryOperator op2 = (m) -> result;
             amount2 = amount.with(op);
-            assertTrue("MonetaryAmount returned from operator is wrapped by implementation of type: " + type.getName(),
-                       amount == amount2);
+            AssertJUnit.assertTrue(
+                    "MonetaryAmount returned from operator is wrapped by implementation of type: " + type.getName(),
+                    amount == amount2);
         }
     }
 
@@ -1983,7 +2049,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
             try{
                 amount.with(op);
-                fail("MonetaryException expected as operator fails, type was " + type.getName());
+                AssertJUnit.fail("MonetaryException expected as operator fails, type was " + type.getName());
             }
             catch(MonetaryException e){
                 // OK, everything else makes the test fail!
@@ -2005,7 +2071,8 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
             try{
                 amount.with(null);
-                fail("NullPointerException expected as operator applied is null, type was " + type.getName());
+                AssertJUnit
+                        .fail("NullPointerException expected as operator applied is null, type was " + type.getName());
             }
             catch(NullPointerException e){
                 // OK, everything else makes the test fail!
@@ -2032,10 +2099,12 @@ public class ModellingMonetaryAmountsTest{
             }
             MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("CHF").setNumber(10).create();
             Integer value = amount.query(query);
-            assertTrue("Value returned from MonetaryAmount Query is not correct for " + type.getName(), value == 10);
+            AssertJUnit.assertTrue("Value returned from MonetaryAmount Query is not correct for " + type.getName(),
+                                   value == 10);
             amount = MonetaryAmounts.getAmountFactory(type).setCurrency("CHF").setNumber(4.5).create();
             value = amount.query(query);
-            assertTrue("Value returned from MonetaryAmount Query is not correct for " + type.getName(), value == 4);
+            AssertJUnit.assertTrue("Value returned from MonetaryAmount Query is not correct for " + type.getName(),
+                                   value == 4);
         }
     }
 
@@ -2060,7 +2129,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
             try{
                 amount.query(query);
-                fail("MonetaryException expected as query applied is failing, type was " + type.getName());
+                AssertJUnit.fail("MonetaryException expected as query applied is failing, type was " + type.getName());
             }
             catch(MonetaryException e){
                 // OK, everything else makes the test fail!
@@ -2083,7 +2152,7 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount amount = factory.setCurrency("XXX").setNumber(1).create();
             try{
                 amount.query(null);
-                fail("NullPointerException expected as query applied is null, type was " + type.getName());
+                AssertJUnit.fail("NullPointerException expected as query applied is null, type was " + type.getName());
             }
             catch(NullPointerException e){
                 // OK, everything else makes the test fail!
@@ -2107,8 +2176,9 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("USD").setNumber(0).create();
             TestUtils.testHasPublicMethod(type, type, "hashCode");
             MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory(type).setCurrency("USD").setNumber(0).create();
-            assertEquals("hashCode() for equal amounts differ for type " + type.getName(), amount.hashCode(),
-                         amount2.hashCode());
+            AssertJUnit
+                    .assertEquals("hashCode() for equal amounts differ for type " + type.getName(), amount.hashCode(),
+                                  amount2.hashCode());
         }
     }
 
@@ -2129,7 +2199,8 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount amount = MonetaryAmounts.getAmountFactory(type).setCurrency("XXX").setNumber(0).create();
             TestUtils.testHasPublicMethod(type, type, "equals", Object.class);
             MonetaryAmount amount2 = MonetaryAmounts.getAmountFactory(type).setCurrency("XXX").setNumber(0).create();
-            assertEquals("equals(Object) for equal amounts returns false for " + type.getName(), amount, amount2);
+            AssertJUnit.assertEquals("equals(Object) for equal amounts returns false for " + type.getName(), amount,
+                                     amount2);
         }
     }
 
@@ -2150,13 +2221,17 @@ public class ModellingMonetaryAmountsTest{
             MonetaryAmount amount3 = factory.setCurrency("CHF").setNumber(1).create();
             MonetaryAmount amount4 = factory.setCurrency("XXX").setNumber(1).create();
 
-            assertTrue("Comparable failed for: " + type.getName(), ((Comparable) amount).compareTo(amount3) > 0);
+            AssertJUnit.assertTrue("Comparable failed for: " + type.getName(),
+                                   ((Comparable) amount).compareTo(amount3) > 0);
 
-            assertTrue("Comparable failed for: " + type.getName(), ((Comparable) amount3).compareTo(amount) < 0);
+            AssertJUnit.assertTrue("Comparable failed for: " + type.getName(),
+                                   ((Comparable) amount3).compareTo(amount) < 0);
 
-            assertTrue("Comparable failed for: " + type.getName(), ((Comparable) amount).compareTo(amount4) < 0);
+            AssertJUnit.assertTrue("Comparable failed for: " + type.getName(),
+                                   ((Comparable) amount).compareTo(amount4) < 0);
 
-            assertTrue("Comparable failed for: " + type.getName(), ((Comparable) amount4).compareTo(amount) > 0);
+            AssertJUnit.assertTrue("Comparable failed for: " + type.getName(),
+                                   ((Comparable) amount4).compareTo(amount) > 0);
         }
     }
 

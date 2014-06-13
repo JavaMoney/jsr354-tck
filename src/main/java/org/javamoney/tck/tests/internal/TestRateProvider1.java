@@ -4,7 +4,6 @@ import org.javamoney.tck.tests.conversion.TestExchangeRate;
 
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
-import javax.money.MonetaryCurrencies;
 import javax.money.convert.*;
 import java.util.Objects;
 

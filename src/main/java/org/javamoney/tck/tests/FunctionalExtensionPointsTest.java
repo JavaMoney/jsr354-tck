@@ -9,10 +9,10 @@
  */
 package org.javamoney.tck.tests;
 
-import junit.extensions.TestSetup;
 import org.javamoney.tck.TCKTestSetup;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import javax.money.MonetaryOperator;
@@ -38,7 +38,7 @@ public class FunctionalExtensionPointsTest{
     public void testOperatorReturnTypeEqualsParameter(){
         Collection<MonetaryOperator> operators = TCKTestSetup.getTestConfiguration().getMonetaryOperators4Test();
         for(MonetaryOperator op: operators){
-            fail("To be implemented.");
+            AssertJUnit.fail("To be implemented.");
         }
     }
 

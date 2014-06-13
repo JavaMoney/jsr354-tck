@@ -41,7 +41,7 @@ public class MonetaryConversionsTest{
                 providerCount++;
             }
         }
-        assertTrue("At least one conversion provider must be available/registered.", providerCount > 0);
+        AssertJUnit.assertTrue("At least one conversion provider must be available/registered.", providerCount > 0);
     }
 
     /**
@@ -54,7 +54,7 @@ public class MonetaryConversionsTest{
     public void testConversionsAreAvailable(){
         for(String providerName : MonetaryConversions.getProviderNames()){
             CurrencyConversion conv = MonetaryConversions.getConversion("XXX", providerName);
-            assertNotNull("CurrencyConversion mot accessible: " + providerName, conv);
+            AssertJUnit.assertNotNull("CurrencyConversion mot accessible: " + providerName, conv);
         }
     }
 
@@ -68,7 +68,7 @@ public class MonetaryConversionsTest{
     public void testConversionsAreAvailableWithContext(){
         for(String providerName : MonetaryConversions.getProviderNames()){
             CurrencyConversion conv = MonetaryConversions.getConversion("XXX", ConversionContext.of(), providerName);
-            assertNotNull("CurrencyConversion mot accessible: " + providerName, conv);
+            AssertJUnit.assertNotNull("CurrencyConversion mot accessible: " + providerName, conv);
         }
     }
 
@@ -82,16 +82,18 @@ public class MonetaryConversionsTest{
     public void testProviderMetadata(){
         for(String providerName : MonetaryConversions.getProviderNames()){
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerName);
-            assertNotNull("Provider mot accessible: " + providerName, prov);
+            AssertJUnit.assertNotNull("Provider mot accessible: " + providerName, prov);
             ProviderContext ctx = prov.getProviderContext();
-            assertNotNull("ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName,
-                          ctx);
-            assertEquals("ExchangeProvider's ProviderContext returns invalid name: " + providerName,
-                         providerName, ctx.getProvider());
-            assertNotNull("ExchangeProvider's ProviderContext declares invalid RateTypes to be returned (null): " +
-                                  providerName, ctx.getRateTypes());
-            assertFalse("ExchangeProvider's ProviderContext declares empty RateTypes to be returned: " + providerName,
-                       ctx.getRateTypes().isEmpty());
+            AssertJUnit.assertNotNull(
+                    "ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName, ctx);
+            AssertJUnit.assertEquals("ExchangeProvider's ProviderContext returns invalid name: " + providerName,
+                                     providerName, ctx.getProvider());
+            AssertJUnit.assertNotNull(
+                    "ExchangeProvider's ProviderContext declares invalid RateTypes to be returned (null): " +
+                            providerName, ctx.getRateTypes());
+            AssertJUnit.assertFalse(
+                    "ExchangeProvider's ProviderContext declares empty RateTypes to be returned: " + providerName,
+                    ctx.getRateTypes().isEmpty());
         }
     }
 
@@ -106,12 +108,13 @@ public class MonetaryConversionsTest{
         for(String providerName : MonetaryConversions.getProviderNames()){
             CurrencyConversion conv = MonetaryConversions.getConversion("XXX", providerName);
             ConversionContext ctx = conv.getConversionContext();
-            assertNotNull("ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName,
-                          ctx);
-            assertEquals("ExchangeProvider's ProviderContext returns invalid name: " + providerName,
-                         providerName, ctx.getProvider());
-            assertNotNull("ExchangeProvider's ProviderContext declares invalid RateTypes to be returned (null): " +
-                                  providerName, ctx.getRateType());
+            AssertJUnit.assertNotNull(
+                    "ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName, ctx);
+            AssertJUnit.assertEquals("ExchangeProvider's ProviderContext returns invalid name: " + providerName,
+                                     providerName, ctx.getProvider());
+            AssertJUnit.assertNotNull(
+                    "ExchangeProvider's ProviderContext declares invalid RateTypes to be returned (null): " +
+                            providerName, ctx.getRateType());
         }
     }
 
@@ -126,12 +129,13 @@ public class MonetaryConversionsTest{
         for(String providerName : MonetaryConversions.getProviderNames()){
             CurrencyConversion conv = MonetaryConversions.getConversion(MonetaryCurrencies.getCurrency("XXX"), providerName);
             ConversionContext ctx = conv.getConversionContext();
-            assertNotNull("ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName,
-                          ctx);
-            assertEquals("ExchangeProvider's ProviderContext returns invalid name: " + providerName,
-                         providerName, ctx.getProvider());
-            assertNotNull("ExchangeProvider's ProviderContext declares invalid RateTypes to be returned (null): " +
-                                  providerName, ctx.getRateType());
+            AssertJUnit.assertNotNull(
+                    "ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName, ctx);
+            AssertJUnit.assertEquals("ExchangeProvider's ProviderContext returns invalid name: " + providerName,
+                                     providerName, ctx.getProvider());
+            AssertJUnit.assertNotNull(
+                    "ExchangeProvider's ProviderContext declares invalid RateTypes to be returned (null): " +
+                            providerName, ctx.getRateType());
         }
     }
 
@@ -147,12 +151,13 @@ public class MonetaryConversionsTest{
             CurrencyConversion conv =
                     MonetaryConversions.getConversion("XXX", ConversionContext.of(), providerName);
             ConversionContext ctx = conv.getConversionContext();
-            assertNotNull("ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName,
-                          ctx);
-            assertEquals("ExchangeProvider's ProviderContext returns invalid name: " + providerName,
-                         providerName, ctx.getProvider());
-            assertNotNull("ExchangeProvider's ProviderContext declares invalid RateTypes to be returned (null): " +
-                                  providerName, ctx.getRateType());
+            AssertJUnit.assertNotNull(
+                    "ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName, ctx);
+            AssertJUnit.assertEquals("ExchangeProvider's ProviderContext returns invalid name: " + providerName,
+                                     providerName, ctx.getProvider());
+            AssertJUnit.assertNotNull(
+                    "ExchangeProvider's ProviderContext declares invalid RateTypes to be returned (null): " +
+                            providerName, ctx.getRateType());
         }
     }
 
@@ -168,12 +173,13 @@ public class MonetaryConversionsTest{
             CurrencyConversion conv = MonetaryConversions
                     .getConversion(MonetaryCurrencies.getCurrency("XXX"), ConversionContext.of(), providerName);
             ConversionContext ctx = conv.getConversionContext();
-            assertNotNull("ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName,
-                          ctx);
-            assertEquals("ExchangeProvider's ProviderContext returns invalid name: " + providerName,
-                         providerName, ctx.getProvider());
-            assertNotNull("ExchangeProvider's ProviderContext declares invalid RateTypes to be returned (null): " +
-                                  providerName, ctx.getRateType());
+            AssertJUnit.assertNotNull(
+                    "ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName, ctx);
+            AssertJUnit.assertEquals("ExchangeProvider's ProviderContext returns invalid name: " + providerName,
+                                     providerName, ctx.getProvider());
+            AssertJUnit.assertNotNull(
+                    "ExchangeProvider's ProviderContext declares invalid RateTypes to be returned (null): " +
+                            providerName, ctx.getRateType());
         }
     }
 
@@ -185,7 +191,7 @@ public class MonetaryConversionsTest{
     @SpecAssertion(id = "431-A4", section = "4.3.1")
     public void testDefaultProviderChainIsDefined(){
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider();
-        assertNotNull("No default ExchangeRateProvider returned.", prov);
+        AssertJUnit.assertNotNull("No default ExchangeRateProvider returned.", prov);
         // we cannot test more here...
     }
 
@@ -197,7 +203,7 @@ public class MonetaryConversionsTest{
     public void testDefaultProviderChainIsDefinedDefault(){
         CurrencyConversion conv = MonetaryConversions
                 .getConversion(MonetaryCurrencies.getCurrency("CHF"));
-        assertNotNull("No default CurrencyConversion returned.", conv);
+        AssertJUnit.assertNotNull("No default CurrencyConversion returned.", conv);
         // we cannot test more here...
     }
 
@@ -209,7 +215,7 @@ public class MonetaryConversionsTest{
     public void testDefaultProviderChainIsDefinedDefault2(){
         CurrencyConversion conv = MonetaryConversions
                 .getConversion("CHF");
-        assertNotNull("No default CurrencyConversion returned.", conv);
+        AssertJUnit.assertNotNull("No default CurrencyConversion returned.", conv);
         // we cannot test more here...
     }
 
@@ -221,7 +227,7 @@ public class MonetaryConversionsTest{
     public void testDefaultProviderChainIsDefinedDefaultWithContext(){
         CurrencyConversion conv = MonetaryConversions
                 .getConversion(MonetaryCurrencies.getCurrency("CHF"), ConversionContext.of());
-        assertNotNull("No default CurrencyConversion returned.", conv);
+        AssertJUnit.assertNotNull("No default CurrencyConversion returned.", conv);
         // we cannot test more here...
     }
 
@@ -233,7 +239,7 @@ public class MonetaryConversionsTest{
     public void testDefaultProviderChainIsDefinedDefault2WithContext(){
         CurrencyConversion conv = MonetaryConversions
                 .getConversion("CHF", ConversionContext.of());
-        assertNotNull("No default CurrencyConversion returned.", conv);
+        AssertJUnit.assertNotNull("No default CurrencyConversion returned.", conv);
         // we cannot test more here...
     }
 

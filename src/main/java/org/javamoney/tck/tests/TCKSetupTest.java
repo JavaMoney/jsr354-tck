@@ -12,6 +12,7 @@ package org.javamoney.tck.tests;
 import org.javamoney.tck.TCKTestSetup;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import java.util.Collection;
@@ -27,8 +28,8 @@ public class TCKSetupTest{
             note = "Tests that a TestConfiguration is registered with the JDK's ServiceLoader.")
     @Test
     public void testTestSetup(){
-        assertTrue("TCK Configuration not available.", TCKTestSetup.getTestConfiguration() != null);
-        assertNotNull(TCKTestSetup.getTestConfiguration());
+        AssertJUnit.assertTrue("TCK Configuration not available.", TCKTestSetup.getTestConfiguration() != null);
+        AssertJUnit.assertNotNull(TCKTestSetup.getTestConfiguration());
     }
 
     @SpecAssertion(
@@ -39,8 +40,8 @@ public class TCKSetupTest{
     @Test
     public void testTestAmountConfiguration(){
         Collection<Class> amountClasses = TCKTestSetup.getTestConfiguration().getAmountClasses();
-        assertNotNull("TCK Test Configuration amount classes are null.", amountClasses);
-        assertFalse("TCK Test Configuration amount classes is empty.", amountClasses.isEmpty());
+        AssertJUnit.assertNotNull("TCK Test Configuration amount classes are null.", amountClasses);
+        AssertJUnit.assertFalse("TCK Test Configuration amount classes is empty.", amountClasses.isEmpty());
     }
 
 

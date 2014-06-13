@@ -53,13 +53,13 @@ public class ExchangeRatesAndRateProvidersTest{
                 continue;
             }
             ExchangeRate rate = prov.getExchangeRate(base, FOO_UNIT);
-            assertNotNull(
+            AssertJUnit.assertNotNull(
                     "Identity rate, accessed by getExchangeRate(CurrencyUnit, CurrencyUnit), is not defined for " +
                             base.getCurrencyCode() + " -> " + FOO_UNIT.getCurrencyCode()
             );
-            assertEquals(rate.getBase().getCurrencyCode(), base.getCurrencyCode());
-            assertEquals(rate.getTerm().getCurrencyCode(), FOO_UNIT.getCurrencyCode());
-            assertEquals(rate.getFactor().intValueExact(), 2);
+            AssertJUnit.assertEquals(rate.getBase().getCurrencyCode(), base.getCurrencyCode());
+            AssertJUnit.assertEquals(rate.getTerm().getCurrencyCode(), FOO_UNIT.getCurrencyCode());
+            AssertJUnit.assertEquals(rate.getFactor().intValueExact(), 2);
         }
     }
 
@@ -77,12 +77,13 @@ public class ExchangeRatesAndRateProvidersTest{
                 continue;
             }
             ExchangeRate rate = prov.getExchangeRate(base.getCurrencyCode(), "XXX");
-            assertNotNull("Identity rate, accessed by getExchangeRate(String, String), is not defined for " +
-                                  base.getCurrencyCode() + " -> " + FOO_UNIT.getCurrencyCode(), rate
-            );
-            assertEquals(rate.getBase().getCurrencyCode(), base.getCurrencyCode());
-            assertEquals(rate.getTerm().getCurrencyCode(), "FOO");
-            assertEquals(rate.getFactor().intValueExact(), 2);
+            AssertJUnit
+                    .assertNotNull("Identity rate, accessed by getExchangeRate(String, String), is not defined for " +
+                                           base.getCurrencyCode() + " -> " + FOO_UNIT.getCurrencyCode(), rate
+                    );
+            AssertJUnit.assertEquals(rate.getBase().getCurrencyCode(), base.getCurrencyCode());
+            AssertJUnit.assertEquals(rate.getTerm().getCurrencyCode(), "FOO");
+            AssertJUnit.assertEquals(rate.getFactor().intValueExact(), 2);
         }
     }
 
@@ -100,14 +101,14 @@ public class ExchangeRatesAndRateProvidersTest{
                 continue;
             }
             ExchangeRate rate = prov.getExchangeRate(base, FOO_UNIT, ConversionContext.ANY_CONVERSION);
-            assertNotNull(
+            AssertJUnit.assertNotNull(
                     "Identity rate, accessed by getExchangeRate(CurrencyUnit, CurrencyUnit, ConversionContext), " +
                             "is not defined for " +
                             base.getCurrencyCode() + " -> " + FOO_UNIT.getCurrencyCode()
             );
-            assertEquals(rate.getBase().getCurrencyCode(), base.getCurrencyCode());
-            assertEquals(rate.getTerm().getCurrencyCode(), FOO_UNIT.getCurrencyCode());
-            assertEquals(rate.getFactor().intValueExact(), 2);
+            AssertJUnit.assertEquals(rate.getBase().getCurrencyCode(), base.getCurrencyCode());
+            AssertJUnit.assertEquals(rate.getTerm().getCurrencyCode(), FOO_UNIT.getCurrencyCode());
+            AssertJUnit.assertEquals(rate.getFactor().intValueExact(), 2);
         }
     }
 
@@ -122,13 +123,14 @@ public class ExchangeRatesAndRateProvidersTest{
         // Use test provider
         for(CurrencyUnit base : MonetaryCurrencies.getCurrencies()){
             ExchangeRate rate = prov.getExchangeRate(base.getCurrencyCode(), "XXX", ConversionContext.ANY_CONVERSION);
-            assertNotNull("Identity rate, accessed by getExchangeRate(String, String, ConversionContext), " +
-                                  "is not defined for " +
-                                  base.getCurrencyCode() + " -> " + FOO_UNIT.getCurrencyCode(), rate
-            );
-            assertEquals(rate.getBase().getCurrencyCode(), base.getCurrencyCode());
-            assertEquals(rate.getTerm().getCurrencyCode(), "XXX");
-            assertEquals(rate.getFactor().intValueExact(), 2);
+            AssertJUnit
+                    .assertNotNull("Identity rate, accessed by getExchangeRate(String, String, ConversionContext), " +
+                                           "is not defined for " +
+                                           base.getCurrencyCode() + " -> " + FOO_UNIT.getCurrencyCode(), rate
+                    );
+            AssertJUnit.assertEquals(rate.getBase().getCurrencyCode(), base.getCurrencyCode());
+            AssertJUnit.assertEquals(rate.getTerm().getCurrencyCode(), "XXX");
+            AssertJUnit.assertEquals(rate.getFactor().intValueExact(), 2);
         }
     }
 
@@ -142,7 +144,7 @@ public class ExchangeRatesAndRateProvidersTest{
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(); // Use default provider
         for(CurrencyUnit unit : MonetaryCurrencies.getCurrencies()){
             ExchangeRate rate = prov.getExchangeRate(unit, unit);
-            assertNotNull(
+            AssertJUnit.assertNotNull(
                     "Identity rate, accessed by getExchangeRate(CurrencyUnit, CurrencyUnit), is not defined for " +
                             unit.getCurrencyCode()
             );
@@ -159,8 +161,9 @@ public class ExchangeRatesAndRateProvidersTest{
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(); // Use default provider
         for(CurrencyUnit unit : MonetaryCurrencies.getCurrencies()){
             ExchangeRate rate = prov.getExchangeRate(unit.getCurrencyCode(), unit.getCurrencyCode());
-            assertNotNull("Identity rate, accessed by getExchangeRate(String, String), is not defined for " +
-                                  unit.getCurrencyCode()
+            AssertJUnit.assertNotNull(
+                    "Identity rate, accessed by getExchangeRate(String, String), is not defined for " +
+                            unit.getCurrencyCode()
             );
         }
     }
@@ -175,7 +178,7 @@ public class ExchangeRatesAndRateProvidersTest{
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(); // Use default provider
         for(CurrencyUnit unit : MonetaryCurrencies.getCurrencies()){
             ExchangeRate rate = prov.getExchangeRate(unit, unit);
-            assertNotNull(
+            AssertJUnit.assertNotNull(
                     "Identity rate, accessed by getExchangeRate(CurrencyUnit, CurrencyUnit, ConversionContext), " +
                             "is not defined for " +
                             unit.getCurrencyCode()
@@ -193,10 +196,11 @@ public class ExchangeRatesAndRateProvidersTest{
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(); // Use default provider
         for(CurrencyUnit unit : MonetaryCurrencies.getCurrencies()){
             ExchangeRate rate = prov.getExchangeRate(unit.getCurrencyCode(), unit.getCurrencyCode());
-            assertNotNull("Identity rate, accessed by getExchangeRate(String, String, ConversionContext), " +
-                                  "is not defined for " +
-                                  unit.getCurrencyCode()
-            );
+            AssertJUnit
+                    .assertNotNull("Identity rate, accessed by getExchangeRate(String, String, ConversionContext), " +
+                                           "is not defined for " +
+                                           unit.getCurrencyCode()
+                    );
         }
     }
 
@@ -210,13 +214,16 @@ public class ExchangeRatesAndRateProvidersTest{
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestConversionProvider");
         ConversionContext ctx = new ConversionContext.Builder().setObject(Locale.CANADA).setText("Foo", "bar").build();
         ExchangeRate rate = prov.getExchangeRate(FOO_UNIT, MonetaryCurrencies.getCurrency("XXX"), ctx);
-        assertNotNull("No test rate returned by getExchangeRate(CurrencyUnit, CurrencyUnit, ConversionContext), " +
-                              "probably TestProvider is not correct registered."
+        AssertJUnit.assertNotNull(
+                "No test rate returned by getExchangeRate(CurrencyUnit, CurrencyUnit, ConversionContext), " +
+                        "probably TestProvider is not correct registered."
         );
-        assertEquals("Text parameter Locale.class was not correctly passed to ExchangeRateProvider implementation.",
-                     "bar", rate.getConversionContext().getText("Foo"));
-        assertEquals("Object parameter Locale.class was not correctly passed to ExchangeRateProvider implementation.",
-                     Locale.CANADA, rate.getConversionContext().getAttribute(Locale.class));
+        AssertJUnit.assertEquals(
+                "Text parameter Locale.class was not correctly passed to ExchangeRateProvider implementation.", "bar",
+                rate.getConversionContext().getText("Foo"));
+        AssertJUnit.assertEquals(
+                "Object parameter Locale.class was not correctly passed to ExchangeRateProvider implementation.",
+                Locale.CANADA, rate.getConversionContext().getAttribute(Locale.class));
     }
 
 

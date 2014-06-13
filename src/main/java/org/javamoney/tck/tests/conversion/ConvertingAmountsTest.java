@@ -9,10 +9,10 @@
  */
 package org.javamoney.tck.tests.conversion;
 
-import org.javamoney.moneta.BuildableCurrencyUnit;
 import org.javamoney.tck.tests.internal.TestCurrencyUnit;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import javax.money.CurrencyUnit;
@@ -43,11 +43,11 @@ public class ConvertingAmountsTest{
         CurrencyConversion conv = MonetaryConversions.getConversion(cu, "TestConversionProvider");
         MonetaryAmount m = MonetaryAmounts.getAmountFactory().setNumber(10).setCurrency("CHF").create();
         MonetaryAmount m2 = m.with(conv);
-        assertEquals(m2.getCurrency().getCurrencyCode(), "FOO");
-        assertEquals(20L, m2.getNumber().longValueExact());
+        AssertJUnit.assertEquals(m2.getCurrency().getCurrencyCode(), "FOO");
+        AssertJUnit.assertEquals(20L, m2.getNumber().longValueExact());
         m2 = m.with(conv);
-        assertEquals(m2.getCurrency().getCurrencyCode(), "FOO");
-        assertEquals(20L, m2.getNumber().longValueExact());
+        AssertJUnit.assertEquals(m2.getCurrency().getCurrencyCode(), "FOO");
+        AssertJUnit.assertEquals(20L, m2.getNumber().longValueExact());
     }
 
     /**
@@ -55,23 +55,23 @@ public class ConvertingAmountsTest{
     */
     @Test @SpecAssertion(id = "432-A2", section="4.3.2")
     public void testConversionComparedWithRate(){
-        final CurrencyUnit FOO = new BuildableCurrencyUnit.Builder("FOO").build();
+        final CurrencyUnit FOO = new TestCurrencyUnit("FOO");
         ExchangeRate rate = MonetaryConversions.getExchangeRateProvider("TestConversionProvider").getExchangeRate(
                 MonetaryCurrencies.getCurrency("CHF"), FOO);
-        assertEquals(rate.getBase(),MonetaryCurrencies.getCurrency("CHF") );
-        assertEquals(rate.getTerm().getCurrencyCode(), FOO.getCurrencyCode());
-        assertEquals(rate.getFactor().intValueExact(), 2);
-        assertEquals("TestConversionProvider", rate.getConversionContext().getProvider());
+        AssertJUnit.assertEquals(rate.getBase(), MonetaryCurrencies.getCurrency("CHF"));
+        AssertJUnit.assertEquals(rate.getTerm().getCurrencyCode(), FOO.getCurrencyCode());
+        AssertJUnit.assertEquals(rate.getFactor().intValueExact(), 2);
+        AssertJUnit.assertEquals("TestConversionProvider", rate.getConversionContext().getProvider());
     }
 
     /**
      * Bad case: try converting from/to an inconvertible (custom) currency, ensure CurrencyConversionException is thrown.
-     * @see org.javamoney.moneta.BuildableCurrencyUnit for creating a custom currency, with some fancy non-ISO currency code.
+     * @see org.javamoney.tck.tests.internal.TestCurrencyUnit } for creating a custom currency, with some fancy non-ISO currency code.
      */
     @Test @SpecAssertion(id = "432-A3", section="4.3.2")
     public void testUnsupportedConversion(){
         MonetaryAmount m = MonetaryAmounts.getAmountFactory().setNumber(10).setCurrency("CHF").create();
-        CurrencyUnit cu = new BuildableCurrencyUnit.Builder("FOOANY").build();
+        CurrencyUnit cu = new TestCurrencyUnit("FOOANY");
         try{
             CurrencyConversion conv = MonetaryConversions.getConversion(cu);
             m.with(conv);

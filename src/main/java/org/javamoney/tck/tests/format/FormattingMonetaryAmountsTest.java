@@ -12,6 +12,7 @@ package org.javamoney.tck.tests.format;
 import org.javamoney.tck.tests.internal.TestMonetaryAmountFactory;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import javax.money.CurrencyUnit;
@@ -55,44 +56,67 @@ public class FormattingMonetaryAmountsTest{
                 String formattedAmount = amountFormat.format(amount);
                 MonetaryAmount amountMock = TestMonetaryAmountFactory.getAmount(value, currency);
                 String formattedAmountMock = amountFormat.format(amountMock);
-                assertNotNull(formattedAmountMock);
-                assertEquals(formattedAmountMock, formattedAmount);
+                AssertJUnit.assertNotNull(formattedAmountMock);
+                AssertJUnit.assertEquals(formattedAmountMock, formattedAmount);
             }
         }
     }
 
-    /*
-    <assertion id="441-A2">
-				<text>Print several amounts, created using the default factory, but
-					also a test instance, provided by the TCK, to ensure no
-					implementation
-					dependencies on the implementation.
-				</text>
-			</assertion>
-			<assertion id="441-A3">
-				<text>Parse back several amounts, input created using the
-					formatting
-					from 'Format_formatAmounts'.
-				</text>
-			</assertion>
-			<assertion id="441-A4">
-				<text>Get/set different amount styles (especially patterns, group
-					sizes, group characters) and compare results with results as from
-					RI.
-					Also apply patterns without currency invovled.
-				</text>
-			</assertion>
-			<assertion id="441-A5">
-				<text>Get/set different monetary contexts and compare results with
-					results from parsed amounts.
-				</text>
-			</assertion>
-			<assertion id="441-A6">
-				<text>Get/set default currency, try to parse patterns without
-					currency information.
-				</text>
-			</assertion>
+    /**
+     * Print several amounts, created using the default factory, but
+     also a test instance, provided by the TCK, to ensure no
+     implementation
+     dependencies on the implementation.
      */
+    @SpecAssertion(section = "4.4.1", id = "441-A2")
+    @Test
+    public void testFormattingIsIndependentOfImplementation(){
+        AssertJUnit.fail("Not implemented.");
+    }
+
+    /**
+     * Parse back several amounts, input created using the
+     formatting
+     from 'Format_formatAmounts'.
+     */
+    @SpecAssertion(section = "4.4.1", id = "441-A3")
+    @Test
+    public void testParseIsIndependentOfImplementation(){
+        AssertJUnit.fail("Not implemented.");
+    }
+
+    /**
+     * Get/set different amount styles (especially patterns, group
+     sizes, group characters) and compare results with results as from
+     RI.
+     Also apply patterns without currency invovled.
+     */
+    @SpecAssertion(section = "4.4.1", id = "441-A4")
+    @Test
+    public void testParseDifferentStyles(){
+        AssertJUnit.fail("Not implemented.");
+    }
+
+    /**
+     * Get/set different monetary contexts and compare results with
+     results from parsed amounts.
+     */
+    @SpecAssertion(section = "4.4.1", id = "441-A5")
+    @Test
+    public void testParseDifferentAmountContexts(){
+        AssertJUnit.fail("Not implemented.");
+    }
+
+    /**
+     * Get/set default currency, try to parse patterns without
+     currency information.
+     */
+    @SpecAssertion(section = "4.4.1", id = "441-A6")
+    @Test
+    public void testParseWithDifferentCurrencies(){
+        AssertJUnit.fail("Not implemented.");
+    }
+
 
     /**
      * AccessingMonetaryAmountFormat using
@@ -105,8 +129,8 @@ public class FormattingMonetaryAmountsTest{
         Locale[] jdkDecimalFormatLocales = DecimalFormat.getAvailableLocales();
         for(Locale jdkDecimalFormatLocale : jdkDecimalFormatLocales){
             MonetaryAmountFormat amountFormat = MonetaryFormats.getAmountFormat(jdkDecimalFormatLocale);
-            assertNotNull(amountFormat);
-            assertEquals(jdkDecimalFormatLocale, amountFormat.getAmountFormatContext().getLocale());
+            AssertJUnit.assertNotNull(amountFormat);
+            AssertJUnit.assertEquals(jdkDecimalFormatLocale, amountFormat.getAmountFormatContext().getLocale());
         }
     }
 
@@ -120,7 +144,7 @@ public class FormattingMonetaryAmountsTest{
     @SpecAssertion(section = "4.4.1", id = "441-B2")
     public void testGetAmountFormat(){
         for(Locale locale : DecimalFormat.getAvailableLocales()){
-            assertNotNull(MonetaryFormats.getAmountFormat(AmountFormatContext.of(locale)));
+            AssertJUnit.assertNotNull(MonetaryFormats.getAmountFormat(AmountFormatContext.of(locale)));
         }
     }
 
@@ -136,9 +160,10 @@ public class FormattingMonetaryAmountsTest{
             if(Locale.ROOT.equals(locale)){
                 continue;
             }
-            assertTrue(
+            AssertJUnit.assertTrue(
                     "MonetaryFormats.getAvailableLocales(); Locale supported by JDKs DecimalFormat is not available: " +
-                            locale, locales.contains(locale));
+                            locale, locales.contains(locale)
+            );
         }
     }
 
@@ -150,7 +175,7 @@ public class FormattingMonetaryAmountsTest{
     @SpecAssertion(section = "4.4.1", id = "441-B3")
     public void testAmountStyleOf(){
         for(Locale locale : DecimalFormat.getAvailableLocales()){
-            assertNotNull(AmountFormatContext.of(locale));
+            AssertJUnit.assertNotNull(AmountFormatContext.of(locale));
         }
     }
 }

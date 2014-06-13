@@ -13,10 +13,9 @@ package org.javamoney.tck.tests.spi;
 
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.testng.AssertJUnit;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.money.convert.ExchangeRateProvider;
 import javax.money.spi.MonetaryAmountFormatProviderSpi;
 import java.util.ServiceLoader;
 
@@ -46,9 +45,10 @@ public class FormattingSPITest{
             l = ServiceLoader.load(MonetaryAmountFormatProviderSpi.class);
         }
         catch(Exception e){
-            fail("Failure during check for loaded MonetaryAmountFormatProviderSpi.", e);
+            Assert.fail("Failure during check for loaded MonetaryAmountFormatProviderSpi.", e);
         }
-        assertTrue(l.iterator().hasNext(), "No instance of MonetaryAmountFormatProviderSpi provided by implementation.");
+        Assert.assertTrue(l.iterator().hasNext(),
+                          "No instance of MonetaryAmountFormatProviderSpi provided by implementation.");
     }
 
 }

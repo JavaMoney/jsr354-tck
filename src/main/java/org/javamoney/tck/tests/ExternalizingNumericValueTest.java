@@ -12,8 +12,8 @@ package org.javamoney.tck.tests;
 import org.javamoney.tck.tests.internal.TestAmount;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
-import org.testng.AssertJUnit.*;
 
 import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmounts;
@@ -52,7 +52,7 @@ public class ExternalizingNumericValueTest{
             MonetaryAmount mAmount1 =
                     MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             NumberValue result = mAmount1.getNumber();
-            assertNotNull("Amount type does not return a NumberValue (null); " + type.getName(), result);
+            AssertJUnit.assertNotNull("Amount type does not return a NumberValue (null); " + type.getName(), result);
         }
     }
 
@@ -72,11 +72,11 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertNotNull("Amount creation failed for " + type, result);
-                assertEquals("Number value (int) returned is not correct for " + type.getName(), num,
-                             result.intValue());
-                assertEquals("Exact number value (int) returned is not correct for " + type.getName(), num,
-                             result.intValueExact());
+                AssertJUnit.assertNotNull("Amount creation failed for " + type, result);
+                AssertJUnit.assertEquals("Number value (int) returned is not correct for " + type.getName(), num,
+                                         result.intValue());
+                AssertJUnit.assertEquals("Exact number value (int) returned is not correct for " + type.getName(), num,
+                                         result.intValueExact());
             }
         }
     }
@@ -104,11 +104,12 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertNotNull("Amount creation failed for " + type, result);
-                assertEquals("Number value (long) returned is not correct for " + type.getName(), num,
-                             result.longValue());
-                assertEquals("Exact number (long) (double) returned is not correct for " + type.getName(), num,
-                             result.longValueExact());
+                AssertJUnit.assertNotNull("Amount creation failed for " + type, result);
+                AssertJUnit.assertEquals("Number value (long) returned is not correct for " + type.getName(), num,
+                                         result.longValue());
+                AssertJUnit
+                        .assertEquals("Exact number (long) (double) returned is not correct for " + type.getName(), num,
+                                      result.longValueExact());
             }
         }
     }
@@ -130,11 +131,12 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertNotNull("Amount creation failed for " + type, result);
-                assertEquals("Number value (double) returned is not correct for " + type.getName(), num,
-                             result.doubleValue(), 0d);
-                assertEquals("Exact number value (double) returned is not correct for " + type.getName(), num,
-                             result.doubleValueExact(), 0d);
+                AssertJUnit.assertNotNull("Amount creation failed for " + type, result);
+                AssertJUnit.assertEquals("Number value (double) returned is not correct for " + type.getName(), num,
+                                         result.doubleValue(), 0d);
+                AssertJUnit
+                        .assertEquals("Exact number value (double) returned is not correct for " + type.getName(), num,
+                                      result.doubleValueExact(), 0d);
             }
         }
     }
@@ -157,12 +159,13 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (BigDecimal) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).stripTrailingZeros(),
-                             result.numberValue(BigDecimal.class).stripTrailingZeros());
-                assertEquals("Exact number value (BigDecimal) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).stripTrailingZeros(),
-                             result.numberValue(BigDecimal.class).stripTrailingZeros());
+                AssertJUnit.assertEquals("Number value (BigDecimal) returned is not correct for " + type.getName(),
+                                         new BigDecimal(String.valueOf(num)).stripTrailingZeros(),
+                                         result.numberValue(BigDecimal.class).stripTrailingZeros());
+                AssertJUnit
+                        .assertEquals("Exact number value (BigDecimal) returned is not correct for " + type.getName(),
+                                      new BigDecimal(String.valueOf(num)).stripTrailingZeros(),
+                                      result.numberValue(BigDecimal.class).stripTrailingZeros());
             }
         }
     }
@@ -185,10 +188,11 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (BigInteger) returned is not correct for " + type.getName(),
-                             new BigInteger(String.valueOf(num)), result.numberValue(BigInteger.class));
-                assertEquals("Exact number value (BigInteger) returned is not correct for " + type.getName(),
-                             new BigInteger(String.valueOf(num)), result.numberValue(BigInteger.class));
+                AssertJUnit.assertEquals("Number value (BigInteger) returned is not correct for " + type.getName(),
+                                         new BigInteger(String.valueOf(num)), result.numberValue(BigInteger.class));
+                AssertJUnit
+                        .assertEquals("Exact number value (BigInteger) returned is not correct for " + type.getName(),
+                                      new BigInteger(String.valueOf(num)), result.numberValue(BigInteger.class));
             }
         }
     }
@@ -216,12 +220,13 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (int, truncated) returned is not correct for " + type.getName(), (int) num,
-                             result.intValue());
+                AssertJUnit.assertEquals("Number value (int, truncated) returned is not correct for " + type.getName(),
+                                         (int) num, result.intValue());
                 try{
                     result.intValueExact();
-                    fail("Number value (int, exact -> truncated) must throw ArithemticException on truncation for " +
-                                 type.getName());
+                    AssertJUnit
+                            .fail("Number value (int, exact -> truncated) must throw ArithemticException on truncation for " +
+                                          type.getName());
                 }
                 catch(ArithmeticException e){
                     // OK
@@ -253,12 +258,13 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (long, truncated) returned is not correct for " + type.getName(), (long) num,
-                             result.intValue());
+                AssertJUnit.assertEquals("Number value (long, truncated) returned is not correct for " + type.getName(),
+                                         (long) num, result.intValue());
                 try{
                     result.longValueExact();
-                    fail("Number value (long, exact -> truncated) must throw ArithemticException on truncation for " +
-                                 type.getName());
+                    AssertJUnit
+                            .fail("Number value (long, exact -> truncated) must throw ArithemticException on truncation for " +
+                                          type.getName());
                 }
                 catch(ArithmeticException e){
                     // OK
@@ -291,8 +297,9 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
+                AssertJUnit
+                        .assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
+                                      new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
             }
         }
     }
@@ -320,9 +327,10 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (Byte, truncating) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).byteValue(),
-                             result.numberValue(Byte.class).byteValue());
+                AssertJUnit
+                        .assertEquals("Number value (Byte, truncating) returned is not correct for " + type.getName(),
+                                      new BigDecimal(String.valueOf(num)).byteValue(),
+                                      result.numberValue(Byte.class).byteValue());
             }
         }
     }
@@ -350,9 +358,10 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (Short, truncating) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).shortValue(),
-                             result.numberValue(Short.class).shortValue());
+                AssertJUnit
+                        .assertEquals("Number value (Short, truncating) returned is not correct for " + type.getName(),
+                                      new BigDecimal(String.valueOf(num)).shortValue(),
+                                      result.numberValue(Short.class).shortValue());
             }
         }
     }
@@ -382,9 +391,10 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (Float, truncating) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).floatValue(),
-                             result.numberValue(Float.class).floatValue(), 0.0f);
+                AssertJUnit
+                        .assertEquals("Number value (Float, truncating) returned is not correct for " + type.getName(),
+                                      new BigDecimal(String.valueOf(num)).floatValue(),
+                                      result.numberValue(Float.class).floatValue(), 0.0f);
             }
         }
     }
@@ -414,9 +424,10 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).doubleValue(),
-                             result.numberValue(Double.class).doubleValue(), 0.0d);
+                AssertJUnit
+                        .assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
+                                      new BigDecimal(String.valueOf(num)).doubleValue(),
+                                      result.numberValue(Double.class).doubleValue(), 0.0d);
             }
         }
     }
@@ -445,9 +456,10 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (short, truncating) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).intValue(),
-                             result.numberValue(Integer.class).intValue());
+                AssertJUnit
+                        .assertEquals("Number value (short, truncating) returned is not correct for " + type.getName(),
+                                      new BigDecimal(String.valueOf(num)).intValue(),
+                                      result.numberValue(Integer.class).intValue());
             }
         }
     }
@@ -480,8 +492,9 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Amount's precision does not match for " + bd + " correct for " + type.getName(),
-                             bd.precision(), result.getPrecision());
+                AssertJUnit
+                        .assertEquals("Amount's precision does not match for " + bd + " correct for " + type.getName(),
+                                      bd.precision(), result.getPrecision());
             }
         }
     }
@@ -513,8 +526,9 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Amount's precision does not match for " + bd + " correct for " + type.getName(),
-                             bd.scale(), result.getScale());
+                AssertJUnit
+                        .assertEquals("Amount's precision does not match for " + bd + " correct for " + type.getName(),
+                                      bd.scale(), result.getScale());
             }
         }
     }
@@ -537,12 +551,13 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (BigDecimal) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).stripTrailingZeros(),
-                             result.numberValue(BigDecimal.class).stripTrailingZeros());
-                assertEquals("Exact number value (BigDecimal) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).stripTrailingZeros(),
-                             result.numberValue(BigDecimal.class).stripTrailingZeros());
+                AssertJUnit.assertEquals("Number value (BigDecimal) returned is not correct for " + type.getName(),
+                                         new BigDecimal(String.valueOf(num)).stripTrailingZeros(),
+                                         result.numberValue(BigDecimal.class).stripTrailingZeros());
+                AssertJUnit
+                        .assertEquals("Exact number value (BigDecimal) returned is not correct for " + type.getName(),
+                                      new BigDecimal(String.valueOf(num)).stripTrailingZeros(),
+                                      result.numberValue(BigDecimal.class).stripTrailingZeros());
             }
         }
     }
@@ -563,11 +578,11 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertNotNull("Amount creation failed for " + type, result);
-                assertEquals("Number value (int) returned is not correct for " + type.getName(), num,
-                             result.intValue());
-                assertEquals("Exact number (int) returned is not correct for " + type.getName(), num,
-                             result.intValueExact());
+                AssertJUnit.assertNotNull("Amount creation failed for " + type, result);
+                AssertJUnit.assertEquals("Number value (int) returned is not correct for " + type.getName(), num,
+                                         result.intValue());
+                AssertJUnit.assertEquals("Exact number (int) returned is not correct for " + type.getName(), num,
+                                         result.intValueExact());
             }
         }
     }
@@ -595,11 +610,11 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertNotNull("Amount creation failed for " + type, result);
-                assertEquals("Number value (long) returned is not correct for " + type.getName(), num,
-                             result.longValue());
-                assertEquals("Exact number (long) returned is not correct for " + type.getName(), num,
-                             result.longValueExact());
+                AssertJUnit.assertNotNull("Amount creation failed for " + type, result);
+                AssertJUnit.assertEquals("Number value (long) returned is not correct for " + type.getName(), num,
+                                         result.longValue());
+                AssertJUnit.assertEquals("Exact number (long) returned is not correct for " + type.getName(), num,
+                                         result.longValueExact());
             }
         }
     }
@@ -627,8 +642,9 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (double, truncated) returned is not correct for " + type.getName(), num,
-                             result.doubleValue(), 0.0d);
+                AssertJUnit
+                        .assertEquals("Number value (double, truncated) returned is not correct for " + type.getName(),
+                                      num, result.doubleValue(), 0.0d);
             }
         }
     }
@@ -661,30 +677,32 @@ public class ExternalizingNumericValueTest{
                 NumberValue result = mAmount1.getNumber();
                 for(Class numType : requiredJdkTykes){
                     if(Byte.class.equals(numType)){
-                        assertEquals("Truncating conversion to byte failed for type " + type.getName(), dec.byteValue(),
-                                     result.byteValue());
+                        AssertJUnit.assertEquals("Truncating conversion to byte failed for type " + type.getName(),
+                                                 dec.byteValue(), result.byteValue());
                     }else if(Short.class.equals(numType)){
-                        assertEquals("Truncating conversion to short failed for type " + type.getName(),
-                                     dec.shortValue(), result.shortValue());
+                        AssertJUnit.assertEquals("Truncating conversion to short failed for type " + type.getName(),
+                                                 dec.shortValue(), result.shortValue());
                     }else if(Integer.class.equals(numType)){
-                        assertEquals("Truncating conversion to int failed for type " + type.getName(), dec.intValue(),
-                                     result.intValue());
+                        AssertJUnit.assertEquals("Truncating conversion to int failed for type " + type.getName(),
+                                                 dec.intValue(), result.intValue());
                     }else if(Long.class.equals(numType)){
-                        assertEquals("Truncating conversion to long failed for type " + type.getName(), dec.longValue(),
-                                     result.longValue());
+                        AssertJUnit.assertEquals("Truncating conversion to long failed for type " + type.getName(),
+                                                 dec.longValue(), result.longValue());
                     }else if(Float.class.equals(numType)){
-                        assertEquals("Truncating conversion to float failed for type " + type.getName(),
-                                     dec.floatValue(), result.floatValue(), 0.0f);
+                        AssertJUnit.assertEquals("Truncating conversion to float failed for type " + type.getName(),
+                                                 dec.floatValue(), result.floatValue(), 0.0f);
                     }else if(Double.class.equals(numType)){
-                        assertEquals("Truncating conversion to double failed for type " + type.getName(),
-                                     dec.doubleValue(), result.doubleValue(), 0.0d);
+                        AssertJUnit.assertEquals("Truncating conversion to double failed for type " + type.getName(),
+                                                 dec.doubleValue(), result.doubleValue(), 0.0d);
                     }else if(BigDecimal.class.equals(numType)){
-                        assertEquals("Truncating conversion to BigDecimal failed for type " + type.getName(),
-                                     dec.stripTrailingZeros(),
-                                     result.numberValue(BigDecimal.class).stripTrailingZeros());
+                        AssertJUnit
+                                .assertEquals("Truncating conversion to BigDecimal failed for type " + type.getName(),
+                                              dec.stripTrailingZeros(),
+                                              result.numberValue(BigDecimal.class).stripTrailingZeros());
                     }else if(BigInteger.class.equals(numType)){
-                        assertEquals("Truncating conversion to BigInteger failed for type " + type.getName(),
-                                     dec.toBigInteger(), result.numberValue(BigInteger.class));
+                        AssertJUnit
+                                .assertEquals("Truncating conversion to BigInteger failed for type " + type.getName(),
+                                              dec.toBigInteger(), result.numberValue(BigInteger.class));
                     }
                 }
             }
@@ -714,8 +732,8 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (int) returned is not correct for " + type.getName(), (int) num,
-                             result.intValue());
+                AssertJUnit.assertEquals("Number value (int) returned is not correct for " + type.getName(), (int) num,
+                                         result.intValue());
             }
         }
     }
@@ -743,12 +761,13 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (long, truncated) returned is not correct for " + type.getName(), (long) num,
-                             result.intValue());
+                AssertJUnit.assertEquals("Number value (long, truncated) returned is not correct for " + type.getName(),
+                                         (long) num, result.intValue());
                 try{
                     result.longValueExact();
-                    fail("Number value (long, exact -> truncated) must throw ArithemticException on truncation for " +
-                                 type.getName());
+                    AssertJUnit
+                            .fail("Number value (long, exact -> truncated) must throw ArithemticException on truncation for " +
+                                          type.getName());
                 }
                 catch(ArithmeticException e){
                     // OK
@@ -781,8 +800,9 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
+                AssertJUnit
+                        .assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
+                                      new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
             }
         }
     }
@@ -804,9 +824,10 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
-                             (long) new BigDecimal(String.valueOf(num)).byteValue(),
-                             (long) result.numberValue(Byte.class));
+                AssertJUnit
+                        .assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                                      (long) new BigDecimal(String.valueOf(num)).byteValue(),
+                                      (long) result.numberValue(Byte.class));
             }
         }
     }
@@ -828,11 +849,14 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
-                             (long) new BigDecimal(String.valueOf(num)).shortValue(),
-                             (long) result.numberValue(Short.class));
-                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
-                             (long) new BigDecimal(String.valueOf(num)).shortValue(), (long) result.shortValue());
+                AssertJUnit
+                        .assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                                      (long) new BigDecimal(String.valueOf(num)).shortValue(),
+                                      (long) result.numberValue(Short.class));
+                AssertJUnit
+                        .assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                                      (long) new BigDecimal(String.valueOf(num)).shortValue(),
+                                      (long) result.shortValue());
             }
         }
     }
@@ -854,11 +878,13 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
-                             (long) new BigDecimal(String.valueOf(num)).intValue(),
-                             (long) result.numberValue(Integer.class));
-                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
-                             (long) new BigDecimal(String.valueOf(num)).intValue(), (long) result.intValue());
+                AssertJUnit
+                        .assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                                      (long) new BigDecimal(String.valueOf(num)).intValue(),
+                                      (long) result.numberValue(Integer.class));
+                AssertJUnit
+                        .assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                                      (long) new BigDecimal(String.valueOf(num)).intValue(), (long) result.intValue());
             }
         }
     }
@@ -880,11 +906,13 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
-                             (long) new BigDecimal(String.valueOf(num)).longValue(),
-                             (long) result.numberValue(Long.class));
-                assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
-                             (long) new BigDecimal(String.valueOf(num)).longValue(), (long) result.longValue());
+                AssertJUnit
+                        .assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                                      (long) new BigDecimal(String.valueOf(num)).longValue(),
+                                      (long) result.numberValue(Long.class));
+                AssertJUnit
+                        .assertEquals("Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
+                                      (long) new BigDecimal(String.valueOf(num)).longValue(), (long) result.longValue());
             }
         }
     }
@@ -906,11 +934,13 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).floatValue(),
-                             result.numberValue(Float.class).floatValue(), 0.0d);
-                assertEquals("Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).floatValue(), result.floatValue(), 0.0d);
+                AssertJUnit.assertEquals(
+                        "Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
+                        new BigDecimal(String.valueOf(num)).floatValue(), result.numberValue(Float.class).floatValue(),
+                        0.0d);
+                AssertJUnit.assertEquals(
+                        "Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
+                        new BigDecimal(String.valueOf(num)).floatValue(), result.floatValue(), 0.0d);
             }
         }
     }
@@ -932,11 +962,13 @@ public class ExternalizingNumericValueTest{
                 MonetaryAmount mAmount1 =
                         MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (BigDecimal -> double) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).doubleValue(),
-                             result.numberValue(Double.class).doubleValue(), 0.0d);
-                assertEquals("Number value (BigDecimal -> double) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
+                AssertJUnit.assertEquals(
+                        "Number value (BigDecimal -> double) returned is not correct for " + type.getName(),
+                        new BigDecimal(String.valueOf(num)).doubleValue(),
+                        result.numberValue(Double.class).doubleValue(), 0.0d);
+                AssertJUnit.assertEquals(
+                        "Number value (BigDecimal -> double) returned is not correct for " + type.getName(),
+                        new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
             }
         }
     }
@@ -967,8 +999,9 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Amount's precision does not match for " + bd + " correct for " + type.getName(),
-                             bd.precision(), result.getPrecision());
+                AssertJUnit
+                        .assertEquals("Amount's precision does not match for " + bd + " correct for " + type.getName(),
+                                      bd.precision(), result.getPrecision());
             }
         }
     }
@@ -999,8 +1032,8 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Amount's scale does not match for " + bd + " correct for " + type.getName(), bd.scale(),
-                             result.getScale());
+                AssertJUnit.assertEquals("Amount's scale does not match for " + bd + " correct for " + type.getName(),
+                                         bd.scale(), result.getScale());
             }
         }
     }
@@ -1032,24 +1065,24 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (byte) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).byteValue(), (byte) 0,
-                             result.numberValue(Byte.class).byteValue());
-                assertEquals("Number value (short) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).shortValue(), (short) 0,
-                             result.numberValue(Short.class).shortValue());
-                assertEquals("Number value (int) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).intValue(), 0,
-                             result.numberValue(Integer.class).intValue());
-                assertEquals("Number value (long) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).longValue(), (long) 0,
-                             result.numberValue(Long.class).longValue());
-                assertEquals("Number value (float) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).floatValue(), 0.0f,
-                             result.numberValue(Float.class).floatValue());
-                assertEquals("Number value (double) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).doubleValue(), 0.0f,
-                             result.numberValue(Double.class).doubleValue());
+                AssertJUnit.assertEquals("Number value (byte) returned is not correct for " + type.getName(),
+                                         new BigDecimal(String.valueOf(num)).byteValue(), (byte) 0,
+                                         result.numberValue(Byte.class).byteValue());
+                AssertJUnit.assertEquals("Number value (short) returned is not correct for " + type.getName(),
+                                         new BigDecimal(String.valueOf(num)).shortValue(), (short) 0,
+                                         result.numberValue(Short.class).shortValue());
+                AssertJUnit.assertEquals("Number value (int) returned is not correct for " + type.getName(),
+                                         new BigDecimal(String.valueOf(num)).intValue(), 0,
+                                         result.numberValue(Integer.class).intValue());
+                AssertJUnit.assertEquals("Number value (long) returned is not correct for " + type.getName(),
+                                         new BigDecimal(String.valueOf(num)).longValue(), (long) 0,
+                                         result.numberValue(Long.class).longValue());
+                AssertJUnit.assertEquals("Number value (float) returned is not correct for " + type.getName(),
+                                         new BigDecimal(String.valueOf(num)).floatValue(), 0.0f,
+                                         result.numberValue(Float.class).floatValue());
+                AssertJUnit.assertEquals("Number value (double) returned is not correct for " + type.getName(),
+                                         new BigDecimal(String.valueOf(num)).doubleValue(), 0.0f,
+                                         result.numberValue(Double.class).doubleValue());
             }
         }
     }
@@ -1078,8 +1111,9 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (int, truncating) returned is not correct for " + num + ", type; " +
-                                     type.getName(), 0, result.intValue());
+                AssertJUnit
+                        .assertEquals("Number value (int, truncating) returned is not correct for " + num + ", type; " +
+                                              type.getName(), 0, result.intValue());
             }
         }
     }
@@ -1108,42 +1142,15 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (long, truncating) returned is not correct for " + num + ", type; " +
-                                     type.getName(), 0L, result.longValue());
-                assertEquals("Number value (long, exact) returned is not correct for " + num + ", type; " +
-                                     type.getName(), 0L, result.longValue());
+                AssertJUnit.assertEquals(
+                        "Number value (long, truncating) returned is not correct for " + num + ", type; " +
+                                type.getName(), 0L, result.longValue());
+                AssertJUnit.assertEquals("Number value (long, exact) returned is not correct for " + num + ", type; " +
+                                                 type.getName(), 0L, result.longValue());
             }
         }
     }
 
-    /**
-     * Check if a correct double value is returned, no truncation is
-     * allowed to be performed.
-     */
-    @SpecAssertion(section = "4.2.3", id = "423-C4")
-    @Test
-    public void testDoubleZero(){
-        double[] nums = new double[]{0.0, -0.0};
-        for(double num : nums){
-            for(Class type : MonetaryAmounts.getAmountTypes()){
-                if(type.equals(TestAmount.class)){
-                    continue;
-                }
-                MonetaryAmount mAmount1 = null;
-                try{
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
-                            .create();
-                }
-                catch(MonetaryException | ArithmeticException e){
-                    // It is possible, that our test may exceed the capabilities, so in that case, we just continue
-                    continue;
-                }
-                NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (double, truncated) returned is not correct for " + type.getName(), num,
-                             result.doubleValue(), 0.0d);
-            }
-        }
-    }
 
     /**
      * Check if a correct number value is returned, no truncation is
@@ -1171,18 +1178,24 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (Number, long) returned is not correct for " + num + ", type; " +
-                                     type.getName(), 0L, result.numberValue(BigDecimal.class).longValueExact());
-                assertEquals("Number value (Number, short) returned is not correct for " + num + ", type; " +
-                                     type.getName(), 0.0f, result.numberValue(Short.class).floatValue(), 0.0f);
-                assertEquals("Number value (Number, int) returned is not correct for " + num + ", type; " +
-                                     type.getName(), 0, result.numberValue(Short.class).intValue());
-                assertEquals("Number value (Number, double) returned is not correct for " + num + ", type; " +
-                                     type.getName(), 0.0d, result.numberValue(Double.class).doubleValue(), 0.0f);
-                assertEquals("Number value (Number, BigInteger) returned is not correct for " + num + ", type; " +
-                                     type.getName(), 0L, result.numberValue(BigInteger.class).longValueExact());
-                assertEquals("Number value (Number, BigDecimal) returned is not correct for " + num + ", type; " +
-                                     type.getName(), 0L, result.numberValue(BigDecimal.class).longValueExact());
+                AssertJUnit.assertEquals("Number value (Number, long) returned is not correct for " + num + ", type; " +
+                                                 type.getName(), 0L,
+                                         result.numberValue(BigDecimal.class).longValueExact());
+                AssertJUnit
+                        .assertEquals("Number value (Number, short) returned is not correct for " + num + ", type; " +
+                                              type.getName(), 0.0f, result.numberValue(Short.class).floatValue(), 0.0f);
+                AssertJUnit.assertEquals("Number value (Number, int) returned is not correct for " + num + ", type; " +
+                                                 type.getName(), 0, result.numberValue(Short.class).intValue());
+                AssertJUnit
+                        .assertEquals("Number value (Number, double) returned is not correct for " + num + ", type; " +
+                                              type.getName(), 0.0d, result.numberValue(Double.class).doubleValue(),
+                                      0.0f);
+                AssertJUnit.assertEquals(
+                        "Number value (Number, BigInteger) returned is not correct for " + num + ", type; " +
+                                type.getName(), 0L, result.numberValue(BigInteger.class).longValueExact());
+                AssertJUnit.assertEquals(
+                        "Number value (Number, BigDecimal) returned is not correct for " + num + ", type; " +
+                                type.getName(), 0L, result.numberValue(BigDecimal.class).longValueExact());
                 result.numberValueExact(BigDecimal.class);
             }
         }
@@ -1214,12 +1227,14 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (int, truncating) returned is not correct for " + num + ", type; " +
-                                     type.getName(), 0L, result.intValue());
+                AssertJUnit
+                        .assertEquals("Number value (int, truncating) returned is not correct for " + num + ", type; " +
+                                              type.getName(), 0L, result.intValue());
                 try{
                     result.intValueExact();
-                    fail("Number value (int, exact) should throw ArithmeticException for " + num + ", type; " +
-                                 type.getName());
+                    AssertJUnit
+                            .fail("Number value (int, exact) should throw ArithmeticException for " + num + ", type; " +
+                                          type.getName());
                 }
                 catch(ArithmeticException e){
                     // OK, as expected!
@@ -1254,18 +1269,30 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (long, truncating) returned is not correct for " + num + ", type; " +
-                                     type.getName(), 0L, result.longValue());
+                AssertJUnit.assertEquals(
+                        "Number value (long, truncating) returned is not correct for " + num + ", type; " +
+                                type.getName(), 0L, result.longValue());
                 try{
                     result.longValueExact();
-                    fail("Number value (long, exact) should throw ArithmeticException for " + num + ", type; " +
-                                 type.getName());
+                    AssertJUnit.fail("Number value (long, exact) should throw ArithmeticException for " + num +
+                                             ", type; " +
+                                             type.getName());
                 }
                 catch(ArithmeticException e){
                     // OK, as expected!
                 }
             }
         }
+    }
+
+    /**
+     * Check if a correct double value is returned, truncation is
+     allowed to be performed (but is not necessary).
+     */
+    @SpecAssertion(section = "4.2.3", id = "423-C8")
+    @Test
+    public void testDoubleValueWithTruncationZero(){
+        AssertJUnit.fail("Not implemented.");
     }
 
 
@@ -1294,8 +1321,9 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
-                             new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
+                AssertJUnit
+                        .assertEquals("Number value (Double, truncating) returned is not correct for " + type.getName(),
+                                      new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
             }
         }
     }
@@ -1327,8 +1355,8 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertEquals("Amount's scale does not match for " + bd + " correct for " + type.getName(),
-                             bd.precision(), result.getPrecision());
+                AssertJUnit.assertEquals("Amount's scale does not match for " + bd + " correct for " + type.getName(),
+                                         bd.precision(), result.getPrecision());
             }
         }
     }
@@ -1358,8 +1386,8 @@ public class ExternalizingNumericValueTest{
                     continue;
                 }
                 NumberValue result = mAmount1.getNumber();
-                assertTrue("Amount's scale is < 0 for " + num + ", was " +
-                                   result.getScale() + " for " + type.getName(), 0 <= result.getScale());
+                AssertJUnit.assertTrue("Amount's scale is < 0 for " + num + ", was " +
+                                               result.getScale() + " for " + type.getName(), 0 <= result.getScale());
             }
             i++;
         }

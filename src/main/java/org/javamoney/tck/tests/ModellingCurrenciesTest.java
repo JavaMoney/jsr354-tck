@@ -9,10 +9,11 @@
  */
 package org.javamoney.tck.tests;
 
-import org.javamoney.tck.TestUtils;
 import org.javamoney.tck.TCKTestSetup;
+import org.javamoney.tck.TestUtils;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import javax.money.CurrencyUnit;
@@ -34,8 +35,8 @@ public class ModellingCurrenciesTest{
     @SpecAssertion(section = "4.2.1", id = "421-A1")
     @Test
     public void testEnsureCurrencyUnit(){
-        assertTrue("TCK Configuration not available.", TCKTestSetup.getTestConfiguration() != null);
-        assertTrue(TCKTestSetup.getTestConfiguration().getCurrencyClasses().size() > 0);
+        AssertJUnit.assertTrue("TCK Configuration not available.", TCKTestSetup.getTestConfiguration() != null);
+        AssertJUnit.assertTrue(TCKTestSetup.getTestConfiguration().getCurrencyClasses().size() > 0);
     }
 
     /**
@@ -50,10 +51,10 @@ public class ModellingCurrenciesTest{
         for(Class type : TCKTestSetup.getTestConfiguration().getCurrencyClasses()){
             for(Currency currency : Currency.getAvailableCurrencies()){
                 CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
-                assertNotNull(unit);
+                AssertJUnit.assertNotNull(unit);
                 CurrencyUnit unit2 = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
-                assertNotNull(unit2);
-                assertEquals(unit, unit2);
+                AssertJUnit.assertNotNull(unit2);
+                AssertJUnit.assertEquals(unit, unit2);
             }
         }
     }
@@ -68,8 +69,8 @@ public class ModellingCurrenciesTest{
         for(Class type : TCKTestSetup.getTestConfiguration().getCurrencyClasses()){
             for(Currency currency : Currency.getAvailableCurrencies()){
                 CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
-                assertNotNull(unit);
-                assertEquals(currency.getCurrencyCode(), unit.getCurrencyCode());
+                AssertJUnit.assertNotNull(unit);
+                AssertJUnit.assertEquals(currency.getCurrencyCode(), unit.getCurrencyCode());
             }
         }
     }
@@ -84,9 +85,9 @@ public class ModellingCurrenciesTest{
         for(Class type : TCKTestSetup.getTestConfiguration().getCurrencyClasses()){
             for(Currency currency : Currency.getAvailableCurrencies()){
                 CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
-                assertEquals(currency.getCurrencyCode(), unit.getCurrencyCode());
-                assertEquals(currency.getDefaultFractionDigits(), unit.getDefaultFractionDigits());
-                assertEquals(currency.getNumericCode(), unit.getNumericCode());
+                AssertJUnit.assertEquals(currency.getCurrencyCode(), unit.getCurrencyCode());
+                AssertJUnit.assertEquals(currency.getDefaultFractionDigits(), unit.getDefaultFractionDigits());
+                AssertJUnit.assertEquals(currency.getNumericCode(), unit.getNumericCode());
             }
         }
     }
@@ -116,11 +117,11 @@ public class ModellingCurrenciesTest{
         List<CurrencyUnit> secondUnits = new ArrayList<CurrencyUnit>();
         for(String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
-            assertNotNull(unit);
+            AssertJUnit.assertNotNull(unit);
             TestUtils.testHasPublicMethod(unit.getClass(), boolean.class, "equals", Object.class);
             firstUnits.add(unit);
             CurrencyUnit unit2 = MonetaryCurrencies.getCurrency(code);
-            assertNotNull(unit);
+            AssertJUnit.assertNotNull(unit);
             secondUnits.add(unit);
         }
         for(String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}){
@@ -128,7 +129,7 @@ public class ModellingCurrenciesTest{
             TestUtils.testHasPublicMethod(unit.getClass(), boolean.class, "equals", Object.class);
         }
         for(int i = 0; i < firstUnits.size(); i++){
-            assertEquals(firstUnits.get(i), secondUnits.get(i));
+            AssertJUnit.assertEquals(firstUnits.get(i), secondUnits.get(i));
         }
     }
 
