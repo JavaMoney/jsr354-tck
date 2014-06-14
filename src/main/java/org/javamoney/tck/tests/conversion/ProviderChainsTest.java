@@ -34,7 +34,7 @@ public class ProviderChainsTest{
     // ********************** A. Test Basic MonetaryConversions Accessors *********************************
 
     /**
-     * Test correct rate evaluation for different provider chains, providers defined by the TCK.<br/>
+     * Test correct rate evaluation for different provider chains, providers defined by the TCK.<p>
      * Hint do not use non TCK provider for this test, it will make results undeterministic.
      */
     @Test
@@ -84,7 +84,7 @@ public class ProviderChainsTest{
     }
 
     /**
-     * Test correct rate evaluation for different provider chains, providers defined by the TCK.<br/>
+     * Test correct rate evaluation for different provider chains, providers defined by the TCK.<p>
      * Hint do not use non TCK provider for this test, it will make results undeterministic.
      */
     @Test
@@ -106,7 +106,7 @@ public class ProviderChainsTest{
 
     /**
      * Test correct rate evaluation for different provider chains, providers defined by the TCK,
-     * with historic rates.<br/>
+     * with historic rates.<p>
      * Hint do not use non TCK provider for this test, it will make results undeterministic.
      */
     @Test
@@ -124,7 +124,7 @@ public class ProviderChainsTest{
     }
 
     /**
-     * Test availability of providers defined by the TCK.<br/>
+     * Test availability of providers defined by the TCK.<p>
      * Hint do not use non TCK provider for this test, it will make results undeterministic.
      */
     @Test

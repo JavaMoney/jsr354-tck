@@ -29,7 +29,7 @@ public class MonetaryConversionsTest{
     // ************************************* A. Test Basic MonetaryConversions Accessors *****************************
 
     /**
-     * Ensure at least one conversion provider is available.<br/>
+     * Ensure at least one conversion provider is available.<p>
      * Hint: ignore all TCK test providers, only count up productive providers.
      */
     @Test
@@ -45,7 +45,7 @@ public class MonetaryConversionsTest{
     }
 
     /**
-     * Access and test different Currency Conversions for the provider in place.<br/>
+     * Access and test different Currency Conversions for the provider in place.<p>
      * Test TCK providers, but also test implementation providers. Doing the ladder it
      * is not possible to test the rates quality, just that rates are returned if necessary.
      */
@@ -59,7 +59,7 @@ public class MonetaryConversionsTest{
     }
 
     /**
-     * Access and test different Currency Conversions for the provider in place.<br/>
+     * Access and test different Currency Conversions for the provider in place.<p>
      * Test TCK providers, but also test implementation providers. Doing the ladder it
      * is not possible to test the rates quality, just that rates are returned if necessary.
      */

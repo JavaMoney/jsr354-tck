@@ -33,7 +33,7 @@ public class ConvertingAmountsTest{
     // ******************************* A. Test Basic MonetaryConversions Accessors ******************************
 
     /**
-     * Test successful conversion for possible currency pairs.<br/>
+     * Test successful conversion for possible currency pairs.<p>
      * Hint: you may only check for rate factory, when using a hardcoded ExchangeRateProvider, such a provider
      * must be also implemented and registered as an SPI.
      */
@@ -51,8 +51,8 @@ public class ConvertingAmountsTest{
     }
 
     /**
-      * Compare conversions done with exchange rates provided for same currency pair.
-    */
+     * Compare conversions done with exchange rates provided for same currency pair.
+     */
     @Test @SpecAssertion(id = "432-A2", section="4.3.2")
     public void testConversionComparedWithRate(){
         final CurrencyUnit FOO = new TestCurrencyUnit("FOO");
