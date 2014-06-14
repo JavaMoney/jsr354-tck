@@ -26,7 +26,7 @@ public interface JSR354TestConfiguration{
 
     /**
      * Return a collection with all {@link MonetaryAmount} classes that are implemented. The list
-     * must not be empty and should contain <b>every</b> amount class implemented.<br/>
+     * must not be empty and should contain <b>every</b> amount class implemented.<p>
      * This enables the TCK to check in addition to the basic implementation compliance, if
      * according {@link MonetaryAmountFactoryProviderSpi} are registered/available correctly.
      *
@@ -35,7 +35,7 @@ public interface JSR354TestConfiguration{
     Collection<Class> getAmountClasses();
 
     /**
-     * List a collection of {@link CurrencyUnit} implementation.<br/>
+     * List a collection of {@link CurrencyUnit} implementation.<p>
      * This enables the TCK to check the basic implementation compliance,
      *
      * @return
