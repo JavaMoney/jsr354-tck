@@ -16,6 +16,7 @@
     </parent>
 
     <artifactId>money-tck</artifactId>
+    <groupId>javax.money</groupId>
     <packaging>jar</packaging>
 
     <version>0.9-SNAPSHOT</version>

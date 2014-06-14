@@ -27,14 +27,9 @@ public final class TCKTestSetup {
 			return ServiceLoader.load(JSR354TestConfiguration.class).iterator()
 					.next();
 		} catch (Exception e) {
-			try {
-				Class.forName("org.javamoney.moneta.Money");
-				return new JSRTestSetup();
-			} catch (Exception e2) {
-				throw new IllegalStateException("No valid implementation of "
+			throw new IllegalStateException("No valid implementation of "
 						+ JSR354TestConfiguration.class.getName()
 						+ " is registered with the ServiceLoader.");
-			}
 		}
 	}
 
