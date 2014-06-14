@@ -36,24 +36,138 @@ You may also read the JSR 354 API specification available https://jcp.org/en/jsr
 Overview
 ~~~~~~~~
 
-Main Design Decisions
-~~~~~~~~~~~~~~~~~~~~~
+The technical compatibility kit (TCK) of a JSR ensures that implementations of a JSR implement the specification
+correctly and help to ensure also behavioural interoperability between different implementations. So the
+TCK for JSR 354 Money and Currency ensures exactly this for implementations of the Money & Currency JSR.
+The TCK hereby is open sourced under the Apache 2 licence. Nevertheless we would be highly interested to keep track of
+implementation of this JSR. So if you are are planning or even writing on an implementation of this JSR, drop a mail to
+the JSR's mailing list on java.net.
 
-Component Loading and Bootstrapping
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Setup of the TCK
-----------------
 
 Downloading and Installing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Configuring the TCK
-~~~~~~~~~~~~~~~~~~~
+Basically the JSR 354 API as well as the TCK and its dependencies are available as maven artifacts. Additionally you
+should of course also include the implementation to test:
 
-Running the Tests
-~~~~~~~~~~~~~~~~~
+[source, xml]
+.Required Dependencies
+---------------------------------------------------------------------------------------
+<dependency>
+    <groupId>javax.money</groupId>
+    <artifactId>money-tck</artifactId>
+    <version>${tck.version}</version>
+</dependency>
+<dependency>
+    <groupId>org.testng</groupId>
+    <artifactId>testng</artifactId>
+    <version>6.8.5</version>
+</dependency>
+<dependency>
+    <groupId>${impl.groupId}</groupId>
+    <artifactId>${impl.artifactId}</artifactId>
+    <type>${impl.packageType}</type>
+    <version>${impl.version}</version>
+</dependency>
+---------------------------------------------------------------------------------------
+
+Main Design Decisions
+~~~~~~~~~~~~~~~~~~~~~
+
+Basically the TCK is a set of tests executed with TestNG. Basic reason for using TestNG is that this library also is
+used in OpenJDK.
+
+Component Loading and Bootstrapping
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The TCK itself is built as a self-executable TestNG program. To execute the TCK basically two prerequisites are
+necessary:
+. you must have all required libraries on the classpath. This includes the JSR's API, your implementation under test,
+  the TCK and TestNG, including all required dependencies.
+. You have to provide a small class, implementing the +org.javamoney.tck.JSR354TestConfiguration+ interface and
+  register it with the JDK's +java.util.ServiceLoader+ mechanism.
+
+This can be achieved in different ways:
+
+* The most easiest way to run the tests is to create a small maven project, where you add the JSR 354 API, your
+implementation and the TCK as dependency. The only thing to be done is executing the test suite by running
++org.javamoney.tck.TCKRunner.main+.
+* Or you can execute the TCK by starting it on the console:
+
+[source, listing]
+.Running the TCK
+---------------------------------------------------------------------------------------
+java -cp ... org.javamoney.tck.TCKRunner
+---------------------------------------------------------------------------------------
+
+The org.javamoney.tck.JSR354TestConfiguration Interface
+-------------------------------------------------------
+
+As mentioned before it is required that you implement an instance of the TCK's
++org.javamoney.tck.JSR354TestConfiguration+ interface:
+
+[source, java]
+.Interface JSR354TestConfiguration
+---------------------------------------------------------------------------------------
+/**
+ * Libraries that implement this JSR and want to be tested with this TCK must implement this
+ * interface and register it using the {@link ServiceLoader}.
+ *
+ * @author Anatole Tresch
+ */
+public interface JSR354TestConfiguration{
+
+    /**
+     * Return a collection with all {@link MonetaryAmount} classes that are implemented. The list
+     * must not be empty and should contain <b>every</b> amount class implemented.<br/>
+     * This enables the TCK to check in addition to the basic implementation compliance, if
+     * according {@link MonetaryAmountFactoryProviderSpi} are registered/available correctly.
+     *
+     * @return a collection with all implemented amount classes, not null.
+     */
+    Collection<Class> getAmountClasses();
+
+    /**
+     * List a collection of {@link CurrencyUnit} implementation.<br/>
+     * This enables the TCK to check the basic implementation compliance,
+     *
+     * @return
+     */
+    Collection<Class> getCurrencyClasses();
+
+
+    /**
+     * This method allows to let instances of MonetaryOperator to be tested for requirements and recommendations.
+     *
+     * @return the list of operators to be checked, not null. It is allowed to return an empty list here, which will
+     * disable TCK tests for MonetaryOperator instances.
+     */
+    Collection<MonetaryOperator> getMonetaryOperators4Test();
+
+}
+---------------------------------------------------------------------------------------
+
+You must register your implementation with the +java.util.ServiceLoader+. This can be achieved by adding the
+following configuration file to your classpath:
+
+[source, listing]
+.Configuring the TCK Test Setup
+---------------------------------------------------------------------------------------
+META-INF
+  \_ services
+      \_ org.javamoney.tck.JSR354TestConfiguration
+---------------------------------------------------------------------------------------
+
+The 'org.javamoney.tck.JSR354TestConfiguration' file should contain exactly one line with the fully qualified
+class name of your implementation provided:
+
+[source, listing]
+.Contents of the org.javamoney.tck.JSR354TestConfiguration file
+---------------------------------------------------------------------------------------
+com.mycomp.mymoney-lib.TCKSetup
+---------------------------------------------------------------------------------------
+
+
 
 Checking the Results
 ~~~~~~~~~~~~~~~~~~~~

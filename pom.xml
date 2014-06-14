@@ -430,13 +430,13 @@
                     <artifactId>maven-processor-plugin</artifactId>
                     <version>2.0.4</version>
                     <configuration>
-                        <defaultOutputDirectory>${basedir}/target/coverage-report</defaultOutputDirectory>
+                        <defaultOutputDirectory>${basedir}/target/docs/coverage-report</defaultOutputDirectory>
                         <processors>
                             <processor>org.jboss.test.audit.report.CoverageProcessor</processor>
                         </processors>
                         <compilerArguments>
                             -AauditXml=${basedir}/src/test/resources/test-audit.xml
-                            -AoutputDir=${basedir}/target/coverage-report -source ${jdkVersion}
+                            -AoutputDir=${basedir}/target/docs/coverage-report -source ${jdkVersion}
                             -target ${jdkVersion}
                         </compilerArguments>
                     </configuration>
@@ -484,15 +484,6 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <classesDirectory>${project.build.testOutputDirectory}</classesDirectory>
-                    <excludes>
-                        <exclude>org/javamoney/tck/TCKTestSetup*</exclude>
-                    </excludes>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.asciidoctor</groupId>
