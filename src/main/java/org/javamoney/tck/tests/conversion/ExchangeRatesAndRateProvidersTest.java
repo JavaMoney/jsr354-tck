@@ -40,7 +40,7 @@ public class ExchangeRatesAndRateProvidersTest{
     private static final CurrencyUnit FOO_UNIT = new TestCurrencyUnit("FOO");
 
     /**
-     * Test access to conversion rates.<br/>
+     * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -64,7 +64,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Test access to conversion rates.<br/>
+     * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -88,7 +88,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Test access to conversion rates.<br/>
+     * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -113,7 +113,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Test access to conversion rates.<br/>
+     * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -135,7 +135,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Test access to conversion rates.<br/>
+     * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -152,7 +152,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Test access to conversion rates.<br/>
+     * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -169,7 +169,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Test access to conversion rates.<br/>
+     * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -187,7 +187,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Test access to conversion rates.<br/>
+     * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -205,7 +205,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Ensure additional ConversionContext is passed correctly to SPIs.<br/>
+     * Ensure additional ConversionContext is passed correctly to SPIs.<p>
      * Hint: this assertion will require some custom SPIs to be registered and selected for chain inclusion!
      */
     @Test
@@ -228,7 +228,7 @@ public class ExchangeRatesAndRateProvidersTest{
 
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -254,7 +254,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -279,7 +279,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -305,7 +305,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -330,7 +330,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -356,7 +356,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -381,7 +381,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -407,7 +407,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -432,7 +432,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -457,7 +457,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -483,7 +483,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -505,7 +505,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -528,7 +528,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
@@ -554,7 +554,7 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Bad case: try accessing rates with incosistent/invalid data.<br/>
+     * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
     @Test
