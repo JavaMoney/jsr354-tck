@@ -54,7 +54,7 @@ should of course also include the implementation to test:
 .Required Dependencies
 ---------------------------------------------------------------------------------------
 <dependency>
-    <groupId>javax.money</groupId>
+    <groupId>org.javamoney</groupId>
     <artifactId>money-tck</artifactId>
     <version>${tck.version}</version>
 </dependency>

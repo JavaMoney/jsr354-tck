@@ -16,7 +16,6 @@
     </parent>
 
     <artifactId>money-tck</artifactId>
-    <groupId>javax.money</groupId>
     <packaging>jar</packaging>
 
     <version>0.9-SNAPSHOT</version>
@@ -419,7 +418,7 @@
                     <extensions>true</extensions>
                     <configuration>
                         <instructions>
-                            <Export-Package>javax.money.*</Export-Package>
+                            <Export-Package>org.javamoney.tck.*</Export-Package>
                             <Private-Package>!*</Private-Package>
                         </instructions>
                     </configuration>
