@@ -226,8 +226,8 @@ com.mycomp.mymoney-lib.TCKSetup
 Checking the Results
 ~~~~~~~~~~~~~~~~~~~~
 
-After TCK execution you should find a folder +tck-results+ within your working directory, containing the TestNG
-result in html (index.html) or xml format.
+Test execution is logged verbosely on the runtime console. Additionally after TCK execution you should find a folder
++tck-results+ within your working directory, containing the TestNG result in html (index.html) or xml format.
 
 Contacts
 ~~~~~~~~
