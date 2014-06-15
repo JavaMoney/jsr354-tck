@@ -36,9 +36,9 @@ public interface JSR354TestConfiguration{
 
     /**
      * List a collection of {@link CurrencyUnit} implementation.<p>
-     * This enables the TCK to check the basic implementation compliance,
+     * This enables the TCK to check the basic implementation compliance.
      *
-     * @return
+     * @return a collection with CurrencyUnit implementations to be tested.
      */
     Collection<Class> getCurrencyClasses();
 

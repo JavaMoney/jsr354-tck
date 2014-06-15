@@ -56,17 +56,17 @@ public class TestUtils{
     }
 
 
-	public static void testSerializable(Class c) {
+	public static void testSerializable(String section, Class c) {
 		if (!Serializable.class.isAssignableFrom(c)) {
-			throw new TCKValidationException("Class must be serializable: "
+			throw new TCKValidationException(section +": Class must be serializable: "
 					+ c.getName());
 		}
 	}
 
-	public static void testImmutable(Class c) {
+	public static void testImmutable(String section, Class c) {
 		if (c.isInterface()) {
 			throw new TCKValidationException(
-					"Class is an interface, instead of a class: "
+                    section +": Class is an interface, instead of a class: "
 							+ c.getName());
 		}
 		if (c.isPrimitive()) {
@@ -127,9 +127,9 @@ public class TestUtils{
 		}
 	}
 
-	public static void testSerializable(Object o) {
+	public static void testSerializable(String section, Object o) {
 		if (!(o instanceof Serializable)) {
-			throw new TCKValidationException("Class must be serializable: "
+			throw new TCKValidationException(section + ": Class must be serializable: "
 					+ o.getClass().getName());
 		}
 		try (ObjectOutputStream oos = new ObjectOutputStream(
@@ -142,17 +142,17 @@ public class TestUtils{
 		}
 	}
 
-	public static void testImplementsInterface(Class type, Class iface) {
+	public static void testImplementsInterface(String section, Class type, Class iface) {
 		Class current = type;
 		for (Class ifa : type.getInterfaces()) {
 			if (ifa.equals(iface)) {
 				return;
 			}
 		}
-		Assert.fail("Class must implement " + iface.getName() + ", but does not: " + type.getName());
+		Assert.fail(section +": Class must implement " + iface.getName() + ", but does not: " + type.getName());
 	}
 
-	public static void testHasPublicMethod(Class type, Class returnType,
+	public static void testHasPublicMethod(String section, Class type, Class returnType,
 			String name, Class... paramTypes) {
 		Class current = type;
 		while (current != null) {
@@ -167,13 +167,13 @@ public class TestUtils{
 			current = current.getSuperclass();
 		}
 		throw new TCKValidationException(
-				"Class must implement method " + name + '('
+                section +": Class must implement method " + name + '('
 						+ Arrays.toString(paramTypes) + "): "
 						+ returnType.getName() + ", but does not: "
 						+ type.getName());
 	}
 
-	public static void testHasPublicStaticMethod(Class type, Class returnType,
+	public static void testHasPublicStaticMethod(String section, Class type, Class returnType,
 			String name, Class... paramTypes) {
 		Class current = type;
 		while (current != null) {
@@ -189,13 +189,13 @@ public class TestUtils{
 			current = current.getSuperclass();
 		}
 		throw new TCKValidationException(
-				"Class must implement method " + name + '('
+                section +": Class must implement method " + name + '('
 						+ Arrays.toString(paramTypes) + "): "
 						+ returnType.getName() + ", but does not: "
 						+ type.getName());
 	}
 
-	public static void testHasNotPublicMethod(Class type, Class returnType,
+	public static void testHasNotPublicMethod(String section, Class type, Class returnType,
 			String name, Class... paramTypes) {
 		Class current = type;
 		while (current != null) {
@@ -204,7 +204,7 @@ public class TestUtils{
 						m.getName().equals(name) &&
 						Arrays.equals(m.getParameterTypes(), paramTypes)) {
 					throw new TCKValidationException(
-							"Class must NOT implement method " + name + '('
+                            section +": Class must NOT implement method " + name + '('
 									+ Arrays.toString(paramTypes) + "): "
 									+ returnType.getName() + ", but does: "
 									+ type.getName());
@@ -214,48 +214,48 @@ public class TestUtils{
 		}
 	}
 
-	public static void testComparable(Class type) {
-		testImplementsInterface(type, Comparable.class);
+	public static void testComparable(String section, Class type) {
+		testImplementsInterface(section, type, Comparable.class);
 	}
 
-	public static void assertValue(Object value, String methodName,
+	public static void assertValue(String section, Object value, String methodName,
 			Object instance) throws NoSuchMethodException, SecurityException,
 			IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException {
 		Method m = instance.getClass().getDeclaredMethod(methodName);
-		Assert.assertEquals(value, m.invoke(instance));
+		Assert.assertEquals(section +": " + m.getName() + '(' + instance + ") returned invalid value:", value, m.invoke(instance));
 	}
 
-	public static boolean testImmutableOpt(Class type) {
+	public static boolean testImmutableOpt(String section, Class type) {
 		try {
-			testImmutable(type);
+			testImmutable(section, type);
 			return true;
 		} catch (Exception e) {
-			warnings.append("Recommendation failed: Class should be immutable: "
+			warnings.append(section +": Recommendation failed: Class should be immutable: "
 					+ type.getName() + ", details: " + e.getMessage() + "\n");
 			return false;
 		}
 	}
 
-	public static boolean testSerializableOpt(Class type) {
+	public static boolean testSerializableOpt(String section, Class type) {
 		try {
-			testSerializable(type);
+			testSerializable(section, type);
 			return true;
 		} catch (Exception e) {
-			warnings.append("Recommendation failed: Class should be serializable: "
+			warnings.append(section +": Recommendation failed: Class should be serializable: "
 					+ type.getName() + ", details: " + e.getMessage() + "\n");
 			return false;
 		}
 	}
 
-	public static boolean testHasPublicStaticMethodOpt(Class type,
+	public static boolean testHasPublicStaticMethodOpt(String section, Class type,
 			Class returnType,
 			String methodName, Class... paramTypes) {
 		try {
-			testHasPublicStaticMethod(type, returnType, methodName, paramTypes);
+			testHasPublicStaticMethod(section, type, returnType, methodName, paramTypes);
 			return true;
 		} catch (Exception e) {
-			warnings.append("Recommendation failed: Missing method [public static "
+			warnings.append(section +": Recommendation failed: Missing method [public static "
 					+ methodName
 					+ '('
 					+ Arrays.toString(paramTypes) + "):" + returnType.getName()
@@ -265,12 +265,12 @@ public class TestUtils{
 		}
 	}
 
-	public static boolean testSerializableOpt(Object instance) {
+	public static boolean testSerializableOpt(String section, Object instance) {
 		try {
-			testSerializable(instance);
+			testSerializable(section, instance);
 			return true;
 		} catch (Exception e) {
-			warnings.append("Recommendation failed: Class is serializable, but serialization failed: "
+			warnings.append(section +": Recommendation failed: Class is serializable, but serialization failed: "
 					+ instance.getClass().getName() + "\n");
 			return false;
 		}

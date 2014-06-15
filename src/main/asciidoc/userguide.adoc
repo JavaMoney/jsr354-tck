@@ -82,7 +82,7 @@ Main Design Decisions
 Basically the TCK is a set of tests executed with TestNG. Basic reason for using TestNG is that this library also is
 used in OpenJDK. Additionally in case of tests are failing you should see a detailed message and a reference to the
 according section in the specification. The audit of the test coverage can be found
-coverage-report/coverage-JSR%20354.html[here].
+https://github.com/JavaMoney/jsr354-tck/blob/master/coverage-report[here].
 
 Component Loading and Bootstrapping
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -150,6 +150,53 @@ public interface JSR354TestConfiguration{
      * disable TCK tests for MonetaryOperator instances.
      */
     Collection<MonetaryOperator> getMonetaryOperators4Test();
+
+}
+---------------------------------------------------------------------------------------
+
+Following find the example implementation ised for testing the reference implementation:
+
+[source,java]
+.TestSetup for the Moneta Reference Implementation
+---------------------------------------------------------------------------------------
+/**
+ * Created by Anatole on 14.06.2014.
+ */
+public final class MonetaTCKSetup implements JSR354TestConfiguration{
+
+    @Override
+    public Collection<Class> getAmountClasses() {
+            return Arrays
+                    .asList(new Class[]{FastMoney.class,FastMoney.class});
+    }
+
+    @Override
+    public Collection<Class> getCurrencyClasses() {
+        try{
+            return Arrays
+                    .asList(new Class[] { Class.forName("org.javamoney.moneta.internal.JDKCurrencyAdapter")});
+        }
+        catch(ClassNotFoundException e){
+            e.printStackTrace();
+            throw new RuntimeException("Currency class not lodable: org.javamoney.moneta.internal.JDKCurrencyAdapter");
+        }
+    }
+
+    @Override
+    public Collection<MonetaryOperator> getMonetaryOperators4Test(){
+        List<MonetaryOperator> ops = new ArrayList<>();
+        ops.add(MonetaryFunctions.majorPart());
+        ops.add(MonetaryFunctions.minorPart());
+        ops.add(MonetaryFunctions.percent(BigDecimal.ONE));
+        ops.add(MonetaryFunctions.percent(3.5));
+        ops.add(MonetaryFunctions.permil(10.3));
+        ops.add(MonetaryFunctions.permil(BigDecimal.ONE));
+        ops.add(MonetaryFunctions.permil(10.5, MathContext.DECIMAL32));
+        ops.add(MonetaryFunctions.reciprocal());
+        ops.add(MonetaryRoundings.getRounding());
+        ops.add(MonetaryConversions.getConversion("EUR"));
+        return ops;
+    }
 
 }
 ---------------------------------------------------------------------------------------
