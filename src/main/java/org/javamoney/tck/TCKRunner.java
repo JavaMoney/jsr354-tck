@@ -7,7 +7,10 @@ import org.javamoney.tck.tests.conversion.MonetaryConversionsTest;
 import org.javamoney.tck.tests.conversion.ProviderChainsTest;
 import org.javamoney.tck.tests.format.FormattingMonetaryAmountsTest;
 
+import org.testng.IReporter;
+import org.testng.ITestListener;
 import org.testng.TestNG;
+import org.testng.reporters.*;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
@@ -44,6 +47,9 @@ public class TCKRunner extends XmlSuite{
         suites.add(new TCKRunner());
         TestNG tng = new TestNG();
         tng.setXmlSuites(suites);
+        tng.setOutputDirectory("./tck-results");
+        tng.addListener(new VerboseReporter());
+        tng.addListener(new SuiteHTMLReporter());
         tng.run();
     }
 
