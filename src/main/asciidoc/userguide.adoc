@@ -1,5 +1,5 @@
-JSR 354 Money & Currency TCK Guide
-==================================
+JSR 354 Money & Currency TCK User Guide
+=======================================
 Anatole Tresch <atsticks@gmail.com>
 :Author Initials: ATR
 :source-highlighter: coderay
@@ -13,9 +13,9 @@ Anatole Tresch <atsticks@gmail.com>
 
 
 JSR 354 'Java Money' defines the Java API for managing monetary amounts and currencies in Java. As other
- JSRs beside the reference implementations also other third parties can provide their implementations. This document will
-describe how this technical compatibility kit (TCK) can be configured and used to determine the compatibility of an implementation
-with the specification and reference implementation.
+JSRs beside the reference implementations also other third parties can provide their implementations. This document will
+describe how this technical compatibility kit (TCK) can be configured and used to determine the compatibility of an
+implementation with the specification and reference implementation.
 
 .This document
 **********************************************************************
@@ -41,7 +41,8 @@ correctly and help to ensure also behavioural interoperability between different
 TCK for JSR 354 Money and Currency ensures exactly this for implementations of the Money & Currency JSR.
 The TCK hereby is open sourced under the Apache 2 licence. Nevertheless we would be highly interested to keep track of
 implementation of this JSR. So if you are are planning or even writing on an implementation of this JSR, drop a mail to
-the JSR's mailing list on java.net.
+the JSR's mailto:jcurrency_mail@javamoney.java.net[mailing list] on http://java.net/project/JavaMoney[java.net] or the
+JSR's mailto:atsticks@java.net[spec lead].
 
 
 Downloading and Installing
@@ -71,11 +72,17 @@ should of course also include the implementation to test:
 </dependency>
 ---------------------------------------------------------------------------------------
 
+Also we have added an https://github.com/JavaMoney/jsr354-ritest[example maven project] that can be used as a starting
+point. All you have to do is clone it from https://github.com/JavaMoney/jsr354-ritest[GitHub] and exchange the
+implementation under test with your own.
+
 Main Design Decisions
 ~~~~~~~~~~~~~~~~~~~~~
 
 Basically the TCK is a set of tests executed with TestNG. Basic reason for using TestNG is that this library also is
-used in OpenJDK.
+used in OpenJDK. Additionally in case of tests are failing you should see a detailed message and a reference to the
+according section in the specification. The audit of the test coverage can be found
+coverage-report/coverage-JSR%20354.html[here].
 
 Component Loading and Bootstrapping
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
