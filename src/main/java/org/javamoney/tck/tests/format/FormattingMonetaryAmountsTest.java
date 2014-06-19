@@ -20,9 +20,15 @@ import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmounts;
 import javax.money.MonetaryCurrencies;
 import javax.money.format.AmountFormatContext;
+import javax.money.format.AmountFormatContext.Builder;
 import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
+
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Locale;
 import java.util.Set;
 
@@ -64,9 +70,9 @@ public class FormattingMonetaryAmountsTest{
 
     /**
      * Print several amounts, created using the default factory, but
-     also a test instance, provided by the TCK, to ensure no
-     implementation
-     dependencies on the implementation.
+     * also a test instance, provided by the TCK, to ensure no
+     * implementation
+     * dependencies on the implementation.
      */
     @SpecAssertion(section = "4.4.1", id = "441-A2")
     @Test
@@ -76,8 +82,8 @@ public class FormattingMonetaryAmountsTest{
 
     /**
      * Parse back several amounts, input created using the
-     formatting
-     from 'Format_formatAmounts'.
+     * formatting
+     * from 'Format_formatAmounts'.
      */
     @SpecAssertion(section = "4.4.1", id = "441-A3")
     @Test
@@ -87,9 +93,9 @@ public class FormattingMonetaryAmountsTest{
 
     /**
      * Get/set different amount styles (especially patterns, group
-     sizes, group characters) and compare results with results as from
-     RI.
-     Also apply patterns without currency invovled.
+     * sizes, group characters) and compare results with results as from
+     * RI.
+     * Also apply patterns without currency invovled.
      */
     @SpecAssertion(section = "4.4.1", id = "441-A4")
     @Test
@@ -99,7 +105,7 @@ public class FormattingMonetaryAmountsTest{
 
     /**
      * Get/set different monetary contexts and compare results with
-     results from parsed amounts.
+     * results from parsed amounts.
      */
     @SpecAssertion(section = "4.4.1", id = "441-A5")
     @Test
@@ -109,12 +115,64 @@ public class FormattingMonetaryAmountsTest{
 
     /**
      * Get/set default currency, try to parse patterns without
-     currency information.
+     * currency information.
      */
     @SpecAssertion(section = "4.4.1", id = "441-A6")
     @Test
     public void testParseWithDifferentCurrencies(){
-        AssertJUnit.fail("Not implemented.");
+        CurrencyUnit currency = MonetaryCurrencies.getCurrency("CHF");
+        
+        BigDecimal[] values = new BigDecimal[]{
+        		new BigDecimal("42000000"), // something with a grouping symbol
+        		new BigDecimal("4.50"), // something with a decimal symbol
+        		new BigDecimal("0.50"), // no major value, only a minor value
+        		new BigDecimal("-3"), // a negative value
+        		new BigDecimal("0")}; // zero :-)
+        Locale[] jdkDecimalFormatLocales = DecimalFormat.getAvailableLocales();
+        for(Locale jdkDecimalFormatLocale : jdkDecimalFormatLocales){
+        	for (BigDecimal value : values) {
+				// for some locales the number format and the currency format is different
+				// therefore we use the currency format
+				// however the currency format includes the currency symbol
+				// which we have to remove
+				DecimalFormat decimalFormatWithCurrencySymbol = (DecimalFormat) DecimalFormat.getCurrencyInstance(jdkDecimalFormatLocale);
+				DecimalFormatSymbols decimalFormatSymbols = decimalFormatWithCurrencySymbol.getDecimalFormatSymbols();
+				String patternWithCurrencySymbol = decimalFormatWithCurrencySymbol.toPattern();
+				String withoutCurrencySymbol = stripCurrencySymbol(patternWithCurrencySymbol);
+				if (value.compareTo(BigDecimal.ZERO) != 0
+						&& value.stripTrailingZeros().scale() != 0
+						&& decimalFormatWithCurrencySymbol.getMaximumFractionDigits() == 0) {
+					// we want to exclude numbers with a fraction value that is not zero
+					// if the currency format does not display fraction values
+					continue;
+				}
+				
+				DecimalFormat decimalFormat = new DecimalFormat(withoutCurrencySymbol);
+				// the constructor argument for DecimalFormat is not localized
+				// so we have to restore the decimal format symbols
+				decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
+				
+				AmountFormatContext context = AmountFormatContext.of(jdkDecimalFormatLocale).toBuilder()
+						.setObject(currency, CurrencyUnit.class)
+						.build();
+				
+				MonetaryAmountFormat amountFormat = MonetaryFormats.getAmountFormat(context);
+				String formatted = decimalFormat.format(value);
+				MonetaryAmount amount = amountFormat.parse(formatted);
+				
+				AssertJUnit.assertEquals(currency, amount.getCurrency());
+				AssertJUnit.assertEquals(0, amount.getNumber().numberValue(BigDecimal.class).compareTo(value));
+			}
+        }
+    }
+    
+    private String stripCurrencySymbol(String patternWithSymbol) {
+    	String currencySymbol = "\u00A4";
+    	String[] parts = patternWithSymbol.split(";");
+    	for (int i = 0; i < parts.length; ++i) {
+			parts[i] = parts[i].replace(currencySymbol, "").trim();
+		}
+    	return String.join(";", parts);
     }
 
 
