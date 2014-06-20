@@ -1287,7 +1287,7 @@ public class ExternalizingNumericValueTest{
 
     /**
      * Check if a correct double value is returned, truncation is
-     allowed to be performed (but is not necessary).
+     * allowed to be performed (but is not necessary).
      */
     @SpecAssertion(section = "4.2.3", id = "423-C8")
     @Test
