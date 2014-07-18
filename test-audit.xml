@@ -407,18 +407,18 @@
 				</text>
 			</assertion>
 			<assertion id="422-F4">
-				<text>Implementations of MonetaryAmount must be serializable.
-				</text>
-			</assertion>
+                <text>Implementations of MonetaryAmount must be immutable.
+                </text>
+            </assertion>
+            <assertion id="422-F5" testable="false">
+                <text>Implementations of MonetaryAmount should be thread-safe.
+                </text>
+            </assertion>
 		</group>
 		<!-- group>
 			<text>G. Monetary Amount Implementation Recommendations</text>
 			<assertion id="422-G1">
 				<text>Implementations of MonetaryAmount should be immutable.
-				</text>
-			</assertion>
-			<assertion id="422-G2"  testable="false">
-				<text>Implementations of MonetaryAmount should be thread safe.
 				</text>
 			</assertion>
 			<assertion id="422-G3">

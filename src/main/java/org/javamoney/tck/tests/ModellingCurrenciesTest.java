@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
-import static org.testng.AssertJUnit.*;
-
 
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class ModellingCurrenciesTest{
@@ -35,7 +33,8 @@ public class ModellingCurrenciesTest{
     @SpecAssertion(section = "4.2.1", id = "421-A1")
     @Test
     public void testEnsureCurrencyUnit(){
-        AssertJUnit.assertTrue("TCK Configuration not available.", TCKTestSetup.getTestConfiguration() != null);
+        AssertJUnit.assertTrue("Section 4.2.1: TCK Configuration not available.",
+                               TCKTestSetup.getTestConfiguration() != null);
         AssertJUnit.assertTrue(TCKTestSetup.getTestConfiguration().getCurrencyClasses().size() > 0);
     }
 
@@ -50,10 +49,16 @@ public class ModellingCurrenciesTest{
     public void testEqualISOCurrencies(){
         for(Currency currency : Currency.getAvailableCurrencies()){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
-            AssertJUnit.assertNotNull(unit);
+            AssertJUnit.assertNotNull(
+                    "Section 4.2.1: MonetaryCurrencies does not provide CurrencyUnit similar to Currency: " +
+                            currency.getCurrencyCode(), unit);
             CurrencyUnit unit2 = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
-            AssertJUnit.assertNotNull(unit2);
-            AssertJUnit.assertEquals(unit, unit2);
+            AssertJUnit.assertNotNull("Section 4.2.1: MonetaryCurrencies does not provide CurrencyUnit similar to Currency: " +
+                                              currency.getCurrencyCode(), unit2);
+            AssertJUnit.assertEquals(
+                    "Section 4.2.1: MonetaryCurrencies does provide different instances of CurrencyUnit for same " +
+                            "Currency: " +
+                            currency.getCurrencyCode(), unit, unit2);
         }
     }
 
@@ -66,8 +71,10 @@ public class ModellingCurrenciesTest{
     public void testEnforce3LetterCode4ISO(){
         for(Currency currency : Currency.getAvailableCurrencies()){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
-            AssertJUnit.assertNotNull(unit);
-            AssertJUnit.assertEquals(currency.getCurrencyCode(), unit.getCurrencyCode());
+            AssertJUnit.assertNotNull("Section 4.2.1: MonetaryCurrencies does not provide CurrencyUnit for ISO code: " +
+                                              currency.getCurrencyCode(), unit);
+            AssertJUnit.assertEquals("Section 4.2.1: MonetaryCurrencies does provide a CurrencyUnit with invalid code, expected: " +
+                                             currency.getCurrencyCode(), currency.getCurrencyCode(), unit.getCurrencyCode());
         }
     }
 
@@ -80,9 +87,12 @@ public class ModellingCurrenciesTest{
     public void testISOCodes(){
         for(Currency currency : Currency.getAvailableCurrencies()){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
-            AssertJUnit.assertEquals(currency.getCurrencyCode(), unit.getCurrencyCode());
-            AssertJUnit.assertEquals(currency.getDefaultFractionDigits(), unit.getDefaultFractionDigits());
-            AssertJUnit.assertEquals(currency.getNumericCode(), unit.getNumericCode());
+            AssertJUnit.assertEquals("Section 4.2.1: MonetaryCurrencies does provide a CurrencyUnit with invalid code for: " +
+                                             currency.getCurrencyCode(), currency.getCurrencyCode(), unit.getCurrencyCode());
+            AssertJUnit.assertEquals("Section 4.2.1: MonetaryCurrencies does provide a CurrencyUnit with invalid default fraction units for: " +
+                                             currency.getCurrencyCode(), currency.getDefaultFractionDigits(), unit.getDefaultFractionDigits());
+            AssertJUnit.assertEquals("Section 4.2.1: MonetaryCurrencies does provide a CurrencyUnit with invalid numeric code for: " +
+                                             currency.getCurrencyCode(), currency.getNumericCode(), unit.getNumericCode());
         }
     }
 

@@ -9,6 +9,7 @@
  */
 package org.javamoney.tck.tests.internal;
 
+import javax.money.CurrencyContext;
 import javax.money.CurrencyUnit;
 import java.io.Serializable;
 import java.util.Objects;
@@ -20,6 +21,8 @@ public final class TestCurrencyUnit implements CurrencyUnit, Serializable{
 
     private String code;
     private int defsultFractionUnits = 11;
+    private static final CurrencyContext CONTEXT =
+            new CurrencyContext.Builder(TestCurrencyUnit.class.getSimpleName()).build();
 
     public TestCurrencyUnit(String code){
         Objects.requireNonNull(code);
@@ -52,8 +55,13 @@ public final class TestCurrencyUnit implements CurrencyUnit, Serializable{
     }
 
     @Override
+    public CurrencyContext getCurrencyContext(){
+        return CONTEXT;
+    }
+
+    @Override
     public int compareTo(CurrencyUnit o){
-        if( o instanceof TestCurrencyUnit){
+        if(o instanceof TestCurrencyUnit){
             return 0;
         }
         return 1;

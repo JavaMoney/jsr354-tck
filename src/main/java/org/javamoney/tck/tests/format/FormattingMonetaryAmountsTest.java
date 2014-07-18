@@ -20,6 +20,7 @@ import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmounts;
 import javax.money.MonetaryCurrencies;
 import javax.money.format.AmountFormatContext;
+import javax.money.format.AmountFormatQuery;
 import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.text.DecimalFormat;
@@ -51,7 +52,7 @@ public class FormattingMonetaryAmountsTest{
         for(CurrencyUnit currency : MonetaryCurrencies.getCurrencies()){
             for(Number value : values){
                 MonetaryAmount amount =
-                        MonetaryAmounts.getAmountFactory().setCurrency(currency.getCurrencyCode()).setNumber(value)
+                        MonetaryAmounts.getDefaultAmountFactory().setCurrency(currency.getCurrencyCode()).setNumber(value)
                                 .create();
                 String formattedAmount = amountFormat.format(amount);
                 MonetaryAmount amountMock = TestMonetaryAmountFactory.getAmount(value, currency);
@@ -144,7 +145,7 @@ public class FormattingMonetaryAmountsTest{
     @SpecAssertion(section = "4.4.1", id = "441-B2")
     public void testGetAmountFormat(){
         for(Locale locale : DecimalFormat.getAvailableLocales()){
-            AssertJUnit.assertNotNull(MonetaryFormats.getAmountFormat(AmountFormatContext.of(locale)));
+            AssertJUnit.assertNotNull(MonetaryFormats.getAmountFormat(AmountFormatQuery.of(locale)));
         }
     }
 
@@ -175,7 +176,7 @@ public class FormattingMonetaryAmountsTest{
     @SpecAssertion(section = "4.4.1", id = "441-B3")
     public void testAmountStyleOf(){
         for(Locale locale : DecimalFormat.getAvailableLocales()){
-            AssertJUnit.assertNotNull(AmountFormatContext.of(locale));
+            AssertJUnit.assertNotNull(AmountFormatQuery.of(locale));
         }
     }
 }

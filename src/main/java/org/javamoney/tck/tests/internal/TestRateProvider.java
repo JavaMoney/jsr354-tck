@@ -14,6 +14,7 @@ import org.javamoney.tck.tests.conversion.TestExchangeRate;
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
 import javax.money.MonetaryCurrencies;
+import javax.money.MonetaryException;
 import javax.money.convert.*;
 import java.util.Objects;
 
@@ -40,13 +41,8 @@ public class TestRateProvider implements ExchangeRateProvider{
 
         @Override
         public ExchangeRate getExchangeRate(MonetaryAmount sourceAmount){
-            return new TestExchangeRate.Builder(CC).setFactor(new TestNumberValue(2)).setBase(sourceAmount.getCurrency())
-                    .setTerm(TERM).build();
-        }
-
-        @Override
-        public CurrencyConversion with(ConversionContext conversionContext){
-            return this;
+            return new TestExchangeRate.Builder(CC).setFactor(new TestNumberValue(2))
+                    .setBase(sourceAmount.getCurrency()).setTerm(TERM).build();
         }
 
         @Override
@@ -68,10 +64,11 @@ public class TestRateProvider implements ExchangeRateProvider{
     }
 
     @Override
-    public boolean isAvailable(CurrencyUnit base, CurrencyUnit term, ConversionContext conversionContext){
+    public boolean isAvailable(ConversionQuery conversionContext){
         Objects.requireNonNull(conversionContext);
-        Objects.requireNonNull(base);
-        return "FOO".equals(term.getCurrencyCode()) || "XXX".equals(term.getCurrencyCode());
+        Objects.requireNonNull(conversionContext.getTermCurrency());
+        return "FOO".equals(conversionContext.getTermCurrency().getCurrencyCode()) ||
+                "XXX".equals(conversionContext.getTermCurrency().getCurrencyCode());
     }
 
     @Override
@@ -79,31 +76,23 @@ public class TestRateProvider implements ExchangeRateProvider{
         return "Foo".equals(termCode) || "XXX".equals(termCode);
     }
 
-    @Override
-    public boolean isAvailable(String baseCode, String termCode, ConversionContext conversionContext){
-        Objects.requireNonNull(conversionContext);
-        Objects.requireNonNull(baseCode);
-        Objects.requireNonNull(termCode);
-        return "Foo".equals(termCode) || "XXX".equals(termCode);
-    }
 
     @Override
     public ExchangeRate getExchangeRate(CurrencyUnit base, CurrencyUnit term){
         if(isAvailable(base, term)){
-            return new TestExchangeRate.Builder(CC).setFactor(new TestNumberValue(2)).setBase(base)
-                    .setTerm(term).build();
+            return new TestExchangeRate.Builder(CC).setFactor(new TestNumberValue(2)).setBase(base).setTerm(term)
+                    .build();
         }
         return null;
     }
 
     @Override
-    public ExchangeRate getExchangeRate(CurrencyUnit base, CurrencyUnit term, ConversionContext conversionContext){
-        Objects.requireNonNull(conversionContext);
-        Objects.requireNonNull(base);
-        Objects.requireNonNull(term);
-        if(isAvailable(base, term, conversionContext)){
-            return new TestExchangeRate.Builder(conversionContext).setFactor(new TestNumberValue(2)).setBase(base)
-                    .setTerm(term).build();
+    public ExchangeRate getExchangeRate(ConversionQuery conversionQuery){
+        if(isAvailable(conversionQuery)){
+            return new TestExchangeRate.Builder(
+                    new ConversionContext.Builder(getProviderContext(), RateType.OTHER)
+                            .importContext(conversionQuery).build()).setFactor(new TestNumberValue(2))
+                    .setBase(conversionQuery.getBaseCurrency()).setTerm(conversionQuery.getTermCurrency()).build();
         }
         return null;
     }
@@ -117,29 +106,18 @@ public class TestRateProvider implements ExchangeRateProvider{
     }
 
     @Override
-    public ExchangeRate getExchangeRate(String baseCode, String termCode, ConversionContext conversionContext){
-        if(isAvailable(baseCode, termCode, conversionContext)){
-            return getExchangeRate(MonetaryCurrencies.getCurrency(baseCode),MonetaryCurrencies.getCurrency(termCode));
-        }
-        return null;
-    }
-
-    @Override
     public ExchangeRate getReversed(ExchangeRate rate){
         return null;
     }
 
     @Override
     public CurrencyConversion getCurrencyConversion(CurrencyUnit term){
-        if(TERM.getCurrencyCode().equals(term.getCurrencyCode())){
-            return CONVERSION;
-        }
-        return null;
+        return CONVERSION;
     }
 
     @Override
-    public CurrencyConversion getCurrencyConversion(CurrencyUnit term, ConversionContext conversionContext){
-        if(TERM.getCurrencyCode().equals(term.getCurrencyCode()) || "XXX".equals(term.getCurrencyCode())){
+    public CurrencyConversion getCurrencyConversion(ConversionQuery conversionQuery){
+        if(isAvailable(conversionQuery)){
             return CONVERSION;
         }
         return null;
@@ -153,11 +131,4 @@ public class TestRateProvider implements ExchangeRateProvider{
         return null;
     }
 
-    @Override
-    public CurrencyConversion getCurrencyConversion(String termCode, ConversionContext conversionContext){
-        if(TERM.getCurrencyCode().equals(termCode)){
-            return CONVERSION;
-        }
-        return null;
-    }
 }

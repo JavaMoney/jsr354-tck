@@ -14,10 +14,7 @@ import org.jboss.test.audit.annotations.SpecVersion;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
-import javax.money.convert.ConversionContext;
-import javax.money.convert.ExchangeRate;
-import javax.money.convert.ExchangeRateProvider;
-import javax.money.convert.MonetaryConversions;
+import javax.money.convert.*;
 
 import java.util.Collection;
 
@@ -119,7 +116,7 @@ public class ProviderChainsTest{
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
         rate = prov1.getExchangeRate("EUR", "USD");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 2);
-        rate = prov1.getExchangeRate("EUR", "USD", new ConversionContext.Builder().setTimestampMillis(10L).build());
+        rate = prov1.getExchangeRate(new ConversionQuery.Builder().setTimestampMillis(10L).setBaseCurrency("EUR").setTermCurrency("USD").build());
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", 200, rate.getFactor().intValueExact());
     }
 

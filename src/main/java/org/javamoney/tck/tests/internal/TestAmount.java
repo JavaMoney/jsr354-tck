@@ -22,7 +22,7 @@ public final class TestAmount implements MonetaryAmount, Serializable{
     private BigDecimal value;
     private CurrencyUnit currencyUnit;
     public static final MonetaryContext MONETARY_CONTEXT =
-            new MonetaryContext.Builder().setAmountType(TestAmount.class).setMaxScale(-1).setPrecision(0).build();
+            new MonetaryContext.Builder(TestAmount.class).setMaxScale(-1).setPrecision(0).build();
 
     public TestAmount(Number number, CurrencyUnit currency){
         this.currencyUnit = currency;

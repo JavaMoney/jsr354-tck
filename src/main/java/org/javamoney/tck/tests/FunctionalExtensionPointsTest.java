@@ -38,7 +38,7 @@ public class FunctionalExtensionPointsTest{
     public void testOperatorReturnTypeEqualsParameter(){
         Collection<MonetaryOperator> operators = TCKTestSetup.getTestConfiguration().getMonetaryOperators4Test();
         for(MonetaryOperator op: operators){
-            AssertJUnit.fail("To be implemented.");
+            AssertJUnit.fail("Section 4.2.4: To be implemented.");
         }
     }
 
