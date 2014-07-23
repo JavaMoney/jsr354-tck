@@ -40,8 +40,8 @@ public class ConvertingAmountsTest{
     @Test @SpecAssertion(id = "432-A1", section="4.3.2")
     public void testConversion(){
         CurrencyUnit cu = new TestCurrencyUnit("FOO");
-        CurrencyConversion conv = MonetaryConversions.getConversion(cu, "TestConversionProvider");
-        MonetaryAmount m = MonetaryAmounts.getAmountFactory().setNumber(10).setCurrency("CHF").create();
+        CurrencyConversion conv = MonetaryConversions.getConversion(cu, "TestRateProvider");
+        MonetaryAmount m = MonetaryAmounts.getDefaultAmountFactory().setNumber(10).setCurrency("CHF").create();
         MonetaryAmount m2 = m.with(conv);
         AssertJUnit.assertEquals(m2.getCurrency().getCurrencyCode(), "FOO");
         AssertJUnit.assertEquals(20L, m2.getNumber().longValueExact());
@@ -56,12 +56,12 @@ public class ConvertingAmountsTest{
     @Test @SpecAssertion(id = "432-A2", section="4.3.2")
     public void testConversionComparedWithRate(){
         final CurrencyUnit FOO = new TestCurrencyUnit("FOO");
-        ExchangeRate rate = MonetaryConversions.getExchangeRateProvider("TestConversionProvider").getExchangeRate(
+        ExchangeRate rate = MonetaryConversions.getExchangeRateProvider("TestRateProvider").getExchangeRate(
                 MonetaryCurrencies.getCurrency("CHF"), FOO);
         AssertJUnit.assertEquals(rate.getBase(), MonetaryCurrencies.getCurrency("CHF"));
         AssertJUnit.assertEquals(rate.getTerm().getCurrencyCode(), FOO.getCurrencyCode());
         AssertJUnit.assertEquals(rate.getFactor().intValueExact(), 2);
-        AssertJUnit.assertEquals("TestConversionProvider", rate.getConversionContext().getProvider());
+        AssertJUnit.assertEquals("TestRateProvider", rate.getConversionContext().getProvider());
     }
 
     /**
@@ -70,7 +70,7 @@ public class ConvertingAmountsTest{
      */
     @Test @SpecAssertion(id = "432-A3", section="4.3.2")
     public void testUnsupportedConversion(){
-        MonetaryAmount m = MonetaryAmounts.getAmountFactory().setNumber(10).setCurrency("CHF").create();
+        MonetaryAmount m = MonetaryAmounts.getDefaultAmountFactory().setNumber(10).setCurrency("CHF").create();
         CurrencyUnit cu = new TestCurrencyUnit("FOOANY");
         try{
             CurrencyConversion conv = MonetaryConversions.getConversion(cu);
@@ -102,7 +102,7 @@ public class ConvertingAmountsTest{
      */
     @Test(expectedExceptions=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
     public void testNullConversion3(){
-        MonetaryConversions.getConversion((CurrencyUnit) null, ConversionContext.of());
+        MonetaryConversions.getConversion((CurrencyUnit) null);
     }
 
     /**
@@ -110,7 +110,7 @@ public class ConvertingAmountsTest{
      */
     @Test(expectedExceptions=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
     public void testNullConversion4(){
-        MonetaryConversions.getConversion((String)null, ConversionContext.of());
+        MonetaryConversions.getConversion((String)null);
     }
 
 }

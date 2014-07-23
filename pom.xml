@@ -20,7 +20,7 @@
         <version>0.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>money-tck</artifactId>
+    <artifactId>money-org.javamoney.tck</artifactId>
     <packaging>jar</packaging>
 
     <version>0.9-SNAPSHOT</version>
@@ -29,8 +29,7 @@
     <url>http://java.net/projects/javamoney</url>
     <inceptionYear>2012</inceptionYear>
     <description>JSR 354 provides an API for representing, transporting, and performing comprehensive calculations with
-        Money and Currency.
-        This module implements JSR 354.
+        Money and Currency. This module implements JSR 354.
     </description>
 
     <organization>
@@ -223,10 +222,10 @@
     </prerequisites>
 
     <scm>
-        <connection>scm:git:https://github.com/JavaMoney/jsr354-tck.git</connection>
+        <connection>scm:git:https://github.com/JavaMoney/jsr354-org.javamoney.tck.git</connection>
         <tag>master</tag>
-        <developerConnection>scm:git:https://github.com/JavaMoney/jsr354-tck.git</developerConnection>
-        <url>https://github.com/JavaMoney/jsr354-tck</url>
+        <developerConnection>scm:git:https://github.com/JavaMoney/jsr354-org.javamoney.tck.git</developerConnection>
+        <url>https://github.com/JavaMoney/jsr354-org.javamoney.tck</url>
     </scm>
 
     <distributionManagement>
@@ -348,6 +347,7 @@
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
                 <version>${testng.version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>javax.money</groupId>
@@ -371,27 +371,29 @@
         <dependency>
             <groupId>javax.money</groupId>
             <artifactId>money-api</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.javamoney</groupId>
             <artifactId>moneta</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
+            <version>${jsr.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.test-audit</groupId>
             <artifactId>jboss-test-audit-api</artifactId>
             <version>${jboss.test.audit.version}</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.jboss.test-audit</groupId>
             <artifactId>jboss-test-audit-impl</artifactId>
             <version>${jboss.test.audit.version}</version>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
@@ -423,25 +425,23 @@
                     <extensions>true</extensions>
                     <configuration>
                         <instructions>
-                            <Export-Package>org.javamoney.tck.*</Export-Package>
+                            <Export-Package>org.javamoney.* "org.javamoney.org.javamoney.tck.*</Export-Package>
                             <Private-Package>!*</Private-Package>
                         </instructions>
                     </configuration>
                 </plugin>
-
                 <plugin>
                     <groupId>org.bsc.maven</groupId>
                     <artifactId>maven-processor-plugin</artifactId>
-                    <version>2.0.4</version>
+                    <version>2.0.7</version>
                     <configuration>
-                        <defaultOutputDirectory>${basedir}/target/docs/coverage-report</defaultOutputDirectory>
+                        <defaultOutputDirectory>${basedir}/target/coverage-report</defaultOutputDirectory>
                         <processors>
                             <processor>org.jboss.test.audit.report.CoverageProcessor</processor>
                         </processors>
+                        <outputClassDirectory>${basedir}/target/classes</outputClassDirectory>
                         <compilerArguments>
-                            -AauditXml=${basedir}/src/test/resources/test-audit.xml
-                            -AoutputDir=${basedir}/target/docs/coverage-report -source ${jdkVersion}
-                            -target ${jdkVersion}
+                            -AauditXml=${basedir}/test-audit.xml -AoutputDir=${basedir}/target/coverage-report -source ${jdkVersion} -target ${jdkVersion}
                         </compilerArguments>
                     </configuration>
                     <executions>
@@ -482,6 +482,7 @@
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
             </plugin>
+
             <!-- ======================================================= -->
             <!-- Packaging (OSGi bundle) -->
             <!-- ======================================================= -->

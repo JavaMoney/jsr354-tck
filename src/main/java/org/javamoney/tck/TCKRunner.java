@@ -15,15 +15,17 @@ import org.javamoney.tck.tests.conversion.ExchangeRatesAndRateProvidersTest;
 import org.javamoney.tck.tests.conversion.MonetaryConversionsTest;
 import org.javamoney.tck.tests.conversion.ProviderChainsTest;
 import org.javamoney.tck.tests.format.FormattingMonetaryAmountsTest;
-
-import org.testng.IReporter;
-import org.testng.ITestListener;
+import org.testng.ITestResult;
+import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
-import org.testng.reporters.*;
+import org.testng.reporters.VerboseReporter;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,8 +60,86 @@ public class TCKRunner extends XmlSuite{
         tng.setXmlSuites(suites);
         tng.setOutputDirectory("./tck-results");
         tng.addListener(new VerboseReporter());
-        tng.addListener(new SuiteHTMLReporter());
+        TCKReporter rep = new TCKReporter(new File("c:/temp/tck-results.txt"));
+        tng.addListener(rep);
         tng.run();
+        rep.writeSummary();
     }
+
+    public static final class TCKReporter extends TestListenerAdapter{
+        private int count = 0;
+        private int skipped = 0;
+        private int failed = 0;
+        private int success = 0;
+
+        private File file;
+        private FileWriter w;
+
+        public TCKReporter(File file){
+            this.file = file;
+            try{
+                w = new FileWriter(file);
+            }
+            catch(IOException e){
+                e.printStackTrace();
+                System.exit(-1);
+            }
+        }
+
+        @Override
+        public void onTestFailure(ITestResult tr){
+            failed++;
+            try{
+                log("[FAILED] " + tr.toString());
+            }
+            catch(IOException e){
+                throw new IllegalStateException("IO Error", e);
+            }
+        }
+
+        @Override
+        public void onTestSkipped(ITestResult tr){
+            skipped++;
+            try{
+                log("[SKIPPED] " + tr.toString());
+            }
+            catch(IOException e){
+                throw new IllegalStateException("IO Error", e);
+            }
+        }
+
+        @Override
+        public void onTestSuccess(ITestResult tr){
+            success++;
+            try{
+                log("[SUCCESS] " + tr.getTestName());
+            }
+            catch(IOException e){
+                throw new IllegalStateException("IO Error", e);
+            }
+        }
+
+        private void log(String string) throws IOException{
+            count++;
+            w.write(string + '\n');
+        }
+
+        public void writeSummary(){
+            try{
+                log("\nJSR 354 TCP version 1.0 Summary");
+                log("-------------------------------");
+                log("\nTOTAL TESTS EXECUTED : " + count);
+                log("TOTAL TESTS SKIPPED  : " + skipped);
+                log("TOTAL TESTS SUCCESS  : " + success);
+                log("TOTAL TESTS FAILED   : " + failed);
+                w.flush();
+                w.close();
+            }
+            catch(IOException e){
+                throw new IllegalStateException("IO Error", e);
+            }
+        }
+    }
+
 
 }

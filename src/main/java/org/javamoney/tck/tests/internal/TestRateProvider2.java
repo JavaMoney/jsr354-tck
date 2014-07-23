@@ -22,7 +22,7 @@ import java.util.Objects;
 public class TestRateProvider2 implements ExchangeRateProvider{
 
     public static final int FACTOR = 2;
-    private static ProviderContext PC = new ProviderContext.Builder("TestConversionProvider2", RateType.OTHER).build();
+    private static ProviderContext PC = new ProviderContext.Builder("TestRateProvider2", RateType.OTHER).build();
     private static ConversionContext CC = new ConversionContext.Builder(PC, RateType.OTHER).build();
 
     private static final class Conversion implements CurrencyConversion{

@@ -41,18 +41,18 @@ public class ProviderChainsTest{
     @SpecAssertion(id = "434-A1", section = "4.3.4")
     public void testCorrectRateEvaluationInChain_diffProviders(){
         ExchangeRateProvider prov1 = MonetaryConversions
-                .getExchangeRateProvider("TestConversionProvider1", "TestConversionProvider2",
-                                         "TestConversionProvider3");
+                .getExchangeRateProvider("TestRateProvider1", "TestRateProvider2",
+                                         "TestRateProvider3");
         ExchangeRate rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
-        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider1", "TestConversionProvider2");
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider1", "TestRateProvider2");
         rate = prov1.getExchangeRate("EUR", "USD");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 2);
-        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider3");
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider3");
         rate = prov1.getExchangeRate("USD", "INR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 3);
-        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider1", "TestConversionProvider3",
-                                                            "TestConversionProvider2");
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider1", "TestRateProvider3",
+                                                            "TestRateProvider2");
         rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
         rate = prov1.getExchangeRate("EUR", "USD");
@@ -60,19 +60,19 @@ public class ProviderChainsTest{
         rate = prov1.getExchangeRate("USD", "INR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 3);
 
-        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider3", "TestConversionProvider2",
-                                                            "TestConversionProvider1");
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider3", "TestRateProvider2",
+                                                            "TestRateProvider1");
         rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
-        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider2", "TestConversionProvider1",
-                                                            "TestConversionProvider3");
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider2", "TestRateProvider1",
+                                                            "TestRateProvider3");
         rate = prov1.getExchangeRate("EUR", "USD");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 2);
         rate = prov1.getExchangeRate("USD", "INR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 3);
 
-        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider3", "TestConversionProvider2",
-                                                            "TestConversionProvider1", "TestConversionProvider0.2");
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider3", "TestRateProvider2",
+                                                            "TestRateProvider1", "TestRateProvider02");
         rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
         rate = prov1.getExchangeRate("EUR", "USD");
@@ -91,14 +91,14 @@ public class ProviderChainsTest{
     @SpecAssertion(id = "434-A1", section = "4.3.4")
     public void testCorrectRateEvaluationInChain_sameProviders(){
         ExchangeRateProvider prov1 = MonetaryConversions
-                .getExchangeRateProvider("TestConversionProvider1", "TestConversionProvider1",
-                                         "TestConversionProvider1");
+                .getExchangeRateProvider("TestRateProvider1", "TestRateProvider1",
+                                         "TestRateProvider1");
         ExchangeRate rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
-        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider1", "TestConversionProvider1");
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider1", "TestRateProvider1");
         rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
-        prov1 = MonetaryConversions.getExchangeRateProvider("TestConversionProvider1");
+        prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider1");
         rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
     }
@@ -113,8 +113,8 @@ public class ProviderChainsTest{
     @SpecAssertion(id = "434-A2", section = "4.3.4")
     public void testCorrectRateEvaluationInChainHistoric(){
         ExchangeRateProvider prov1 = MonetaryConversions
-                .getExchangeRateProvider("TestConversionProvider1", "TestConversionProvider2",
-                                         "TestConversionProvider3");
+                .getExchangeRateProvider("TestRateProvider1", "TestRateProvider2",
+                                         "TestRateProvider3");
         ExchangeRate rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
         rate = prov1.getExchangeRate("EUR", "USD");
@@ -131,16 +131,16 @@ public class ProviderChainsTest{
     @SpecAssertion(id = "434-A3", section = "4.3.4")
     public void testTCKRateChainAvailability(){
         Collection<String> provNames = MonetaryConversions.getProviderNames();
-        AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestConversionProvider",
-                               provNames.contains("TestConversionProvider"));
-        AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestConversionProvider1",
-                               provNames.contains("TestConversionProvider1"));
-        AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestConversionProvider2",
-                               provNames.contains("TestConversionProvider2"));
-        AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestConversionProvider3",
-                               provNames.contains("TestConversionProvider3"));
-        AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestConversionProvider0.2",
-                               provNames.contains("TestConversionProvider0.2"));
+        AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestRateProvider",
+                               provNames.contains("TestRateProvider"));
+        AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered:TestRateProvider1",
+                               provNames.contains("TestRateProvider1"));
+        AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestRateProvider2",
+                               provNames.contains("TestRateProvider2"));
+        AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestRateProvider3",
+                               provNames.contains("TestRateProvider3"));
+        AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestRateProvider02",
+                               provNames.contains("TestRateProvider02"));
     }
 
 }

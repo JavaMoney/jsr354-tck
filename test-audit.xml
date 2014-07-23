@@ -1,96 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <specification xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://jboss.com/products/weld/tck/audit" xsi:schemaLocation="http://jboss.com/products/weld/tck/audit"
-	name="JSR 354 Money and Currency" version="1.0.0" id="JSR 354"
-	generateSectionIds="false">
-	<section id="0" title="TCK Setup">
+               xmlns="http://jboss.com/products/weld/org.javamoney.tck/audit"
+               xsi:schemaLocation="http://jboss.com/products/weld/org.javamoney.tck/audit"
+               name="JSR 354 Money and Currency" version="1.0.0" id="JSR 354"
+               generateSectionIds="false">
+    <section id="0" title="TCK Setup">
         <!-- Tests class TCKSetupTest -->
-		<group>
-			<text>Tests the correct setup of the TCK</text>
-			<assertion id="Setup">
-				<text>Ensure an implementation of
+        <group>
+            <text>Tests the correct setup of the TCK</text>
+            <assertion id="Setup">
+                <text>Ensure an implementation of
                     org.javamoney.tck.JSR354TestConfiguration is registered using the
                     java.util.ServiceLoader.
                 </text>
-			</assertion>
-		</group>
-	</section>
-	<section id="1" title="Introduction, Use Cases, Requirements (no tests)" />
-	<section id="2" title="Use Cases" />
-	<section id="3" title="Requirements" />
-	<section id="3.1" title="Core Requirements"  />
-	<section id="3.2" title="Formatting Requirements"  />
-	<section id="3.3" title="EE and ME Support"  />
-	<section id="3.4" title="Non Functional Requirements"/>
+            </assertion>
+        </group>
+    </section>
+    <section id="1" title="Introduction, Use Cases, Requirements (no tests)"/>
+    <section id="2" title="Use Cases"/>
+    <section id="3" title="Requirements"/>
+    <section id="3.1" title="Core Requirements"/>
+    <section id="3.2" title="Formatting Requirements"/>
+    <section id="3.3" title="EE and ME Support"/>
+    <section id="3.4" title="Non Functional Requirements"/>
 
-	<section id="4" title="Specification" />
+    <section id="4" title="Specification"/>
 
-	<!-- **************************************************************** **** 
-		Core API **************************************************************** -->
-	<section id="4.1" title="Package and Project Structure"  />
-	<section id="4.1.1" title="Package Overview"  />
-	<section id="4.1.2" title="Module/Repository Overview"  />
-	<section id="4.2" title="Money and Currency Core API"  />
-	<section id="4.2.1" title="Modelling of Currencies">
+    <!-- **************************************************************** ****
+        Core API **************************************************************** -->
+    <section id="4.1" title="Package and Project Structure"/>
+    <section id="4.1.1" title="Package Overview"/>
+    <section id="4.1.2" title="Module/Repository Overview"/>
+    <section id="4.2" title="Money and Currency Core API"/>
+    <section id="4.2.1" title="Modelling of Currencies">
         <!-- Tests class ModellingCurrenciesTest -->
-		<group>
-			<text>A. Managing the Currency code</text>
-			<assertion id="421-A1">
-				<text>Ensure at least one javax.money.CurrencyUnit implementation
-					is
-					available and registered/accessible from MonetaryCurrencies.
-				</text>
-			</assertion>
-			<assertion id="421-A2">
-				<text>Test that currencies returned for same ISO currency code are
-					equal, ensure when listing all available currencies, that the
-					code
-					is unique.
-				</text>
-			</assertion>
-			<assertion id="421-A3">
-				<text>Ensure all ISO 3-letters codes as defined by the JDK are also
-					available from MonetaryCurrencies.
-				</text>
-			</assertion>
-			<assertion id="421-A4">
-				<text>Test that JDK currencies returned
-					match the values of
-					corresponding JDK Currency (code, numeric code,
-					default fraction
-					digits).
-				</text>
-			</assertion>
-		</group>
-		<group>
-			<text>B. Currency Unit Implementation Requirements</text>
-			<assertion id="421-B1">
-				<text>CurrencyUnit must implement hashCode.
-				</text>
-			</assertion>
-			<assertion id="421-B2">
-				<text>CurrencyUnit must implement equals.
-				</text>
-			</assertion>
-			<assertion id="421-B3">
-				<text>CurrencyUnit implementation must be Comparable.
-				</text>
-			</assertion>
-			<assertion id="421-B4">
-				<text>CurrencyUnit implementation must be immutable.
-				</text>
-			</assertion>
-			<assertion id="421-B5" testable="false">
-				<text>CurrencyUnit implementation must be thread safe.
-				</text>
-			</assertion>
-			<assertion id="421-B6">
-				<text>CurrencyUnit implementation must be serializable.
-				</text>
-			</assertion>
-		</group>
-	</section>
-	<section id="4.2.2" title="Modeling of Monetary Amounts">
+        <group>
+            <text>A. Managing the Currency code</text>
+            <assertion id="421-A1">
+                <text>Ensure at least one javax.money.CurrencyUnit implementation
+                    is
+                    available and registered/accessible from MonetaryCurrencies.
+                </text>
+            </assertion>
+            <assertion id="421-A2">
+                <text>Test that currencies returned for same ISO currency code are
+                    equal, ensure when listing all available currencies, that the
+                    code
+                    is unique.
+                </text>
+            </assertion>
+            <assertion id="421-A3">
+                <text>Ensure all ISO 3-letters codes as defined by the JDK are also
+                    available from MonetaryCurrencies.
+                </text>
+            </assertion>
+            <assertion id="421-A4">
+                <text>Test that JDK currencies returned
+                    match the values of
+                    corresponding JDK Currency (code, numeric code,
+                    default fraction
+                    digits).
+                </text>
+            </assertion>
+        </group>
+        <group>
+            <text>B. Currency Unit Implementation Requirements</text>
+            <assertion id="421-B1">
+                <text>CurrencyUnit must implement hashCode.
+                </text>
+            </assertion>
+            <assertion id="421-B2">
+                <text>CurrencyUnit must implement equals.
+                </text>
+            </assertion>
+            <assertion id="421-B3">
+                <text>CurrencyUnit implementation must be Comparable.
+                </text>
+            </assertion>
+            <assertion id="421-B4">
+                <text>CurrencyUnit implementation must be immutable.
+                </text>
+            </assertion>
+            <assertion id="421-B5" testable="false">
+                <text>CurrencyUnit implementation must be thread safe.
+                </text>
+            </assertion>
+            <assertion id="421-B6">
+                <text>CurrencyUnit implementation must be serializable.
+                </text>
+            </assertion>
+        </group>
+    </section>
+    <section id="4.2.2" title="Modeling of Monetary Amounts">
         <!-- Tests class ModellingMonetaryAmountsTest -->
 		<group>
 			<text>Preconditions</text>
@@ -407,18 +408,18 @@
 				</text>
 			</assertion>
 			<assertion id="422-F4">
-				<text>Implementations of MonetaryAmount must be serializable.
-				</text>
-			</assertion>
+                <text>Implementations of MonetaryAmount must be immutable.
+                </text>
+            </assertion>
+            <assertion id="422-F5" testable="false">
+                <text>Implementations of MonetaryAmount should be thread-safe.
+                </text>
+            </assertion>
 		</group>
 		<!-- group>
 			<text>G. Monetary Amount Implementation Recommendations</text>
 			<assertion id="422-G1">
 				<text>Implementations of MonetaryAmount should be immutable.
-				</text>
-			</assertion>
-			<assertion id="422-G2"  testable="false">
-				<text>Implementations of MonetaryAmount should be thread safe.
 				</text>
 			</assertion>
 			<assertion id="422-G3">

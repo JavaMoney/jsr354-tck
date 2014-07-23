@@ -19,14 +19,8 @@ import org.testng.annotations.Test;
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryCurrencies;
 import javax.money.UnknownCurrencyException;
-import javax.money.convert.ConversionContext;
-import javax.money.convert.ExchangeRate;
-import javax.money.convert.ExchangeRateProvider;
-import javax.money.convert.MonetaryConversions;
+import javax.money.convert.*;
 import java.util.Locale;
-
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertNotNull;
 
 /**
  * Tests for Exchange Rates and Rate Providers.
@@ -46,7 +40,7 @@ public class ExchangeRatesAndRateProvidersTest{
     @Test
     @SpecAssertion(id = "433-A1", section = "4.3.3")
     public void testAccessKnownRates(){
-        ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestConversionProvider");
+        ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestRateProvider");
         // Use test provider
         for(CurrencyUnit base : MonetaryCurrencies.getCurrencies()){
             if(base.equals(FOO_UNIT)){
@@ -100,7 +94,7 @@ public class ExchangeRatesAndRateProvidersTest{
             if(base.equals(FOO_UNIT)){
                 continue;
             }
-            ExchangeRate rate = prov.getExchangeRate(base, FOO_UNIT, ConversionContext.ANY_CONVERSION);
+            ExchangeRate rate = prov.getExchangeRate(base, FOO_UNIT);
             AssertJUnit.assertNotNull(
                     "Identity rate, accessed by getExchangeRate(CurrencyUnit, CurrencyUnit, ConversionContext), " +
                             "is not defined for " +
@@ -122,7 +116,7 @@ public class ExchangeRatesAndRateProvidersTest{
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestConversionProvider");
         // Use test provider
         for(CurrencyUnit base : MonetaryCurrencies.getCurrencies()){
-            ExchangeRate rate = prov.getExchangeRate(base.getCurrencyCode(), "XXX", ConversionContext.ANY_CONVERSION);
+            ExchangeRate rate = prov.getExchangeRate(base.getCurrencyCode(), "XXX");
             AssertJUnit
                     .assertNotNull("Identity rate, accessed by getExchangeRate(String, String, ConversionContext), " +
                                            "is not defined for " +
@@ -212,8 +206,10 @@ public class ExchangeRatesAndRateProvidersTest{
     @SpecAssertion(id = "433-A2", section = "4.3.3")
     public void testPassingOverConversionContextToSPIs(){
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestConversionProvider");
-        ConversionContext ctx = new ConversionContext.Builder().setObject(Locale.CANADA).setText("Foo", "bar").build();
-        ExchangeRate rate = prov.getExchangeRate(FOO_UNIT, MonetaryCurrencies.getCurrency("XXX"), ctx);
+        ConversionQuery ctx =
+                new ConversionQuery.Builder().set(Locale.CANADA).set("Foo", "bar").setBaseCurrency(FOO_UNIT)
+                        .setTermCurrency(MonetaryCurrencies.getCurrency("XXX")).build();
+        ExchangeRate rate = prov.getExchangeRate(ctx);
         AssertJUnit.assertNotNull(
                 "No test rate returned by getExchangeRate(CurrencyUnit, CurrencyUnit, ConversionContext), " +
                         "probably TestProvider is not correct registered."
@@ -223,7 +219,7 @@ public class ExchangeRatesAndRateProvidersTest{
                 rate.getConversionContext().getText("Foo"));
         AssertJUnit.assertEquals(
                 "Object parameter Locale.class was not correctly passed to ExchangeRateProvider implementation.",
-                Locale.CANADA, rate.getConversionContext().getAttribute(Locale.class));
+                Locale.CANADA, rate.getConversionContext().get(Locale.class));
     }
 
 
@@ -342,7 +338,7 @@ public class ExchangeRatesAndRateProvidersTest{
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
             try{
-                prov.getExchangeRate("dhdjbdjd", "CHF", ConversionContext.ANY_CONVERSION);
+                prov.getExchangeRate("dhdjbdjd", "CHF");
                 Assert.fail(
                         "ExchangeRateProvider should throw UnknownCurrencyException when an invalid source currency " +
                                 "is passed to getExchangeRate(String,String,ConversionContext), provider: " +
@@ -368,7 +364,7 @@ public class ExchangeRatesAndRateProvidersTest{
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
             try{
-                prov.getExchangeRate(null, "CHF", ConversionContext.ANY_CONVERSION);
+                prov.getExchangeRate(null, "CHF");
                 Assert.fail("ExchangeRateProvider should throw UnknownCurrencyException when an null source currency " +
                                     "is passed to getExchangeRate(String,String,ConversionContext), provider: " +
                                     providerID
@@ -393,7 +389,7 @@ public class ExchangeRatesAndRateProvidersTest{
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
             try{
-                prov.getExchangeRate("CHF", "dhdjbdjd", ConversionContext.ANY_CONVERSION);
+                prov.getExchangeRate("CHF", "dhdjbdjd");
                 Assert.fail(
                         "ExchangeRateProvider should throw UnknownCurrencyException when an invalid target currency " +
                                 "is passed to getExchangeRate(String,String,ConversionContext), provider: " +
@@ -419,7 +415,7 @@ public class ExchangeRatesAndRateProvidersTest{
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
             try{
-                prov.getExchangeRate("CHF", null, ConversionContext.ANY_CONVERSION);
+                prov.getExchangeRate("CHF", null);
                 Assert.fail("ExchangeRateProvider should throw NullPointerException when an null target currency " +
                                     "is passed to getExchangeRate(String,String,ConversionContext), provider: " +
                                     providerID
@@ -444,9 +440,9 @@ public class ExchangeRatesAndRateProvidersTest{
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
             try{
-                prov.getExchangeRate("CHF", "USD", null);
-                Assert.fail("ExchangeRateProvider should throw NullPointerException when an null target currency " +
-                                    "is passed to getExchangeRate(String,String,ConversionContext), provider: " +
+                prov.getExchangeRate(null);
+                Assert.fail("ExchangeRateProvider should throw NullPointerException when an null ConversionQuery " +
+                                    "is passed to getExchangeRate(ConversionQuery), provider: " +
                                     providerID
                 );
             }
@@ -456,31 +452,6 @@ public class ExchangeRatesAndRateProvidersTest{
         }
     }
 
-    /**
-     * Bad case: try accessing rates with inconsistent/invalid data.<p>
-     * Hint: this assertion will require multiple tests to be written!
-     */
-    @Test
-    @SpecAssertion(id = "433-A3", section = "4.3.3")
-    public void testInvalidUsage_NullContext2(){
-        for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestConversionProvider".equals(providerID)){
-                continue;
-            }
-            ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
-            try{
-                prov.getExchangeRate(MonetaryCurrencies.getCurrency("USD"), MonetaryCurrencies.getCurrency("EUR"),
-                                     null);
-                Assert.fail("ExchangeRateProvider should throw NullPointerException when an null target currency " +
-                                    "is passed to getExchangeRate(String,String,ConversionContext), provider: " +
-                                    providerID
-                );
-            }
-            catch(NullPointerException e){
-                // OK
-            }
-        }
-    }
 
     /**
      * Bad case: try accessing rates with inconsistent/invalid data.<p>
@@ -493,7 +464,7 @@ public class ExchangeRatesAndRateProvidersTest{
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
             try{
                 prov.getExchangeRate(null, MonetaryCurrencies.getCurrency("CHF"));
-                Assert.fail("ExchangeRateProvider should throw UnknownCurrencyException when an null source currency " +
+                Assert.fail("ExchangeRateProvider should throw NullPointerException when an null source currency " +
                                     "is passed to getExchangeRate(CurrencyUnit,CurrencyUnit), provider: " +
                                     providerID
                 );
@@ -516,58 +487,8 @@ public class ExchangeRatesAndRateProvidersTest{
             try{
                 prov.getExchangeRate(MonetaryCurrencies.getCurrency("CHF"), null);
                 Assert.fail(
-                        "ExchangeRateProvider should throw UnknownCurrencyException when an invalid target currency " +
+                        "ExchangeRateProvider should throw NullPointerException when an invalid target currency " +
                                 "is passed to getExchangeRate(CurrencyUnit,CurrencyUnit), provider: " +
-                                providerID
-                );
-            }
-            catch(NullPointerException e){
-                // OK
-            }
-        }
-    }
-
-    /**
-     * Bad case: try accessing rates with inconsistent/invalid data.<p>
-     * Hint: this assertion will require multiple tests to be written!
-     */
-    @Test
-    @SpecAssertion(id = "433-A3", section = "4.3.3")
-    public void testInvalidUsage_NullSourceCurrencyUnitAndContext(){
-        for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestConversionProvider".equals(providerID)){
-                continue;
-            }
-            ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
-            try{
-                prov.getExchangeRate(null, MonetaryCurrencies.getCurrency("CHF"), ConversionContext.ANY_CONVERSION);
-                Assert.fail("ExchangeRateProvider should throw NullPointerException when an null source currency " +
-                                    "is passed to getExchangeRate(CurrencyUnit,CurrencyUnit,ConversionContext), " +
-                                    "provider: " +
-                                    providerID
-                );
-            }
-            catch(NullPointerException e){
-                // OK
-            }
-        }
-    }
-
-    /**
-     * Bad case: try accessing rates with inconsistent/invalid data.<p>
-     * Hint: this assertion will require multiple tests to be written!
-     */
-    @Test
-    @SpecAssertion(id = "433-A3", section = "4.3.3")
-    public void testInvalidUsage_NullTargetCurrencyUnitAndContext(){
-        for(String providerID : MonetaryConversions.getProviderNames()){
-            ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
-            try{
-                prov.getExchangeRate(MonetaryCurrencies.getCurrency("CHF"), null, ConversionContext.ANY_CONVERSION);
-                Assert.fail(
-                        "ExchangeRateProvider should throw UnknownCurrencyException when an invalid target currency " +
-                                "is passed to getExchangeRate(CurrencyUnit,CurrencyUnit,ConversionContext), " +
-                                "provider: " +
                                 providerID
                 );
             }
