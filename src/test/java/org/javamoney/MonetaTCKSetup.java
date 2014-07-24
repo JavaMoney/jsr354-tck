@@ -54,7 +54,7 @@ public final class MonetaTCKSetup implements JSR354TestConfiguration{
         ops.add(MonetaryFunctions.permil(BigDecimal.ONE));
         ops.add(MonetaryFunctions.permil(10.5, MathContext.DECIMAL32));
         ops.add(MonetaryFunctions.reciprocal());
-        ops.add(MonetaryRoundings.getRounding());
+        ops.add(MonetaryRoundings.getDefaultRounding());
         ops.add(MonetaryConversions.getConversion("EUR"));
         return ops;
     }

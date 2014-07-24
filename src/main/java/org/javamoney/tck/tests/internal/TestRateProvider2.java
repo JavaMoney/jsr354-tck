@@ -46,13 +46,8 @@ public class TestRateProvider2 implements ExchangeRateProvider{
 
         @Override
         public ExchangeRate getExchangeRate(MonetaryAmount sourceAmount){
-            return new TestExchangeRate.Builder(CC).setFactor(new TestNumberValue(FACTOR)).setBase(sourceAmount.getCurrency())
-                    .setTerm(term).build();
-        }
-
-        @Override
-        public CurrencyConversion with(ConversionContext conversionContext){
-            return this;
+            return new TestExchangeRate.Builder(CC).setFactor(new TestNumberValue(FACTOR))
+                    .setBase(sourceAmount.getCurrency()).setTerm(term).build();
         }
 
         @Override
@@ -67,34 +62,31 @@ public class TestRateProvider2 implements ExchangeRateProvider{
     }
 
     @Override
-    public boolean isAvailable(CurrencyUnit base, CurrencyUnit term, ConversionContext conversionContext){
-        Objects.requireNonNull(conversionContext);
-        Objects.requireNonNull(base);
-        Objects.requireNonNull(term);
-        return "EUR".equals(base.getCurrencyCode());
+    public boolean isAvailable(ConversionQuery conversionQuery){
+        Objects.requireNonNull(conversionQuery);
+        Objects.requireNonNull(conversionQuery.getBaseCurrency());
+        Objects.requireNonNull(conversionQuery.getTermCurrency());
+        return "EUR".equals(conversionQuery.getBaseCurrency().getCurrencyCode());
     }
 
     @Override
-    public ExchangeRate getExchangeRate(CurrencyUnit base, CurrencyUnit term, ConversionContext conversionContext){
-        Objects.requireNonNull(conversionContext);
-        Objects.requireNonNull(base);
-        Objects.requireNonNull(term);
-        if(isAvailable(base, term, conversionContext)){
-            if(conversionContext.getTimestampMillis()!=null){
-                return new TestExchangeRate.Builder(conversionContext).setFactor(new TestNumberValue(FACTOR * 100)).setBase(base)
-                        .setTerm(term).build();
+    public ExchangeRate getExchangeRate(ConversionQuery conversionQuery){
+        if(isAvailable(conversionQuery)){
+            if(conversionQuery.getTimestampMillis() != null){
+                return new TestExchangeRate.Builder("TestRateProvider2",RateType.OTHER).setFactor(new TestNumberValue(FACTOR * 100))
+                        .setBase(conversionQuery.getBaseCurrency()).setTerm(conversionQuery.getTermCurrency()).build();
             }
-            return new TestExchangeRate.Builder(conversionContext).setFactor(new TestNumberValue(FACTOR)).setBase(base)
-                    .setTerm(term).build();
+            return new TestExchangeRate.Builder("TestRateProvider2",RateType.OTHER).setFactor(new TestNumberValue(FACTOR))
+                    .setBase(conversionQuery.getBaseCurrency()).setTerm(conversionQuery.getTermCurrency()).build();
         }
         return null;
     }
 
     @Override
-    public CurrencyConversion getCurrencyConversion(CurrencyUnit term, ConversionContext conversionContext){
+    public CurrencyConversion getCurrencyConversion(ConversionQuery conversionContext){
         Objects.requireNonNull(conversionContext);
-        Objects.requireNonNull(term);
-        return new Conversion(term);
+        Objects.requireNonNull(conversionContext.getTermCurrency());
+        return new Conversion(conversionContext.getTermCurrency());
     }
 
 }

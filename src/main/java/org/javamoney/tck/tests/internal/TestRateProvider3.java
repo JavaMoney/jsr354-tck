@@ -46,13 +46,8 @@ public class TestRateProvider3 implements ExchangeRateProvider{
 
         @Override
         public ExchangeRate getExchangeRate(MonetaryAmount sourceAmount){
-            return new TestExchangeRate.Builder(CC).setFactor(new TestNumberValue(FACTOR)).setBase(sourceAmount.getCurrency())
-                    .setTerm(term).build();
-        }
-
-        @Override
-        public CurrencyConversion with(ConversionContext conversionContext){
-            return this;
+            return new TestExchangeRate.Builder(CC).setFactor(new TestNumberValue(FACTOR))
+                    .setBase(sourceAmount.getCurrency()).setTerm(term).build();
         }
 
         @Override
@@ -67,30 +62,27 @@ public class TestRateProvider3 implements ExchangeRateProvider{
     }
 
     @Override
-    public boolean isAvailable(CurrencyUnit base, CurrencyUnit term, ConversionContext conversionContext){
-        Objects.requireNonNull(conversionContext);
-        Objects.requireNonNull(base);
-        Objects.requireNonNull(term);
-        return "USD".equals(base.getCurrencyCode());
+    public boolean isAvailable(ConversionQuery query){
+        Objects.requireNonNull(query);
+        Objects.requireNonNull(query.getBaseCurrency());
+        Objects.requireNonNull(query.getTermCurrency());
+        return "USD".equals(query.getBaseCurrency().getCurrencyCode());
     }
 
     @Override
-    public ExchangeRate getExchangeRate(CurrencyUnit base, CurrencyUnit term, ConversionContext conversionContext){
-        Objects.requireNonNull(conversionContext);
-        Objects.requireNonNull(base);
-        Objects.requireNonNull(term);
-        if(isAvailable(base, term, conversionContext)){
-            return new TestExchangeRate.Builder(conversionContext).setFactor(new TestNumberValue(FACTOR)).setBase(base)
-                    .setTerm(term).build();
+    public ExchangeRate getExchangeRate(ConversionQuery query){
+        if(isAvailable(query)){
+            return new TestExchangeRate.Builder(PC.getProvider(), RateType.OTHER).setFactor(new TestNumberValue(FACTOR))
+                    .setBase(query.getBaseCurrency()).setTerm(query.getTermCurrency()).build();
         }
         return null;
     }
 
     @Override
-    public CurrencyConversion getCurrencyConversion(CurrencyUnit term, ConversionContext conversionContext){
-        Objects.requireNonNull(conversionContext);
-        Objects.requireNonNull(term);
-        return new Conversion(term);
+    public CurrencyConversion getCurrencyConversion(ConversionQuery conversionQuery){
+        Objects.requireNonNull(conversionQuery);
+        Objects.requireNonNull(conversionQuery.getTermCurrency());
+        return new Conversion(conversionQuery.getTermCurrency());
     }
 
 }

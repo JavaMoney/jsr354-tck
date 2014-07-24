@@ -10,10 +10,7 @@
 package org.javamoney.tck.tests.internal;
 
 
-import javax.money.CurrencyUnit;
-import javax.money.MonetaryAmount;
-import javax.money.MonetaryOperator;
-import javax.money.RoundingContext;
+import javax.money.*;
 import javax.money.spi.RoundingProviderSpi;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -26,10 +23,20 @@ import java.util.Set;
  */
 public class TestRoundingProvider implements RoundingProviderSpi{
 
-    private Map<String,MonetaryOperator> customRoundings = new HashMap<>();
+    private static final RoundingContext CONTEXT =
+            new RoundingContext.Builder(TestRoundingProvider.class.getSimpleName(), "NOSCALE").build();
+    private static final RoundingContext CONTEXT_CASH =
+            new RoundingContext.Builder(TestRoundingProvider.class.getSimpleName(), "cashRounding").build();
+
+    private Map<String,MonetaryRounding> customRoundings = new HashMap<>();
 
     public TestRoundingProvider(){
-        customRoundings.put("NOSCALE", new MonetaryOperator(){
+        customRoundings.put("NOSCALE", new MonetaryRounding(){
+            @Override
+            public RoundingContext getRoundingContext(){
+                return CONTEXT;
+            }
+
             @Override
             public MonetaryAmount apply(MonetaryAmount value){
                 return value.getFactory()
@@ -40,8 +47,8 @@ public class TestRoundingProvider implements RoundingProviderSpi{
     }
 
     @Override
-    public MonetaryOperator getRounding(RoundingContext context){
-        MonetaryOperator customRounding = customRoundings.get(context.getRoundingId());
+    public MonetaryRounding getRounding(RoundingQuery context){
+        MonetaryRounding customRounding = customRoundings.get(context.getRoundingName());
         if(customRounding != null){
             return customRounding;
         }
@@ -58,15 +65,24 @@ public class TestRoundingProvider implements RoundingProviderSpi{
         }else{
             if("XAU".equals(context.getCurrencyUnit().getCurrencyCode())){
                 if(timestamp != null){
-                    return new MonetaryOperator(){
+                    return new MonetaryRounding(){
+                        @Override
+                        public RoundingContext getRoundingContext(){
+                            return CONTEXT;
+                        }
                         @Override
                         public MonetaryAmount apply(MonetaryAmount value){
                             return value.getFactory().setNumber(
-                                    value.getNumber().numberValue(BigDecimal.class).setScale(2, RoundingMode.UP)).create();
+                                    value.getNumber().numberValue(BigDecimal.class).setScale(2, RoundingMode.UP))
+                                    .create();
                         }
                     };
                 }
-                return new MonetaryOperator(){
+                return new MonetaryRounding(){
+                    @Override
+                    public RoundingContext getRoundingContext(){
+                        return CONTEXT;
+                    }
                     @Override
                     public MonetaryAmount apply(MonetaryAmount value){
                         return value.getFactory()
@@ -80,9 +96,13 @@ public class TestRoundingProvider implements RoundingProviderSpi{
     }
 
 
-    private MonetaryOperator getCashRounding(CurrencyUnit currency){
+    private MonetaryRounding getCashRounding(CurrencyUnit currency){
         if("XAU".equals(currency.getCurrencyCode())){
-            return new MonetaryOperator(){
+            return new MonetaryRounding(){
+                @Override
+                public RoundingContext getRoundingContext(){
+                    return CONTEXT_CASH;
+                }
                 @Override
                 public MonetaryAmount apply(MonetaryAmount value){
                     return value.getFactory()
@@ -94,9 +114,13 @@ public class TestRoundingProvider implements RoundingProviderSpi{
         return null;
     }
 
-    private MonetaryOperator getCashRounding(CurrencyUnit currency, long timestamp){
+    private MonetaryRounding getCashRounding(CurrencyUnit currency, long timestamp){
         if("XAU".equals(currency.getCurrencyCode()) && timestamp < 100){
-            return new MonetaryOperator(){
+            return new MonetaryRounding(){
+                @Override
+                public RoundingContext getRoundingContext(){
+                    return CONTEXT_CASH;
+                }
                 @Override
                 public MonetaryAmount apply(MonetaryAmount value){
                     return value.getFactory()

@@ -1132,7 +1132,7 @@ public class ModellingMonetaryAmountsTest{
                                              " exceeds capabilities (scale) for " +
                                              type.getName());
                 }
-                catch(MonetaryException ex){
+                catch(ArithmeticException ex){
                     // Expected
                 }
             }
