@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
-import static org.testng.AssertJUnit.*;
-
 
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class ModellingCurrenciesTest{
@@ -107,16 +105,16 @@ public class ModellingCurrenciesTest{
     @SpecAssertion(section = "4.2.1", id = "421-B2")
     @Test
     public void testImplementsEquals(){
-        List<CurrencyUnit> firstUnits = new ArrayList<CurrencyUnit>();
-        List<CurrencyUnit> secondUnits = new ArrayList<CurrencyUnit>();
+        List<CurrencyUnit> firstUnits = new ArrayList<>();
+        List<CurrencyUnit> secondUnits = new ArrayList<>();
         for(String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
             AssertJUnit.assertNotNull(unit);
             TestUtils.testHasPublicMethod("Section 4.2.1", unit.getClass(), boolean.class, "equals", Object.class);
             firstUnits.add(unit);
             CurrencyUnit unit2 = MonetaryCurrencies.getCurrency(code);
-            AssertJUnit.assertNotNull(unit);
-            secondUnits.add(unit);
+            AssertJUnit.assertNotNull(unit2);
+            secondUnits.add(unit2);
         }
         for(String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);

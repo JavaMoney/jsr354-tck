@@ -116,7 +116,7 @@ public class ProviderChainsTest{
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
         rate = prov1.getExchangeRate("EUR", "USD");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 2);
-        rate = prov1.getExchangeRate(new ConversionQuery.Builder().setTimestampMillis(10L).setBaseCurrency("EUR").setTermCurrency("USD").build());
+        rate = prov1.getExchangeRate(ConversionQueryBuilder.create().setTimestampMillis(10L).setBaseCurrency("EUR").setTermCurrency("USD").build());
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", 200, rate.getFactor().intValueExact());
     }
 

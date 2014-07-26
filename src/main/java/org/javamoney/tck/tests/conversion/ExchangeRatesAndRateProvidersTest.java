@@ -207,7 +207,7 @@ public class ExchangeRatesAndRateProvidersTest{
     public void testPassingOverConversionContextToSPIs(){
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestConversionProvider");
         ConversionQuery ctx =
-                new ConversionQuery.Builder().set(Locale.CANADA).set("Foo", "bar").setBaseCurrency(FOO_UNIT)
+                ConversionQueryBuilder.create().set(Locale.CANADA).set("Foo", "bar").setBaseCurrency(FOO_UNIT)
                         .setTermCurrency(MonetaryCurrencies.getCurrency("XXX")).build();
         ExchangeRate rate = prov.getExchangeRate(ctx);
         AssertJUnit.assertNotNull(

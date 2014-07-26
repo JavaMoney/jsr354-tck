@@ -86,7 +86,7 @@ public class MonetaryConversionsTest{
     public void testConversionsAreAvailableWithQuery(){
         for(String providerName : MonetaryConversions.getProviderNames()){
             ConversionQuery query =
-                    new ConversionQuery.Builder().setTermCurrency("XXX").setProviders(providerName).build();
+                    ConversionQueryBuilder.create().setTermCurrency("XXX").setProviders(providerName).build();
             try{
                 CurrencyConversion conv = MonetaryConversions.getConversion(query);
                 AssertJUnit.assertNotNull(

@@ -22,8 +22,8 @@ import java.util.Objects;
  */
 public class TestRateProvider implements ExchangeRateProvider{
 
-    private ProviderContext PC = new ProviderContext.Builder("TestRateProvider", RateType.OTHER).build();
-    private ConversionContext CC = new ConversionContext.Builder(PC, RateType.OTHER).build();
+    private ProviderContext PC = ProviderContextBuilder.create("TestRateProvider", RateType.OTHER).build();
+    private ConversionContext CC = ConversionContextBuilder.create(PC, RateType.OTHER).build();
     private CurrencyUnit TERM = new TestCurrencyUnit("FOO");
 
     private CurrencyConversion CONVERSION = new CurrencyConversion(){
@@ -89,7 +89,7 @@ public class TestRateProvider implements ExchangeRateProvider{
     public ExchangeRate getExchangeRate(ConversionQuery conversionQuery){
         if(isAvailable(conversionQuery)){
             return new TestExchangeRate.Builder(
-                    new ConversionContext.Builder(getProviderContext(), RateType.OTHER)
+                    ConversionContextBuilder.create(getProviderContext(), RateType.OTHER)
                             .importContext(conversionQuery).build()).setFactor(new TestNumberValue(2))
                     .setBase(conversionQuery.getBaseCurrency()).setTerm(conversionQuery.getTermCurrency()).build();
         }

@@ -148,7 +148,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     @SpecAssertion(section = "4.2.7", id = "427-A4")
     public void testCorrectLocales(){
 
-        Set<CurrencyUnit> test = MonetaryCurrencies.getCurrencies(new Locale("", "AD"));
+        MonetaryCurrencies.getCurrencies(new Locale("", "AD"));
 
         for(String country : Locale.getISOCountries()){
             Locale locale = new Locale("", country);
@@ -312,7 +312,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     @Test
     @SpecAssertion(section = "4.2.7", id = "427-B4")
     public void testAmountQueryType(){
-        MonetaryAmountFactoryQuery ctx = new MonetaryAmountFactoryQuery.Builder().setTargetType(TestAmount.class).build();
+        MonetaryAmountFactoryQuery ctx = MonetaryAmountFactoryQueryBuilder.create().setTargetType(TestAmount.class).build();
         Collection<MonetaryAmountFactory<?>> factories = MonetaryAmounts.getAmountFactories(ctx);
         AssertJUnit.assertNotNull("Section 4.2.7: Amount factory query should return explicitly queried factories", factories);
         boolean found = false;
@@ -324,7 +324,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
         }
         AssertJUnit.assertTrue("Section 4.2.7: Amount type query should return same explicitly queried factory",
                                found);
-        ctx = new MonetaryAmountFactoryQuery.Builder().build();
+        ctx = MonetaryAmountFactoryQueryBuilder.create().build();
         MonetaryAmountFactory<?> factory = MonetaryAmounts.getAmountFactory(ctx);
         AssertJUnit.assertNotNull("Section 4.2.7: Amount type must be provided", factory);
     }
@@ -363,7 +363,6 @@ public class AccessingCurrenciesAmountsRoundingsTest{
         for(Currency currency : Currency.getAvailableCurrencies()){
             m = new TestMonetaryAmountFactory().setNumber(new BigDecimal("12.123456789101222232323"))
                     .setCurrency(currency.getCurrencyCode()).create();
-            BigDecimal numVal = new BigDecimal("12.123456789101222232323");
             if(currency.getDefaultFractionDigits() >= 0){
                 MonetaryAmount rounded = m.with(r); // should not throw an error
                 AssertJUnit.assertEquals(
@@ -404,7 +403,6 @@ public class AccessingCurrenciesAmountsRoundingsTest{
                         "ASDF 12.123", m.with(r).toString());
             }else{
                 try{
-                    r = null;
                     r = MonetaryRoundings.getRounding(cu);
                     AssertJUnit.assertNotNull(r);
                 }
@@ -435,7 +433,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     @Test
     @SpecAssertion(section = "4.2.7", id = "427-C2")
     public void testAccessRoundingsWithRoundingContext(){
-        RoundingQuery ctx = new RoundingQuery.Builder().setScale(1).set(RoundingMode.UP).build();
+        RoundingQuery ctx = RoundingQueryBuilder.create().setScale(1).set(RoundingMode.UP).build();
         MonetaryOperator r = MonetaryRoundings.getRounding(ctx);
         AssertJUnit.assertNotNull("Section 4.2.7: No rounding provided for MonetaryContext", r);
         MonetaryAmount m =
@@ -451,7 +449,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
           description = "Section 4.2.7: Expected NPE for MonetaryRoundings.getRounding((RoundingContext) null).")
     @SpecAssertion(section = "4.2.7", id = "427-C2")
     public void testAccessRoundingsWithMonetaryContext_Null(){
-        MonetaryOperator r = MonetaryRoundings.getRounding((RoundingQuery) null);
+        MonetaryRoundings.getRounding(null);
     }
 
     /**

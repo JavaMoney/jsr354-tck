@@ -22,8 +22,6 @@ import javax.money.NumberValue;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import static org.testng.AssertJUnit.*;
-
 /**
  * Testing Numeric Externalization for numeric values of MonetaryAmount instances.
  * Created by Anatole on 10.03.14.
@@ -35,8 +33,6 @@ public class ExternalizingNumericValueTest{
 
     private Class[] requiredJdkTykes =
             new Class[]{Integer.class, Long.class, Double.class, BigDecimal.class, BigInteger.class};
-
-    private Class[] optionalJdkTykes = new Class[]{Byte.class, Short.class, Float.class};
 
 
     /**
@@ -94,7 +90,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -210,7 +206,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -248,7 +244,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -287,7 +283,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -317,7 +313,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -348,7 +344,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -381,7 +377,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -414,7 +410,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -427,7 +423,7 @@ public class ExternalizingNumericValueTest{
                 AssertJUnit
                         .assertEquals("Section 4.2.3: Number value (Double, truncating) returned is not correct for " + type.getName(),
                                       new BigDecimal(String.valueOf(num)).doubleValue(),
-                                      result.numberValue(Double.class).doubleValue(), 0.0d);
+                                      result.numberValue(Double.class), 0.0d);
             }
         }
     }
@@ -446,7 +442,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -481,7 +477,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 BigDecimal bd = new BigDecimal(num);
                 try{
                     mAmount1 =
@@ -515,7 +511,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 BigDecimal bd = new BigDecimal(num);
                 try{
                     mAmount1 =
@@ -600,7 +596,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -632,7 +628,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -664,7 +660,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 BigDecimal dec = new BigDecimal(String.valueOf(num));
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
@@ -722,7 +718,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -751,7 +747,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -790,7 +786,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -908,11 +904,13 @@ public class ExternalizingNumericValueTest{
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit
                         .assertEquals("Section 4.2.3: Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
-                                      (long) new BigDecimal(String.valueOf(num)).longValue(),
+
+                                      new BigDecimal(String.valueOf(num)).longValue(),
                                       (long) result.numberValue(Long.class));
                 AssertJUnit
                         .assertEquals("Section 4.2.3: Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
-                                      (long) new BigDecimal(String.valueOf(num)).longValue(), (long) result.longValue());
+
+                                      new BigDecimal(String.valueOf(num)).longValue(), result.longValue());
             }
         }
     }
@@ -936,7 +934,7 @@ public class ExternalizingNumericValueTest{
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit.assertEquals(
                         "Section 4.2.3: Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
-                        new BigDecimal(String.valueOf(num)).floatValue(), result.numberValue(Float.class).floatValue(),
+                        new BigDecimal(String.valueOf(num)).floatValue(), result.numberValue(Float.class),
                         0.0d);
                 AssertJUnit.assertEquals(
                         "Section 4.2.3: Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
@@ -964,8 +962,7 @@ public class ExternalizingNumericValueTest{
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit.assertEquals(
                         "Section 4.2.3: Number value (BigDecimal -> double) returned is not correct for " + type.getName(),
-                        new BigDecimal(String.valueOf(num)).doubleValue(),
-                        result.numberValue(Double.class).doubleValue(), 0.0d);
+                        new BigDecimal(String.valueOf(num)).doubleValue(), result.numberValue(Double.class), 0.0d);
                 AssertJUnit.assertEquals(
                         "Section 4.2.3: Number value (BigDecimal -> double) returned is not correct for " + type.getName(),
                         new BigDecimal(String.valueOf(num)).doubleValue(), result.doubleValue(), 0.0d);
@@ -988,7 +985,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 BigDecimal bd = new BigDecimal(num);
                 try{
                     mAmount1 =
@@ -1021,7 +1018,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 BigDecimal bd = new BigDecimal(num);
                 try{
                     mAmount1 =
@@ -1055,7 +1052,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -1082,7 +1079,7 @@ public class ExternalizingNumericValueTest{
                                          result.numberValue(Float.class).floatValue());
                 AssertJUnit.assertEquals("Section 4.2.3: Number value (double) returned is not correct for " + type.getName(),
                                          new BigDecimal(String.valueOf(num)).doubleValue(), 0.0f,
-                                         result.numberValue(Double.class).doubleValue());
+                                         result.numberValue(Double.class));
             }
         }
     }
@@ -1101,7 +1098,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -1132,7 +1129,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -1168,7 +1165,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -1188,7 +1185,7 @@ public class ExternalizingNumericValueTest{
                                                  type.getName(), 0, result.numberValue(Short.class).intValue());
                 AssertJUnit
                         .assertEquals("Section 4.2.3: Number value (Number, double) returned is not correct for " + num + ", type; " +
-                                              type.getName(), 0.0d, result.numberValue(Double.class).doubleValue(),
+                                              type.getName(), 0.0d, result.numberValue(Double.class),
                                       0.0f);
                 AssertJUnit.assertEquals(
                         "Section 4.2.3: Number value (Number, BigInteger) returned is not correct for " + num + ", type; " +
@@ -1217,7 +1214,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -1259,7 +1256,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -1311,7 +1308,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 try{
                     mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
@@ -1344,7 +1341,7 @@ public class ExternalizingNumericValueTest{
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 BigDecimal bd = new BigDecimal(num);
                 try{
                     mAmount1 =
@@ -1369,13 +1366,12 @@ public class ExternalizingNumericValueTest{
     public void testScaleZero(){
         String[] nums =
                 new String[]{"-0", "-0.0", "-0.00", "-0.000", "-0.0000", "-0.00000", "-0.000000", "-0.00000000"};
-        int i = 0;
         for(String num : nums){
             for(Class type : MonetaryAmounts.getAmountTypes()){
                 if(type.equals(TestAmount.class)){
                     continue;
                 }
-                MonetaryAmount mAmount1 = null;
+                MonetaryAmount mAmount1;
                 BigDecimal bd = new BigDecimal(num);
                 try{
                     mAmount1 =
@@ -1389,7 +1385,6 @@ public class ExternalizingNumericValueTest{
                 AssertJUnit.assertTrue("Section 4.2.3: Amount's scale is < 0 for " + num + ", was " +
                                                result.getScale() + " for " + type.getName(), 0 <= result.getScale());
             }
-            i++;
         }
     }
 

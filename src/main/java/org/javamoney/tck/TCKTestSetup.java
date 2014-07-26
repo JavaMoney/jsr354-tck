@@ -9,10 +9,6 @@
  */
 package org.javamoney.tck;
 
-import javax.money.MonetaryOperator;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.ServiceLoader;
 
 public final class TCKTestSetup {
@@ -36,41 +32,5 @@ public final class TCKTestSetup {
 	public static JSR354TestConfiguration getTestConfiguration() {
 		return TEST_CONFIG;
 	}
-
-	private static final class JSRTestSetup implements JSR354TestConfiguration {
-
-		@Override
-		public Collection<Class> getAmountClasses() {
-			try {
-				return Arrays
-						.asList(new Class[] {
-								Class.forName("org.javamoney.moneta.Money"),
-								Class.forName("org.javamoney.moneta.FastMoney") });
-			} catch (ClassNotFoundException e) {
-				throw new IllegalStateException("No valid implementation of "
-						+ JSR354TestConfiguration.class.getName()
-						+ " is registered with the ServiceLoader.");
-			}
-		}
-
-		@Override
-		public Collection<Class> getCurrencyClasses() {
-			try {
-				return Arrays
-						.asList(new Class[] { Class
-								.forName("org.javamoney.moneta.internal.JDKCurrencyAdapter") });
-			} catch (ClassNotFoundException e) {
-				throw new IllegalStateException("No valid implementation of "
-						+ JSR354TestConfiguration.class.getName()
-						+ " is registered with the ServiceLoader.");
-			}
-		}
-
-        @Override
-        public Collection<MonetaryOperator> getMonetaryOperators4Test(){
-            return Collections.emptyList();
-        }
-
-    }
 
 }

@@ -37,7 +37,7 @@ public class TCKRunner extends XmlSuite{
         setName("JSR354-TCK 1.0");
         XmlTest test = new XmlTest(this);
         test.setName("TCK/Test Setup");
-        List<XmlClass> classes = new ArrayList<XmlClass>();
+        List<XmlClass> classes = new ArrayList<>();
         classes.add(new XmlClass(TCKTestSetup.class));
         classes.add(new XmlClass(ModellingCurrenciesTest.class));
         classes.add(new XmlClass(ModellingMonetaryAmountsTest.class));
@@ -53,8 +53,8 @@ public class TCKRunner extends XmlSuite{
         test.setXmlClasses(classes);
     }
 
-    public static final void main(String... args){
-        List<XmlSuite> suites = new ArrayList<XmlSuite>();
+    public static void main(String... args){
+        List<XmlSuite> suites = new ArrayList<>();
         suites.add(new TCKRunner());
         TestNG tng = new TestNG();
         tng.setXmlSuites(suites);
@@ -72,11 +72,9 @@ public class TCKRunner extends XmlSuite{
         private int failed = 0;
         private int success = 0;
 
-        private File file;
         private FileWriter w;
 
         public TCKReporter(File file){
-            this.file = file;
             try{
                 w = new FileWriter(file);
             }
