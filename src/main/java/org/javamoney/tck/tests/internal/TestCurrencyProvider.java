@@ -11,6 +11,7 @@ package org.javamoney.tck.tests.internal;
 
 import javax.money.CurrencyQuery;
 import javax.money.CurrencyUnit;
+import javax.money.QueryType;
 import javax.money.spi.CurrencyProviderSpi;
 import java.util.*;
 
@@ -33,5 +34,10 @@ public final class TestCurrencyProvider implements CurrencyProviderSpi{
             }
         }
         return result;
+    }
+
+    @Override
+    public Set<QueryType> getQueryTypes() {
+        return QueryType.DEFAULT_SET;
     }
 }

@@ -619,14 +619,14 @@ public class CreatingMonetaryAmountsTest{
                 try{
                     f.setNumber(TestUtils.createNumberWithPrecision(f, ctx.getPrecision() + 5));
                     f.create();
-                    AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw an exception, " +
+                    AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
                                              "when an amount with exceeding precision is " +
                                              "tried" +
 
                                              " being created, type: " +
                                              type.getName());
                 }
-                catch(MonetaryException e){
+                catch(ArithmeticException e){
                     // OK
                 }
             }
@@ -635,12 +635,12 @@ public class CreatingMonetaryAmountsTest{
                     f.setNumber(TestUtils.createNumberWithScale(f, ctx.getMaxScale() + 5));
                     f.create();
                     AssertJUnit
-                            .fail("Section 4.2.6: MonetaryAmountFactory must throw an exception, " +
+                            .fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
                                           "when an amount with exceeding scale is tried" +
                                           " being created, type: " +
                                           type.getName());
                 }
-                catch(MonetaryException e){
+                catch(ArithmeticException e){
                     // OK
                 }
             }
@@ -666,18 +666,18 @@ public class CreatingMonetaryAmountsTest{
                 }
                 f.create();
                 AssertJUnit
-                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
+                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a ArithmeticException, " +
                                       "when a positive amount without a currency" +
                                       " is" +
                                       " tried to be created, type: " +
                                       type.getName());
             }
-            catch(MonetaryException e){
+            catch(ArithmeticException e){
                 // OK
             }
             catch(Exception e){
                 AssertJUnit
-                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
+                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a ArithmeticException, " +
                                       "when a positive amount without a currency" +
                                       " is" +
                                       " tried to be created, but threw " + e.getClass() + " type: " +
@@ -984,14 +984,14 @@ public class CreatingMonetaryAmountsTest{
                     f.setNumber(TestUtils.createNumberWithPrecision(f, ctx.getPrecision() + 5).negate());
                     f.create();
                     AssertJUnit
-                            .fail("Section 4.2.6: MonetaryAmountFactory must throw an exception, " +
+                            .fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
                                           "when an amount with exceeding precision is " +
                                           "tried" +
 
                                           " being created, type: " +
                                           type.getName());
                 }
-                catch(MonetaryException e){
+                catch(ArithmeticException e){
                     // OK
                 }
             }
@@ -1000,12 +1000,12 @@ public class CreatingMonetaryAmountsTest{
                     f.setNumber(TestUtils.createNumberWithScale(f, ctx.getMaxScale() + 5).negate());
                     f.create();
                     AssertJUnit
-                            .fail("Section 4.2.6: MonetaryAmountFactory must throw an exception, " +
+                            .fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
                                           "when an amount with exceeding scale is tried" +
                                           " being created, type: " +
                                           type.getName());
                 }
-                catch(MonetaryException e){
+                catch(ArithmeticException e){
                     // OK
                 }
             }

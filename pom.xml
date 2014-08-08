@@ -20,7 +20,7 @@
         <version>0.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>money-org.javamoney.tck</artifactId>
+    <artifactId>javamoney-tck</artifactId>
     <packaging>jar</packaging>
 
     <version>0.9-SNAPSHOT</version>
@@ -59,7 +59,7 @@
 
         <license.licenseName>jcp_spec</license.licenseName>
         <license.licenseResolver>src/license</license.licenseResolver>
-        <jboss.test.audit.version>1.1.1-SNAPSHOT</jboss.test.audit.version>
+        <jboss.test.audit.version>1.1.0.Final</jboss.test.audit.version>
     </properties>
 
     <developers>
@@ -246,7 +246,208 @@
         </snapshotRepository>
     </distributionManagement>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.money</groupId>
+                <artifactId>money-api</artifactId>
+                <version>${jsr.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jul-to-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mutabilitydetector</groupId>
+                <artifactId>MutabilityDetector</artifactId>
+                <version>0.9.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.mutabilitydetector</groupId>
+            <artifactId>MutabilityDetector</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.money</groupId>
+            <artifactId>money-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.javamoney</groupId>
+            <artifactId>moneta</artifactId>
+            <version>${jsr.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>2.4</version>
+            </extension>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-webdav-jackrabbit</artifactId>
+                <version>2.2</version>
+            </extension>
+        </extensions>
+
+        <pluginManagement>
+            <plugins>
+                <!-- ======================================================= -->
+                <!-- Packaging (OSGi bundle) -->
+                <!-- ======================================================= -->
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>2.3.5</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <instructions>
+                            <Export-Package>org.javamoney.* "org.javamoney.org.javamoney.tck.*</Export-Package>
+                            <Private-Package>!*</Private-Package>
+                        </instructions>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <debug>true</debug>
+                    <optimize>false</optimize>
+                    <verbose>true</verbose>
+                    <source>${maven.compile.sourceLevel}</source>
+                    <target>${maven.compile.targetLevel}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <testClassesDirectory>${build.directory}/classes</testClassesDirectory>
+                </configuration>
+            </plugin>
+
+            <!-- ======================================================= -->
+            <!-- Packaging (OSGi bundle) -->
+            <!-- ======================================================= -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>output-html</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/docs</outputDirectory>
+                            <sourceHighlighter>highlightjs</sourceHighlighter>
+                            <backend>html</backend>
+                            <embedAssets>true</embedAssets>
+                            <imagesDir>arc/main/asciidoc/images</imagesDir>
+                        </configuration>
+                    </execution>
+                    <!-- execution> <id>output-pdf</id> <phase>generate-resources</phase>
+                        <goals> <goal>process-asciidoc</goal> </goals> <configuration> <outputDirectory>target/docs</outputDirectory>
+                        <sourceHighlighter>highlightjs</sourceHighlighter> <backend>pdf</backend>
+                        </configuration> </execution -->
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <profiles>
+        <profile>
+            <id>audit</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.bsc.maven</groupId>
+                            <artifactId>maven-processor-plugin</artifactId>
+                            <version>2.0.7</version>
+                            <configuration>
+                                <defaultOutputDirectory>${basedir}/target/coverage-report</defaultOutputDirectory>
+                                <processors>
+                                    <processor>org.jboss.test.audit.report.CoverageProcessor</processor>
+                                </processors>
+                                <outputClassDirectory>${basedir}/target/classes</outputClassDirectory>
+                                <compilerArguments>
+                                    -AauditXml=${basedir}/test-audit.xml -AoutputDir=${basedir}/target/coverage-report -source ${jdkVersion} -target ${jdkVersion}
+                                </compilerArguments>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <id>process</id>
+                                    <phase>generate-sources</phase>
+                                    <goals>
+                                        <goal>process-test</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.bsc.maven</groupId>
+                        <artifactId>maven-processor-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.test-audit</groupId>
+                    <artifactId>jboss-test-audit-api</artifactId>
+                    <version>${jboss.test.audit.version}</version>
+                    <optional>true</optional>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.test-audit</groupId>
+                    <artifactId>jboss-test-audit-impl</artifactId>
+                    <version>${jboss.test.audit.version}</version>
+                    <optional>true</optional>
+                </dependency>
+            </dependencies>
+        </profile>
         <profile>
             <id>release-sign-artifacts</id>
             <activation>
@@ -273,6 +474,7 @@
                             -DrepositoryId=sonatype-nexus-staging -->
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.4</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -341,191 +543,7 @@
         </profile>
     </profiles>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>${testng.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.money</groupId>
-                <artifactId>money-api</artifactId>
-                <version>${jsr.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jul-to-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mutabilitydetector</groupId>
-                <artifactId>MutabilityDetector</artifactId>
-                <version>0.9.1</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.mutabilitydetector</groupId>
-            <artifactId>MutabilityDetector</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.money</groupId>
-            <artifactId>money-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.javamoney</groupId>
-            <artifactId>moneta</artifactId>
-            <version>${jsr.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.test-audit</groupId>
-            <artifactId>jboss-test-audit-api</artifactId>
-            <version>${jboss.test.audit.version}</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.test-audit</groupId>
-            <artifactId>jboss-test-audit-impl</artifactId>
-            <version>${jboss.test.audit.version}</version>
-            <optional>true</optional>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <defaultGoal>install</defaultGoal>
-
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ssh</artifactId>
-                <version>2.4</version>
-            </extension>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-webdav-jackrabbit</artifactId>
-                <version>2.2</version>
-            </extension>
-        </extensions>
-
-        <pluginManagement>
-            <plugins>
-                <!-- ======================================================= -->
-                <!-- Packaging (OSGi bundle) -->
-                <!-- ======================================================= -->
-                <plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-bundle-plugin</artifactId>
-                    <version>2.3.5</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <instructions>
-                            <Export-Package>org.javamoney.* "org.javamoney.org.javamoney.tck.*</Export-Package>
-                            <Private-Package>!*</Private-Package>
-                        </instructions>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.bsc.maven</groupId>
-                    <artifactId>maven-processor-plugin</artifactId>
-                    <version>2.0.7</version>
-                    <configuration>
-                        <defaultOutputDirectory>${basedir}/target/coverage-report</defaultOutputDirectory>
-                        <processors>
-                            <processor>org.jboss.test.audit.report.CoverageProcessor</processor>
-                        </processors>
-                        <outputClassDirectory>${basedir}/target/classes</outputClassDirectory>
-                        <compilerArguments>
-                            -AauditXml=${basedir}/test-audit.xml -AoutputDir=${basedir}/target/coverage-report -source ${jdkVersion} -target ${jdkVersion}
-                        </compilerArguments>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>process</id>
-                            <phase>generate-sources</phase>
-                            <goals>
-                                <goal>process-test</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <debug>true</debug>
-                    <optimize>false</optimize>
-                    <verbose>true</verbose>
-                    <source>${maven.compile.sourceLevel}</source>
-                    <target>${maven.compile.targetLevel}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <testFailureIgnore>true</testFailureIgnore>
-                    <testClassesDirectory>${build.directory}/classes</testClassesDirectory>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.bsc.maven</groupId>
-                <artifactId>maven-processor-plugin</artifactId>
-            </plugin>
-
-            <!-- ======================================================= -->
-            <!-- Packaging (OSGi bundle) -->
-            <!-- ======================================================= -->
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.asciidoctor</groupId>
-                <artifactId>asciidoctor-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>output-html</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>target/docs</outputDirectory>
-                            <sourceHighlighter>highlightjs</sourceHighlighter>
-                            <!-- coderay -->
-                            <backend>html</backend>
-                            <embedAssets>true</embedAssets>
-                            <imagesDir>arc/main/asciidoc/images</imagesDir>
-                        </configuration>
-                    </execution>
-                    <!-- execution> <id>output-pdf</id> <phase>generate-resources</phase>
-                        <goals> <goal>process-asciidoc</goal> </goals> <configuration> <outputDirectory>target/docs</outputDirectory>
-                        <sourceHighlighter>highlightjs</sourceHighlighter> <backend>pdf</backend>
-                        </configuration> </execution -->
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
     <repositories>
         <repository>
             <id>jboss-maven2-brew</id>

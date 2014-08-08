@@ -95,6 +95,11 @@ public class TestRoundingProvider implements RoundingProviderSpi{
         return null;
     }
 
+    @Override
+    public Set<QueryType> getQueryTypes() {
+        return QueryType.DEFAULT_SET;
+    }
+
 
     private MonetaryRounding getCashRounding(CurrencyUnit currency){
         if("XAU".equals(currency.getCurrencyCode())){
@@ -137,7 +142,7 @@ public class TestRoundingProvider implements RoundingProviderSpi{
     }
 
     @Override
-    public Set<String> getRoundingIds(){
+    public Set<String> getRoundingNames(){
         return customRoundings.keySet();
     }
 }
