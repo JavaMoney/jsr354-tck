@@ -31,7 +31,7 @@ public class CreatingMonetaryAmountsTest{
     /**
      * Access a MonetaryAmountFactory for each registered type.
      */
-    @Test
+    @Test(description = "4.2.6 Ensure MonetaryAmountFactory instances are accessible for all amount types under test.")
     @SpecAssertion(section = "4.2.6", id = "426-A1")
     public void testAccessToMonetaryAmountFactory(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -43,7 +43,8 @@ public class CreatingMonetaryAmountsTest{
     /**
      * For each MonetaryAmountFactory: Check if getAmountType returns the correct type.
      */
-    @Test
+    @Test(description = "4.2.6 Ensure MonetaryAmountFactory instances accessible for all amount types under test return " +
+            "correct amount type.")
     @SpecAssertion(section = "4.2.6", id = "426-A2")
     public void testMonetaryAmountFactoryReturnsCorrectType(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -58,7 +59,8 @@ public class CreatingMonetaryAmountsTest{
      * than Max
      * MonetaryContext.
      */
-    @Test
+    @Test(description = "4.2.6 Ensure MonetaryAmountFactory instances accessible for all amount types under test return " +
+            "correct min/max MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-A3")
     public void testMonetaryAmountFactoryMinMaxCapabilities(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -77,7 +79,8 @@ public class CreatingMonetaryAmountsTest{
     /**
      * Checks if capabilities of default MonetaryContext are less than Max MonetaryContext.
      */
-    @Test
+    @Test(description = "4.2.6 Ensure MonetaryAmountFactory instances accessible for all amount types under test return " +
+            "correct min/max MonetaryContext (min <= max).")
     @SpecAssertion(section = "4.2.6", id = "426-A4")
     public void testMonetaryAmountFactoryMinMaxCapabilities_Compare(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -129,7 +132,7 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmountFactory: Create zero amounts from a
      * factory with currencies.
      */
-    @Test
+    @Test(description = "4.2.6 Ensure MonetaryAmountFactory instances support creation of 0 amounts.")
     @SpecAssertion(section = "4.2.6", id = "426-B1")
     public void testMonetaryAmountFactoryCreateZeroAmountsWithDiffCurrencies(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -164,7 +167,8 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Create zero amounts from a
      * factory with monetary contexts.
      */
-    @Test
+    @Test(description = "4.2.6 Ensure MonetaryAmountFactory instances support creation of 0 amounts, with explicit " +
+            "MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-B2")
     public void testMonetaryAmountFactoryCreateZeroAmountsWithDiffContexts(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -219,7 +223,8 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Create zero amounts from a
      * factory with monetary contexts.
      */
-    @Test
+    @Test(description = "4.2.6 Ensure MonetaryAmountFactory instances support creation of 0 amounts, with different " +
+            "explicit MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-B2")
     public void testMonetaryAmountFactoryCreateZeroAmountsWithDiffContexts2(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -274,7 +279,8 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Create zero amounts from a
      * factory with monetary contexts.
      */
-    @Test
+    @Test(description = "4.2.6 Ensure MonetaryAmountFactory instances support creation of 0 amounts, with different " +
+            "explicit MonetaryContext (precision, scale).")
     @SpecAssertion(section = "4.2.6", id = "426-B2")
     public void testMonetaryAmountFactoryCreateZeroAmountsWithDiffContexts3(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -330,7 +336,8 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Bad Case: Create zero amounts
      * from a factory with an invalid currency.
      */
-    @Test
+    @Test(description = "4.2.6 Bad case: For each MonetaryAmount Factory: Create zero amounts" +
+            " from a factory with an invalid currency.")
     @SpecAssertion(section = "4.2.6", id = "426-B3")
     public void testMonetaryAmountFactoryCreateAmountsWithInvalidCurrency(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -358,7 +365,8 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Bad Case: Create zero amounts
      * from a factory with an invalid contexts.
      */
-    @Test
+    @Test(description = "4.2.6 Bad case: For each MonetaryAmount Factory: Create zero amounts" +
+            " from a factory with an invalid MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-B4")
     public void testMonetaryAmountFactoryCreateAmountsWithInvalidMonetaryContext(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -403,7 +411,7 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Create positive amounts from
      * a factory with currencies.
      */
-    @Test
+    @Test(description = "4.2.6 For each MonetaryAmount Factory: Create positive amounts.")
     @SpecAssertion(section = "4.2.6", id = "426-C1")
     public void testMonetaryAmountFactoryCreatePositiveAmountsWitCurrencies(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -439,7 +447,7 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Create positive amounts from
      * a factory with monetary contexts.
      */
-    @Test
+    @Test(description = "4.2.6 For each MonetaryAmount Factory: Create positive amounts with explicit MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-C2")
     public void testMonetaryAmountFactoryCreatePositiveAmountsWithContexts(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -494,7 +502,8 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Create positive amounts from
      * a factory with monetary contexts.
      */
-    @Test
+    @Test(description = "4.2.6 For each MonetaryAmount Factory: Create positive amounts using doubles with explicit MonetaryContext " +
+            "(precision/scale).")
     @SpecAssertion(section = "4.2.6", id = "426-C2")
     public void testMonetaryAmountFactoryCreatePositiveAmountsWithContexts2(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -549,7 +558,8 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Create positive amounts from
      * a factory with monetary contexts.
      */
-    @Test
+    @Test(description = "4.2.6 For each MonetaryAmount Factory: Create positive amounts using BigDecimal with explicit MonetaryContext " +
+            "(precision/scale).")
     @SpecAssertion(section = "4.2.6", id = "426-C2")
     public void testMonetaryAmountFactoryCreatePositiveAmountsWithContexts3(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -605,7 +615,8 @@ public class CreatingMonetaryAmountsTest{
      * amounts from a factory with an invalid numeric value (exceeding max
      * MonetaryContext).
      */
-    @Test
+    @Test(description = "4.2.6 Bad case: For each MonetaryAmount Factory: Create positive amounts using invalid numbers," +
+            " expecting ArithemticException thrown.")
     @SpecAssertion(section = "4.2.6", id = "426-C3")
     public void testMonetaryAmountFactoryCreatePositiveAmountsWithInvalidNumber(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -650,7 +661,8 @@ public class CreatingMonetaryAmountsTest{
     /**
      * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an no currency.
      */
-    @Test
+    @Test(description = "4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts without currency," +
+            " expecting MonetaryException thrown.")
     @SpecAssertion(section = "4.2.6", id = "426-C4")
     public void testMonetaryAmountFactoryCreatePositiveNoCurrency_BadCase(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -666,18 +678,18 @@ public class CreatingMonetaryAmountsTest{
                 }
                 f.create();
                 AssertJUnit
-                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a ArithmeticException, " +
+                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
                                       "when a positive amount without a currency" +
                                       " is" +
                                       " tried to be created, type: " +
                                       type.getName());
             }
-            catch(ArithmeticException e){
+            catch(MonetaryException e){
                 // OK
             }
             catch(Exception e){
                 AssertJUnit
-                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a ArithmeticException, " +
+                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
                                       "when a positive amount without a currency" +
                                       " is" +
                                       " tried to be created, but threw " + e.getClass() + " type: " +
@@ -689,7 +701,8 @@ public class CreatingMonetaryAmountsTest{
     /**
      * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an invalid currency.
      */
-    @Test
+    @Test(description = "4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts with an invalid currency," +
+            " expecting MonetaryException thrown.")
     @SpecAssertion(section = "4.2.6", id = "426-C4")
     public void testMonetaryAmountFactoryCreatePositiveInvalidCurrency_BadCase(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -722,7 +735,8 @@ public class CreatingMonetaryAmountsTest{
     /**
      * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an invalid currency.
      */
-    @Test
+    @Test(description = "4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts with an invalid currency," +
+            " expecting MonetaryException thrown.")
     @SpecAssertion(section = "4.2.6", id = "426-C5")
     public void testMonetaryAmountFactoryCreatePositiveInvalidContext_BadCase(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -767,7 +781,7 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Create negative amounts from
      * a factory with currencies.
      */
-    @Test
+    @Test(description = "4.2.6 For each MonetaryAmount Factory: Create negative amounts.")
     @SpecAssertion(section = "4.2.6", id = "426-D1")
     public void testMonetaryAmountFactoryNegativePositiveAmountsWitCurrencies(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -803,7 +817,8 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Create negative amounts from
      * a factory with monetary contexts.
      */
-    @Test
+    @Test(description = "4.2.6 For each MonetaryAmount Factory: Create negative amounts, with explicit" +
+            " MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-D2")
     public void testMonetaryAmountFactoryNegativePositiveAmountsWithContexts(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -858,7 +873,8 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Create negative amounts from
      * a factory with monetary contexts.
      */
-    @Test
+    @Test(description = "4.2.6 For each MonetaryAmount Factory: Create negative amounts, with explicit " +
+            "MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-D2")
     public void testMonetaryAmountFactoryNegativePositiveAmountsWithContexts2(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -913,7 +929,8 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Create negative amounts from
      * a factory with monetary contexts.
      */
-    @Test
+    @Test(description = "4.2.6 For each MonetaryAmount Factory: Create negative amounts, with explicit " +
+            "MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-D2")
     public void testMonetaryAmountFactoryNegativePositiveAmountsWithContexts3(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -969,7 +986,8 @@ public class CreatingMonetaryAmountsTest{
      * amounts from a factory with an invalid numeric value (exceeding max
      * MonetaryContext).
      */
-    @Test
+    @Test(description = "4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts, with invalid " +
+            "numeric value, expect ArithmeticException.")
     @SpecAssertion(section = "4.2.6", id = "426-D3")
     public void testMonetaryAmountFactoryNegativePositiveAmountsWithInvalidNumber(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -1015,7 +1033,8 @@ public class CreatingMonetaryAmountsTest{
     /**
      * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an no currency.
      */
-    @Test
+    @Test(description = "4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts, with no " +
+            "currency, expect MonetaryException.")
     @SpecAssertion(section = "4.2.6", id = "426-D4")
     public void testMonetaryAmountFactoryCreateNegativeNoCurrency_BadCase(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -1053,7 +1072,8 @@ public class CreatingMonetaryAmountsTest{
     /**
      * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an invalid currency.
      */
-    @Test
+    @Test(description = "4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts, with invalid " +
+            "currency, expect MonetaryException.")
     @SpecAssertion(section = "4.2.6", id = "426-D4")
     public void testMonetaryAmountFactoryCreateNegativeInvalidCurrency_BadCase(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -1085,7 +1105,8 @@ public class CreatingMonetaryAmountsTest{
     /**
      * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an invalid currency.
      */
-    @Test
+    @Test(description = "4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts, with no " +
+            "currency, expect MonetaryException.")
     @SpecAssertion(section = "4.2.6", id = "426-D5")
     public void testMonetaryAmountFactoryCreateNegativeInvalidContext_BadCase(){
         for(Class type : MonetaryAmounts.getAmountTypes()){

@@ -24,7 +24,7 @@ public class TCKSetupTest{
             section = "0",
             id = "Setup",
             note = "Tests that a TestConfiguration is registered with the JDK's ServiceLoader.")
-    @Test
+    @Test(description = "TCK Setup: ensure TCK Configuration is registered and available.")
     public void testTestSetup(){
         AssertJUnit.assertTrue("TCK Configuration not available.", TCKTestSetup.getTestConfiguration() != null);
         AssertJUnit.assertNotNull(TCKTestSetup.getTestConfiguration());
@@ -35,7 +35,7 @@ public class TCKSetupTest{
             id = "Setup",
             note = "Checks that TestConfiguration.getAmountClasses() returns a non empty collection of amount " +
                     "implementations")
-    @Test
+    @Test(description = "TChecks that MonetaryAmount classes are registered for testing.")
     public void testTestAmountConfiguration(){
         Collection<Class> amountClasses = TCKTestSetup.getTestConfiguration().getAmountClasses();
         AssertJUnit.assertNotNull("TCK Test Configuration amount classes are null.", amountClasses);

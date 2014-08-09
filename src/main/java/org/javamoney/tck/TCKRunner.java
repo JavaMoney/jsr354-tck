@@ -100,19 +100,20 @@ public class TCKRunner extends XmlSuite{
         @Override
         public void onTestFailure(ITestResult tr){
             failed++;
+            String location = tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName();
             try{
                 Method realTestMethod = tr.getMethod().getMethod();
-                Test specAssert = realTestMethod.getAnnotation(Test.class);
-                if(specAssert!=null && specAssert.description()!=null && !specAssert.description().isEmpty()){
+                Test testAnnot = realTestMethod.getAnnotation(Test.class);
+                if(testAnnot!=null && testAnnot.description()!=null && !testAnnot.description().isEmpty()){
                     if(tr.getThrowable()!=null){
                         StringWriter sw = new StringWriter();
                         PrintWriter w = new PrintWriter(sw);
                         tr.getThrowable().printStackTrace(w);
                         w.flush();
-                        log("[FAILED] " + specAssert.description() + ":\n"+sw.toString());
+                        log("[FAILED]  " + testAnnot.description() + "("+location+"):\n"+sw.toString());
                     }
                     else{
-                        log("[FAILED] " + specAssert.description());
+                        log("[FAILED]  " + testAnnot.description()+ "("+location+")");
                     }
                 }
                 else{
@@ -122,10 +123,10 @@ public class TCKRunner extends XmlSuite{
                         PrintWriter w = new PrintWriter(sw);
                         tr.getThrowable().printStackTrace(w);
                         w.flush();
-                        log("[FAILED] " + tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName() + ":\n"+sw.toString());
+                        log("[FAILED]  " + location + ":\n"+sw.toString());
                     }
                     else{
-                        log("[FAILED] " + tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName());
+                        log("[FAILED]  " + location);
                     }
                 }
             }
@@ -137,14 +138,15 @@ public class TCKRunner extends XmlSuite{
         @Override
         public void onTestSkipped(ITestResult tr){
             skipped++;
+            String location = tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName();
             try{
                 Method realTestMethod = tr.getMethod().getMethod();
                 Test specAssert = realTestMethod.getAnnotation(Test.class);
                 if(specAssert!=null && specAssert.description()!=null && !specAssert.description().isEmpty()){
-                    log("[SKIPPED] " + specAssert.description());
+                    log("[SKIPPED] " + specAssert.description()+ "("+location+")");
                 }
                 else{
-                    log("[SKIPPED] " + tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName());
+                    log("[SKIPPED] " + location);
                 }
             }
             catch(IOException e){
@@ -155,14 +157,15 @@ public class TCKRunner extends XmlSuite{
         @Override
         public void onTestSuccess(ITestResult tr){
             success++;
+            String location = tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName();
             try{
                 Method realTestMethod = tr.getMethod().getMethod();
                 Test specAssert = realTestMethod.getAnnotation(Test.class);
                 if(specAssert!=null && specAssert.description()!=null && !specAssert.description().isEmpty()){
-                    log("[SUCCESS] " + specAssert.description());
+                    log("[SUCCESS] " + specAssert.description()+ "("+location+")");
                 }
                 else{
-                    log("[SUCCESS] " + tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName());
+                    log("[SUCCESS] " + location);
                 }
             }
             catch(IOException e){

@@ -34,7 +34,7 @@ public class ProviderChainsTest{
      * Test correct rate evaluation for different provider chains, providers defined by the TCK.<p>
      * Hint do not use non TCK provider for this test, it will make results undeterministic.
      */
-    @Test
+    @Test(description = "4.3.4 Test correct rate evaluation for different conversion provider chains.")
     @SpecAssertion(id = "434-A1", section = "4.3.4")
     public void testCorrectRateEvaluationInChain_diffProviders(){
         ExchangeRateProvider prov1 = MonetaryConversions
@@ -84,7 +84,8 @@ public class ProviderChainsTest{
      * Test correct rate evaluation for different provider chains, providers defined by the TCK.<p>
      * Hint do not use non TCK provider for this test, it will make results undeterministic.
      */
-    @Test
+    @Test(description = "4.3.4 Test correct rate evaluation for different conversion provider chains, " +
+            "with duplicate provider entries.")
     @SpecAssertion(id = "434-A1", section = "4.3.4")
     public void testCorrectRateEvaluationInChain_sameProviders(){
         ExchangeRateProvider prov1 = MonetaryConversions
@@ -106,7 +107,8 @@ public class ProviderChainsTest{
      * with historic rates.<p>
      * Hint do not use non TCK provider for this test, it will make results undeterministic.
      */
-    @Test
+    @Test(description = "4.3.4 Test correct rate evaluation for different conversion provider chains, " +
+            "with historic rates.")
     @SpecAssertion(id = "434-A2", section = "4.3.4")
     public void testCorrectRateEvaluationInChainHistoric(){
         ExchangeRateProvider prov1 = MonetaryConversions
@@ -124,7 +126,7 @@ public class ProviderChainsTest{
      * Test availability of providers defined by the TCK.<p>
      * Hint do not use non TCK provider for this test, it will make results undeterministic.
      */
-    @Test
+    @Test(description = "4.3.4 Test availability of TCK provided providers.")
     @SpecAssertion(id = "434-A3", section = "4.3.4")
     public void testTCKRateChainAvailability(){
         Collection<String> provNames = MonetaryConversions.getProviderNames();

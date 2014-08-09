@@ -38,7 +38,7 @@ public class ModellingMonetaryAmountsTest{
      * by calling MonetaryAmounts.getAmountTypes();
      */
     @SpecAssertion(section = "4.2.2", id = "422-0")
-    @Test
+    @Test(description="4.2.2 Ensure MonetaryAmounts.getAmountTypes() is not null and not empty.")
     public void testEnsureMonetaryAmount(){
         AssertJUnit.assertNotNull("Section 4.2.2: MonetaryAmounts.getAmountTypes() must never return null.",
                                   MonetaryAmounts.getAmountTypes());
@@ -52,7 +52,7 @@ public class ModellingMonetaryAmountsTest{
      * returns correct results.
      */
     @SpecAssertion(section = "4.2.2", id = "422-A1")
-    @Test
+    @Test(description="4.2.2 Ensure amount can be created with all default currencies.")
     public void testCurrencyCode(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             for(Currency jdkCur : Currency.getAvailableCurrencies()){
@@ -60,7 +60,7 @@ public class ModellingMonetaryAmountsTest{
                         MonetaryAmounts.getDefaultAmountFactory().setCurrency(jdkCur.getCurrencyCode()).setNumber(10.15)
                                 .create();
                 AssertJUnit.assertNotNull(
-                        "Section 4.2.2: Amount factory returned null for new amount,m type: " + type.getName(), amount);
+                        "Section 4.2.2: Amount factory returned null for new amount type: " + type.getName(), amount);
                 AssertJUnit.assertNotNull(
                         "Section 4.2.2: Amount factory returned new amount with null currency, type: " + type.getName(),
                         amount.getCurrency());
@@ -77,7 +77,7 @@ public class ModellingMonetaryAmountsTest{
      * returns correct results.
      */
     @SpecAssertion(section = "4.2.2", id = "422-A2")
-    @Test
+    @Test(description="4.2.2 Ensure amounts created return correct getNumber().")
     public void testGetNumber(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -120,7 +120,7 @@ public class ModellingMonetaryAmountsTest{
      * getMonetaryContext() returns correct results.
      */
     @SpecAssertion(section = "4.2.2", id = "422-A3")
-    @Test
+    @Test(description="4.2.2 Ensure amounts created return correct getMonetaryContext().")
     public void testGetMonetaryContext(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -175,7 +175,7 @@ public class ModellingMonetaryAmountsTest{
      * returns correct results.
      */
     @SpecAssertion(section = "4.2.2", id = "422-A4")
-    @Test
+    @Test(description="4.2.2 For each amount class, test isNegative().")
     public void testIsNegative(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -204,7 +204,7 @@ public class ModellingMonetaryAmountsTest{
      * returns correct results.
      */
     @SpecAssertion(section = "4.2.2", id = "422-A5")
-    @Test
+    @Test(description="4.2.2 For each amount class, test isPositive().")
     public void testIsPositive(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -234,7 +234,7 @@ public class ModellingMonetaryAmountsTest{
      * returns correct results.
      */
     @SpecAssertion(section = "4.2.2", id = "422-A6")
-    @Test
+    @Test(description="4.2.2 For each amount class, test isZero().")
     public void testIsZero(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -263,7 +263,7 @@ public class ModellingMonetaryAmountsTest{
      * returns correct results (-0, +0 == 0).
      */
     @SpecAssertion(section = "4.2.2", id = "422-A6")
-    @Test
+    @Test(description="4.2.2 For each amount class, test isZero(), advanced.")
     public void testIsZeroAdvanced(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -286,7 +286,7 @@ public class ModellingMonetaryAmountsTest{
      * implemented correctly.
      */
     @SpecAssertion(section = "4.2.2", id = "422-A7")
-    @Test
+    @Test(description="4.2.2 For each amount class, test signum().")
     public void testSignum(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = getAmountFactory(type);
@@ -311,7 +311,7 @@ public class ModellingMonetaryAmountsTest{
      * returns correct results.
      */
     @SpecAssertion(section = "4.2.2", id = "422-A8")
-    @Test
+    @Test(description="4.2.2 For each amount class, test isNegativeOrZero().")
     public void testIsNegativeOrZero(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -340,7 +340,7 @@ public class ModellingMonetaryAmountsTest{
      * returns correct results.
      */
     @SpecAssertion(section = "4.2.2", id = "422-A9")
-    @Test
+    @Test(description="4.2.2 For each amount class, test isPositiveOrZero().")
     public void testIsPositiveOrZero(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -373,7 +373,7 @@ public class ModellingMonetaryAmountsTest{
      * instances created are of the same type.
      */
     @SpecAssertion(section = "4.2.2", id = "422-B1")
-    @Test
+    @Test(description="4.2.2 For each amount class, access factory and create amounts.")
     public void testMonetaryAmountFactories(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = getAmountFactory(type);
@@ -405,7 +405,8 @@ public class ModellingMonetaryAmountsTest{
      * be equal (or even be identical!).
      */
     @SpecAssertion(section = "4.2.2", id = "422-B2")
-    @Test
+    @Test(description="4.2.2 For each amount class, access factory and create amounts, ensure amounts are equal if they" +
+            "should.")
     public void testMonetaryAmountFactories_InstancesMustBeEqual(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -454,7 +455,7 @@ public class ModellingMonetaryAmountsTest{
      * numeric value.
      */
     @SpecAssertion(section = "4.2.2", id = "422-B3")
-    @Test
+    @Test(description="4.2.2 For each amount class, check new amounts are not equal.")
     public void testMonetaryAmountFactories_InstantesMustBeNotEqual(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = getAmountFactory(type);
@@ -488,7 +489,7 @@ public class ModellingMonetaryAmountsTest{
      * and by passing a CurrencyUnit.
      */
     @SpecAssertion(section = "4.2.2", id = "422-B4")
-    @Test
+    @Test(description="4.2.2 For each amount class, check multiple instances are not equal.")
     public void testMonetaryAmountFactories_CreateWithCurrencies(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = getAmountFactory(type);
@@ -521,7 +522,7 @@ public class ModellingMonetaryAmountsTest{
      * instances must be non equal and have the same currency and number value.
      */
     @SpecAssertion(section = "4.2.2", id = "422-B5")
-    @Test
+    @Test(description="4.2.2 For each amount class, check new amounts with explcit MonetaryContext.")
     public void testMonetaryAmountFactories_CreateWithMonetaryContext(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = getAmountFactory(type);
@@ -550,7 +551,7 @@ public class ModellingMonetaryAmountsTest{
      * new number and a new currency. The instances must be non equal.
      */
     @SpecAssertion(section = "4.2.2", id = "422-B6")
-    @Test
+    @Test(description="4.2.2 For each amount class, check new amounts are not equal for different currencies and contexts.")
     public void testMonetaryAmountFactories_CreateWithMonetaryContextNumberAndCurrency(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -575,7 +576,7 @@ public class ModellingMonetaryAmountsTest{
      * Test isGreaterThan() is implemented correctly for each amount type regardless of trailing zeroes.
      */
     @SpecAssertion(section = "4.2.2", id = "422-C1")
-    @Test
+    @Test(description="4.2.2 For each amount class, check isGreaterThan().")
     public void testMonetaryAmount_isGreaterThan(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = getAmountFactory(type);
@@ -604,7 +605,7 @@ public class ModellingMonetaryAmountsTest{
      * zeroes.
      */
     @SpecAssertion(section = "4.2.2", id = "422-C2")
-    @Test
+    @Test(description="4.2.2 For each amount class, check isGreaterThanOrEquals().")
     public void testMonetaryAmount_isGreaterThanOrEquals(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = getAmountFactory(type);
@@ -633,7 +634,7 @@ public class ModellingMonetaryAmountsTest{
      * zeroes.
      */
     @SpecAssertion(section = "4.2.2", id = "422-C3")
-    @Test
+    @Test(description="4.2.2 For each amount class, check isLessThan().")
     public void testMonetaryAmount_isLessThan(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             MonetaryAmountFactory<MonetaryAmount> f = getAmountFactory(type);
@@ -662,7 +663,7 @@ public class ModellingMonetaryAmountsTest{
      * zeroes.
      */
     @SpecAssertion(section = "4.2.2", id = "422-C4")
-    @Test
+    @Test(description="4.2.2 For each amount class, check isLessThanOrEqualTo().")
     public void testMonetaryAmount_isLessThanOrEqualTo(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -694,7 +695,7 @@ public class ModellingMonetaryAmountsTest{
      * zeroes.
      */
     @SpecAssertion(section = "4.2.2", id = "422-C5")
-    @Test
+    @Test(description="4.2.2 For each amount class, check isEqualTo().")
     public void testMonetaryAmount_isEqualTo(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -788,7 +789,7 @@ public class ModellingMonetaryAmountsTest{
      * {@code }isEqualTo()} return true, regardless of MonetaryContext.
      */
     @SpecAssertion(section = "4.2.2", id = "422-C6")
-    @Test
+    @Test(description="4.2.2 For each amount class, check isEqualTo(), regardless different MonetaryContext instances.")
     public void testMonetaryAmount_isEqualToRegardlessMonetaryContext(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -853,7 +854,7 @@ public class ModellingMonetaryAmountsTest{
      * {@code }isEqualTo()} return true, regardless of iumplementation type.
      */
     @SpecAssertion(section = "4.2.2", id = "422-C7")
-    @Test
+    @Test(description="4.2.2 For each amount class, check isEqualTo(), regardless implementation type.")
     public void testMonetaryAmount_isEqualToRegardlessType(){
         List<MonetaryAmount> instances = new ArrayList<>();
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -878,7 +879,7 @@ public class ModellingMonetaryAmountsTest{
      * Tests that add() correctly adds two values, using positive integers.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D1")
-    @Test
+    @Test(description="4.2.2 For each amount class, check m1.add(m2), m1 >0, m2>0.")
     public void testAddPositiveIntegers(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -902,7 +903,7 @@ public class ModellingMonetaryAmountsTest{
      * Tests that add() correctly adds two values, using negative integers.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D1")
-    @Test
+    @Test(description="4.2.2 For each amount class, check m1.add(m2), m1 <0, m2<0.")
     public void testAddNegativeIntegers(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -923,7 +924,7 @@ public class ModellingMonetaryAmountsTest{
      * Tests that add() correctly adds two values, using fractions.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D1")
-    @Test
+    @Test(description="4.2.2 For each amount class, check m1.add(m2), m2 is fraction.")
     public void testAddPositiveFractions(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -944,7 +945,7 @@ public class ModellingMonetaryAmountsTest{
      * Tests that add() correctly adds two values, using positive and negative integers.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D1")
-    @Test
+    @Test(description="4.2.2 For each amount class, check m1.add(m2), m1, m2 = mixed ints.")
     public void testAddMixedIntegers(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -991,7 +992,7 @@ public class ModellingMonetaryAmountsTest{
      * Tests that add() correctly adds two values, using positive and negative fractions.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D1")
-    @Test
+    @Test(description="4.2.2 For each amount class, check m1.add(m2), m1, m2 = mixed fractions.")
     public void testAddMixedFractions(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1039,7 +1040,7 @@ public class ModellingMonetaryAmountsTest{
      * MonetaryException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D2")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure currency compatibility is working.")
     public void testAdd_IncompatibleCurrencies(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1063,7 +1064,7 @@ public class ModellingMonetaryAmountsTest{
      * Tests that add(0) should return itself.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D3")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure m2 = m1,add(0) -> m1==m2.")
     public void testAdd_Zero(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1083,7 +1084,7 @@ public class ModellingMonetaryAmountsTest{
      * a MonetaryException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D4")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure ArithemticException is thrown when adding exceeding values.")
     public void testAdd_ExceedsCapabilities(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1145,7 +1146,7 @@ public class ModellingMonetaryAmountsTest{
      * a MonetaryException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D5")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure NullPointerException is thrown when calling m.add(null).")
     public void testAdd_Null(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1168,7 +1169,7 @@ public class ModellingMonetaryAmountsTest{
      * Tests that subtract() correctly adds two values, using positive integers.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D6")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure correct subtraction of positive ints.")
     public void testSubtractPositiveIntegers(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1189,7 +1190,7 @@ public class ModellingMonetaryAmountsTest{
      * Tests that subtract() correctly adds two values, using negative integers.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D6")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure correct subtraction of negative ints.")
     public void testSubtractNegativeIntegers(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1210,7 +1211,7 @@ public class ModellingMonetaryAmountsTest{
      * Tests that subtract() correctly adds two values, using fractions.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D6")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure correct subtraction of positive fractions.")
     public void testSubtractPositiveFractions(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1231,7 +1232,7 @@ public class ModellingMonetaryAmountsTest{
      * Tests that subtract() correctly adds two values, using positive and negative integers.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D6")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure correct subtraction of mixed ints.")
     public void testSubtractMixedIntegers(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1278,7 +1279,7 @@ public class ModellingMonetaryAmountsTest{
      * Tests that subtract() correctly adds two values, using positive and negative fractions.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D6")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure correct subtraction of mixed fractions.")
     public void testSubtractMixedFractions(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1326,7 +1327,7 @@ public class ModellingMonetaryAmountsTest{
      * MonetaryException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D8")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure subtraction with invalid currency throws MonetaryException.")
     public void testSubtract_IncompatibleCurrencies(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1350,7 +1351,7 @@ public class ModellingMonetaryAmountsTest{
      * Tests that subtract(0) should return itself.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D7")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure subtraction of 0 returns same instance.")
     public void testSubtract_Zero(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1370,7 +1371,7 @@ public class ModellingMonetaryAmountsTest{
      * a MonetaryException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D9")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure subtraction with exceeding capabilities throws ArithmeticException.")
     public void testSubtract_ExceedsCapabilities(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1442,7 +1443,7 @@ public class ModellingMonetaryAmountsTest{
      * a MonetaryException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D10")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure subtraction with null throws NullPointerException.")
     public void testSubtract_Null(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1464,7 +1465,7 @@ public class ModellingMonetaryAmountsTest{
      * Test multiply() allow to multiply numbers.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D11")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure correct multiplication of int values.")
     public void testMultiply_Integral(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1498,7 +1499,7 @@ public class ModellingMonetaryAmountsTest{
      * Test multiply() allow to multiply numbers.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D11")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure correct multiplication of decimal values.")
     public void testMultiply_Decimals(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1532,7 +1533,7 @@ public class ModellingMonetaryAmountsTest{
      * Test multiply(1) returns this.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D12")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure multiplication by one returns same instance.")
     public void testMultiplyOne(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1562,7 +1563,7 @@ public class ModellingMonetaryAmountsTest{
      * ArithmeticException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D13")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure multiplication with exceeding values throws ArithmeticException.")
     public void testMultiplyExceedsCapabilities(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1626,7 +1627,7 @@ public class ModellingMonetaryAmountsTest{
      * Test multiply(null) must throw an NullPointerException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D14")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure multiplication of null throws NullPointerException.")
     public void testMultiplyNull(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1650,7 +1651,7 @@ public class ModellingMonetaryAmountsTest{
      * Test divide() function allow to divide numbers.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D15")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure correct division.")
     public void testDivide(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1671,7 +1672,7 @@ public class ModellingMonetaryAmountsTest{
      * Test divideToIntegralValue() function allow to divide numbers.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D15")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure correct division with int values.")
     public void testDivideToIntegralValue(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1701,7 +1702,7 @@ public class ModellingMonetaryAmountsTest{
      * Test divide(0) function must throw an ArithmeticException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D16")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure divide(0) throws ArithmeticException.")
     public void testDivideZero(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1724,7 +1725,7 @@ public class ModellingMonetaryAmountsTest{
      * Test divide(1) should return this.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D17")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure divide 1 returns same instance.")
     public void testDivideOne(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1748,7 +1749,7 @@ public class ModellingMonetaryAmountsTest{
      * Test  divide(null)must throw a NullPointerException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D18")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure divide by null throws NullPointerException.")
     public void testDivideNull(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1771,7 +1772,7 @@ public class ModellingMonetaryAmountsTest{
      * Test  remainder()allow to calculate the remainder.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D19")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure correct results for remainder.")
     public void testRemainder(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1811,7 +1812,7 @@ public class ModellingMonetaryAmountsTest{
      * Test remainder(0) must throw an ArithmeticException
      */
     @SpecAssertion(section = "4.2.2", id = "422-D20")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure remainder(0), double, throws ArithmeticException.")
     public void testRemainderZero_Double(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1839,7 +1840,7 @@ public class ModellingMonetaryAmountsTest{
      * Test remainder(0) must throw an ArithmeticException
      */
     @SpecAssertion(section = "4.2.2", id = "422-D20")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure remainder(0), long, throws ArithmeticException.")
     public void testRemainderZero_Long(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1867,7 +1868,7 @@ public class ModellingMonetaryAmountsTest{
      * Test remainder(0) must throw an ArithmeticException
      */
     @SpecAssertion(section = "4.2.2", id = "422-D20")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure remainder(0), Number, throws ArithmeticException.")
     public void testRemainderZero_Number(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1895,7 +1896,7 @@ public class ModellingMonetaryAmountsTest{
      * Test remainder(null) must throw a NullPointerException
      */
     @SpecAssertion(section = "4.2.2", id = "422-D21")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure remainder(null), throws NullPointerException.")
     public void testRemainderNull(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1918,7 +1919,7 @@ public class ModellingMonetaryAmountsTest{
      * Test  divideAndRemainder()allow to divide/remind numbers.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D22")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure correct divideAndRemainder().")
     public void testDivideAndRemainder(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1954,7 +1955,7 @@ public class ModellingMonetaryAmountsTest{
      * Test  divideAndRemainder(0) throws an ArithmeticException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D23")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure correct divideAndRemainderZero().")
     public void testDivideAndRemainderZero(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -1981,7 +1982,7 @@ public class ModellingMonetaryAmountsTest{
      * Test  divideAndRemainder(null) throws an NullPointerException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D24")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure divideAndRemainder(null) throws a NullPointerException.")
     public void testDivideAndRemainderNull(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -2005,7 +2006,7 @@ public class ModellingMonetaryAmountsTest{
      * Test  divideAndRemainder(1) returns this/ZERO.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D25")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure divideAndRemainder(1) returns same instance.")
     public void testDivideAndRemainderOne(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -2034,7 +2035,7 @@ public class ModellingMonetaryAmountsTest{
      * Test scaleByPowerOfTen()allow to scale by power of 10.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D26")
-    @Test
+    @Test(description="4.2.2 For each amount class, ensure scaleByPowerOfTen(1) returns correct results.")
     public void testScaleByPowerOfTen(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -2069,7 +2070,7 @@ public class ModellingMonetaryAmountsTest{
      * Test abs() for getting the absolute value.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D27")
-    @Test
+    @Test(description="4.2.2 For each amount class, test absolute().")
     public void testAbsolute(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -2096,7 +2097,7 @@ public class ModellingMonetaryAmountsTest{
      * Test negate() for negating a value.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D28")
-    @Test
+    @Test(description="4.2.2 For each amount class, test negate().")
     public void testNegate(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -2119,7 +2120,7 @@ public class ModellingMonetaryAmountsTest{
      * amounts of the same type and correct value.
      */
     @SpecAssertion(section = "4.2.2", id = "422-E1")
-    @Test
+    @Test(description="4.2.2 For each amount class, test with().")
     public void testWith(){
         MonetaryOperator op = (amount) -> amount;
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -2148,7 +2149,7 @@ public class ModellingMonetaryAmountsTest{
      * amounts of the same type and correct value, testing operators provided by TCKTestSetup.
      */
     @SpecAssertion(section = "4.2.2", id = "422-E1")
-    @Test
+    @Test(description="4.2.2 For each amount class, test with().")
     public void testWith4ProvidedOperators(){
         for(MonetaryOperator op : TCKTestSetup.getTestConfiguration().getMonetaryOperators4Test()){
             for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -2178,7 +2179,7 @@ public class ModellingMonetaryAmountsTest{
      * Test with(m) throws a MonetaryException, if m throws any exception.
      */
     @SpecAssertion(section = "4.2.2", id = "422-E2")
-    @Test
+    @Test(description="4.2.2 Bad case: For each amount class, test with(), operator throws exception.")
     public void testWithInvalidOperator(){
         MonetaryOperator op = new MonetaryOperator(){
             @Override
@@ -2207,7 +2208,7 @@ public class ModellingMonetaryAmountsTest{
      * Test with(null) throws a NullPointerException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-E2")
-    @Test
+    @Test(description="4.2.2 Bad case: For each amount class, test with(null), expected NullPointerException.")
     public void testWithNull(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -2230,7 +2231,7 @@ public class ModellingMonetaryAmountsTest{
      * Test with(null) throws a NullPointerException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-E2")
-    @Test
+    @Test(description="4.2.2 Bad case: For each amount class, test with(), operator throws exception.")
     public void testWithNull4ProvidedOperators(){
         for(MonetaryOperator op : TCKTestSetup.getTestConfiguration().getMonetaryOperators4Test()){
             try{
@@ -2250,7 +2251,7 @@ public class ModellingMonetaryAmountsTest{
      * valuable results.
      */
     @SpecAssertion(section = "4.2.2", id = "422-E3")
-    @Test
+    @Test(description="4.2.2 For each amount class, test query().")
     public void testQuery(){
         MonetaryQuery<Integer> query = new MonetaryQuery<Integer>(){
             @Override
@@ -2279,7 +2280,7 @@ public class ModellingMonetaryAmountsTest{
      * Test query(q) throws a MonetaryException, if q throws any exception.
      */
     @SpecAssertion(section = "4.2.2", id = "422-E4")
-    @Test
+    @Test(description="4.2.2 For each amount class, test query(), MonetaryQuery throws exception, MonetaryException expected.")
     public void testQueryInvalidQuery(){
         MonetaryQuery<Integer> query = new MonetaryQuery<Integer>(){
             @Override
@@ -2309,7 +2310,7 @@ public class ModellingMonetaryAmountsTest{
      * Test query(null) throws a NullPointerException.
      */
     @SpecAssertion(section = "4.2.2", id = "422-E4")
-    @Test
+    @Test(description="4.2.2 For each amount class, test query(null), NullPointerException expected.")
     public void testQueryNull(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -2336,7 +2337,7 @@ public class ModellingMonetaryAmountsTest{
      * context.
      */
     @SpecAssertion(section = "4.2.2", id = "422-F1")
-    @Test
+    @Test(description="4.2.2 For each amount class, test implements hashCode().")
     public void testImplementsHashCode(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -2358,7 +2359,7 @@ public class ModellingMonetaryAmountsTest{
      * context.
      */
     @SpecAssertion(section = "4.2.2", id = "422-F2")
-    @Test
+    @Test(description="4.2.2 For each amount class, test implements equals().")
     public void testImplementsEquals(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -2377,7 +2378,7 @@ public class ModellingMonetaryAmountsTest{
      * Implementations of MonetaryAmount must be Comparable.
      */
     @SpecAssertion(section = "4.2.2", id = "422-F3")
-    @Test
+    @Test(description="4.2.2 For each amount class, test is Comparable.")
     public void testImplementComparable(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
@@ -2408,7 +2409,7 @@ public class ModellingMonetaryAmountsTest{
      * Implementations of MonetaryAmount must be Serializable.
      */
     @SpecAssertion(section = "4.2.2", id = "422-F4")
-    @Test
+    @Test(description="4.2.2 For each amount class, test iis immutable.")
     public void testImmutable(){
         for(Class type : TCKTestSetup.getTestConfiguration().getAmountClasses()){
             if(type.equals(TestAmount.class)){

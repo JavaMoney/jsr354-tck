@@ -31,7 +31,7 @@ public class ModellingCurrenciesTest{
      * is available and registered/accessible from MonetaryCurrencies.
      */
     @SpecAssertion(section = "4.2.1", id = "421-A1")
-    @Test
+    @Test(description = "4.2.1 Ensure TCK has CurrencyUnit classes configured.")
     public void testEnsureCurrencyUnit(){
         AssertJUnit.assertTrue("TCK Configuration not available.", TCKTestSetup.getTestConfiguration() != null);
         AssertJUnit.assertTrue(TCKTestSetup.getTestConfiguration().getCurrencyClasses().size() > 0);
@@ -44,7 +44,7 @@ public class ModellingCurrenciesTest{
      * is unique.
      */
     @SpecAssertion(section = "4.2.1", id = "421-A2")
-    @Test
+    @Test(description = "4.2.1 Test currencies provided equal at least currencies from java.util.Currency.")
     public void testEqualISOCurrencies(){
         for(Currency currency : Currency.getAvailableCurrencies()){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
@@ -60,7 +60,7 @@ public class ModellingCurrenciesTest{
      * available from MonetaryCurrencies.
      */
     @SpecAssertion(section = "4.2.1", id = "421-A3")
-    @Test
+    @Test(description = "4.2.1 Test currencies provided have correct ISO 3-letter currency codes.")
     public void testEnforce3LetterCode4ISO(){
         for(Currency currency : Currency.getAvailableCurrencies()){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
@@ -74,7 +74,7 @@ public class ModellingCurrenciesTest{
      * default fraction digits).
      */
     @SpecAssertion(section = "4.2.1", id = "421-A4")
-    @Test
+    @Test(description = "4.2.1 Test currencies provided have correct default fraction digits and numeric code.")
     public void testISOCodes(){
         for(Currency currency : Currency.getAvailableCurrencies()){
             CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
@@ -88,7 +88,7 @@ public class ModellingCurrenciesTest{
      * Test that CurrencyUnit implementations implement hashCode.
      */
     @SpecAssertion(section = "4.2.1", id = "421-B1")
-    @Test
+    @Test(description = "4.2.1 Ensure registered CurrencyUnit classes implement hashCode.")
     public void testCurrencyClassesEqualsHashcode(){
         for(Class type : TCKTestSetup.getTestConfiguration().getCurrencyClasses()){
             TestUtils.testHasPublicMethod("Section 4.2.1", type, int.class, "hashCode");
@@ -103,7 +103,7 @@ public class ModellingCurrenciesTest{
      * Test that CurrencyUnit implementations implement equals.
      */
     @SpecAssertion(section = "4.2.1", id = "421-B2")
-    @Test
+    @Test(description = "4.2.1 Ensure registered CurrencyUnit classes implement equals.")
     public void testImplementsEquals(){
         List<CurrencyUnit> firstUnits = new ArrayList<>();
         List<CurrencyUnit> secondUnits = new ArrayList<>();
@@ -129,7 +129,7 @@ public class ModellingCurrenciesTest{
      * Test that CurrencyUnit implementations are comparable.
      */
     @SpecAssertion(section = "4.2.1", id = "421-B3")
-    @Test
+    @Test(description = "4.2.1 Ensure registered CurrencyUnit classes are Comparable.")
     public void testCurrencyClassesComparable(){
         for(Class type : TCKTestSetup.getTestConfiguration().getCurrencyClasses()){
             TestUtils.testComparable("Section 4.2.1", type);
@@ -144,7 +144,7 @@ public class ModellingCurrenciesTest{
      * Test that CurrencyUnit implementations are immutable.
      */
     @SpecAssertion(section = "4.2.1", id = "421-B4")
-    @Test
+    @Test(description = "4.2.1 Ensure registered CurrencyUnit classes are immutable.")
     public void testIsImmutable(){
         for(Class type : TCKTestSetup.getTestConfiguration().getCurrencyClasses()){
             TestUtils.testImmutable("Section 4.2.1", type);
@@ -159,7 +159,7 @@ public class ModellingCurrenciesTest{
      * Test that CurrencyUnit implementations are serializable.
      */
     @SpecAssertion(section = "4.2.1", id = "421-B6")
-    @Test
+    @Test(description = "4.2.1 Ensure registered CurrencyUnit classes are serializable.")
     public void testImplementsSerializable(){
         for(Class type : TCKTestSetup.getTestConfiguration().getCurrencyClasses()){
             TestUtils.testSerializable("Section 4.2.1", type);

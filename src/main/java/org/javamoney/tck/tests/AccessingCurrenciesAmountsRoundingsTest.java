@@ -41,7 +41,8 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Test if MonetaryCurrencies provides all ISO related entries,
      * similar to the JDK.
      */
-    @Test
+    @Test(description = "4.2.7 Test if MonetaryCurrencies provides all ISO related entries similar to " +
+            "java.util.Currency.")
     @SpecAssertion(section = "4.2.7", id = "427-A1")
     public void testAllISOCurrenciesAvailable(){
         for(Currency currency : Currency.getAvailableCurrencies()){
@@ -62,7 +63,8 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Test if MonetaryCurrencies provides all Locale related
      * entries, similar to the JDK (for all ISO countries).
      */
-    @Test
+    @Test(description = "4.2.7 Test if MonetaryCurrencies provides all locale related entries similar to " +
+            "java.util.Currency.")
     @SpecAssertion(section = "4.2.7", id = "427-A2")
     public void testAllLocaleCurrenciesAvailable(){
         for(String country : Locale.getISOCountries()){
@@ -105,7 +107,8 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Test if MonetaryCurrencies provides correct instance with ISO
      * codes.
      */
-    @Test
+    @Test(description = "4.2.7 Test if MonetaryCurrencies provides correct ISO related entries similar to " +
+            "java.util.Currency.")
     @SpecAssertion(section = "4.2.7", id = "427-A3")
     public void testCorrectISOCodes(){
         for(Currency currency : Currency.getAvailableCurrencies()){
@@ -144,7 +147,8 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Test if MonetaryCurrencies provides correct instance with
      * Locales.
      */
-    @Test
+    @Test(description = "4.2.7 Test if MonetaryCurrencies provides correct locale related entries similar to " +
+            "java.util.Currency.")
     @SpecAssertion(section = "4.2.7", id = "427-A4")
     public void testCorrectLocales(){
 
@@ -203,7 +207,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Test for custom MonetaryCurrencies provided, based on the TCK
      * TestProvider.
      */
-    @Test
+    @Test(description = "4.2.7 Test if MonetaryCurrencies provides customized locale identified currencies.")
     @SpecAssertion(section = "4.2.7", id = "427-A5")
     public void testCustomCurrencies(){
         Locale testLocale = new Locale("lang", "count", "test");
@@ -221,30 +225,13 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     // ********************************* B. Accessing Monetary Amount Factories ***********************
 
     /**
-     * Ensure the types available, must be at least one type (if one
-     * has a specified AmountFlavor.java, 2 are recommended).
-     */
-    @Test
-    @SpecAssertion(section = "4.2.7", id = "427-B1")
-    public void testAmountTypesDefined(){
-        Collection<Class> amountClasses = TCKTestSetup.getTestConfiguration().getAmountClasses();
-        AssertJUnit.assertNotNull(amountClasses);
-        AssertJUnit.assertFalse(amountClasses.isEmpty());
-        Collection<Class<? extends MonetaryAmount>> providedClasses = MonetaryAmounts.getAmountTypes();
-        for(Class amountType : amountClasses){
-            AssertJUnit.assertTrue("Section 4.2.7: Amount class not registered: " + amountType.getName(),
-                                   providedClasses.contains(amountType));
-        }
-    }
-
-    /**
      * Ensure amount factories are accessible for all types
      * available,
      * providing also the
      * some test implementations with the
      * TCK.
      */
-    @Test
+    @Test(description = "4.2.7 Ensure amount classes to test are setup and registered/available in MonetaryAmounts.")
     @SpecAssertion(section = "4.2.7", id = "427-B2")
     public void testAmountTypesProvided(){
         Collection<Class> amountClasses = TCKTestSetup.getTestConfiguration().getAmountClasses();
@@ -269,7 +256,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * every factory accessed
      * is a new instance.
      */
-    @Test
+    @Test(description = "4.2.7 Ensure amount factories are accessible for all types available in MonetaryAmounts.")
     @SpecAssertion(section = "4.2.7", id = "427-B3")
     public void testAmountTypesInstantiatable(){
         Collection<Class> amountClasses = TCKTestSetup.getTestConfiguration().getAmountClasses();
@@ -309,7 +296,8 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Ensure correct query function implementations, providing also
      * the some test implementations with the TCK.
      */
-    @Test
+    @Test(description = "4.2.7 Ensure correct query function, MonetaryAmounts.getAmountFactories should return factory" +
+            "for explicit acquired amount types.")
     @SpecAssertion(section = "4.2.7", id = "427-B4")
     public void testAmountQueryType(){
         MonetaryAmountFactoryQuery ctx = MonetaryAmountFactoryQueryBuilder.create().setTargetType(TestAmount.class).build();
@@ -333,7 +321,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Ensure a default factory is returned. Test javamoney.config
      * for  configuring default value.
      */
-    @Test
+    @Test(description = "4.2.7 Ensure a default MonetaryAmountFactory is available.")
     @SpecAssertion(section = "4.2.7", id = "427-B5")
     public void testAmountDefaultType(){
         AssertJUnit.assertNotNull("Section 4.2.7: No default MonetaryAmountFactory found.",
@@ -347,7 +335,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Access roundings using all defined currencies, including TCK
      * custom currencies.
      */
-    @Test
+    @Test(description = "4.2.7 Ensure MonetaryRoundings instances are available, for all registered currencies.")
     @SpecAssertion(section = "4.2.7", id = "427-C1")
     public void testAccessRoundingsForCustomCurrencies_Default(){
         // Using default roundings...
@@ -382,7 +370,8 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Access roundings using all defined currencies, including TCK
      * custom currencies.
      */
-    @Test
+    @Test(description = "4.2.7 Ensure MonetaryRoundings instances are available, also for any custom currency " +
+            "(not registered).")
     @SpecAssertion(section = "4.2.7", id = "427-C1")
     public void testAccessRoundingsForCustomCurrencies_Explicit(){
         // Using default roundings...
@@ -418,7 +407,8 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * custom currencies.
      */
     @Test(expectedExceptions = NullPointerException.class,
-          description = "Section 4.2.7: Expected NPE accessing a rounding with MonetaryRoundings.getRounding(null).")
+          description = "Section 4.2.7: Expected NullPointerException accessing a rounding with " +
+                  "'MonetaryRoundings.getRounding(null)'.")
     @SpecAssertion(section = "4.2.7", id = "427-C1")
     public void testAccessRoundingsForCustomCurrencies_Explicit_Null(){
         MonetaryRoundings.getRounding((CurrencyUnit) null);
@@ -430,7 +420,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * MathContext/RoundingMode, as an attribute, when running
      * on the JDK.
      */
-    @Test
+    @Test(description = "4.2.7 Ensure correct MonetaryRounding returned for a mathematical RoundingQuery.")
     @SpecAssertion(section = "4.2.7", id = "427-C2")
     public void testAccessRoundingsWithRoundingContext(){
         RoundingQuery ctx = RoundingQueryBuilder.create().setScale(1).set(RoundingMode.UP).build();
@@ -447,7 +437,8 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Access roundings using a RoundingContext, that is null.
      */
     @Test(expectedExceptions = NullPointerException.class,
-          description = "Section 4.2.7: Expected NPE for MonetaryRoundings.getRounding((RoundingContext) null).")
+          description = "4.2.7: Ensure NullPointerException is thrown for " +
+                  "'MonetaryRoundings.getRounding((RoundingContext) null)'.")
     @SpecAssertion(section = "4.2.7", id = "427-C2")
     public void testAccessRoundingsWithMonetaryContext_Null(){
         MonetaryRoundings.getRounding(null);
@@ -457,7 +448,8 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Access custom roundings and ensure TCK custom roundings are
      * registered.
      */
-    @Test
+    @Test(description = "4.2.7 Access named roundings and ensure TCK named roundings are " +
+            "registered.")
     @SpecAssertion(section = "4.2.7", id = "427-C3")
     public void testAccessCustomRoundings(){
         Set<String> ids = MonetaryRoundings.getRoundingNames();
@@ -469,7 +461,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     /**
      * Test TCK custom roundings.
      */
-    @Test
+    @Test(description = "4.2.7 Access custom roundings and ensure correct functionality.")
     @SpecAssertion(section = "4.2.7", id = "427-C4")
     public void testCustomRoundings(){
         MonetaryOperator r = MonetaryRoundings.getRounding("NOSCALE");
@@ -485,7 +477,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Test TCK custom roundings.
      */
     @Test(expectedExceptions = NullPointerException.class,
-          description = "Section 4.2.7: expected NPE for MonetaryRoundings.getRounding((String) null).")
+          description = "4.2.7: Ensure NullPointerException is thrown for MonetaryRoundings.getRounding((String) null).")
     @SpecAssertion(section = "4.2.7", id = "427-C4")
     public void testCustomRoundings_Null(){
         MonetaryRoundings.getRounding((String) null);
@@ -494,7 +486,8 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     /**
      * Test TCK custom roundings.
      */
-    @Test(expectedExceptions = MonetaryException.class)
+    @Test(expectedExceptions = MonetaryException.class, description = "4.2.7 Ensure MonetaryException is thrown for " +
+            "accessing invalid named rounding.")
     @SpecAssertion(section = "4.2.7", id = "427-C4")
     public void testCustomRoundings_Foo(){
         assertNotNull("Section 4.2.7: Expected custom rounding with name 'foo'.", MonetaryRoundings.getRounding("foo"));
