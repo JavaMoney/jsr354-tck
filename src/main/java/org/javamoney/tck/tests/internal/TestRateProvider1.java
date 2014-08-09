@@ -13,13 +13,11 @@ import org.javamoney.tck.tests.conversion.TestExchangeRate;
 
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
-import javax.money.QueryType;
 import javax.money.convert.*;
 import java.util.Objects;
-import java.util.Set;
 
 /**
- * Created by Anatole on 26.04.2014.
+ * CTest ExchangeProvider.  reated by Anatole on 26.04.2014.
  */
 public class TestRateProvider1 implements ExchangeRateProvider{
 
@@ -61,11 +59,6 @@ public class TestRateProvider1 implements ExchangeRateProvider{
     @Override
     public ProviderContext getProviderContext(){
         return PC;
-    }
-
-    @Override
-    public Set<QueryType> getQueryTypes() {
-        return QueryType.DEFAULT_SET;
     }
 
     @Override

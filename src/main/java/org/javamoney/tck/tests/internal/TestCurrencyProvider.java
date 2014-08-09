@@ -11,33 +11,27 @@ package org.javamoney.tck.tests.internal;
 
 import javax.money.CurrencyQuery;
 import javax.money.CurrencyUnit;
-import javax.money.QueryType;
 import javax.money.spi.CurrencyProviderSpi;
 import java.util.*;
 
 /**
  * Created by Anatole on 19.04.2014.
  */
-public final class TestCurrencyProvider implements CurrencyProviderSpi{
+public final class TestCurrencyProvider implements CurrencyProviderSpi {
 
     @Override
-    public Set<CurrencyUnit> getCurrencies(CurrencyQuery currencyQuery){
+    public Set<CurrencyUnit> getCurrencies(CurrencyQuery currencyQuery) {
         Set<CurrencyUnit> result = new HashSet<>(1);
-        for(String cur: currencyQuery.getCurrencyCodes()){
-            if(cur.endsWith("_test")){
+        for (String cur : currencyQuery.getCurrencyCodes()) {
+            if (cur.endsWith("_test")) {
                 result.add(new TestCurrencyUnit(cur));
             }
         }
-        for(Locale country: currencyQuery.getCountries()){
-            if("test".equals(country.getVariant())){
+        for (Locale country : currencyQuery.getCountries()) {
+            if ("test".equals(country.getVariant())) {
                 result.add(new TestCurrencyUnit(country.toString()));
             }
         }
         return result;
-    }
-
-    @Override
-    public Set<QueryType> getQueryTypes() {
-        return QueryType.DEFAULT_SET;
     }
 }

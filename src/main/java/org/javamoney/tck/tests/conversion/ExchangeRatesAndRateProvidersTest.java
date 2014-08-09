@@ -64,7 +64,7 @@ public class ExchangeRatesAndRateProvidersTest{
     @Test
     @SpecAssertion(id = "433-A1", section = "4.3.3")
     public void testAccessKnownRatesWithCodes(){
-        ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestConversionProvider");
+        ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestRateProvider");
         // Use test provider
         for(CurrencyUnit base : MonetaryCurrencies.getCurrencies()){
             if(base.equals(FOO_UNIT)){
@@ -88,7 +88,7 @@ public class ExchangeRatesAndRateProvidersTest{
     @Test
     @SpecAssertion(id = "433-A1", section = "4.3.3")
     public void testAccessKnownRatesAndContext(){
-        ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestConversionProvider");
+        ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestRateProvider");
         // Use test provider
         for(CurrencyUnit base : MonetaryCurrencies.getCurrencies()){
             if(base.equals(FOO_UNIT)){
@@ -113,17 +113,17 @@ public class ExchangeRatesAndRateProvidersTest{
     @Test
     @SpecAssertion(id = "433-A1", section = "4.3.3")
     public void testAccessKnownRatesWithCodesAndContext(){
-        ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestConversionProvider");
+        ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestRateProvider");
         // Use test provider
         for(CurrencyUnit base : MonetaryCurrencies.getCurrencies()){
-            ExchangeRate rate = prov.getExchangeRate(base.getCurrencyCode(), "XXX");
+            ExchangeRate rate = prov.getExchangeRate(base, FOO_UNIT);
             AssertJUnit
                     .assertNotNull("Identity rate, accessed by getExchangeRate(String, String, ConversionContext), " +
                                            "is not defined for " +
                                            base.getCurrencyCode() + " -> " + FOO_UNIT.getCurrencyCode(), rate
                     );
             AssertJUnit.assertEquals(rate.getBase().getCurrencyCode(), base.getCurrencyCode());
-            AssertJUnit.assertEquals(rate.getTerm().getCurrencyCode(), "XXX");
+            AssertJUnit.assertEquals(rate.getTerm().getCurrencyCode(), FOO_UNIT.getCurrencyCode());
             AssertJUnit.assertEquals(rate.getFactor().intValueExact(), 2);
         }
     }
@@ -205,7 +205,7 @@ public class ExchangeRatesAndRateProvidersTest{
     @Test
     @SpecAssertion(id = "433-A2", section = "4.3.3")
     public void testPassingOverConversionContextToSPIs(){
-        ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestConversionProvider");
+        ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestRateProvider");
         ConversionQuery ctx =
                 ConversionQueryBuilder.create().set(Locale.CANADA).set("Foo", "bar").setBaseCurrency(FOO_UNIT)
                         .setTermCurrency(MonetaryCurrencies.getCurrency("XXX")).build();
@@ -231,7 +231,7 @@ public class ExchangeRatesAndRateProvidersTest{
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_InvalidSourceCurrency(){
         for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestConversionProvider".equals(providerID)){
+            if("TestRateProvider".equals(providerID)){
                 continue;
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
@@ -257,7 +257,7 @@ public class ExchangeRatesAndRateProvidersTest{
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_NullSourceCurrency(){
         for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestConversionProvider".equals(providerID)){
+            if("TestRateProvider".equals(providerID)){
                 continue;
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
@@ -282,7 +282,7 @@ public class ExchangeRatesAndRateProvidersTest{
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_InvalidTargetCurrency(){
         for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestConversionProvider".equals(providerID)){
+            if("TestRateProvider".equals(providerID)){
                 continue;
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
@@ -308,7 +308,7 @@ public class ExchangeRatesAndRateProvidersTest{
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_NullTargetCurrency(){
         for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestConversionProvider".equals(providerID)){
+            if("TestRateProvider".equals(providerID)){
                 continue;
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
@@ -333,7 +333,7 @@ public class ExchangeRatesAndRateProvidersTest{
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_InvalidSourceCurrencyAndContext(){
         for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestConversionProvider".equals(providerID)){
+            if("TestRateProvider".equals(providerID)){
                 continue;
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
@@ -359,7 +359,7 @@ public class ExchangeRatesAndRateProvidersTest{
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_NullSourceCurrencyAndContext(){
         for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestConversionProvider".equals(providerID)){
+            if("TestRateProvider".equals(providerID)){
                 continue;
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
@@ -384,7 +384,7 @@ public class ExchangeRatesAndRateProvidersTest{
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_InvalidTargetCurrencyAndContext(){
         for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestConversionProvider".equals(providerID)){
+            if("TestRateProvider".equals(providerID)){
                 continue;
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
@@ -410,7 +410,7 @@ public class ExchangeRatesAndRateProvidersTest{
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_NullTargetCurrencyAndContext(){
         for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestConversionProvider".equals(providerID)){
+            if("TestRateProvider".equals(providerID)){
                 continue;
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
@@ -435,7 +435,7 @@ public class ExchangeRatesAndRateProvidersTest{
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_NullContext(){
         for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestConversionProvider".equals(providerID)){
+            if("TestRateProvider".equals(providerID)){
                 continue;
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);

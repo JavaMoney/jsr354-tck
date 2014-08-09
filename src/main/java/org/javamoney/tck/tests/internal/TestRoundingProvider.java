@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by Anatole on 26.04.2014.
+ * Test ExchangeProvider. Created by Anatole on 26.04.2014.
  */
 public class TestRoundingProvider implements RoundingProviderSpi{
 
@@ -95,11 +95,6 @@ public class TestRoundingProvider implements RoundingProviderSpi{
         return null;
     }
 
-    @Override
-    public Set<QueryType> getQueryTypes() {
-        return QueryType.DEFAULT_SET;
-    }
-
 
     private MonetaryRounding getCashRounding(CurrencyUnit currency){
         if("XAU".equals(currency.getCurrencyCode())){
@@ -135,10 +130,6 @@ public class TestRoundingProvider implements RoundingProviderSpi{
             };
         }
         return null;
-    }
-
-    private MonetaryOperator getCustomRounding(String customRoundingId){
-        return customRoundings.get(customRoundingId);
     }
 
     @Override

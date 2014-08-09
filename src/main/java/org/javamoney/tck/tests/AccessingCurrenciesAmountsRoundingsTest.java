@@ -435,11 +435,12 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     public void testAccessRoundingsWithRoundingContext(){
         RoundingQuery ctx = RoundingQueryBuilder.create().setScale(1).set(RoundingMode.UP).build();
         MonetaryOperator r = MonetaryRoundings.getRounding(ctx);
-        AssertJUnit.assertNotNull("Section 4.2.7: No rounding provided for MonetaryContext", r);
+        AssertJUnit.assertNotNull("Section 4.2.7: No rounding provided for RoundingQuery: " + ctx, r);
         MonetaryAmount m =
                 new TestMonetaryAmountFactory().setNumber(new BigDecimal("12.123456789101222232323")).setCurrency("CHF")
                         .create();
-        AssertJUnit.assertEquals("CHF 12.2", m.with(r).toString());
+        AssertJUnit.assertEquals("Section 4.2.7: Invalid rounding provided for RoundingQuery: " + ctx,
+                "CHF 12.2", m.with(r).toString());
     }
 
     /**
