@@ -61,7 +61,7 @@ public class ExchangeRatesAndRateProvidersTest{
      * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
-    @Test
+    @Test(description = "4.3.3 Test access to exchange rates from TestRateProvider, using target currency code.")
     @SpecAssertion(id = "433-A1", section = "4.3.3")
     public void testAccessKnownRatesWithCodes(){
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestRateProvider");
@@ -85,7 +85,7 @@ public class ExchangeRatesAndRateProvidersTest{
      * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
-    @Test
+    @Test(description = "4.3.3 Test access to exchange rates from TestRateProvider, using target CUrrencyUnit.")
     @SpecAssertion(id = "433-A1", section = "4.3.3")
     public void testAccessKnownRatesAndContext(){
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestRateProvider");
@@ -110,7 +110,7 @@ public class ExchangeRatesAndRateProvidersTest{
      * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
-    @Test
+    @Test(description = "4.3.3  Test access to conversion rates, including known factor, using TestRateProvider.")
     @SpecAssertion(id = "433-A1", section = "4.3.3")
     public void testAccessKnownRatesWithCodesAndContext(){
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestRateProvider");
@@ -132,7 +132,7 @@ public class ExchangeRatesAndRateProvidersTest{
      * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
-    @Test
+    @Test(description = "4.3.3 Test access to identity conversion rate for CurrencyUnits, using default provider")
     @SpecAssertion(id = "433-A1", section = "4.3.3")
     public void testAccessRates_IdentityRatesWithUnits(){
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(); // Use default provider
@@ -149,7 +149,7 @@ public class ExchangeRatesAndRateProvidersTest{
      * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
-    @Test
+    @Test(description = "4.3.3 Test access to conversion rate for currency codes, using default provider.")
     @SpecAssertion(id = "433-A1", section = "4.3.3")
     public void testAccessRates_IdentityRatesWithCodes(){
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(); // Use default provider
@@ -166,14 +166,14 @@ public class ExchangeRatesAndRateProvidersTest{
      * Test access to conversion rates.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
-    @Test
+    @Test(description = "4.3.3 Test access to conversion rate for CurrencyQuery, using default provider.")
     @SpecAssertion(id = "433-A1", section = "4.3.3")
     public void testAccessRates_IdentityRatesWithUnitsAndContext(){
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(); // Use default provider
         for(CurrencyUnit unit : MonetaryCurrencies.getCurrencies()){
-            ExchangeRate rate = prov.getExchangeRate(unit, unit);
+            ExchangeRate rate = prov.getExchangeRate(ConversionQueryBuilder.create().setBaseCurrency(unit).setTermCurrency(unit).build());
             AssertJUnit.assertNotNull(
-                    "Identity rate, accessed by getExchangeRate(CurrencyUnit, CurrencyUnit, ConversionContext), " +
+                    "Identity rate, accessed by getExchangeRate(ConversionQuery), " +
                             "is not defined for " +
                             unit.getCurrencyCode()
             );
@@ -181,28 +181,10 @@ public class ExchangeRatesAndRateProvidersTest{
     }
 
     /**
-     * Test access to conversion rates.<p>
-     * Hint: this assertion will require multiple tests to be written!
-     */
-    @Test
-    @SpecAssertion(id = "433-A1", section = "4.3.3")
-    public void testAccessRates_IdentityRatesWithCodesAndContext(){
-        ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(); // Use default provider
-        for(CurrencyUnit unit : MonetaryCurrencies.getCurrencies()){
-            ExchangeRate rate = prov.getExchangeRate(unit.getCurrencyCode(), unit.getCurrencyCode());
-            AssertJUnit
-                    .assertNotNull("Identity rate, accessed by getExchangeRate(String, String, ConversionContext), " +
-                                           "is not defined for " +
-                                           unit.getCurrencyCode()
-                    );
-        }
-    }
-
-    /**
      * Ensure additional ConversionContext is passed correctly to SPIs.<p>
      * Hint: this assertion will require some custom SPIs to be registered and selected for chain inclusion!
      */
-    @Test
+    @Test(description = "4.3.3 Ensure additional ConversionQuery data is passed correctly to SPIs.")
     @SpecAssertion(id = "433-A2", section = "4.3.3")
     public void testPassingOverConversionContextToSPIs(){
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestRateProvider");
@@ -211,7 +193,7 @@ public class ExchangeRatesAndRateProvidersTest{
                         .setTermCurrency(MonetaryCurrencies.getCurrency("XXX")).build();
         ExchangeRate rate = prov.getExchangeRate(ctx);
         AssertJUnit.assertNotNull(
-                "No test rate returned by getExchangeRate(CurrencyUnit, CurrencyUnit, ConversionContext), " +
+                "No test rate returned by getExchangeRate(ConversionQuery), " +
                         "probably TestProvider is not correct registered."
         );
         AssertJUnit.assertEquals(
@@ -227,7 +209,7 @@ public class ExchangeRatesAndRateProvidersTest{
      * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
-    @Test
+    @Test(description = "4.3.3 Bad case: try accessing exchange rates with invalid base currency code.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_InvalidSourceCurrency(){
         for(String providerID : MonetaryConversions.getProviderNames()){
@@ -253,7 +235,7 @@ public class ExchangeRatesAndRateProvidersTest{
      * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
-    @Test
+    @Test(description = "4.3.3 Bad case: try accessing exchange rates with null base currency code.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_NullSourceCurrency(){
         for(String providerID : MonetaryConversions.getProviderNames()){
@@ -278,7 +260,7 @@ public class ExchangeRatesAndRateProvidersTest{
      * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
-    @Test
+    @Test(description = "4.3.3 Bad case: try accessing exchange rates with invalid term currency code.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_InvalidTargetCurrency(){
         for(String providerID : MonetaryConversions.getProviderNames()){
@@ -304,7 +286,7 @@ public class ExchangeRatesAndRateProvidersTest{
      * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
-    @Test
+    @Test(description = "4.3.3 Bad case: try accessing exchange rates with null term currency code.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_NullTargetCurrency(){
         for(String providerID : MonetaryConversions.getProviderNames()){
@@ -329,7 +311,7 @@ public class ExchangeRatesAndRateProvidersTest{
      * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
-    @Test
+    @Test(description = "4.3.3 Bad case: try accessing exchange rates with null ConversionQuery.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_InvalidSourceCurrencyAndContext(){
         for(String providerID : MonetaryConversions.getProviderNames()){
@@ -338,10 +320,10 @@ public class ExchangeRatesAndRateProvidersTest{
             }
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
             try{
-                prov.getExchangeRate("dhdjbdjd", "CHF");
+                prov.getExchangeRate((ConversionQuery)null);
                 Assert.fail(
-                        "ExchangeRateProvider should throw UnknownCurrencyException when an invalid source currency " +
-                                "is passed to getExchangeRate(String,String,ConversionContext), provider: " +
+                        "ExchangeRateProvider should throw NPE when an null ConversionQuery " +
+                                "is passed to getExchangeRate(ConversionQuery), provider: " +
                                 providerID
                 );
             }
@@ -351,113 +333,12 @@ public class ExchangeRatesAndRateProvidersTest{
         }
     }
 
-    /**
-     * Bad case: try accessing rates with inconsistent/invalid data.<p>
-     * Hint: this assertion will require multiple tests to be written!
-     */
-    @Test
-    @SpecAssertion(id = "433-A3", section = "4.3.3")
-    public void testInvalidUsage_NullSourceCurrencyAndContext(){
-        for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestRateProvider".equals(providerID)){
-                continue;
-            }
-            ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
-            try{
-                prov.getExchangeRate(null, "CHF");
-                Assert.fail("ExchangeRateProvider should throw UnknownCurrencyException when an null source currency " +
-                                    "is passed to getExchangeRate(String,String,ConversionContext), provider: " +
-                                    providerID
-                );
-            }
-            catch(NullPointerException e){
-                // OK
-            }
-        }
-    }
 
     /**
      * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
-    @Test
-    @SpecAssertion(id = "433-A3", section = "4.3.3")
-    public void testInvalidUsage_InvalidTargetCurrencyAndContext(){
-        for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestRateProvider".equals(providerID)){
-                continue;
-            }
-            ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
-            try{
-                prov.getExchangeRate("CHF", "dhdjbdjd");
-                Assert.fail(
-                        "ExchangeRateProvider should throw UnknownCurrencyException when an invalid target currency " +
-                                "is passed to getExchangeRate(String,String,ConversionContext), provider: " +
-                                providerID
-                );
-            }
-            catch(UnknownCurrencyException e){
-                // OK
-            }
-        }
-    }
-
-    /**
-     * Bad case: try accessing rates with inconsistent/invalid data.<p>
-     * Hint: this assertion will require multiple tests to be written!
-     */
-    @Test
-    @SpecAssertion(id = "433-A3", section = "4.3.3")
-    public void testInvalidUsage_NullTargetCurrencyAndContext(){
-        for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestRateProvider".equals(providerID)){
-                continue;
-            }
-            ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
-            try{
-                prov.getExchangeRate("CHF", null);
-                Assert.fail("ExchangeRateProvider should throw NullPointerException when an null target currency " +
-                                    "is passed to getExchangeRate(String,String,ConversionContext), provider: " +
-                                    providerID
-                );
-            }
-            catch(NullPointerException e){
-                // OK
-            }
-        }
-    }
-
-    /**
-     * Bad case: try accessing rates with inconsistent/invalid data.<p>
-     * Hint: this assertion will require multiple tests to be written!
-     */
-    @Test
-    @SpecAssertion(id = "433-A3", section = "4.3.3")
-    public void testInvalidUsage_NullContext(){
-        for(String providerID : MonetaryConversions.getProviderNames()){
-            if("TestRateProvider".equals(providerID)){
-                continue;
-            }
-            ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
-            try{
-                prov.getExchangeRate(null);
-                Assert.fail("ExchangeRateProvider should throw NullPointerException when an null ConversionQuery " +
-                                    "is passed to getExchangeRate(ConversionQuery), provider: " +
-                                    providerID
-                );
-            }
-            catch(NullPointerException e){
-                // OK
-            }
-        }
-    }
-
-
-    /**
-     * Bad case: try accessing rates with inconsistent/invalid data.<p>
-     * Hint: this assertion will require multiple tests to be written!
-     */
-    @Test
+    @Test(description = "4.3.3 Bad case: try accessing exchange rates with null base CurrencyUnit.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_NullSourceCurrencyUnit(){
         for(String providerID : MonetaryConversions.getProviderNames()){
@@ -479,7 +360,7 @@ public class ExchangeRatesAndRateProvidersTest{
      * Bad case: try accessing rates with inconsistent/invalid data.<p>
      * Hint: this assertion will require multiple tests to be written!
      */
-    @Test
+    @Test(description = "4.3.3 Bad case: try accessing exchange rates with null term CurrencyUnit.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_NullTargetCurrencyUnit(){
         for(String providerID : MonetaryConversions.getProviderNames()){

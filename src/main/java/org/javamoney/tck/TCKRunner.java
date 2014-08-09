@@ -15,21 +15,23 @@ import org.javamoney.tck.tests.conversion.ExchangeRatesAndRateProvidersTest;
 import org.javamoney.tck.tests.conversion.MonetaryConversionsTest;
 import org.javamoney.tck.tests.conversion.ProviderChainsTest;
 import org.javamoney.tck.tests.format.FormattingMonetaryAmountsTest;
+import org.jboss.test.audit.annotations.SpecAssertion;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
+import org.testng.annotations.Test;
 import org.testng.reporters.VerboseReporter;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Main class for executing the JSR 354 TCK.
  * Created by Anatole on 12.06.2014.
  */
 public class TCKRunner extends XmlSuite{
@@ -54,16 +56,20 @@ public class TCKRunner extends XmlSuite{
     }
 
     public static void main(String... args){
+        System.out.println("-- JSR 354 TCK started --");
         List<XmlSuite> suites = new ArrayList<>();
         suites.add(new TCKRunner());
         TestNG tng = new TestNG();
         tng.setXmlSuites(suites);
         tng.setOutputDirectory("./tck-results");
         tng.addListener(new VerboseReporter());
-        TCKReporter rep = new TCKReporter(new File("c:/temp/tck-results.txt"));
+        File file = new File(System.getProperty("java.io.tmpdir"), "tck-results.txt");
+        TCKReporter rep = new TCKReporter(file);
+        System.out.println("Writing to file " + file.getAbsolutePath() + " ...");
         tng.addListener(rep);
         tng.run();
         rep.writeSummary();
+        System.out.println("-- JSR 354 TCK finished --");
     }
 
     public static final class TCKReporter extends TestListenerAdapter{
@@ -76,7 +82,14 @@ public class TCKRunner extends XmlSuite{
 
         public TCKReporter(File file){
             try{
+                if(!file.exists()){
+                    file.createNewFile();
+                }
                 w = new FileWriter(file);
+                w.write("*****************************************************************************************\n");
+                w.write("**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.0\n");
+                w.write("*****************************************************************************************\n\n");
+                w.write("Executed on " + new java.util.Date() +"\n\n" );
             }
             catch(IOException e){
                 e.printStackTrace();
@@ -88,7 +101,33 @@ public class TCKRunner extends XmlSuite{
         public void onTestFailure(ITestResult tr){
             failed++;
             try{
-                log("[FAILED] " + tr.toString());
+                Method realTestMethod = tr.getMethod().getMethod();
+                Test specAssert = realTestMethod.getAnnotation(Test.class);
+                if(specAssert!=null && specAssert.description()!=null && !specAssert.description().isEmpty()){
+                    if(tr.getThrowable()!=null){
+                        StringWriter sw = new StringWriter();
+                        PrintWriter w = new PrintWriter(sw);
+                        tr.getThrowable().printStackTrace(w);
+                        w.flush();
+                        log("[FAILED] " + specAssert.description() + ":\n"+sw.toString());
+                    }
+                    else{
+                        log("[FAILED] " + specAssert.description());
+                    }
+                }
+                else{
+
+                    if(tr.getThrowable()!=null){
+                        StringWriter sw = new StringWriter();
+                        PrintWriter w = new PrintWriter(sw);
+                        tr.getThrowable().printStackTrace(w);
+                        w.flush();
+                        log("[FAILED] " + tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName() + ":\n"+sw.toString());
+                    }
+                    else{
+                        log("[FAILED] " + tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName());
+                    }
+                }
             }
             catch(IOException e){
                 throw new IllegalStateException("IO Error", e);
@@ -99,7 +138,14 @@ public class TCKRunner extends XmlSuite{
         public void onTestSkipped(ITestResult tr){
             skipped++;
             try{
-                log("[SKIPPED] " + tr.toString());
+                Method realTestMethod = tr.getMethod().getMethod();
+                Test specAssert = realTestMethod.getAnnotation(Test.class);
+                if(specAssert!=null && specAssert.description()!=null && !specAssert.description().isEmpty()){
+                    log("[SKIPPED] " + specAssert.description());
+                }
+                else{
+                    log("[SKIPPED] " + tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName());
+                }
             }
             catch(IOException e){
                 throw new IllegalStateException("IO Error", e);
@@ -110,7 +156,14 @@ public class TCKRunner extends XmlSuite{
         public void onTestSuccess(ITestResult tr){
             success++;
             try{
-                log("[SUCCESS] " + tr.getTestName());
+                Method realTestMethod = tr.getMethod().getMethod();
+                Test specAssert = realTestMethod.getAnnotation(Test.class);
+                if(specAssert!=null && specAssert.description()!=null && !specAssert.description().isEmpty()){
+                    log("[SUCCESS] " + specAssert.description());
+                }
+                else{
+                    log("[SUCCESS] " + tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName());
+                }
             }
             catch(IOException e){
                 throw new IllegalStateException("IO Error", e);

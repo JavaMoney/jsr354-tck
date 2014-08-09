@@ -37,7 +37,8 @@ public class ConvertingAmountsTest{
      * Hint: you may only check for rate factory, when using a hardcoded ExchangeRateProvider, such a provider
      * must be also implemented and registered as an SPI.
      */
-    @Test @SpecAssertion(id = "432-A1", section="4.3.2")
+    @Test(description = "4.3.2 Test successful conversion for possible currency pairs, using TestRateProvider.")
+    @SpecAssertion(id = "432-A1", section="4.3.2")
     public void testConversion(){
         CurrencyUnit cu = new TestCurrencyUnit("FOO");
         CurrencyConversion conv = MonetaryConversions.getConversion(cu, "TestRateProvider");
@@ -53,7 +54,8 @@ public class ConvertingAmountsTest{
     /**
      * Compare conversions done with exchange rates provided for same currency pair.
      */
-    @Test @SpecAssertion(id = "432-A2", section="4.3.2")
+    @Test(description = "4.3.2 Compare conversions done with exchange rates provided for same currency pair.")
+    @SpecAssertion(id = "432-A2", section="4.3.2")
     public void testConversionComparedWithRate(){
         final CurrencyUnit FOO = new TestCurrencyUnit("FOO");
         ExchangeRate rate = MonetaryConversions.getExchangeRateProvider("TestRateProvider").getExchangeRate(
@@ -68,7 +70,9 @@ public class ConvertingAmountsTest{
      * Bad case: try converting from/to an inconvertible (custom) currency, ensure CurrencyConversionException is thrown.
      * @see org.javamoney.tck.tests.internal.TestCurrencyUnit } for creating a custom currency, with some fancy non-ISO currency code.
      */
-    @Test @SpecAssertion(id = "432-A3", section="4.3.2")
+    @Test(description="4.3.2 Bad case: Try converting from/to an inconvertible (custom) currency (FOOANY), " +
+            "ensure CurrencyConversionException is thrown.")
+    @SpecAssertion(id = "432-A3", section="4.3.2")
     public void testUnsupportedConversion(){
         MonetaryAmount m = MonetaryAmounts.getDefaultAmountFactory().setNumber(10).setCurrency("CHF").create();
         CurrencyUnit cu = new TestCurrencyUnit("FOOANY");
@@ -84,7 +88,9 @@ public class ConvertingAmountsTest{
     /**
      * Bad case: try converting from/to a null currency, ensure NullPointerException is thrown.
      */
-    @Test(expectedExceptions=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
+    @Test(expectedExceptions=NullPointerException.class,
+    description = "4.3.2 Bad case: Access CurrencyConversion with a null CurrencyUnit, ensure NullPointerException is thrown.")
+    @SpecAssertion(id = "432-A4", section="4.3.2")
     public void testNullConversion1(){
         MonetaryConversions.getConversion((CurrencyUnit)null);
     }
@@ -92,24 +98,10 @@ public class ConvertingAmountsTest{
     /**
      * Bad case: try converting from/to a null currency, ensure NullPointerException is thrown.
      */
-    @Test(expectedExceptions=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
+    @Test(expectedExceptions=NullPointerException.class,
+    description = "4.3.2 Bad case: Access CurrencyConversion with a null currency code, ensure NullPointerException is thrown.")
+    @SpecAssertion(id = "432-A4", section="4.3.2")
     public void testNullConversion2(){
-        MonetaryConversions.getConversion((String)null);
-    }
-
-    /**
-     * Bad case: try converting from/to a null currency, ensure NullPointerException is thrown.
-     */
-    @Test(expectedExceptions=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
-    public void testNullConversion3(){
-        MonetaryConversions.getConversion((CurrencyUnit) null);
-    }
-
-    /**
-     * Bad case: try converting from/to a null currency, ensure NullPointerException is thrown.
-     */
-    @Test(expectedExceptions=NullPointerException.class) @SpecAssertion(id = "432-A4", section="4.3.2")
-    public void testNullConversion4(){
         MonetaryConversions.getConversion((String)null);
     }
 

@@ -36,10 +36,10 @@ public class ExternalizingNumericValueTest{
 
 
     /**
-     * Checks if number type is not null
+     * Checks if number type is not null.
      */
     @SpecAssertion(section = "4.2.3", id = "423-A1")
-    @Test
+    @Test(description = "4.2.3 - Amount types do not return a NumberValue of null.")
     public void testReturningNumberValueIsNotNull(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
             if(type.equals(TestAmount.class)){
