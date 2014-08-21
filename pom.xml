@@ -373,6 +373,9 @@
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
                     <testClassesDirectory>${build.directory}/classes</testClassesDirectory>
+					<additionalClasspathElements>
+						<additionalClasspathElement>${build.directory}/test-classes</additionalClasspathElement>
+					</additionalClasspathElements>
                 </configuration>
             </plugin>
 
