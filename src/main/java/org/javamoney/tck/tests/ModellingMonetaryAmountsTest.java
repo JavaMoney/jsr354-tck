@@ -20,6 +20,7 @@ import org.testng.annotations.Test;
 
 import javax.money.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
@@ -2051,6 +2052,7 @@ public class ModellingMonetaryAmountsTest{
                 for(int p = -3; p < 3; p++){
                     BigDecimal bdExpected = m.scaleByPowerOfTen(p).getNumber().numberValue(BigDecimal.class);
                     BigDecimal bdCalculated = m.getNumber().numberValue(BigDecimal.class).scaleByPowerOfTen(p);
+                    bdCalculated = bdCalculated.setScale(m.getMonetaryContext().getMaxScale(), RoundingMode.HALF_EVEN);
                     if(bdExpected.signum() == 0){
                         AssertJUnit.assertTrue("Section 4.2.2: Invalid " + m + " -> scaleByPowerOfTen(" + p + ") for " +
                                                        type.getName(), bdCalculated.signum() == 0);
@@ -2165,8 +2167,8 @@ public class ModellingMonetaryAmountsTest{
                 );
                 final MonetaryAmount result =
                         getAmountFactory(type).setCurrency("CHF").setNumber(4).create();
-                MonetaryOperator op2 = (m) -> result;
-                amount2 = amount.with(op);
+                MonetaryOperator op2 = (m) -> m;
+                amount2 = amount.with(op2);
                 AssertJUnit.assertTrue(
                         "Section 4.2.2: MonetaryAmount returned from operator is wrapped by implementation of type: " +
                                 type.getName(), amount == amount2

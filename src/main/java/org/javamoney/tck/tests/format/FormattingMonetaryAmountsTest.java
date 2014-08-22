@@ -18,6 +18,7 @@ import org.testng.annotations.Test;
 
 import javax.money.*;
 import javax.money.format.AmountFormatQuery;
+import javax.money.format.AmountFormatQueryBuilder;
 import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.text.DecimalFormat;
@@ -27,6 +28,7 @@ import java.util.Set;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertEquals;
 
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class FormattingMonetaryAmountsTest{
@@ -57,7 +59,7 @@ public class FormattingMonetaryAmountsTest{
                 MonetaryAmount amountMock = TestMonetaryAmountFactory.getAmount(value, currency);
                 String formattedAmountMock = amountFormat.format(amountMock);
                 AssertJUnit.assertNotNull(formattedAmountMock);
-                AssertJUnit.assertEquals(formattedAmountMock, formattedAmount);
+                assertEquals(formattedAmountMock, formattedAmount);
             }
         }
     }
@@ -129,9 +131,41 @@ public class FormattingMonetaryAmountsTest{
      Also apply patterns without currency invovled.
      */
     @SpecAssertion(section = "4.4.1", id = "441-A4")
-    @Test
+    @Test(description = "Test formats and parses (round-trip) any supported amount type for each supported Locale, " +
+            "using different format queries.")
     public void testParseDifferentStyles(){
-        AssertJUnit.fail("Not implemented.");
+        for (Locale locale : MonetaryFormats.getAvailableLocales()) {
+            for (Class clazz : MonetaryAmounts.getAmountTypes()) {
+                AmountFormatQuery[] styles = new AmountFormatQuery[]{
+                        AmountFormatQueryBuilder.create(locale)
+                                .setTargetType(clazz).build()
+                };
+                MonetaryAmountFactory fact = MonetaryAmounts.getAmountFactory(clazz);
+                for (AmountFormatQuery query : styles) {
+                    if (fact.getAmountType().equals(TestAmount.class)) {
+                        continue;
+                    }
+                    MonetaryAmount amt = fact.setCurrency("USD").setNumber(10.5).create();
+                    MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(query);
+                    String formatProduced = format.format(amt);
+                    assertNotNull(formatProduced, "No MonetaryAmountFormat returned from MonetaryFormats." +
+                            "getMonetaryFormat(Locale,String...) with supported Locale: " + locale);
+                    assertFalse(formatProduced.isEmpty(), "MonetaryAmountFormat returned empty String for " + amt);
+                    try {
+                        MonetaryAmount amtParsed = format.parse(formatProduced);
+                        assertNotNull(amtParsed, "Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                                "' using MonetaryAmountFormat: " + format);
+                        assertEquals(amtParsed.getClass(), clazz,
+                                "Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                                        "' using MonetaryAmountFormat(invalid type " +
+                                        amtParsed.getClass().getName() + ") for format: " + format);
+                    } catch (MonetaryException e) {
+                        System.out.println("WARNING: Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                                "' using MonetaryAmountFormat: " + format);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -149,9 +183,36 @@ public class FormattingMonetaryAmountsTest{
      currency information.
      */
     @SpecAssertion(section = "4.4.1", id = "441-A6")
-    @Test
+    @Test(description = "Test formats and parses (round-trip) any supported amount type for each supported Locale," +
+            " checks results for different currencies")
     public void testParseWithDifferentCurrencies(){
-        AssertJUnit.fail("Not implemented.");
+        for (Locale locale : MonetaryFormats.getAvailableLocales()) {
+            MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(locale);
+            for (MonetaryAmountFactory fact : MonetaryAmounts.getAmountFactories()) {
+                if (fact.getAmountType().equals(TestAmount.class)) {
+                    continue;
+                }
+                for (String currency : new String[]{"CHF", "USD", "GBP", "EUR"}) {
+                    MonetaryAmount amt = fact.setCurrency(currency).setNumber(10.5).create();
+                    String formatProduced = format.format(amt);
+                    assertNotNull(formatProduced, "No MonetaryAmountFormat returned from MonetaryFormats." +
+                            "getMonetaryFormat(Locale,String...) with supported Locale: " + locale);
+                    assertFalse(formatProduced.isEmpty(), "MonetaryAmountFormat returned empty String for " + amt);
+                    try {
+                        MonetaryAmount amtParsed = format.parse(formatProduced);
+                        assertNotNull(amtParsed, "Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                                "' using MonetaryAmountFormat: " + format);
+                        assertEquals(amtParsed.getCurrency().getCurrencyCode(), currency,
+                                "Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                                        "' using MonetaryAmountFormat(invalid currency " +
+                                        amtParsed.getCurrency().getCurrencyCode() + "): " + format);
+                    } catch (MonetaryException e) {
+                        System.out.println("WARNING: Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                                "' using MonetaryAmountFormat: " + format);
+                    }
+                }
+            }
+        }
     }
 
 
@@ -168,7 +229,7 @@ public class FormattingMonetaryAmountsTest{
         for(Locale jdkDecimalFormatLocale : jdkDecimalFormatLocales){
             MonetaryAmountFormat amountFormat = MonetaryFormats.getAmountFormat(jdkDecimalFormatLocale);
             AssertJUnit.assertNotNull(amountFormat);
-            AssertJUnit.assertEquals(jdkDecimalFormatLocale, amountFormat.getAmountFormatContext().getLocale());
+            assertEquals(jdkDecimalFormatLocale, amountFormat.getAmountFormatContext().getLocale());
         }
     }
 
