@@ -326,8 +326,7 @@ public class ExchangeRatesAndRateProvidersTest{
                                 "is passed to getExchangeRate(ConversionQuery), provider: " +
                                 providerID
                 );
-            }
-            catch(UnknownCurrencyException e){
+            } catch (NullPointerException e) {
                 // OK
             }
         }

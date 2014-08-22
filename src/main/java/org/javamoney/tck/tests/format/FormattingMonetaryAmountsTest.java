@@ -9,22 +9,24 @@
  */
 package org.javamoney.tck.tests.format;
 
+import org.javamoney.tck.tests.internal.TestAmount;
 import org.javamoney.tck.tests.internal.TestMonetaryAmountFactory;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
-import javax.money.CurrencyUnit;
-import javax.money.MonetaryAmount;
-import javax.money.MonetaryAmounts;
-import javax.money.MonetaryCurrencies;
+import javax.money.*;
 import javax.money.format.AmountFormatQuery;
 import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.text.DecimalFormat;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotNull;
 
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class FormattingMonetaryAmountsTest{
@@ -37,7 +39,7 @@ public class FormattingMonetaryAmountsTest{
      * dependencies on the implementation.
      */
     @SpecAssertion(section = "4.4.1", id = "441-A1")
-    @Test
+    @Test(description = "Ensures the system.s default locale is supported for MonetaryAmountFormat.")
     public void testNoDepOnAmountImplementation(){
         final Locale defaultLocale = Locale.getDefault();
         MonetaryAmountFormat amountFormat = MonetaryFormats.getAmountFormat(defaultLocale);
@@ -67,9 +69,26 @@ public class FormattingMonetaryAmountsTest{
      dependencies on the implementation.
      */
     @SpecAssertion(section = "4.4.1", id = "441-A2")
-    @Test
+    @Test(description = "Formats amounts using all available locales.")
     public void testFormattingIsIndependentOfImplementation(){
-        AssertJUnit.fail("Not implemented.");
+        for (Locale locale : MonetaryFormats.getAvailableLocales()) {
+            MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(locale);
+            Set<String> formatsProcuced = new HashSet<>();
+            for (MonetaryAmountFactory fact : MonetaryAmounts.getAmountFactories()) {
+                if (fact.getAmountType().equals(TestAmount.class)) {
+                    continue;
+                }
+                MonetaryAmount amt = fact.setCurrency("USD").setNumber(10.5).create();
+                String formatProduced = format.format(amt);
+                assertNotNull(formatProduced, "No MonetaryAmountFormat returned from MonetaryFormats." +
+                        "getMonetaryFormat(Locale,String...) with supported Locale: " + locale);
+                assertFalse(formatProduced.isEmpty(), "MonetaryAmountFormat returned empty String for " + amt);
+                formatsProcuced.add(formatProduced);
+            }
+            assertFalse(formatsProcuced.isEmpty(), "No formatted amount available. Are there no amount?");
+            assertFalse(formatsProcuced.size() > 1, "Formatter produces different output for different amount classes(+" +
+                    format.getClass() + "): " + formatsProcuced);
+        }
     }
 
     /**
@@ -78,9 +97,29 @@ public class FormattingMonetaryAmountsTest{
      from 'Format_formatAmounts'.
      */
     @SpecAssertion(section = "4.4.1", id = "441-A3")
-    @Test
+    @Test(description = "Test formats and parses (round-trip) any supported amount type for each supported Locale.")
     public void testParseIsIndependentOfImplementation(){
-        AssertJUnit.fail("Not implemented.");
+        for (Locale locale : MonetaryFormats.getAvailableLocales()) {
+            MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(locale);
+            for (MonetaryAmountFactory fact : MonetaryAmounts.getAmountFactories()) {
+                if (fact.getAmountType().equals(TestAmount.class)) {
+                    continue;
+                }
+                MonetaryAmount amt = fact.setCurrency("USD").setNumber(10.5).create();
+                String formatProduced = format.format(amt);
+                assertNotNull(formatProduced, "No MonetaryAmountFormat returned from MonetaryFormats." +
+                        "getMonetaryFormat(Locale,String...) with supported Locale: " + locale);
+                assertFalse(formatProduced.isEmpty(), "MonetaryAmountFormat returned empty String for " + amt);
+                try {
+                    MonetaryAmount amtParsed = format.parse(formatProduced);
+                    assertNotNull(amtParsed, "Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                            "' using MonetaryAmountFormat: " + format);
+                } catch (MonetaryException e) {
+                    System.out.println("WARNING: Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                            "' using MonetaryAmountFormat: " + format);
+                }
+            }
+        }
     }
 
     /**
@@ -122,7 +161,8 @@ public class FormattingMonetaryAmountsTest{
      * available also from java.text.DecimalFormat must be supported.
      */
     @SpecAssertion(section = "4.4.1", id = "441-B1")
-    @Test
+    @Test(description = "Ensures all Locales defined by DecimalFormat.getAvailableLocales() are available for " +
+            "monetary formatting.")
     public void testLocalesSupported(){
         Locale[] jdkDecimalFormatLocales = DecimalFormat.getAvailableLocales();
         for(Locale jdkDecimalFormatLocale : jdkDecimalFormatLocales){
@@ -138,7 +178,8 @@ public class FormattingMonetaryAmountsTest{
      * available also from java.text.DecimalFormat must be supported
      * (using AmountFormatContext.of(Locale)).
      */
-    @Test
+    @Test(description = "Ensures for each locale defined by DecimalFormat.getAvailableLocales() a " +
+            "MonetaryAmountFormat instance is provided.")
     @SpecAssertion(section = "4.4.1", id = "441-B2")
     public void testGetAmountFormat(){
         for(Locale locale : DecimalFormat.getAvailableLocales()){
@@ -150,7 +191,8 @@ public class FormattingMonetaryAmountsTest{
      * Test MonetaryFormats.getAvailableLocales, all locales available also from java.text.DecimalFormat must be
      * supported (using AmountFormatContext.of(Locale)), more locales are possible.
      */
-    @Test
+    @Test(description = "Ensures for each locale defined by DecimalFormat.getAvailableLocales() a " +
+            "MonetaryFormats.isAvailable(Locale) is true.")
     @SpecAssertion(section = "4.4.1", id = "441-B3")
     public void testGetAvailableLocales(){
         Set<Locale> locales = MonetaryFormats.getAvailableLocales();
@@ -169,11 +211,12 @@ public class FormattingMonetaryAmountsTest{
      * Test MonetaryFormats.getAvailableLocales, all locales available also from java.text.DecimalFormat must be
      * supported (using AmountFormatContext.of(Locale)), more locales are possible.
      */
-    @Test
+    @Test(description = "Ensures for each locale defined by DecimalFormat.getAvailableLocales() a " +
+            "MonetaryFormats.getAmountFormat(AmountFormatQuery) returns a formatter.")
     @SpecAssertion(section = "4.4.1", id = "441-B3")
     public void testAmountStyleOf(){
         for(Locale locale : DecimalFormat.getAvailableLocales()){
-            AssertJUnit.assertNotNull(AmountFormatQuery.of(locale));
+            AssertJUnit.assertNotNull(MonetaryFormats.getAmountFormat(AmountFormatQuery.of(locale)));
         }
     }
 }
