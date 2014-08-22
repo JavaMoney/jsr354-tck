@@ -1577,18 +1577,17 @@ public class ModellingMonetaryAmountsTest{
                 MonetaryAmount m = f.setNumber(10).setCurrency("USD").create();
                 try{
                     m.multiply(num);
-                    AssertJUnit.fail("Section 4.2.2: Multiplication of amount 10 with " + num +
-                                             " exceeds max monetary context (scale), " +
-                                             "but did not throw an ArithmeticException, type was " +
-                                             type);
                 }
                 catch(ArithmeticException e){
-                    // OK
+                    AssertJUnit.fail("Section 4.2.2: Multiplication of amount 10 with " + num +
+                            " exceeds max monetary context (scale), should be rounded, " +
+                            "but did throw an ArithmeticException, type was " +
+                            type);
                 }
                 catch(Exception e){
                     AssertJUnit.fail("Section 4.2.2: Multiplication of amount 10 with " + num +
-                                             " exceeds max monetary context(scale), " +
-                                             "but did not throw an ArithmeticException (exception thrown was " +
+                            " exceeds max monetary context(scale), should be rounded, " +
+                            "but did throw an Exception (exception thrown was " +
                                              e.getClass().getName() + "), type was " +
                                              type);
                 }
@@ -2059,8 +2058,8 @@ public class ModellingMonetaryAmountsTest{
                     }else{
                         AssertJUnit
                                 .assertEquals("Section 4.2.2: Invalid " + m + " -> scaleByPowerOfTen(" + p + ") for " +
-                                                      type.getName(), bdExpected.stripTrailingZeros(),
-                                              bdCalculated.stripTrailingZeros()
+                                                type.getName(), bdExpected.setScale(m.getMonetaryContext().getMaxScale() - 1, RoundingMode.HALF_EVEN).stripTrailingZeros(),
+                                        bdCalculated.setScale(m.getMonetaryContext().getMaxScale() - 1, RoundingMode.HALF_EVEN).stripTrailingZeros()
                                 );
                     }
                 }

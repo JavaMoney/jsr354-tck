@@ -136,47 +136,38 @@ public class FormattingMonetaryAmountsTest{
     public void testParseDifferentStyles(){
         for (Locale locale : MonetaryFormats.getAvailableLocales()) {
             for (Class clazz : MonetaryAmounts.getAmountTypes()) {
-                AmountFormatQuery[] styles = new AmountFormatQuery[]{
-                        AmountFormatQueryBuilder.create(locale)
-                                .setTargetType(clazz).build()
-                };
+                if (clazz.equals(TestAmount.class)) {
+                    continue;
+                }
                 MonetaryAmountFactory fact = MonetaryAmounts.getAmountFactory(clazz);
-                for (AmountFormatQuery query : styles) {
-                    if (fact.getAmountType().equals(TestAmount.class)) {
-                        continue;
-                    }
-                    MonetaryAmount amt = fact.setCurrency("USD").setNumber(10.5).create();
-                    MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(query);
-                    String formatProduced = format.format(amt);
-                    assertNotNull(formatProduced, "No MonetaryAmountFormat returned from MonetaryFormats." +
-                            "getMonetaryFormat(Locale,String...) with supported Locale: " + locale);
-                    assertFalse(formatProduced.isEmpty(), "MonetaryAmountFormat returned empty String for " + amt);
-                    try {
-                        MonetaryAmount amtParsed = format.parse(formatProduced);
-                        assertNotNull(amtParsed, "Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
-                                "' using MonetaryAmountFormat: " + format);
-                        assertEquals(amtParsed.getClass(), clazz,
-                                "Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
-                                        "' using MonetaryAmountFormat(invalid type " +
-                                        amtParsed.getClass().getName() + ") for format: " + format);
-                    } catch (MonetaryException e) {
-                        System.out.println("WARNING: Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
-                                "' using MonetaryAmountFormat: " + format);
-                    }
+                AmountFormatQuery query =
+                        AmountFormatQueryBuilder.create(locale)
+                                .setMonetaryAmountFactory(fact).build();
+                if (fact.getAmountType().equals(TestAmount.class)) {
+                    continue;
+                }
+                MonetaryAmount amt = fact.setCurrency("USD").setNumber(10.5).create();
+                MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(query);
+                String formatProduced = format.format(amt);
+                assertNotNull(formatProduced, "No MonetaryAmountFormat returned from MonetaryFormats." +
+                        "getMonetaryFormat(Locale,String...) with supported Locale: " + locale);
+                assertFalse(formatProduced.isEmpty(), "MonetaryAmountFormat returned empty String for " + amt);
+                try {
+                    MonetaryAmount amtParsed = format.parse(formatProduced);
+                    assertNotNull(amtParsed, "Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                            "' using MonetaryAmountFormat: " + format);
+                    assertEquals(amtParsed.getClass(), clazz,
+                            "Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                                    "' using MonetaryAmountFormat(invalid type " +
+                                    amtParsed.getClass().getName() + ") for format: " + format);
+                } catch (MonetaryException e) {
+                    System.out.println("WARNING: Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                            "' using MonetaryAmountFormat: " + format);
                 }
             }
         }
     }
 
-    /**
-     * Get/set different monetary contexts and compare results with
-     results from parsed amounts.
-     */
-    @SpecAssertion(section = "4.4.1", id = "441-A5")
-    @Test
-    public void testParseDifferentAmountContexts(){
-        AssertJUnit.fail("Not implemented.");
-    }
 
     /**
      * Get/set default currency, try to parse patterns without
