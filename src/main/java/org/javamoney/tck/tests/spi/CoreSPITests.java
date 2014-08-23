@@ -26,7 +26,7 @@ import static org.testng.Assert.fail;
  * Created by Anatole on 10.03.14.
  */
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
-public class CoreSPITests{
+public class CoreSPITests {
 
 
     // ***************************************** A. Registering Currencies ***********************************
@@ -37,14 +37,13 @@ public class CoreSPITests{
      * especially bad case behaviour for invalid
      * input.
      */
-    @Test
+    @Test(description = "4.5.1 Test if a CurrencyProviderSpi is registered.")
     @SpecAssertion(id = "451-A1", section = "4.5.1")
-    public void testCurrencyProviderSpi(){
+    public void testCurrencyProviderSpi() {
         ServiceLoader l = null;
-        try{
+        try {
             l = ServiceLoader.load(CurrencyProviderSpi.class);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Failure during check for loaded CurrencyProviderSpi.", e);
         }
         Assert.assertTrue(l.iterator().hasNext(), "No instance of CurrencyProviderSpi provided by implementation.");
@@ -56,14 +55,13 @@ public class CoreSPITests{
      * especially bad case behaviour for invalid
      * input.
      */
-    @Test
+    @Test(description = "4.5.1 Test if a MonetaryCurrenciesSingletonSpi is registered.")
     @SpecAssertion(id = "451-A2", section = "4.5.1")
-    public void testMonetaryCurrenciesSingletonSpi(){
+    public void testMonetaryCurrenciesSingletonSpi() {
         ServiceLoader l = null;
-        try{
+        try {
             l = ServiceLoader.load(MonetaryCurrenciesSingletonSpi.class);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Failure during check for loadable MonetaryCurrenciesSingletonSpi.", e);
         }
         // this spi is optional, a default will be installed if missing, which will cover the currencies bsed
@@ -79,18 +77,17 @@ public class CoreSPITests{
      * especially bad case behaviour for invalid
      * input.
      */
-    @Test
+    @Test(description = "4.5.1 Test if a MonetaryAmountFactoryProviderSpi is registered.")
     @SpecAssertion(id = "451-B1", section = "4.5.1")
-    public void testMonetaryAmountFactoryProviderSpis(){
+    public void testMonetaryAmountFactoryProviderSpis() {
         ServiceLoader l = null;
-        try{
+        try {
             l = ServiceLoader.load(MonetaryAmountFactoryProviderSpi.class);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Failure during check for loaded MonetaryAmountFactoryProviderSpi.", e);
         }
         Assert.assertTrue(l.iterator().hasNext(),
-                          "No instance of MonetaryAmountFactoryProviderSpi provided by implementation.");
+                "No instance of MonetaryAmountFactoryProviderSpi provided by implementation.");
     }
 
     // ************************************ C. Backing the MonetaryAmounts Singleton ******************************
@@ -101,18 +98,17 @@ public class CoreSPITests{
      * especially bad case behaviour for invalid
      * input.
      */
-    @Test
+    @Test(description = "4.5.1 Test if a MonetaryAmountsSingletonSpi is registered.")
     @SpecAssertion(id = "451-C1", section = "4.5.1")
-    public void testMonetaryAmountsSingletonSpi(){
+    public void testMonetaryAmountsSingletonSpi() {
         ServiceLoader l = null;
-        try{
+        try {
             l = ServiceLoader.load(MonetaryAmountsSingletonSpi.class);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Failure during check for loaded MonetaryAmountsSingletonSpi.", e);
         }
         Assert.assertTrue(l.iterator().hasNext(),
-                          "No instance of MonetaryAmountsSingletonSpi provided by implementation.");
+                "No instance of MonetaryAmountsSingletonSpi provided by implementation.");
     }
 
     // ************************************ D. Registering Roundings ******************************
@@ -123,14 +119,13 @@ public class CoreSPITests{
      * especially bad case behaviour for invalid
      * input.
      */
-    @Test
+    @Test(description = "4.5.1 Test if a RoundingProviderSpi is registered.")
     @SpecAssertion(id = "451-D1", section = "4.5.1")
-    public void testRoundingProviderSpi(){
+    public void testRoundingProviderSpi() {
         ServiceLoader l = null;
-        try{
+        try {
             l = ServiceLoader.load(RoundingProviderSpi.class);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Failure during check for loaded RoundingProviderSpi.", e);
         }
         Assert.assertTrue(l.iterator().hasNext(), "No instance of RoundingProviderSpi provided by implementation.");
@@ -144,14 +139,13 @@ public class CoreSPITests{
      * especially bad case behaviour for invalid
      * input.
      */
-    @Test
+    @Test(description = "4.5.1 Test if any ExchangeRateProvider instances are registered.")
     @SpecAssertion(id = "451-E1", section = "4.5.1")
-    public void testExchangeRateProviderSpi(){
+    public void testExchangeRateProviderSpi() {
         ServiceLoader l = null;
-        try{
+        try {
             l = ServiceLoader.load(ExchangeRateProvider.class);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Failure during check for loaded ExchangeRateProvider.", e);
         }
         Assert.assertTrue(l.iterator().hasNext(), "No instance of ExchangeRateProvider provided by implementation.");
@@ -163,18 +157,17 @@ public class CoreSPITests{
      * especially bad case behaviour for invalid
      * input.
      */
-    @Test
+    @Test(description = "4.5.1 Test if a MonetaryConversionsSingletonSpi instance is registered.")
     @SpecAssertion(id = "451-E2", section = "4.5.1")
-    public void testMonetaryConversionsSingletonSpi(){
+    public void testMonetaryConversionsSingletonSpi() {
         ServiceLoader l = null;
-        try{
+        try {
             l = ServiceLoader.load(MonetaryConversionsSingletonSpi.class);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Failure during check for loaded MonetaryConversionsSingletonSpi.", e);
         }
         Assert.assertTrue(l.iterator().hasNext(),
-                          "No instance of MonetaryConversionsSingletonSpi provided by implementation.");
+                "No instance of MonetaryConversionsSingletonSpi provided by implementation.");
     }
 
 }

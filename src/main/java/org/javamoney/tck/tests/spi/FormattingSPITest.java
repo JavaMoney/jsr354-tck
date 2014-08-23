@@ -24,29 +24,28 @@ import static org.testng.Assert.fail;
  * Created by Anatole on 10.03.14.
  */
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
-public class FormattingSPITest{
+public class FormattingSPITest {
 
     // ********************************* C. Prodivding Amount Formats
 
     /**
      * Test registered MonetaryAmountFormatProviderSpi (one is
-     required),
-     especially bad case behaviour for
-     invalid
-     input.
+     * required),
+     * especially bad case behaviour for
+     * invalid
+     * input.
      */
-    @Test
-    @SpecAssertion(id="452-A1", section="4.5.2")
-    public void testMonetaryAmountFormatProviderSpiIsRegistered(){
+    @Test(description = "4.5.1 Test if a MonetaryAmountFormatProviderSpi instance is registered.")
+    @SpecAssertion(id = "452-A1", section = "4.5.2")
+    public void testMonetaryAmountFormatProviderSpiIsRegistered() {
         ServiceLoader l = null;
-        try{
+        try {
             l = ServiceLoader.load(MonetaryAmountFormatProviderSpi.class);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Failure during check for loaded MonetaryAmountFormatProviderSpi.", e);
         }
         Assert.assertTrue(l.iterator().hasNext(),
-                          "No instance of MonetaryAmountFormatProviderSpi provided by implementation.");
+                "No instance of MonetaryAmountFormatProviderSpi provided by implementation.");
     }
 
 }

@@ -62,7 +62,7 @@ public class TCKRunner extends XmlSuite{
         TestNG tng = new TestNG();
         tng.setXmlSuites(suites);
         tng.setOutputDirectory("./tck-results");
-        tng.addListener(new VerboseReporter());
+//        tng.addListener(new VerboseReporter());
         File file = new File(System.getProperty("java.io.tmpdir"), "tck-results.txt");
         TCKReporter rep = new TCKReporter(file);
         System.out.println("Writing to file " + file.getAbsolutePath() + " ...");
@@ -78,6 +78,7 @@ public class TCKRunner extends XmlSuite{
         private int failed = 0;
         private int success = 0;
 
+        private StringWriter internalBuffer = new StringWriter(3000);
         private FileWriter w;
 
         public TCKReporter(File file){
@@ -90,6 +91,12 @@ public class TCKRunner extends XmlSuite{
                 w.write("**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.0\n");
                 w.write("*****************************************************************************************\n\n");
                 w.write("Executed on " + new java.util.Date() +"\n\n" );
+
+                // System.out:
+                internalBuffer.write("*****************************************************************************************\n");
+                internalBuffer.write("**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.0\n");
+                internalBuffer.write("*****************************************************************************************\n\n");
+                internalBuffer.write("Executed on " + new java.util.Date() + "\n\n");
             }
             catch(IOException e){
                 e.printStackTrace();
@@ -173,9 +180,12 @@ public class TCKRunner extends XmlSuite{
             }
         }
 
-        private void log(String string) throws IOException{
+        private void log(String text) throws IOException {
             count++;
-            w.write(string + '\n');
+            w.write(text);
+            w.write('\n');
+            internalBuffer.write(text);
+            internalBuffer.write('\n');
         }
 
         public void writeSummary(){
@@ -188,6 +198,9 @@ public class TCKRunner extends XmlSuite{
                 log("TOTAL TESTS FAILED   : " + failed);
                 w.flush();
                 w.close();
+                internalBuffer.flush();
+                System.out.println();
+                System.out.println(internalBuffer);
             }
             catch(IOException e){
                 throw new IllegalStateException("IO Error", e);
