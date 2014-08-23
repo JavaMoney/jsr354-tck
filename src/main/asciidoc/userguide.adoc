@@ -161,7 +161,7 @@ public interface JSR354TestConfiguration{
 }
 ---------------------------------------------------------------------------------------
 
-Following find the example implementation ised for testing the reference implementation:
+Following find the example implementation that is used for testing the _moneta_ reference implementation:
 
 [source,java]
 .TestSetup for the Moneta Reference Implementation
@@ -208,7 +208,7 @@ public final class MonetaTCKSetup implements JSR354TestConfiguration{
 }
 ---------------------------------------------------------------------------------------
 
-You must register your implementation with the +java.util.ServiceLoader+. This can be achieved by adding the
+You must register your implementation with the +java.util.ServiceLoader+. This is done by adding the
 following configuration file to your classpath:
 
 [source, listing]
@@ -234,7 +234,264 @@ Checking the Results
 ~~~~~~~~~~~~~~~~~~~~
 
 Test execution is logged verbosely on the runtime console. Additionally after TCK execution you should find a folder
-+tck-results+ within your working directory, containing the TestNG result in html (index.html) or xml format.
++tck-results+ within your working directory, containing the TestNG result in html (index.html) or xml format. Find
+following an example output from testing the reference implementation:
+
+[source, listing]
+.Example TCK Console Output
+---------------------------------------------------------------------------------------
+... (Basic Trace Output)
+
+===============================================
+JSR354-TCK 1.0
+Total tests run: 219, Failures: 0, Skips: 0
+===============================================
+
+
+*****************************************************************************************
+**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.0
+*****************************************************************************************
+
+Executed on Sun Aug 24 00:38:44 CEST 2014
+
+[SUCCESS] 4.2.1 Ensure registered CurrencyUnit classes are Comparable.(ModellingCurrenciesTest#testCurrencyClassesComparable)
+[SUCCESS] 4.2.1 Ensure registered CurrencyUnit classes implement hashCode.(ModellingCurrenciesTest#testCurrencyClassesEqualsHashcode)
+[SUCCESS] 4.2.1 Test currencies provided have correct ISO 3-letter currency codes.(ModellingCurrenciesTest#testEnforce3LetterCode4ISO)
+[SUCCESS] 4.2.1 Ensure TCK has CurrencyUnit classes configured.(ModellingCurrenciesTest#testEnsureCurrencyUnit)
+[SUCCESS] 4.2.1 Test currencies provided equal at least currencies from java.util.Currency.(ModellingCurrenciesTest#testEqualISOCurrencies)
+[SUCCESS] 4.2.1 Test currencies provided have correct default fraction digits and numeric code.(ModellingCurrenciesTest#testISOCodes)
+[SUCCESS] 4.2.1 Ensure registered CurrencyUnit classes implement equals.(ModellingCurrenciesTest#testImplementsEquals)
+[SUCCESS] 4.2.1 Ensure registered CurrencyUnit classes are serializable.(ModellingCurrenciesTest#testImplementsSerializable)
+[SUCCESS] 4.2.1 Ensure registered CurrencyUnit classes are immutable.(ModellingCurrenciesTest#testIsImmutable)
+[SUCCESS] 4.2.2 For each amount class, test absolute().(ModellingMonetaryAmountsTest#testAbsolute)
+[SUCCESS] 4.2.2 For each amount class, check m1.add(m2), m1, m2 = mixed fractions.(ModellingMonetaryAmountsTest#testAddMixedFractions)
+[SUCCESS] 4.2.2 For each amount class, check m1.add(m2), m1, m2 = mixed ints.(ModellingMonetaryAmountsTest#testAddMixedIntegers)
+[SUCCESS] 4.2.2 For each amount class, check m1.add(m2), m1 <0, m2<0.(ModellingMonetaryAmountsTest#testAddNegativeIntegers)
+[SUCCESS] 4.2.2 For each amount class, check m1.add(m2), m2 is fraction.(ModellingMonetaryAmountsTest#testAddPositiveFractions)
+[SUCCESS] 4.2.2 For each amount class, check m1.add(m2), m1 >0, m2>0.(ModellingMonetaryAmountsTest#testAddPositiveIntegers)
+[SUCCESS] 4.2.2 For each amount class, ensure ArithemticException is thrown when adding exceeding values.(ModellingMonetaryAmountsTest#testAdd_ExceedsCapabilities)
+[SUCCESS] 4.2.2 For each amount class, ensure currency compatibility is working.(ModellingMonetaryAmountsTest#testAdd_IncompatibleCurrencies)
+[SUCCESS] 4.2.2 For each amount class, ensure NullPointerException is thrown when calling m.add(null).(ModellingMonetaryAmountsTest#testAdd_Null)
+[SUCCESS] 4.2.2 For each amount class, ensure m2 = m1,add(0) -> m1==m2.(ModellingMonetaryAmountsTest#testAdd_Zero)
+[SUCCESS] 4.2.2 Ensure amount can be created with all default currencies.(ModellingMonetaryAmountsTest#testCurrencyCode)
+[SUCCESS] 4.2.2 For each amount class, ensure correct division.(ModellingMonetaryAmountsTest#testDivide)
+[SUCCESS] 4.2.2 For each amount class, ensure correct divideAndRemainder().(ModellingMonetaryAmountsTest#testDivideAndRemainder)
+[SUCCESS] 4.2.2 For each amount class, ensure divideAndRemainder(null) throws a NullPointerException.(ModellingMonetaryAmountsTest#testDivideAndRemainderNull)
+[SUCCESS] 4.2.2 For each amount class, ensure divideAndRemainder(1) returns same instance.(ModellingMonetaryAmountsTest#testDivideAndRemainderOne)
+[SUCCESS] 4.2.2 For each amount class, ensure correct divideAndRemainderZero().(ModellingMonetaryAmountsTest#testDivideAndRemainderZero)
+[SUCCESS] 4.2.2 For each amount class, ensure divide by null throws NullPointerException.(ModellingMonetaryAmountsTest#testDivideNull)
+[SUCCESS] 4.2.2 For each amount class, ensure divide 1 returns same instance.(ModellingMonetaryAmountsTest#testDivideOne)
+[SUCCESS] 4.2.2 For each amount class, ensure correct division with int values.(ModellingMonetaryAmountsTest#testDivideToIntegralValue)
+[SUCCESS] 4.2.2 For each amount class, ensure divide(0) throws ArithmeticException.(ModellingMonetaryAmountsTest#testDivideZero)
+[SUCCESS] 4.2.2 Ensure MonetaryAmounts.getAmountTypes() is not null and not empty.(ModellingMonetaryAmountsTest#testEnsureMonetaryAmount)
+[SUCCESS] 4.2.2 Ensure amounts created return correct getMonetaryContext().(ModellingMonetaryAmountsTest#testGetMonetaryContext)
+[SUCCESS] 4.2.2 Ensure amounts created return correct getNumber().(ModellingMonetaryAmountsTest#testGetNumber)
+[SUCCESS] 4.2.2 For each amount class, test iis immutable.(ModellingMonetaryAmountsTest#testImmutable)
+[SUCCESS] 4.2.2 For each amount class, test is Comparable.(ModellingMonetaryAmountsTest#testImplementComparable)
+[SUCCESS] 4.2.2 For each amount class, test implements equals().(ModellingMonetaryAmountsTest#testImplementsEquals)
+[SUCCESS] 4.2.2 For each amount class, test implements hashCode().(ModellingMonetaryAmountsTest#testImplementsHashCode)
+[SUCCESS] 4.2.2 For each amount class, test isNegative().(ModellingMonetaryAmountsTest#testIsNegative)
+[SUCCESS] 4.2.2 For each amount class, test isNegativeOrZero().(ModellingMonetaryAmountsTest#testIsNegativeOrZero)
+[SUCCESS] 4.2.2 For each amount class, test isPositive().(ModellingMonetaryAmountsTest#testIsPositive)
+[SUCCESS] 4.2.2 For each amount class, test isPositiveOrZero().(ModellingMonetaryAmountsTest#testIsPositiveOrZero)
+[SUCCESS] 4.2.2 For each amount class, test isZero().(ModellingMonetaryAmountsTest#testIsZero)
+[SUCCESS] 4.2.2 For each amount class, test isZero(), advanced.(ModellingMonetaryAmountsTest#testIsZeroAdvanced)
+[SUCCESS] 4.2.2 For each amount class, access factory and create amounts.(ModellingMonetaryAmountsTest#testMonetaryAmountFactories)
+[SUCCESS] 4.2.2 For each amount class, check multiple instances are not equal.(ModellingMonetaryAmountsTest#testMonetaryAmountFactories_CreateWithCurrencies)
+[SUCCESS] 4.2.2 For each amount class, check new amounts with explcit MonetaryContext.(ModellingMonetaryAmountsTest#testMonetaryAmountFactories_CreateWithMonetaryContext)
+[SUCCESS] 4.2.2 For each amount class, check new amounts are not equal for different currencies and contexts.(ModellingMonetaryAmountsTest#testMonetaryAmountFactories_CreateWithMonetaryContextNumberAndCurrency)
+[SUCCESS] 4.2.2 For each amount class, access factory and create amounts, ensure amounts are equal if theyshould.(ModellingMonetaryAmountsTest#testMonetaryAmountFactories_InstancesMustBeEqual)
+[SUCCESS] 4.2.2 For each amount class, check new amounts are not equal.(ModellingMonetaryAmountsTest#testMonetaryAmountFactories_InstantesMustBeNotEqual)
+[SUCCESS] 4.2.2 For each amount class, check isEqualTo().(ModellingMonetaryAmountsTest#testMonetaryAmount_isEqualTo)
+[SUCCESS] 4.2.2 For each amount class, check isEqualTo(), regardless different MonetaryContext instances.(ModellingMonetaryAmountsTest#testMonetaryAmount_isEqualToRegardlessMonetaryContext)
+[SUCCESS] 4.2.2 For each amount class, check isEqualTo(), regardless implementation type.(ModellingMonetaryAmountsTest#testMonetaryAmount_isEqualToRegardlessType)
+[SUCCESS] 4.2.2 For each amount class, check isGreaterThan().(ModellingMonetaryAmountsTest#testMonetaryAmount_isGreaterThan)
+[SUCCESS] 4.2.2 For each amount class, check isGreaterThanOrEquals().(ModellingMonetaryAmountsTest#testMonetaryAmount_isGreaterThanOrEquals)
+[SUCCESS] 4.2.2 For each amount class, check isLessThan().(ModellingMonetaryAmountsTest#testMonetaryAmount_isLessThan)
+[SUCCESS] 4.2.2 For each amount class, check isLessThanOrEqualTo().(ModellingMonetaryAmountsTest#testMonetaryAmount_isLessThanOrEqualTo)
+[SUCCESS] 4.2.2 For each amount class, ensure multiplication with exceeding values throws ArithmeticException.(ModellingMonetaryAmountsTest#testMultiplyExceedsCapabilities)
+[SUCCESS] 4.2.2 For each amount class, ensure multiplication of null throws NullPointerException.(ModellingMonetaryAmountsTest#testMultiplyNull)
+[SUCCESS] 4.2.2 For each amount class, ensure multiplication by one returns same instance.(ModellingMonetaryAmountsTest#testMultiplyOne)
+[SUCCESS] 4.2.2 For each amount class, ensure correct multiplication of decimal values.(ModellingMonetaryAmountsTest#testMultiply_Decimals)
+[SUCCESS] 4.2.2 For each amount class, ensure correct multiplication of int values.(ModellingMonetaryAmountsTest#testMultiply_Integral)
+[SUCCESS] 4.2.2 For each amount class, test negate().(ModellingMonetaryAmountsTest#testNegate)
+[SUCCESS] 4.2.2 For each amount class, test query().(ModellingMonetaryAmountsTest#testQuery)
+[SUCCESS] 4.2.2 For each amount class, test query(), MonetaryQuery throws exception, MonetaryException expected.(ModellingMonetaryAmountsTest#testQueryInvalidQuery)
+[SUCCESS] 4.2.2 For each amount class, test query(null), NullPointerException expected.(ModellingMonetaryAmountsTest#testQueryNull)
+[SUCCESS] 4.2.2 For each amount class, ensure correct results for remainder.(ModellingMonetaryAmountsTest#testRemainder)
+[SUCCESS] 4.2.2 For each amount class, ensure remainder(null), throws NullPointerException.(ModellingMonetaryAmountsTest#testRemainderNull)
+[SUCCESS] 4.2.2 For each amount class, ensure remainder(0), double, throws ArithmeticException.(ModellingMonetaryAmountsTest#testRemainderZero_Double)
+[SUCCESS] 4.2.2 For each amount class, ensure remainder(0), long, throws ArithmeticException.(ModellingMonetaryAmountsTest#testRemainderZero_Long)
+[SUCCESS] 4.2.2 For each amount class, ensure remainder(0), Number, throws ArithmeticException.(ModellingMonetaryAmountsTest#testRemainderZero_Number)
+[SUCCESS] 4.2.2 For each amount class, ensure scaleByPowerOfTen(1) returns correct results.(ModellingMonetaryAmountsTest#testScaleByPowerOfTen)
+[SUCCESS] 4.2.2 For each amount class, test signum().(ModellingMonetaryAmountsTest#testSignum)
+[SUCCESS] 4.2.2 For each amount class, ensure correct subtraction of mixed fractions.(ModellingMonetaryAmountsTest#testSubtractMixedFractions)
+[SUCCESS] 4.2.2 For each amount class, ensure correct subtraction of mixed ints.(ModellingMonetaryAmountsTest#testSubtractMixedIntegers)
+[SUCCESS] 4.2.2 For each amount class, ensure correct subtraction of negative ints.(ModellingMonetaryAmountsTest#testSubtractNegativeIntegers)
+[SUCCESS] 4.2.2 For each amount class, ensure correct subtraction of positive fractions.(ModellingMonetaryAmountsTest#testSubtractPositiveFractions)
+[SUCCESS] 4.2.2 For each amount class, ensure correct subtraction of positive ints.(ModellingMonetaryAmountsTest#testSubtractPositiveIntegers)
+[SUCCESS] 4.2.2 For each amount class, ensure subtraction with exceeding capabilities throws ArithmeticException.(ModellingMonetaryAmountsTest#testSubtract_ExceedsCapabilities)
+[SUCCESS] 4.2.2 For each amount class, ensure subtraction with invalid currency throws MonetaryException.(ModellingMonetaryAmountsTest#testSubtract_IncompatibleCurrencies)
+[SUCCESS] 4.2.2 For each amount class, ensure subtraction with null throws NullPointerException.(ModellingMonetaryAmountsTest#testSubtract_Null)
+[SUCCESS] 4.2.2 For each amount class, ensure subtraction of 0 returns same instance.(ModellingMonetaryAmountsTest#testSubtract_Zero)
+[SUCCESS] 4.2.2 For each amount class, test with().(ModellingMonetaryAmountsTest#testWith)
+[SUCCESS] 4.2.2 For each amount class, test with().(ModellingMonetaryAmountsTest#testWith4ProvidedOperators)
+[SUCCESS] 4.2.2 Bad case: For each amount class, test with(), operator throws exception.(ModellingMonetaryAmountsTest#testWithInvalidOperator)
+[SUCCESS] 4.2.2 Bad case: For each amount class, test with(null), expected NullPointerException.(ModellingMonetaryAmountsTest#testWithNull)
+[SUCCESS] 4.2.2 Bad case: For each amount class, test with(), operator throws exception.(ModellingMonetaryAmountsTest#testWithNull4ProvidedOperators)
+[SUCCESS] 4.2.6 Ensure MonetaryAmountFactory instances are accessible for all amount types under test.(CreatingMonetaryAmountsTest#testAccessToMonetaryAmountFactory)
+[SUCCESS] 4.2.6 Bad case: For each MonetaryAmount Factory: Create zero amounts from a factory with an invalid currency.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreateAmountsWithInvalidCurrency)
+[SUCCESS] 4.2.6 Bad case: For each MonetaryAmount Factory: Create zero amounts from a factory with an invalid MonetaryContext.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreateAmountsWithInvalidMonetaryContext)
+[SUCCESS] 4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts, with no currency, expect MonetaryException.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreateNegativeInvalidContext_BadCase)
+[SUCCESS] 4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts, with invalid currency, expect MonetaryException.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreateNegativeInvalidCurrency_BadCase)
+[SUCCESS] 4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts, with no currency, expect MonetaryException.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreateNegativeNoCurrency_BadCase)
+[SUCCESS] 4.2.6 For each MonetaryAmount Factory: Create positive amounts.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreatePositiveAmountsWitCurrencies)
+[SUCCESS] 4.2.6 For each MonetaryAmount Factory: Create positive amounts with explicit MonetaryContext.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreatePositiveAmountsWithContexts)
+[SUCCESS] 4.2.6 For each MonetaryAmount Factory: Create positive amounts using doubles with explicit MonetaryContext (precision/scale).(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreatePositiveAmountsWithContexts2)
+[SUCCESS] 4.2.6 For each MonetaryAmount Factory: Create positive amounts using BigDecimal with explicit MonetaryContext (precision/scale).(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreatePositiveAmountsWithContexts3)
+[SUCCESS] 4.2.6 Bad case: For each MonetaryAmount Factory: Create positive amounts using invalid numbers, expecting ArithemticException thrown.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreatePositiveAmountsWithInvalidNumber)
+[SUCCESS] 4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts with an invalid currency, expecting MonetaryException thrown.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreatePositiveInvalidContext_BadCase)
+[SUCCESS] 4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts with an invalid currency, expecting MonetaryException thrown.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreatePositiveInvalidCurrency_BadCase)
+[SUCCESS] 4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts without currency, expecting MonetaryException thrown.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreatePositiveNoCurrency_BadCase)
+[SUCCESS] 4.2.6 Ensure MonetaryAmountFactory instances support creation of 0 amounts, with explicit MonetaryContext.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreateZeroAmountsWithDiffContexts)
+[SUCCESS] 4.2.6 Ensure MonetaryAmountFactory instances support creation of 0 amounts, with different explicit MonetaryContext.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreateZeroAmountsWithDiffContexts2)
+[SUCCESS] 4.2.6 Ensure MonetaryAmountFactory instances support creation of 0 amounts, with different explicit MonetaryContext (precision, scale).(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreateZeroAmountsWithDiffContexts3)
+[SUCCESS] 4.2.6 Ensure MonetaryAmountFactory instances support creation of 0 amounts.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryCreateZeroAmountsWithDiffCurrencies)
+[SUCCESS] 4.2.6 Ensure MonetaryAmountFactory instances accessible for all amount types under test return correct min/max MonetaryContext.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryMinMaxCapabilities)
+[SUCCESS] 4.2.6 Ensure MonetaryAmountFactory instances accessible for all amount types under test return correct min/max MonetaryContext (min <= max).(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryMinMaxCapabilities_Compare)
+[SUCCESS] 4.2.6 For each MonetaryAmount Factory: Create negative amounts.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryNegativePositiveAmountsWitCurrencies)
+[SUCCESS] 4.2.6 For each MonetaryAmount Factory: Create negative amounts, with explicit MonetaryContext.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryNegativePositiveAmountsWithContexts)
+[SUCCESS] 4.2.6 For each MonetaryAmount Factory: Create negative amounts, with explicit MonetaryContext.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryNegativePositiveAmountsWithContexts2)
+[SUCCESS] 4.2.6 For each MonetaryAmount Factory: Create negative amounts, with explicit MonetaryContext.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryNegativePositiveAmountsWithContexts3)
+[SUCCESS] 4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts, with invalid numeric value, expect ArithmeticException.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryNegativePositiveAmountsWithInvalidNumber)
+[SUCCESS] 4.2.6 Ensure MonetaryAmountFactory instances accessible for all amount types under test return correct amount type.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryReturnsCorrectType)
+[SUCCESS] Checks if a correct Double value is returned, no truncation is allowed to be performed.(ExternalizingNumericValueTest#testDoubleNegative)
+[SUCCESS] 4.2.3 Check if a correct double value is returned, truncation is allowed to be performed (but is not necessary).(ExternalizingNumericValueTest#testDoubleValueWithTruncationZero)
+[SUCCESS] 4.2.3 Checks if a correct double value is returned, truncation is allowed to be performed.(ExternalizingNumericValueTest#testDoubleWithTruncationNegative)
+[SUCCESS] 4.2.3 Checks if a correct Integer value is returned, no truncation is allowed to be performed.(ExternalizingNumericValueTest#testIntegerNegative)
+[SUCCESS] 4.2.3 Check if a correct integer value is returned, truncation is allowed to be performed. Check should be done for every JDK type supported.(ExternalizingNumericValueTest#testIntegerValueWithTruncationZero)
+[SUCCESS] 4.2.3 Check if a correct integer value is returned, truncation is allowed to be performed..(ExternalizingNumericValueTest#testIntegerWithTruncationNegative)
+[SUCCESS] 4.2.3 Check if a correct integer value is returned, no truncation is  allowed to be performed.(ExternalizingNumericValueTest#testIntegerZero)
+[SUCCESS] 4.2.3 Checks if a correct negative long value is returned, no truncation is allowed to be performed.(ExternalizingNumericValueTest#testLongNegative)
+[SUCCESS] 4.2.3 Check if a correct long value is returned, truncation is allowed to be performed. Check should be done for every JDK type supported.(ExternalizingNumericValueTest#testLongValueWithTruncationZero)
+[SUCCESS] 4.2.3 Checks if a correct long value is returned, truncation is allowed to be performed.(ExternalizingNumericValueTest#testLongWithTruncationNegative)
+[SUCCESS] 4.2.3 Check if a correct long zero value is returned, no truncation is  allowed to be performed.(ExternalizingNumericValueTest#testLongZero)
+[SUCCESS] 4.2.3 Ensure NumberValue numberValue() works correnctly.(ExternalizingNumericValueTest#testNumberTypeNegative)
+[SUCCESS] 4.2.3 Checks if number type is not null and returning a concrete (no abstract class or interface).(ExternalizingNumericValueTest#testNumberTypeZero)
+[SUCCESS] 4.2.3 Checks if a correct long value is returned, truncation is allowed to be performed. Check should be done for every JDK type.(ExternalizingNumericValueTest#testNumberValueWithTruncationNegative)
+[SUCCESS] 4.2.3 Checks if a correct double value is returned, truncation is allowed to be performed. Check should be done for every JDK type.(ExternalizingNumericValueTest#testNumberValueWithTruncationNegative_Double)
+[SUCCESS] 4.2.3 Checks if a correct double value is returned, truncation is allowed to be performed. Check should be done for every JDK type.(ExternalizingNumericValueTest#testNumberValueWithTruncationNegative_Float)
+[SUCCESS] 4.2.3 Checks if a correct int value is returned, truncation is allowed to be performed. Check should be done for every JDK type.(ExternalizingNumericValueTest#testNumberValueWithTruncationNegative_Integer)
+[SUCCESS] 4.2.3 Checks if a correct Number value is returned, truncation is allowed to be performed. Check should be done for every JDK type.(ExternalizingNumericValueTest#testNumberValueWithTruncationNegative_Long)
+[SUCCESS] 4.2.3 Checks if a correct double value is returned, truncation is allowed to be performed. Check should be done for every JDK type.(ExternalizingNumericValueTest#testNumberValueWithTruncationNegative_Short)
+[SUCCESS] 4.2.3 Check if a correct Number value is returned, truncation is allowed to be performed. Check should be done for every JDK type supported.(ExternalizingNumericValueTest#testNumberValueWithTruncationZero)
+[SUCCESS] 4.2.3 Check if a correct long zero value is returned, no truncation is  allowed to be performed.(ExternalizingNumericValueTest#testNumberValueZero)
+[SUCCESS] 4.2.3 Check if a correct number value is returned, truncation is  allowed to be performed. Check should be done for every JDK type supported.(ExternalizingNumericValueTest#testNumberWithTruncationNegative)
+[SUCCESS] 4.2.3 Test correct precision values, including border cases.(ExternalizingNumericValueTest#testPrecisionNegative)
+[SUCCESS] 4.2.3 Ensure NumberValue getPrecision() works correctly.(ExternalizingNumericValueTest#testPrecisionValues)
+[SUCCESS] 4.2.3 Check if a correct precision value is returned. Check should be done for every JDK type supported.(ExternalizingNumericValueTest#testPrecisionZero)
+[SUCCESS] 4.2.3 Amount types do not return a NumberValue of null.(ExternalizingNumericValueTest#testReturningNumberValueIsNotNull)
+[SUCCESS] 4.2.3 Test correct scale values, including border cases.(ExternalizingNumericValueTest#testScaleNegative)
+[SUCCESS] 4.2.3 Ensure NumberValue getScale() works correctly.(ExternalizingNumericValueTest#testScaleValues)
+[SUCCESS] 4.2.3 Check if a correct scale value is returned. Check should be done for every JDK type supported.(ExternalizingNumericValueTest#testScaleZero)
+[SUCCESS] 4.2.3 Ensure NumberValue doubleValue(), doubleValueExact() provide correct values.(ExternalizingNumericValueTest#testValidDouble)
+[SUCCESS] 4.2.3 Ensure NumberValue doubleValue() is truncated.(ExternalizingNumericValueTest#testValidDoubleWithTruncation)
+[SUCCESS] 4.2.3 Ensure NumberValue intValue(), intValueExact() provide correct values.(ExternalizingNumericValueTest#testValidInteger)
+[SUCCESS] 4.2.3 Ensure NumberValue intValue() is truncated.(ExternalizingNumericValueTest#testValidIntegerWithTruncation)
+[SUCCESS] 4.2.3 Ensure NumberValue longValue(), longValueExact() provide correct values.(ExternalizingNumericValueTest#testValidLong)
+[SUCCESS] 4.2.3 Ensure NumberValue longValue() is truncated.(ExternalizingNumericValueTest#testValidLongWithTruncation)
+[SUCCESS] 4.2.3 Ensure NumberValue asType(BigDecimal.class) provides correct values.(ExternalizingNumericValueTest#testValidNumberBD)
+[SUCCESS] 4.2.3 Ensure NumberValue asType(BigInteger.class) provides correct values.(ExternalizingNumericValueTest#testValidNumberBI)
+[SUCCESS] 4.2.3 Ensure NumberValue byteValue() is truncated.(ExternalizingNumericValueTest#testValidNumberWithTruncation_Byte)
+[SUCCESS] 4.2.3 Ensure NumberValue doubleValue() is truncated.(ExternalizingNumericValueTest#testValidNumberWithTruncation_Double)
+[SUCCESS] 4.2.3 Ensure NumberValue floatValue() is truncated.(ExternalizingNumericValueTest#testValidNumberWithTruncation_Float)
+[SUCCESS] 4.2.3 Ensure NumberValue intValue() is truncated correctly.(ExternalizingNumericValueTest#testValidNumberWithTruncation_Integer)
+[SUCCESS] 4.2.3 Ensure NumberValue shortValue() is truncated.(ExternalizingNumericValueTest#testValidNumberWithTruncation_Short)
+[SUCCESS] 4.2.4 Ensures the result of all operators under test is of the same class as the input.(FunctionalExtensionPointsTest#testOperatorReturnTypeEqualsParameter)
+[SUCCESS] 4.2.7 Access named roundings and ensure TCK named roundings are registered.(AccessingCurrenciesAmountsRoundingsTest#testAccessCustomRoundings)
+[SUCCESS] 4.2.7 Ensure MonetaryRoundings instances are available, for all registered currencies.(AccessingCurrenciesAmountsRoundingsTest#testAccessRoundingsForCustomCurrencies_Default)
+[SUCCESS] 4.2.7 Ensure MonetaryRoundings instances are available, also for any custom currency (not registered).(AccessingCurrenciesAmountsRoundingsTest#testAccessRoundingsForCustomCurrencies_Explicit)
+[SUCCESS] 4.2.7 Expected NullPointerException accessing a rounding with 'MonetaryRoundings.getRounding(null)'.(AccessingCurrenciesAmountsRoundingsTest#testAccessRoundingsForCustomCurrencies_Explicit_Null)
+[SUCCESS] 4.2.7 Ensure NullPointerException is thrown for 'MonetaryRoundings.getRounding((RoundingContext) null)'.(AccessingCurrenciesAmountsRoundingsTest#testAccessRoundingsWithMonetaryContext_Null)
+[SUCCESS] 4.2.7 Ensure correct MonetaryRounding returned for a mathematical RoundingQuery.(AccessingCurrenciesAmountsRoundingsTest#testAccessRoundingsWithRoundingContext)
+[SUCCESS] 4.2.7 Test if MonetaryCurrencies provides all ISO related entries similar to java.util.Currency.(AccessingCurrenciesAmountsRoundingsTest#testAllISOCurrenciesAvailable)
+[SUCCESS] 4.2.7 Test if MonetaryCurrencies provides all locale related entries similar to java.util.Currency.(AccessingCurrenciesAmountsRoundingsTest#testAllLocaleCurrenciesAvailable)
+[SUCCESS] 4.2.7 Ensure a default MonetaryAmountFactory is available.(AccessingCurrenciesAmountsRoundingsTest#testAmountDefaultType)
+[SUCCESS] 4.2.7 Ensure correct query function, MonetaryAmounts.getAmountFactories should return factoryfor explicit acquired amount types.(AccessingCurrenciesAmountsRoundingsTest#testAmountQueryType)
+[SUCCESS] 4.2.7 Ensure amount factories are accessible for all types available in MonetaryAmounts.(AccessingCurrenciesAmountsRoundingsTest#testAmountTypesInstantiatable)
+[SUCCESS] 4.2.7 Ensure amount classes to test are setup and registered/available in MonetaryAmounts.(AccessingCurrenciesAmountsRoundingsTest#testAmountTypesProvided)
+[SUCCESS] 4.2.7 Test if MonetaryCurrencies provides correct ISO related entries similar to java.util.Currency.(AccessingCurrenciesAmountsRoundingsTest#testCorrectISOCodes)
+[SUCCESS] 4.2.7 Test if MonetaryCurrencies provides correct locale related entries similar to java.util.Currency.(AccessingCurrenciesAmountsRoundingsTest#testCorrectLocales)
+[SUCCESS] 4.2.7 Test if MonetaryCurrencies provides customized locale identified currencies.(AccessingCurrenciesAmountsRoundingsTest#testCustomCurrencies)
+[SUCCESS] 4.2.7 Access custom roundings and ensure correct functionality.(AccessingCurrenciesAmountsRoundingsTest#testCustomRoundings)
+[SUCCESS] 4.2.7 Ensure MonetaryException is thrown for accessing invalid named rounding.(AccessingCurrenciesAmountsRoundingsTest#testCustomRoundings_Foo)
+[SUCCESS] 4.2.7 Ensure NullPointerException is thrown for MonetaryRoundings.getRounding((String) null).(AccessingCurrenciesAmountsRoundingsTest#testCustomRoundings_Null)
+[SUCCESS] 4.3.1 Access Conversion to term currency code XXX for all providers that support according conversion, ifavailable a non-null CurrencyConversion must be provided.(MonetaryConversionsTest#testConversionsAreAvailable)
+[SUCCESS] 4.3.1 Access Conversion by query to term currency XXX for all providers that support according conversion, ifavailable a non-null CurrencyConversion must be provided.(MonetaryConversionsTest#testConversionsAreAvailableWithQuery)
+[SUCCESS] 4.3.1 Access and test the default conversion provider chain.(MonetaryConversionsTest#testDefaultProviderChainIsDefined)
+[SUCCESS] 4.3.1 Access and test the default conversion provider chain, by accessing a defaultCurrencyConversion for term CurrencyUnit CHF.(MonetaryConversionsTest#testDefaultProviderChainIsDefinedDefault)
+[SUCCESS] 4.3.1 Access and test the default conversion provider chain, by accessing a defaultCurrencyConversion for term currency code CHF.(MonetaryConversionsTest#testDefaultProviderChainIsDefinedDefault2)
+[SUCCESS] 4.3.1 Access and test the default conversion provider chain, by accessing a defaultCurrencyConversion for ConversionQuery.(MonetaryConversionsTest#testDefaultProviderChainIsDefinedDefaultWithContext)
+[SUCCESS] 4.3.1 Test if all ExchangeRateProvider instances returns valid ProviderContext.(MonetaryConversionsTest#testProviderMetadata)
+[SUCCESS] 4.3.1 Test if all CurrencyConversion instances returns valid ConversionContext, accessed by currency code.(MonetaryConversionsTest#testProviderMetadata2)
+[SUCCESS] 4.3.1 Test if all CurrencyConversion instances returns valid ConversionContext, accessed by ConversionQuery/currency code.(MonetaryConversionsTest#testProviderMetadata2WithContext)
+[SUCCESS] 4.3.1 Test if all CurrencyConversion instances returns valid ConversionContext, accessed by CurrencyUnit.(MonetaryConversionsTest#testProviderMetadata3)
+[SUCCESS] 4.3.1 Test if all CurrencyConversion instances returns valid ConversionContext, accessed by ConversionQuery/CurrencyUnit.(MonetaryConversionsTest#testProviderMetadata3WithContext)
+[SUCCESS] 4.3.1 Ensure at least one conversion provider is available, TestRateProvider must be present.(MonetaryConversionsTest#testProvidersAvailable)
+[SUCCESS] 4.3.1 Bad case: Access invalid ExchangeRateProvider, expect MonetaryException thrown, using default provider chain.(MonetaryConversionsTest#testUseInvalidProvider)
+[SUCCESS] 4.3.1 Bad case: Access invalid ExchangeRateProvider, expect MonetaryException thrown, using explicit provider.(MonetaryConversionsTest#testUseInvalidProviderWithinChain)
+[SUCCESS] 4.3.3 Test access of Conversion Rates, using TCK provided rate provider.(ExchangeRatesAndRateProvidersTest#testAccessKnownRates)
+[SUCCESS] 4.3.3 Test access to exchange rates from TestRateProvider, using target CUrrencyUnit.(ExchangeRatesAndRateProvidersTest#testAccessKnownRatesAndContext)
+[SUCCESS] 4.3.3 Test access to exchange rates from TestRateProvider, using target currency code.(ExchangeRatesAndRateProvidersTest#testAccessKnownRatesWithCodes)
+[SUCCESS] 4.3.3  Test access to conversion rates, including known factor, using TestRateProvider.(ExchangeRatesAndRateProvidersTest#testAccessKnownRatesWithCodesAndContext)
+[SUCCESS] 4.3.3 Test access to conversion rate for currency codes, using default provider.(ExchangeRatesAndRateProvidersTest#testAccessRates_IdentityRatesWithCodes)
+[SUCCESS] 4.3.3 Test access to identity conversion rate for CurrencyUnits, using default provider(ExchangeRatesAndRateProvidersTest#testAccessRates_IdentityRatesWithUnits)
+[SUCCESS] 4.3.3 Test access to conversion rate for CurrencyQuery, using default provider.(ExchangeRatesAndRateProvidersTest#testAccessRates_IdentityRatesWithUnitsAndContext)
+[SUCCESS] 4.3.3 Bad case: try accessing exchange rates with invalid base currency code.(ExchangeRatesAndRateProvidersTest#testInvalidUsage_InvalidSourceCurrency)
+[SUCCESS] 4.3.3 Bad case: try accessing exchange rates with null ConversionQuery.(ExchangeRatesAndRateProvidersTest#testInvalidUsage_InvalidSourceCurrencyAndContext)
+[SUCCESS] 4.3.3 Bad case: try accessing exchange rates with invalid term currency code.(ExchangeRatesAndRateProvidersTest#testInvalidUsage_InvalidTargetCurrency)
+[SUCCESS] 4.3.3 Bad case: try accessing exchange rates with null base currency code.(ExchangeRatesAndRateProvidersTest#testInvalidUsage_NullSourceCurrency)
+[SUCCESS] 4.3.3 Bad case: try accessing exchange rates with null base CurrencyUnit.(ExchangeRatesAndRateProvidersTest#testInvalidUsage_NullSourceCurrencyUnit)
+[SUCCESS] 4.3.3 Bad case: try accessing exchange rates with null term currency code.(ExchangeRatesAndRateProvidersTest#testInvalidUsage_NullTargetCurrency)
+[SUCCESS] 4.3.3 Bad case: try accessing exchange rates with null term CurrencyUnit.(ExchangeRatesAndRateProvidersTest#testInvalidUsage_NullTargetCurrencyUnit)
+[SUCCESS] 4.3.3 Ensure additional ConversionQuery data is passed correctly to SPIs.(ExchangeRatesAndRateProvidersTest#testPassingOverConversionContextToSPIs)
+[SUCCESS] 4.3.2 Test successful conversion for CHF -> FOO, using TestRateProvider.(ConvertingAmountsTest#testConversion)
+[SUCCESS] 4.3.2 Test correct ExchangeRate is returned for CHF -> FOO, using TestRateProvider.(ConvertingAmountsTest#testConversionComparedWithRate)
+[SUCCESS] 4.3.2 Bad case: Access CurrencyConversion with a CurrencyUnit==null, ensure NullPointerException is thrown.(ConvertingAmountsTest#testNullConversion1)
+[SUCCESS] 4.3.2 Bad case: Access CurrencyConversion with a currency code==null, ensure NullPointerException is thrown.(ConvertingAmountsTest#testNullConversion2)
+[SUCCESS] 4.3.2 Bad case: Try CurrencyConversion to an inconvertible (custom) currency (FOOANY), ensure CurrencyConversionException is thrown.(ConvertingAmountsTest#testUnsupportedConversion)
+[SUCCESS] 4.3.4 Test correct rate evaluation for different conversion provider chains, with historic rates.(ProviderChainsTest#testCorrectRateEvaluationInChainHistoric)
+[SUCCESS] 4.3.4 Test correct rate evaluation for different conversion provider chains.(ProviderChainsTest#testCorrectRateEvaluationInChain_diffProviders)
+[SUCCESS] 4.3.4 Test correct rate evaluation for different conversion provider chains, with duplicate provider entries.(ProviderChainsTest#testCorrectRateEvaluationInChain_sameProviders)
+[SUCCESS] 4.3.4 Test availability of TCK provided providers.(ProviderChainsTest#testTCKRateChainAvailability)
+[SUCCESS] 4.4.1 Ensures for each locale defined by DecimalFormat.getAvailableLocales() a MonetaryFormats.getAmountFormat(AmountFormatQuery) returns a formatter.(FormattingMonetaryAmountsTest#testAmountStyleOf)
+[SUCCESS] 4.4.1 Formats amounts using all available locales.(FormattingMonetaryAmountsTest#testFormattingIsIndependentOfImplementation)
+[SUCCESS] 4.4.1 Ensures for each locale defined by DecimalFormat.getAvailableLocales() a MonetaryAmountFormat instance is provided.(FormattingMonetaryAmountsTest#testGetAmountFormat)
+[SUCCESS] 4.4.1 Ensures for each locale defined by DecimalFormat.getAvailableLocales() a MonetaryFormats.isAvailable(Locale) is true.(FormattingMonetaryAmountsTest#testGetAvailableLocales)
+[SUCCESS] 4.4.1 Ensures all Locales defined by DecimalFormat.getAvailableLocales() are available for monetary formatting.(FormattingMonetaryAmountsTest#testLocalesSupported)
+[SUCCESS] 4.4.1 Ensures the system.s default locale is supported for MonetaryAmountFormat.(FormattingMonetaryAmountsTest#testNoDepOnAmountImplementation)
+[SUCCESS] 4.4.1 Test formats and parses (round-trip) any supported amount type for each supported Locale, using different format queries.(FormattingMonetaryAmountsTest#testParseDifferentStyles)
+[SUCCESS] 4.4.1 Test formats and parses (round-trip) any supported amount type for each supported Locale.(FormattingMonetaryAmountsTest#testParseIsIndependentOfImplementation)
+[SUCCESS] 4.4.1 Test formats and parses (round-trip) any supported amount type for each supported Locale, checks results for different currencies(FormattingMonetaryAmountsTest#testParseWithDifferentCurrencies)
+
+JSR 354 TCP version 1.0 Summary
+-------------------------------
+
+TOTAL TESTS EXECUTED : 221
+TOTAL TESTS SKIPPED  : 0
+TOTAL TESTS SUCCESS  : 219
+TOTAL TESTS FAILED   : 0
+
+-- JSR 354 TCK finished --
+
+===============================================
+Custom suite
+Total tests run: 1, Failures: 0, Skips: 0
+===============================================
+
+
+Process finished with exit code 0
+---------------------------------------------------------------------------------------
 
 Contacts
 ~~~~~~~~

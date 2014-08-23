@@ -477,7 +477,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Test TCK custom roundings.
      */
     @Test(expectedExceptions = NullPointerException.class,
-          description = "4.2.7: Ensure NullPointerException is thrown for MonetaryRoundings.getRounding((String) null).")
+            description = "4.2.7 Ensure NullPointerException is thrown for MonetaryRoundings.getRounding((String) null).")
     @SpecAssertion(section = "4.2.7", id = "427-C4")
     public void testCustomRoundings_Null(){
         MonetaryRoundings.getRounding((String) null);

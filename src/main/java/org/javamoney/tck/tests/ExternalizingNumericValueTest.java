@@ -608,7 +608,7 @@ public class ExternalizingNumericValueTest {
      * allowed to be performed.
      */
     @SpecAssertion(section = "4.2.3", id = "423-B4")
-    @Test(description = "Checks if a correct Double value is returned, no truncation is " +
+    @Test(description = "4.2.3 Checks if a correct Double value is returned, no truncation is " +
             "allowed to be performed.")
     public void testDoubleNegative() {
         double[] nums = new double[]{-3.12334, -1.235, -0.43, -1.35, -52.4, -12345, 123, -1223243.342325435};

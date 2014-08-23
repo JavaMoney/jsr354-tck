@@ -40,7 +40,7 @@ public class FunctionalExtensionPointsTest {
      * (amount.getClass() == result.getClass()).
      */
     @SpecAssertion(section = "4.2.4", id = "424-A1")
-    @Test(description = "Ansures the result of all operators under test is of the same class as the input.")
+    @Test(description = "4.2.4 Ensures the result of all operators under test is of the same class as the input.")
     public void testOperatorReturnTypeEqualsParameter() {
         Collection<MonetaryOperator> operators = TCKTestSetup.getTestConfiguration().getMonetaryOperators4Test();
         assertNotNull(operators, "No operators (null) to test returned from TestConfiguration.getMonetaryOperators4Test().");
