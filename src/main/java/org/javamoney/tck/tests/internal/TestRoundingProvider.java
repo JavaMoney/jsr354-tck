@@ -52,24 +52,25 @@ public class TestRoundingProvider implements RoundingProviderSpi{
         if(customRounding != null){
             return customRounding;
         }
-        if(context.getCurrencyUnit() == null){
+        if(context.getCurrency() == null){
             return null;
         }
         Boolean cashRounding = context.getBoolean("cashRounding", Boolean.FALSE);
         Long timestamp = context.getTimestampMillis();
         if(cashRounding){
             if(timestamp != null){
-                return getCashRounding(context.getCurrencyUnit(), timestamp);
+                return getCashRounding(context.getCurrency(), timestamp);
             }
-            return getCashRounding(context.getCurrencyUnit());
+            return getCashRounding(context.getCurrency());
         }else{
-            if("XAU".equals(context.getCurrencyUnit().getCurrencyCode())){
+            if("XAU".equals(context.getCurrency().getCurrencyCode())){
                 if(timestamp != null){
                     return new MonetaryRounding(){
                         @Override
                         public RoundingContext getRoundingContext(){
                             return CONTEXT;
                         }
+
                         @Override
                         public MonetaryAmount apply(MonetaryAmount value){
                             return value.getFactory().setNumber(
@@ -83,6 +84,7 @@ public class TestRoundingProvider implements RoundingProviderSpi{
                     public RoundingContext getRoundingContext(){
                         return CONTEXT;
                     }
+
                     @Override
                     public MonetaryAmount apply(MonetaryAmount value){
                         return value.getFactory()
@@ -103,6 +105,7 @@ public class TestRoundingProvider implements RoundingProviderSpi{
                 public RoundingContext getRoundingContext(){
                     return CONTEXT_CASH;
                 }
+
                 @Override
                 public MonetaryAmount apply(MonetaryAmount value){
                     return value.getFactory()
@@ -121,6 +124,7 @@ public class TestRoundingProvider implements RoundingProviderSpi{
                 public RoundingContext getRoundingContext(){
                     return CONTEXT_CASH;
                 }
+
                 @Override
                 public MonetaryAmount apply(MonetaryAmount value){
                     return value.getFactory()

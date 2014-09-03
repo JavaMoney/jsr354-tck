@@ -35,7 +35,7 @@ public class TestRateProvider1 implements ExchangeRateProvider{
         }
 
         @Override
-        public CurrencyUnit getTermCurrency(){
+        public CurrencyUnit getCurrency(){
             return term;
         }
 
@@ -65,7 +65,7 @@ public class TestRateProvider1 implements ExchangeRateProvider{
     public boolean isAvailable(ConversionQuery conversionQuery){
         Objects.requireNonNull(conversionQuery);
         Objects.requireNonNull(conversionQuery.getBaseCurrency());
-        Objects.requireNonNull(conversionQuery.getTermCurrency());
+        Objects.requireNonNull(conversionQuery.getCurrency());
         return "CHF".equals(conversionQuery.getBaseCurrency().getCurrencyCode());
     }
 
@@ -73,11 +73,11 @@ public class TestRateProvider1 implements ExchangeRateProvider{
     public ExchangeRate getExchangeRate(ConversionQuery conversionQuery){
         Objects.requireNonNull(conversionQuery);
         Objects.requireNonNull(conversionQuery.getBaseCurrency());
-        Objects.requireNonNull(conversionQuery.getTermCurrency());
+        Objects.requireNonNull(conversionQuery.getCurrency());
         if(isAvailable(conversionQuery)){
             return new TestExchangeRate.Builder(getClass().getSimpleName(), RateType.OTHER)
                     .setFactor(new TestNumberValue(FACTOR)).setBase(conversionQuery.getBaseCurrency())
-                    .setTerm(conversionQuery.getTermCurrency()).build();
+                    .setTerm(conversionQuery.getCurrency()).build();
         }
         return null;
     }
@@ -85,8 +85,8 @@ public class TestRateProvider1 implements ExchangeRateProvider{
     @Override
     public CurrencyConversion getCurrencyConversion(ConversionQuery query){
         Objects.requireNonNull(query);
-        Objects.requireNonNull(query.getTermCurrency());
-        return new Conversion(query.getTermCurrency());
+        Objects.requireNonNull(query.getCurrency());
+        return new Conversion(query.getCurrency());
     }
 
 }

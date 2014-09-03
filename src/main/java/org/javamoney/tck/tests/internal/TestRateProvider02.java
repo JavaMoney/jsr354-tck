@@ -22,8 +22,7 @@ import java.util.Objects;
 public class TestRateProvider02 implements ExchangeRateProvider{
 
     public static final double FACTOR = 0.2;
-    private static ProviderContext PC =
-            ProviderContextBuilder.create("TestRateProvider02", RateType.OTHER).build();
+    private static ProviderContext PC = ProviderContextBuilder.create("TestRateProvider02", RateType.OTHER).build();
     private static ConversionContext CC = ConversionContextBuilder.create(PC, RateType.OTHER).build();
 
     private static final class Conversion implements CurrencyConversion{
@@ -36,7 +35,7 @@ public class TestRateProvider02 implements ExchangeRateProvider{
         }
 
         @Override
-        public CurrencyUnit getTermCurrency(){
+        public CurrencyUnit getCurrency(){
             return term;
         }
 
@@ -65,7 +64,7 @@ public class TestRateProvider02 implements ExchangeRateProvider{
     @Override
     public boolean isAvailable(ConversionQuery conversionQuery){
         Objects.requireNonNull(conversionQuery);
-        Objects.requireNonNull(conversionQuery.getTermCurrency());
+        Objects.requireNonNull(conversionQuery.getCurrency());
         return true;
     }
 
@@ -75,7 +74,7 @@ public class TestRateProvider02 implements ExchangeRateProvider{
         if(isAvailable(conversionQuery)){
             return new TestExchangeRate.Builder(getProviderContext().getProvider(), RateType.OTHER)
                     .setFactor(new TestNumberValue(FACTOR)).setBase(conversionQuery.getBaseCurrency())
-                    .setTerm(conversionQuery.getTermCurrency()).build();
+                    .setTerm(conversionQuery.getCurrency()).build();
         }
         return null;
     }
@@ -83,7 +82,7 @@ public class TestRateProvider02 implements ExchangeRateProvider{
     @Override
     public CurrencyConversion getCurrencyConversion(ConversionQuery conversionQuery){
         if(isAvailable(conversionQuery)){
-            return new Conversion(conversionQuery.getTermCurrency());
+            return new Conversion(conversionQuery.getCurrency());
         }
         return null;
     }

@@ -35,7 +35,7 @@ public class TestRateProvider3 implements ExchangeRateProvider{
         }
 
         @Override
-        public CurrencyUnit getTermCurrency(){
+        public CurrencyUnit getCurrency(){
             return term;
         }
 
@@ -65,7 +65,7 @@ public class TestRateProvider3 implements ExchangeRateProvider{
     public boolean isAvailable(ConversionQuery query){
         Objects.requireNonNull(query);
         Objects.requireNonNull(query.getBaseCurrency());
-        Objects.requireNonNull(query.getTermCurrency());
+        Objects.requireNonNull(query.getCurrency());
         return "USD".equals(query.getBaseCurrency().getCurrencyCode());
     }
 
@@ -73,7 +73,7 @@ public class TestRateProvider3 implements ExchangeRateProvider{
     public ExchangeRate getExchangeRate(ConversionQuery query){
         if(isAvailable(query)){
             return new TestExchangeRate.Builder(PC.getProvider(), RateType.OTHER).setFactor(new TestNumberValue(FACTOR))
-                    .setBase(query.getBaseCurrency()).setTerm(query.getTermCurrency()).build();
+                    .setBase(query.getBaseCurrency()).setTerm(query.getCurrency()).build();
         }
         return null;
     }
@@ -81,8 +81,8 @@ public class TestRateProvider3 implements ExchangeRateProvider{
     @Override
     public CurrencyConversion getCurrencyConversion(ConversionQuery conversionQuery){
         Objects.requireNonNull(conversionQuery);
-        Objects.requireNonNull(conversionQuery.getTermCurrency());
-        return new Conversion(conversionQuery.getTermCurrency());
+        Objects.requireNonNull(conversionQuery.getCurrency());
+        return new Conversion(conversionQuery.getCurrency());
     }
 
 }

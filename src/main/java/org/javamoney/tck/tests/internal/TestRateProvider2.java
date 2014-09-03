@@ -35,7 +35,7 @@ public class TestRateProvider2 implements ExchangeRateProvider{
         }
 
         @Override
-        public CurrencyUnit getTermCurrency(){
+        public CurrencyUnit getCurrency(){
             return term;
         }
 
@@ -65,7 +65,7 @@ public class TestRateProvider2 implements ExchangeRateProvider{
     public boolean isAvailable(ConversionQuery conversionQuery){
         Objects.requireNonNull(conversionQuery);
         Objects.requireNonNull(conversionQuery.getBaseCurrency());
-        Objects.requireNonNull(conversionQuery.getTermCurrency());
+        Objects.requireNonNull(conversionQuery.getCurrency());
         return "EUR".equals(conversionQuery.getBaseCurrency().getCurrencyCode());
     }
 
@@ -73,11 +73,13 @@ public class TestRateProvider2 implements ExchangeRateProvider{
     public ExchangeRate getExchangeRate(ConversionQuery conversionQuery){
         if(isAvailable(conversionQuery)){
             if(conversionQuery.getTimestampMillis() != null){
-                return new TestExchangeRate.Builder("TestRateProvider2",RateType.OTHER).setFactor(new TestNumberValue(FACTOR * 100))
-                        .setBase(conversionQuery.getBaseCurrency()).setTerm(conversionQuery.getTermCurrency()).build();
+                return new TestExchangeRate.Builder("TestRateProvider2", RateType.OTHER)
+                        .setFactor(new TestNumberValue(FACTOR * 100)).setBase(conversionQuery.getBaseCurrency())
+                        .setTerm(conversionQuery.getCurrency()).build();
             }
-            return new TestExchangeRate.Builder("TestRateProvider2",RateType.OTHER).setFactor(new TestNumberValue(FACTOR))
-                    .setBase(conversionQuery.getBaseCurrency()).setTerm(conversionQuery.getTermCurrency()).build();
+            return new TestExchangeRate.Builder("TestRateProvider2", RateType.OTHER)
+                    .setFactor(new TestNumberValue(FACTOR)).setBase(conversionQuery.getBaseCurrency())
+                    .setTerm(conversionQuery.getCurrency()).build();
         }
         return null;
     }
@@ -85,8 +87,8 @@ public class TestRateProvider2 implements ExchangeRateProvider{
     @Override
     public CurrencyConversion getCurrencyConversion(ConversionQuery conversionContext){
         Objects.requireNonNull(conversionContext);
-        Objects.requireNonNull(conversionContext.getTermCurrency());
-        return new Conversion(conversionContext.getTermCurrency());
+        Objects.requireNonNull(conversionContext.getCurrency());
+        return new Conversion(conversionContext.getCurrency());
     }
 
 }
