@@ -4,3 +4,4 @@ test-output/
 /bin
 /.settings
 /.classpath
+/.resourceCache
