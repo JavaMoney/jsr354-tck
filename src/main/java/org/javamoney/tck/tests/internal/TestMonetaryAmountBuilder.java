@@ -11,15 +11,14 @@ package org.javamoney.tck.tests.internal;
 
 import javax.money.*;
 
-public final class TestMonetaryAmountFactory implements MonetaryAmountFactory<TestAmount>{
+public final class TestMonetaryAmountBuilder implements MonetaryAmountFactory<TestAmount>{
 
-	private Number value;
-	private CurrencyUnit currency;
+    private Number value;
+    private CurrencyUnit currency;
 
-	public static TestAmount getAmount(final Number number,
-			final CurrencyUnit currency) {
+    public static TestAmount getAmount(final Number number, final CurrencyUnit currency){
         return new TestAmount(number, currency);
-	}
+    }
 
     @Override
     public Class<? extends MonetaryAmount> getAmountType(){

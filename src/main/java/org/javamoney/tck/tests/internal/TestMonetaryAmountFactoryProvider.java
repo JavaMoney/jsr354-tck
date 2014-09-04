@@ -30,7 +30,7 @@ public final class TestMonetaryAmountFactoryProvider implements MonetaryAmountFa
 
     @Override
     public MonetaryAmountFactory createMonetaryAmountFactory(){
-        return new TestMonetaryAmountFactory();
+        return new TestMonetaryAmountBuilder();
     }
 
     @Override

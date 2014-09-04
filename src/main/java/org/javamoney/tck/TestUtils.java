@@ -230,7 +230,7 @@ public class TestUtils{
     }
 
     public static MonetaryAmount createAmountWithScale(int scale){
-        MonetaryAmountFactoryQuery tgtContext = MonetaryAmountFactoryQueryBuilder.create().setMaxScale(scale).build();
+        MonetaryAmountFactoryQuery tgtContext = MonetaryAmountFactoryQueryBuilder.of().setMaxScale(scale).build();
         MonetaryAmountFactory<?> exceedingFactory;
         try{
             exceedingFactory = MonetaryAmounts.getAmountFactory(tgtContext);
@@ -245,8 +245,7 @@ public class TestUtils{
     }
 
     public static MonetaryAmount createAmountWithPrecision(int precision){
-        MonetaryAmountFactoryQuery tgtContext =
-                MonetaryAmountFactoryQueryBuilder.create().setPrecision(precision).build();
+        MonetaryAmountFactoryQuery tgtContext = MonetaryAmountFactoryQueryBuilder.of().setPrecision(precision).build();
         MonetaryAmountFactory<?> exceedingFactory;
         try{
             exceedingFactory = MonetaryAmounts.getAmountFactory(tgtContext);

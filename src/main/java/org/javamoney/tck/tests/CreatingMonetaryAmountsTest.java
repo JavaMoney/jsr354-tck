@@ -43,8 +43,9 @@ public class CreatingMonetaryAmountsTest{
     /**
      * For each MonetaryAmountFactory: Check if getAmountType returns the correct type.
      */
-    @Test(description = "4.2.6 Ensure MonetaryAmountFactory instances accessible for all amount types under test return " +
-            "correct amount type.")
+    @Test(description =
+                  "4.2.6 Ensure MonetaryAmountFactory instances accessible for all amount types under test return " +
+                          "correct amount type.")
     @SpecAssertion(section = "4.2.6", id = "426-A2")
     public void testMonetaryAmountFactoryReturnsCorrectType(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -59,8 +60,9 @@ public class CreatingMonetaryAmountsTest{
      * than Max
      * MonetaryContext.
      */
-    @Test(description = "4.2.6 Ensure MonetaryAmountFactory instances accessible for all amount types under test return " +
-            "correct min/max MonetaryContext.")
+    @Test(description =
+                  "4.2.6 Ensure MonetaryAmountFactory instances accessible for all amount types under test return " +
+                          "correct min/max MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-A3")
     public void testMonetaryAmountFactoryMinMaxCapabilities(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -79,8 +81,9 @@ public class CreatingMonetaryAmountsTest{
     /**
      * Checks if capabilities of default MonetaryContext are less than Max MonetaryContext.
      */
-    @Test(description = "4.2.6 Ensure MonetaryAmountFactory instances accessible for all amount types under test return " +
-            "correct min/max MonetaryContext (min <= max).")
+    @Test(description =
+                  "4.2.6 Ensure MonetaryAmountFactory instances accessible for all amount types under test return " +
+                          "correct min/max MonetaryContext (min <= max).")
     @SpecAssertion(section = "4.2.6", id = "426-A4")
     public void testMonetaryAmountFactoryMinMaxCapabilities_Compare(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -181,7 +184,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -190,7 +193,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -200,7 +203,7 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
@@ -208,7 +211,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -237,7 +240,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -246,7 +249,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -256,7 +259,7 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
@@ -264,7 +267,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -293,7 +296,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -302,7 +305,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -312,7 +315,7 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
@@ -320,7 +323,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -378,24 +381,20 @@ public class CreatingMonetaryAmountsTest{
                 f.setCurrency("USD");
                 MonetaryContext maxCtx = f.getMaximalMonetaryContext();
                 if(maxCtx.getPrecision() != 0){
-                    f.setContext(
-                            MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(maxCtx.getPrecision() + 1)
-                                    .build());
-                    AssertJUnit
-                            .fail("Section 4.2.6: Factory should throw MonetaryException for invalid context " +
-                                          "(exceeding precision), " +
-                                          "type was " +
-                                          type.getName());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(maxCtx.getPrecision() + 1)
+                                         .build());
+                    AssertJUnit.fail("Section 4.2.6: Factory should throw MonetaryException for invalid context " +
+                                             "(exceeding precision), " +
+                                             "type was " +
+                                             type.getName());
                 }
                 if(maxCtx.getMaxScale() != -1){
-                    f.setContext(
-                            MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(maxCtx.getMaxScale() + 1)
-                                    .build());
-                    AssertJUnit
-                            .fail("Section 4.2.6: Factory should throw MonetaryException for invalid context " +
-                                          "(exceeding scale), " +
-                                          "type was " +
-                                          type.getName());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(maxCtx.getMaxScale() + 1)
+                                         .build());
+                    AssertJUnit.fail("Section 4.2.6: Factory should throw MonetaryException for invalid context " +
+                                             "(exceeding scale), " +
+                                             "type was " +
+                                             type.getName());
                 }
             }
             catch(MonetaryException e){
@@ -460,7 +459,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -469,7 +468,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -479,7 +478,7 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
@@ -487,7 +486,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -502,8 +501,10 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Create positive amounts from
      * a factory with monetary contexts.
      */
-    @Test(description = "4.2.6 For each MonetaryAmount Factory: Create positive amounts using doubles with explicit MonetaryContext " +
-            "(precision/scale).")
+    @Test(description =
+                  "4.2.6 For each MonetaryAmount Factory: Create positive amounts using doubles with explicit " +
+                          "MonetaryContext " +
+                          "(precision/scale).")
     @SpecAssertion(section = "4.2.6", id = "426-C2")
     public void testMonetaryAmountFactoryCreatePositiveAmountsWithContexts2(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -516,7 +517,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -525,7 +526,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -535,7 +536,7 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
@@ -543,7 +544,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -558,8 +559,10 @@ public class CreatingMonetaryAmountsTest{
      * For each MonetaryAmount Factory: Create positive amounts from
      * a factory with monetary contexts.
      */
-    @Test(description = "4.2.6 For each MonetaryAmount Factory: Create positive amounts using BigDecimal with explicit MonetaryContext " +
-            "(precision/scale).")
+    @Test(description =
+                  "4.2.6 For each MonetaryAmount Factory: Create positive amounts using BigDecimal with explicit " +
+                          "MonetaryContext " +
+                          "(precision/scale).")
     @SpecAssertion(section = "4.2.6", id = "426-C2")
     public void testMonetaryAmountFactoryCreatePositiveAmountsWithContexts3(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -572,7 +575,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -581,7 +584,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -591,7 +594,7 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
@@ -599,7 +602,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -615,8 +618,9 @@ public class CreatingMonetaryAmountsTest{
      * amounts from a factory with an invalid numeric value (exceeding max
      * MonetaryContext).
      */
-    @Test(description = "4.2.6 Bad case: For each MonetaryAmount Factory: Create positive amounts using invalid numbers," +
-            " expecting ArithemticException thrown.")
+    @Test(description =
+                  "4.2.6 Bad case: For each MonetaryAmount Factory: Create positive amounts using invalid numbers," +
+                          " expecting ArithemticException thrown.")
     @SpecAssertion(section = "4.2.6", id = "426-C3")
     public void testMonetaryAmountFactoryCreatePositiveAmountsWithInvalidNumber(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -645,11 +649,10 @@ public class CreatingMonetaryAmountsTest{
                 try{
                     f.setNumber(TestUtils.createNumberWithScale(f, ctx.getMaxScale() + 5));
                     f.create();
-                    AssertJUnit
-                            .fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
-                                          "when an amount with exceeding scale is tried" +
-                                          " being created, type: " +
-                                          type.getName());
+                    AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
+                                             "when an amount with exceeding scale is tried" +
+                                             " being created, type: " +
+                                             type.getName());
                 }
                 catch(ArithmeticException e){
                     // OK
@@ -677,23 +680,21 @@ public class CreatingMonetaryAmountsTest{
                     f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision()));
                 }
                 f.create();
-                AssertJUnit
-                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
-                                      "when a positive amount without a currency" +
-                                      " is" +
-                                      " tried to be created, type: " +
-                                      type.getName());
+                AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
+                                         "when a positive amount without a currency" +
+                                         " is" +
+                                         " tried to be created, type: " +
+                                         type.getName());
             }
             catch(MonetaryException e){
                 // OK
             }
             catch(Exception e){
-                AssertJUnit
-                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
-                                      "when a positive amount without a currency" +
-                                      " is" +
-                                      " tried to be created, but threw " + e.getClass() + " type: " +
-                                      type.getName());
+                AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
+                                         "when a positive amount without a currency" +
+                                         " is" +
+                                         " tried to be created, but threw " + e.getClass() + " type: " +
+                                         type.getName());
             }
         }
     }
@@ -701,8 +702,9 @@ public class CreatingMonetaryAmountsTest{
     /**
      * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an invalid currency.
      */
-    @Test(description = "4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts with an invalid currency," +
-            " expecting MonetaryException thrown.")
+    @Test(description =
+                  "4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts with an invalid currency," +
+                          " expecting MonetaryException thrown.")
     @SpecAssertion(section = "4.2.6", id = "426-C4")
     public void testMonetaryAmountFactoryCreatePositiveInvalidCurrency_BadCase(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -718,13 +720,12 @@ public class CreatingMonetaryAmountsTest{
                 }
                 f.setCurrency("FooBar_foobar_fOobAr_foObaR");
                 f.create();
-                AssertJUnit
-                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
-                                      "when a positive amount with an invalid " +
-                                      "currency" +
-                                      " is" +
-                                      " tried to be created, type: " +
-                                      type.getName());
+                AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
+                                         "when a positive amount with an invalid " +
+                                         "currency" +
+                                         " is" +
+                                         " tried to be created, type: " +
+                                         type.getName());
             }
             catch(MonetaryException e){
                 // OK
@@ -735,8 +736,9 @@ public class CreatingMonetaryAmountsTest{
     /**
      * For each MonetaryAmount Factory: Bad Case: Create negative amounts from a factory with an invalid currency.
      */
-    @Test(description = "4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts with an invalid currency," +
-            " expecting MonetaryException thrown.")
+    @Test(description =
+                  "4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts with an invalid currency," +
+                          " expecting MonetaryException thrown.")
     @SpecAssertion(section = "4.2.6", id = "426-C5")
     public void testMonetaryAmountFactoryCreatePositiveInvalidContext_BadCase(){
         for(Class type : MonetaryAmounts.getAmountTypes()){
@@ -760,12 +762,11 @@ public class CreatingMonetaryAmountsTest{
                     f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision()));
                     f.setCurrency("FooBar_foobar_fOobAr_foObaR");
                     f.create();
-                    AssertJUnit
-                            .fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
-                                          "when a positive amount without an " +
-                                          "invalid MonetaryContext is" +
-                                          " tried to be created, type: " +
-                                          type.getName());
+                    AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
+                                             "when a positive amount without an " +
+                                             "invalid MonetaryContext is" +
+                                             " tried to be created, type: " +
+                                             type.getName());
                 }
             }
             catch(MonetaryException e){
@@ -831,7 +832,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -840,7 +841,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -850,7 +851,7 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
@@ -858,7 +859,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -887,7 +888,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -896,7 +897,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -906,7 +907,7 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
@@ -914,7 +915,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -943,7 +944,7 @@ public class CreatingMonetaryAmountsTest{
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if(maxCtx.getPrecision() != 0){
                 for(int p = maxCtx.getPrecision(); p > 0; p--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -952,7 +953,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int p = 0; p < 100; p += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setPrecision(p).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -962,7 +963,7 @@ public class CreatingMonetaryAmountsTest{
             }
             if(maxCtx.getMaxScale() != -1){
                 for(int s = maxCtx.getMaxScale(); s >= 0; s--){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
@@ -970,7 +971,7 @@ public class CreatingMonetaryAmountsTest{
                 }
             }else{
                 for(int s = 0; s < 100; s += 10){
-                    f.setContext(MonetaryContextBuilder.create(MonetaryAmount.class).setMaxScale(s).build());
+                    f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
                             "Section 4.2.6: Factory did not honor the precision set on the context for " +
@@ -1001,13 +1002,12 @@ public class CreatingMonetaryAmountsTest{
                 try{
                     f.setNumber(TestUtils.createNumberWithPrecision(f, ctx.getPrecision() + 5).negate());
                     f.create();
-                    AssertJUnit
-                            .fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
-                                          "when an amount with exceeding precision is " +
-                                          "tried" +
+                    AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
+                                             "when an amount with exceeding precision is " +
+                                             "tried" +
 
-                                          " being created, type: " +
-                                          type.getName());
+                                             " being created, type: " +
+                                             type.getName());
                 }
                 catch(ArithmeticException e){
                     // OK
@@ -1017,11 +1017,10 @@ public class CreatingMonetaryAmountsTest{
                 try{
                     f.setNumber(TestUtils.createNumberWithScale(f, ctx.getMaxScale() + 5).negate());
                     f.create();
-                    AssertJUnit
-                            .fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
-                                          "when an amount with exceeding scale is tried" +
-                                          " being created, type: " +
-                                          type.getName());
+                    AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
+                                             "when an amount with exceeding scale is tried" +
+                                             " being created, type: " +
+                                             type.getName());
                 }
                 catch(ArithmeticException e){
                     // OK
@@ -1050,21 +1049,19 @@ public class CreatingMonetaryAmountsTest{
                                         .negate());
                 }
                 f.create();
-                AssertJUnit
-                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
-                                      "when an amount without a currency is" +
-                                      " tried to be created, type: " +
-                                      type.getName());
+                AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
+                                         "when an amount without a currency is" +
+                                         " tried to be created, type: " +
+                                         type.getName());
             }
             catch(MonetaryException e){
                 // OK
             }
             catch(Exception e){
-                AssertJUnit
-                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
-                                      "when an amount without a currency is" +
-                                      " tried to be created, but threw " + e.getClass() + " type: " +
-                                      type.getName());
+                AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
+                                         "when an amount without a currency is" +
+                                         " tried to be created, but threw " + e.getClass() + " type: " +
+                                         type.getName());
             }
         }
     }
@@ -1090,11 +1087,10 @@ public class CreatingMonetaryAmountsTest{
                 }
                 f.setCurrency("Section 4.2.6: FooBar_foobar_fOobAr_foObaR");
                 f.create();
-                AssertJUnit
-                        .fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
-                                      "when an amount with an invalid " +
-                                      "currency is tried to be created, type: " +
-                                      type.getName());
+                AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
+                                         "when an amount with an invalid " +
+                                         "currency is tried to be created, type: " +
+                                         type.getName());
             }
             catch(MonetaryException e){
                 // OK
@@ -1135,11 +1131,10 @@ public class CreatingMonetaryAmountsTest{
                     }
                     f.setCurrency("FooBar_foobar_fOobAr_foObaR");
                     f.create();
-                    AssertJUnit
-                            .fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
-                                          "when an amount with an invalid " +
-                                          "MonetaryContext is tried to be created, type: " +
-                                          type.getName());
+                    AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
+                                             "when an amount with an invalid " +
+                                             "MonetaryContext is tried to be created, type: " +
+                                             type.getName());
                 }
             }
             catch(MonetaryException e){

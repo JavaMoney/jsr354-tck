@@ -23,7 +23,7 @@ public final class TestCurrencyUnit implements CurrencyUnit, Serializable{
     private String code;
     private int defsultFractionUnits = 11;
     private static final CurrencyContext CONTEXT =
-            CurrencyContextBuilder.create(TestCurrencyUnit.class.getSimpleName()).build();
+            CurrencyContextBuilder.of(TestCurrencyUnit.class.getSimpleName()).build();
 
     public TestCurrencyUnit(String code){
         Objects.requireNonNull(code);
@@ -62,7 +62,7 @@ public final class TestCurrencyUnit implements CurrencyUnit, Serializable{
 
     @Override
     public int compareTo(CurrencyUnit o){
-        if( o instanceof TestCurrencyUnit){
+        if(o instanceof TestCurrencyUnit){
             return 0;
         }
         return 1;

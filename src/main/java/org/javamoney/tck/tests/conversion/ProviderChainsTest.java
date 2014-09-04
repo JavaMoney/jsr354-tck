@@ -38,8 +38,7 @@ public class ProviderChainsTest{
     @SpecAssertion(id = "434-A1", section = "4.3.4")
     public void testCorrectRateEvaluationInChain_diffProviders(){
         ExchangeRateProvider prov1 = MonetaryConversions
-                .getExchangeRateProvider("TestRateProvider1", "TestRateProvider2",
-                                         "TestRateProvider3");
+                .getExchangeRateProvider("TestRateProvider1", "TestRateProvider2", "TestRateProvider3");
         ExchangeRate rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
         prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider1", "TestRateProvider2");
@@ -48,8 +47,8 @@ public class ProviderChainsTest{
         prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider3");
         rate = prov1.getExchangeRate("USD", "INR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 3);
-        prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider1", "TestRateProvider3",
-                                                            "TestRateProvider2");
+        prov1 = MonetaryConversions
+                .getExchangeRateProvider("TestRateProvider1", "TestRateProvider3", "TestRateProvider2");
         rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
         rate = prov1.getExchangeRate("EUR", "USD");
@@ -57,19 +56,20 @@ public class ProviderChainsTest{
         rate = prov1.getExchangeRate("USD", "INR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 3);
 
-        prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider3", "TestRateProvider2",
-                                                            "TestRateProvider1");
+        prov1 = MonetaryConversions
+                .getExchangeRateProvider("TestRateProvider3", "TestRateProvider2", "TestRateProvider1");
         rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
-        prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider2", "TestRateProvider1",
-                                                            "TestRateProvider3");
+        prov1 = MonetaryConversions
+                .getExchangeRateProvider("TestRateProvider2", "TestRateProvider1", "TestRateProvider3");
         rate = prov1.getExchangeRate("EUR", "USD");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 2);
         rate = prov1.getExchangeRate("USD", "INR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 3);
 
-        prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider3", "TestRateProvider2",
-                                                            "TestRateProvider1", "TestRateProvider02");
+        prov1 = MonetaryConversions
+                .getExchangeRateProvider("TestRateProvider3", "TestRateProvider2", "TestRateProvider1",
+                                         "TestRateProvider02");
         rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
         rate = prov1.getExchangeRate("EUR", "USD");
@@ -89,8 +89,7 @@ public class ProviderChainsTest{
     @SpecAssertion(id = "434-A1", section = "4.3.4")
     public void testCorrectRateEvaluationInChain_sameProviders(){
         ExchangeRateProvider prov1 = MonetaryConversions
-                .getExchangeRateProvider("TestRateProvider1", "TestRateProvider1",
-                                         "TestRateProvider1");
+                .getExchangeRateProvider("TestRateProvider1", "TestRateProvider1", "TestRateProvider1");
         ExchangeRate rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
         prov1 = MonetaryConversions.getExchangeRateProvider("TestRateProvider1", "TestRateProvider1");
@@ -112,13 +111,14 @@ public class ProviderChainsTest{
     @SpecAssertion(id = "434-A2", section = "4.3.4")
     public void testCorrectRateEvaluationInChainHistoric(){
         ExchangeRateProvider prov1 = MonetaryConversions
-                .getExchangeRateProvider("TestRateProvider1", "TestRateProvider2",
-                                         "TestRateProvider3");
+                .getExchangeRateProvider("TestRateProvider1", "TestRateProvider2", "TestRateProvider3");
         ExchangeRate rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
         rate = prov1.getExchangeRate("EUR", "USD");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 2);
-        rate = prov1.getExchangeRate(ConversionQueryBuilder.create().setTimestampMillis(10L).setBaseCurrency("EUR").setTermCurrency("USD").build());
+        rate = prov1.getExchangeRate(
+                ConversionQueryBuilder.of().setTimestampMillis(10L).setBaseCurrency("EUR").setTermCurrency("USD")
+                        .build());
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", 200, rate.getFactor().intValueExact());
     }
 

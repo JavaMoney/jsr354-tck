@@ -13,7 +13,6 @@ import org.javamoney.tck.TCKTestSetup;
 import org.javamoney.tck.tests.internal.TestAmount;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
-import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import javax.money.MonetaryAmount;
@@ -30,7 +29,7 @@ import static org.testng.Assert.assertNotNull;
  * Created by Anatole on 10.03.14.
  */
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
-public class FunctionalExtensionPointsTest {
+public class FunctionalExtensionPointsTest{
 
     // *************************** A. Monetary Operator Implementation Requirements ***************
 
@@ -41,20 +40,23 @@ public class FunctionalExtensionPointsTest {
      */
     @SpecAssertion(section = "4.2.4", id = "424-A1")
     @Test(description = "4.2.4 Ensures the result of all operators under test is of the same class as the input.")
-    public void testOperatorReturnTypeEqualsParameter() {
+    public void testOperatorReturnTypeEqualsParameter(){
         Collection<MonetaryOperator> operators = TCKTestSetup.getTestConfiguration().getMonetaryOperators4Test();
-        assertNotNull(operators, "No operators (null) to test returned from TestConfiguration.getMonetaryOperators4Test().");
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
-            if (type.equals(TestAmount.class)) {
+        assertNotNull(operators,
+                      "No operators (null) to test returned from TestConfiguration.getMonetaryOperators4Test().");
+        for(Class type : MonetaryAmounts.getAmountTypes()){
+            if(type.equals(TestAmount.class)){
                 continue;
             }
             MonetaryAmountFactory<?> f = getAmountFactory(type);
             f.setCurrency("CHF");
             f.setNumber(200.10);
             MonetaryAmount m = f.create();
-            for (MonetaryOperator op : operators) {
+            for(MonetaryOperator op : operators){
                 MonetaryAmount m2 = m.with(op);
-                assertEquals(m2.getClass(), m.getClass(), "Operator returned type with different type, which is not allowed: " + op.getClass().getName());
+                assertEquals(m2.getClass(), m.getClass(),
+                             "Operator returned type with different type, which is not allowed: " +
+                                     op.getClass().getName());
             }
         }
     }

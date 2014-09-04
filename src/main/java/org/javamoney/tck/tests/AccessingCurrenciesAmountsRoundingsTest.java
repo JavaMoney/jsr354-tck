@@ -12,7 +12,7 @@ package org.javamoney.tck.tests;
 import org.javamoney.tck.TCKTestSetup;
 import org.javamoney.tck.tests.internal.TestAmount;
 import org.javamoney.tck.tests.internal.TestCurrencyUnit;
-import org.javamoney.tck.tests.internal.TestMonetaryAmountFactory;
+import org.javamoney.tck.tests.internal.TestMonetaryAmountBuilder;
 import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.testng.AssertJUnit;
@@ -50,12 +50,10 @@ public class AccessingCurrenciesAmountsRoundingsTest{
                     "Section 4.2.7: Currency not available [MonetaryCurrencies#isCurrencyAvailable(String)] for JDK " +
                             "currency code: " +
                             currency.getCurrencyCode(),
-                    MonetaryCurrencies.isCurrencyAvailable(currency.getCurrencyCode())
-            );
+                    MonetaryCurrencies.isCurrencyAvailable(currency.getCurrencyCode()));
             AssertJUnit.assertNotNull(
                     "Section 4.2.7: Currency null [MonetaryCurrencies#igetCurrency(String)] for JDK currency code: " +
-                            currency.getCurrencyCode(), MonetaryCurrencies.getCurrency(currency.getCurrencyCode())
-            );
+                            currency.getCurrencyCode(), MonetaryCurrencies.getCurrency(currency.getCurrencyCode()));
         }
     }
 
@@ -73,8 +71,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
                 AssertJUnit.assertTrue(
                         "Section 4.2.7: Currency not available [MonetaryCurrencies#isCurrencyAvailable(Locale)] for " +
                                 "locale: " +
-                                locale, MonetaryCurrencies.isCurrencyAvailable(locale)
-                );
+                                locale, MonetaryCurrencies.isCurrencyAvailable(locale));
                 AssertJUnit
                         .assertNotNull("Currency null [MonetaryCurrencies#igetCurrency(Locale)] for locale: " + locale,
                                        MonetaryCurrencies.getCurrencies(locale));
@@ -89,16 +86,15 @@ public class AccessingCurrenciesAmountsRoundingsTest{
                 AssertJUnit.assertNotNull(
                         "Section 4.2.7: No Currency returned from [MonetaryCurrencies#getCurrencies(Locale)] for " +
                                 "locale: " +
-                                locale, requiredCurrency
-                );
+                                locale, requiredCurrency);
                 AssertJUnit.assertEquals(
                         "Section 4.2.7: Invalid Currency returned from [MonetaryCurrencies#getCurrencies(Locale)] for" +
                                 " " +
                                 "locale: " +
                                 locale +
                                 ", expected: " + Currency.getInstance(locale) + ", found: " + requiredCurrency,
-                        MonetaryCurrencies.getCurrency(Currency.getInstance(locale).getCurrencyCode()), requiredCurrency
-                );
+                        MonetaryCurrencies.getCurrency(Currency.getInstance(locale).getCurrencyCode()),
+                        requiredCurrency);
             }
         }
     }
@@ -120,16 +116,14 @@ public class AccessingCurrenciesAmountsRoundingsTest{
                             currency.getCurrencyCode() + ", expected: " +
                             Currency.getInstance(currency.getCurrencyCode()).getCurrencyCode() +
                             ", found: " + unit.getCurrencyCode(),
-                    Currency.getInstance(currency.getCurrencyCode()).getCurrencyCode(), unit.getCurrencyCode()
-            );
+                    Currency.getInstance(currency.getCurrencyCode()).getCurrencyCode(), unit.getCurrencyCode());
             AssertJUnit.assertEquals(
                     "Section 4.2.7: Invalid numeric code returned from [MonetaryCurrencies#igetCurrency(String)] for " +
                             "currency code: " +
                             currency.getCurrencyCode() + ", expected: " +
                             Currency.getInstance(currency.getCurrencyCode()).getNumericCode() +
                             ", found: " + unit.getNumericCode(),
-                    Currency.getInstance(currency.getCurrencyCode()).getNumericCode(), unit.getNumericCode()
-            );
+                    Currency.getInstance(currency.getCurrencyCode()).getNumericCode(), unit.getNumericCode());
             AssertJUnit.assertEquals(
                     "Section 4.2.7: Invalid default fraction unit returned from [MonetaryCurrencies#igetCurrency" +
                             "(String)] for " +
@@ -138,8 +132,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
                             Currency.getInstance(currency.getCurrencyCode()).getDefaultFractionDigits() +
                             ", found: " + unit.getDefaultFractionDigits(),
                     Currency.getInstance(currency.getCurrencyCode()).getDefaultFractionDigits(),
-                    unit.getDefaultFractionDigits()
-            );
+                    unit.getDefaultFractionDigits());
         }
     }
 
@@ -164,13 +157,11 @@ public class AccessingCurrenciesAmountsRoundingsTest{
                     "Section 4.2.7: Invalid Currencies (null) returned from [MonetaryCurrencies#igetCurrencies" +
                             "(Locale)] for" +
                             " locale: " +
-                            locale, units
-            );
+                            locale, units);
             AssertJUnit.assertFalse(
                     "Section 4.2.7: Empty Currencies returned from [MonetaryCurrencies#igetCurrencies(Locale)] for" +
                             " locale: " +
-                            locale, units.isEmpty()
-            );
+                            locale, units.isEmpty());
             CurrencyUnit requiredCurrency = null;
             for(CurrencyUnit cu : units){
                 if(Currency.getInstance(locale).getCurrencyCode().equals(cu.getCurrencyCode())){
@@ -178,28 +169,25 @@ public class AccessingCurrenciesAmountsRoundingsTest{
                     break;
                 }
             }
-            AssertJUnit.assertNotNull(
-                    "Section 4.2.7: Required Currency missing in result returned from " +
-                            "[MonetaryCurrencies#igetCurrency(Locale)] for" +
-                            " locale: " +
-                            locale + ", expected: " + Currency.getInstance(locale).getCurrencyCode() +
-                            ", found: " + units, requiredCurrency
-            );
+            AssertJUnit.assertNotNull("Section 4.2.7: Required Currency missing in result returned from " +
+                                              "[MonetaryCurrencies#igetCurrency(Locale)] for" +
+                                              " locale: " +
+                                              locale + ", expected: " + Currency.getInstance(locale).getCurrencyCode() +
+                                              ", found: " + units, requiredCurrency);
             AssertJUnit.assertEquals(
                     "Section 4.2.7: Invalid numeric code returned from [MonetaryCurrencies#igetCurrency(Locale)] for " +
                             "locale: " +
                             locale + ", expected: " + Currency.getInstance(locale).getNumericCode() +
                             ", found: " + requiredCurrency.getNumericCode(),
-                    Currency.getInstance(locale).getNumericCode(), requiredCurrency.getNumericCode()
-            );
+                    Currency.getInstance(locale).getNumericCode(), requiredCurrency.getNumericCode());
             AssertJUnit.assertEquals(
                     "Section 4.2.7: Invalid default fraction unit returned from [MonetaryCurrencies#igetCurrency" +
                             "(Locale)] for " +
                             "locale: " +
                             locale + ", expected: " + Currency.getInstance(locale).getDefaultFractionDigits() +
                             ", found: " + requiredCurrency.getDefaultFractionDigits(),
-                    Currency.getInstance(locale).getDefaultFractionDigits(), requiredCurrency.getDefaultFractionDigits()
-            );
+                    Currency.getInstance(locale).getDefaultFractionDigits(),
+                    requiredCurrency.getDefaultFractionDigits());
         }
     }
 
@@ -275,20 +263,19 @@ public class AccessingCurrenciesAmountsRoundingsTest{
                     "Section 4.2.7: MonetaryAmountFactory creates null amounts for " + amountType.getName(), m1);
             AssertJUnit.assertTrue(
                     "Section 4.2.7: MonetaryAmountFactory creates non zero amounts for " + amountType.getName(),
-                                   m1.isZero());
+                    m1.isZero());
             AssertJUnit.assertEquals(
                     "Section 4.2.7: MonetaryAmountFactory creates non zero amounts for " + amountType.getName(), 0L,
-                                     m1.getNumber().longValue());
+                    m1.getNumber().longValue());
             AssertJUnit.assertTrue(
                     "Section 4.2.7: MonetaryAmountFactory creates non assignable amounts instances for " +
-                            amountType.getName(), amountType.isAssignableFrom(m1.getClass())
-            );
+                            amountType.getName(), amountType.isAssignableFrom(m1.getClass()));
         }
         MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(TestAmount.class);
         AssertJUnit.assertNotNull("Section 4.2.7: MonetaryAmountFactory returned by MonetaryAmounts is null for " +
                                           TestAmount.class.getName(), f);
         AssertJUnit.assertEquals("MonetaryAmountFactory returned by MonetaryAmounts is obfuscated or proxied for " +
-                                         TestMonetaryAmountFactory.class.getName(), TestMonetaryAmountFactory.class,
+                                         TestMonetaryAmountBuilder.class.getName(), TestMonetaryAmountBuilder.class,
                                  f.getClass());
     }
 
@@ -296,23 +283,24 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Ensure correct query function implementations, providing also
      * the some test implementations with the TCK.
      */
-    @Test(description = "4.2.7 Ensure correct query function, MonetaryAmounts.getAmountFactories should return factory" +
-            "for explicit acquired amount types.")
+    @Test(description =
+                  "4.2.7 Ensure correct query function, MonetaryAmounts.getAmountFactories should return factory" +
+                          "for explicit acquired amount types.")
     @SpecAssertion(section = "4.2.7", id = "427-B4")
     public void testAmountQueryType(){
-        MonetaryAmountFactoryQuery ctx = MonetaryAmountFactoryQueryBuilder.create().setTargetType(TestAmount.class).build();
+        MonetaryAmountFactoryQuery ctx = MonetaryAmountFactoryQueryBuilder.of().setTargetType(TestAmount.class).build();
         Collection<MonetaryAmountFactory<?>> factories = MonetaryAmounts.getAmountFactories(ctx);
-        AssertJUnit.assertNotNull("Section 4.2.7: Amount factory query should return explicitly queried factories", factories);
+        AssertJUnit.assertNotNull("Section 4.2.7: Amount factory query should return explicitly queried factories",
+                                  factories);
         boolean found = false;
-        for(MonetaryAmountFactory<?> f:factories){
+        for(MonetaryAmountFactory<?> f : factories){
             if(f.getAmountType().equals(TestAmount.class)){
                 found = true;
                 break;
-    }
+            }
         }
-        AssertJUnit.assertTrue("Section 4.2.7: Amount type query should return same explicitly queried factory",
-                               found);
-        ctx = MonetaryAmountFactoryQueryBuilder.create().build();
+        AssertJUnit.assertTrue("Section 4.2.7: Amount type query should return same explicitly queried factory", found);
+        ctx = MonetaryAmountFactoryQueryBuilder.of().build();
         MonetaryAmountFactory<?> factory = MonetaryAmounts.getAmountFactory(ctx);
         AssertJUnit.assertNotNull("Section 4.2.7: Amount type must be provided", factory);
     }
@@ -342,26 +330,25 @@ public class AccessingCurrenciesAmountsRoundingsTest{
         TestCurrencyUnit cu = new TestCurrencyUnit("ASDF", 3);
         MonetaryRounding r = MonetaryRoundings.getDefaultRounding();
         MonetaryAmount m =
-                new TestMonetaryAmountFactory().setNumber(new BigDecimal("12.123456789101222232323")).setCurrency(cu)
+                new TestMonetaryAmountBuilder().setNumber(new BigDecimal("12.123456789101222232323")).setCurrency(cu)
                         .create();
         AssertJUnit.assertEquals(
                 "Section 4.2.7: expected ASDF 12.123 with default rounding from ASDF 12.123456789101222232323",
                 "ASDF 12.123", m.with(r).toString());
         // should not throw an error!
         for(Currency currency : Currency.getAvailableCurrencies()){
-            m = new TestMonetaryAmountFactory().setNumber(new BigDecimal("12.123456789101222232323"))
+            m = new TestMonetaryAmountBuilder().setNumber(new BigDecimal("12.123456789101222232323"))
                     .setCurrency(currency.getCurrencyCode()).create();
             if(currency.getDefaultFractionDigits() >= 0){
                 MonetaryAmount rounded = m.with(r); // should not throw an error
                 AssertJUnit.assertEquals(
                         "Section 4.2.7: Returned amount class must be the same as the input class to the rounding " +
-                                "operator.", TestAmount.class, rounded.getClass()
-                );
+                                "operator.", TestAmount.class, rounded.getClass());
                 AssertJUnit.assertEquals("Section 4.2.7: Rounding did change currency: " + rounded.getClass().getName(),
                                          currency.getCurrencyCode(), rounded.getCurrency().getCurrencyCode());
                 AssertJUnit.assertNotSame(
                         "Section 4.2.7: Rounding did not have any effect, should use scale==2 as default.",
-                                          m.getNumber().getScale(), rounded.getNumber().getScale());
+                        m.getNumber().getScale(), rounded.getNumber().getScale());
             }
         }
     }
@@ -378,7 +365,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
         TestCurrencyUnit cu = new TestCurrencyUnit("ASDF", 3);
         MonetaryOperator r = MonetaryRoundings.getRounding(cu);
         MonetaryAmount m =
-                new TestMonetaryAmountFactory().setNumber(new BigDecimal("12.123456789101222232323")).setCurrency(cu)
+                new TestMonetaryAmountBuilder().setNumber(new BigDecimal("12.123456789101222232323")).setCurrency(cu)
                         .create();
         AssertJUnit.assertEquals("Section 4.2.7: Expected ASDF 12.123 for custom rounding 12.123456789101222232323.",
                                  "ASDF 12.123", m.with(r).toString());
@@ -423,14 +410,14 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     @Test(description = "4.2.7 Ensure correct MonetaryRounding returned for a mathematical RoundingQuery.")
     @SpecAssertion(section = "4.2.7", id = "427-C2")
     public void testAccessRoundingsWithRoundingContext(){
-        RoundingQuery ctx = RoundingQueryBuilder.create().setScale(1).set(RoundingMode.UP).build();
+        RoundingQuery ctx = RoundingQueryBuilder.of().setScale(1).set(RoundingMode.UP).build();
         MonetaryOperator r = MonetaryRoundings.getRounding(ctx);
         AssertJUnit.assertNotNull("Section 4.2.7: No rounding provided for RoundingQuery: " + ctx, r);
         MonetaryAmount m =
-                new TestMonetaryAmountFactory().setNumber(new BigDecimal("12.123456789101222232323")).setCurrency("CHF")
+                new TestMonetaryAmountBuilder().setNumber(new BigDecimal("12.123456789101222232323")).setCurrency("CHF")
                         .create();
-        AssertJUnit.assertEquals("Section 4.2.7: Invalid rounding provided for RoundingQuery: " + ctx,
-                "CHF 12.2", m.with(r).toString());
+        AssertJUnit.assertEquals("Section 4.2.7: Invalid rounding provided for RoundingQuery: " + ctx, "CHF 12.2",
+                                 m.with(r).toString());
     }
 
     /**
@@ -448,8 +435,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Access custom roundings and ensure TCK custom roundings are
      * registered.
      */
-    @Test(description = "4.2.7 Access named roundings and ensure TCK named roundings are " +
-            "registered.")
+    @Test(description = "4.2.7 Access named roundings and ensure TCK named roundings are " + "registered.")
     @SpecAssertion(section = "4.2.7", id = "427-C3")
     public void testAccessCustomRoundings(){
         Set<String> ids = MonetaryRoundings.getRoundingNames();
@@ -467,7 +453,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
         MonetaryOperator r = MonetaryRoundings.getRounding("NOSCALE");
         AssertJUnit.assertNotNull(r);
         MonetaryAmount m =
-                new TestMonetaryAmountFactory().setNumber(new BigDecimal("12.123456789101222232323")).setCurrency("CHF")
+                new TestMonetaryAmountBuilder().setNumber(new BigDecimal("12.123456789101222232323")).setCurrency("CHF")
                         .create();
         AssertJUnit.assertEquals("Section 4.2.7: Expected CHF 12 for NOSCALE operator on " + m, "CHF 12",
                                  m.with(r).toString());
@@ -477,7 +463,7 @@ public class AccessingCurrenciesAmountsRoundingsTest{
      * Test TCK custom roundings.
      */
     @Test(expectedExceptions = NullPointerException.class,
-            description = "4.2.7 Ensure NullPointerException is thrown for MonetaryRoundings.getRounding((String) null).")
+          description = "4.2.7 Ensure NullPointerException is thrown for MonetaryRoundings.getRounding((String) null).")
     @SpecAssertion(section = "4.2.7", id = "427-C4")
     public void testCustomRoundings_Null(){
         MonetaryRoundings.getRounding((String) null);
@@ -486,8 +472,8 @@ public class AccessingCurrenciesAmountsRoundingsTest{
     /**
      * Test TCK custom roundings.
      */
-    @Test(expectedExceptions = MonetaryException.class, description = "4.2.7 Ensure MonetaryException is thrown for " +
-            "accessing invalid named rounding.")
+    @Test(expectedExceptions = MonetaryException.class,
+          description = "4.2.7 Ensure MonetaryException is thrown for " + "accessing invalid named rounding.")
     @SpecAssertion(section = "4.2.7", id = "427-C4")
     public void testCustomRoundings_Foo(){
         assertNotNull("Section 4.2.7: Expected custom rounding with name 'foo'.", MonetaryRoundings.getRounding("foo"));

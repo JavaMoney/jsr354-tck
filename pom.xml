@@ -50,7 +50,7 @@
         <jdkVersion>1.8</jdkVersion>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.create.sourceEncoding>UTF-8</project.create.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <moduleDir>.</moduleDir>
         <basedir>.</basedir>
@@ -318,7 +318,7 @@
         </dependency>
     </dependencies>
 
-    <build>
+    <create>
         <defaultGoal>install</defaultGoal>
 
         <extensions>
@@ -364,7 +364,7 @@
                     <verbose>true</verbose>
                     <source>${maven.compile.sourceLevel}</source>
                     <target>${maven.compile.targetLevel}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <encoding>${project.create.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>
@@ -372,10 +372,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <testClassesDirectory>${build.directory}/classes</testClassesDirectory>
-					<additionalClasspathElements>
-						<additionalClasspathElement>${build.directory}/test-classes</additionalClasspathElement>
-					</additionalClasspathElements>
+                    <testClassesDirectory>${create.directory}/classes</testClassesDirectory>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>${create.directory}/test-classes</additionalClasspathElement>
+                    </additionalClasspathElements>
                 </configuration>
             </plugin>
 
@@ -411,7 +411,7 @@
                 </executions>
             </plugin>
         </plugins>
-    </build>
+    </create>
 
     <profiles>
         <profile>
@@ -422,7 +422,7 @@
                     <value>true</value>
                 </property>
             </activation>
-            <build>
+            <create>
                 <pluginManagement>
                     <plugins>
                         <plugin>
@@ -436,7 +436,8 @@
                                 </processors>
                                 <outputClassDirectory>${basedir}/target/classes</outputClassDirectory>
                                 <compilerArguments>
-                                    -AauditXml=${basedir}/test-audit.xml -AoutputDir=${basedir}/target/coverage-report -source ${jdkVersion} -target ${jdkVersion}
+                                    -AauditXml=${basedir}/test-audit.xml -AoutputDir=${basedir}/target/coverage-report
+                                    -source ${jdkVersion} -target ${jdkVersion}
                                 </compilerArguments>
                             </configuration>
                             <executions>
@@ -457,7 +458,7 @@
                         <artifactId>maven-processor-plugin</artifactId>
                     </plugin>
                 </plugins>
-            </build>
+            </create>
         </profile>
         <profile>
             <id>release-sign-artifacts</id>
@@ -467,7 +468,7 @@
                     <value>true</value>
                 </property>
             </activation>
-            <build>
+            <create>
                 <pluginManagement>
                     <plugins>
                         <plugin>
@@ -497,7 +498,7 @@
                         </executions>
                     </plugin>
                 </plugins>
-            </build>
+            </create>
         </profile>
 
         <profile>
@@ -508,7 +509,7 @@
                     <value>true</value>
                 </property>
             </activation>
-            <build>
+            <create>
                 <pluginManagement>
                     <plugins>
                         <!-- ======================================================= -->
@@ -550,7 +551,7 @@
                         </executions>
                     </plugin>
                 </plugins>
-            </build>
+            </create>
         </profile>
     </profiles>
 

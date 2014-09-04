@@ -24,9 +24,9 @@ import java.util.Set;
 public class TestRoundingProvider implements RoundingProviderSpi{
 
     private static final RoundingContext CONTEXT =
-            RoundingContextBuilder.create(TestRoundingProvider.class.getSimpleName(), "NOSCALE").build();
+            RoundingContextBuilder.of(TestRoundingProvider.class.getSimpleName(), "NOSCALE").build();
     private static final RoundingContext CONTEXT_CASH =
-            RoundingContextBuilder.create(TestRoundingProvider.class.getSimpleName(), "cashRounding").build();
+            RoundingContextBuilder.of(TestRoundingProvider.class.getSimpleName(), "cashRounding").build();
 
     private Map<String,MonetaryRounding> customRoundings = new HashMap<>();
 

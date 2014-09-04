@@ -22,7 +22,7 @@ import java.util.Objects;
  */
 public class TestRateProvider implements ExchangeRateProvider{
 
-    private ProviderContext PC = ProviderContextBuilder.create("TestRateProvider", RateType.OTHER).build();
+    private ProviderContext PC = ProviderContextBuilder.of("TestRateProvider", RateType.OTHER).build();
     private ConversionContext CC = ConversionContextBuilder.create(PC, RateType.OTHER).build();
     private CurrencyUnit TERM = new TestCurrencyUnit("FOO");
 
@@ -90,8 +90,7 @@ public class TestRateProvider implements ExchangeRateProvider{
         if(isAvailable(conversionQuery)){
             return new TestExchangeRate.Builder(
                     ConversionContextBuilder.create(getProviderContext(), RateType.OTHER).importContext(conversionQuery)
-                            .build()
-            ).setFactor(new TestNumberValue(2)).setBase(conversionQuery.getBaseCurrency())
+                            .build()).setFactor(new TestNumberValue(2)).setBase(conversionQuery.getBaseCurrency())
                     .setTerm(conversionQuery.getCurrency()).build();
         }
         return null;
