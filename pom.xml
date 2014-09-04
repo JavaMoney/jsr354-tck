@@ -50,7 +50,7 @@
         <jdkVersion>1.8</jdkVersion>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
-        <project.create.sourceEncoding>UTF-8</project.create.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <moduleDir>.</moduleDir>
         <basedir>.</basedir>
@@ -318,7 +318,7 @@
         </dependency>
     </dependencies>
 
-    <create>
+    <build>
         <defaultGoal>install</defaultGoal>
 
         <extensions>
@@ -364,7 +364,7 @@
                     <verbose>true</verbose>
                     <source>${maven.compile.sourceLevel}</source>
                     <target>${maven.compile.targetLevel}</target>
-                    <encoding>${project.create.sourceEncoding}</encoding>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>
@@ -372,9 +372,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <testClassesDirectory>${create.directory}/classes</testClassesDirectory>
+                    <testClassesDirectory>${build.directory}/classes</testClassesDirectory>
                     <additionalClasspathElements>
-                        <additionalClasspathElement>${create.directory}/test-classes</additionalClasspathElement>
+                        <additionalClasspathElement>${build.directory}/test-classes</additionalClasspathElement>
                     </additionalClasspathElements>
                 </configuration>
             </plugin>
@@ -411,7 +411,7 @@
                 </executions>
             </plugin>
         </plugins>
-    </create>
+    </build>
 
     <profiles>
         <profile>
@@ -422,8 +422,8 @@
                     <value>true</value>
                 </property>
             </activation>
-            <create>
-                <pluginManagement>
+            <build>
+            <pluginManagement>
                     <plugins>
                         <plugin>
                             <groupId>org.bsc.maven</groupId>
@@ -458,7 +458,7 @@
                         <artifactId>maven-processor-plugin</artifactId>
                     </plugin>
                 </plugins>
-            </create>
+            </build>
         </profile>
         <profile>
             <id>release-sign-artifacts</id>
@@ -468,8 +468,8 @@
                     <value>true</value>
                 </property>
             </activation>
-            <create>
-                <pluginManagement>
+            <build>
+            <pluginManagement>
                     <plugins>
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
@@ -498,7 +498,7 @@
                         </executions>
                     </plugin>
                 </plugins>
-            </create>
+            </build>
         </profile>
 
         <profile>
@@ -509,8 +509,8 @@
                     <value>true</value>
                 </property>
             </activation>
-            <create>
-                <pluginManagement>
+            <build>
+            <pluginManagement>
                     <plugins>
                         <!-- ======================================================= -->
                         <!-- License -->
@@ -551,7 +551,7 @@
                         </executions>
                     </plugin>
                 </plugins>
-            </create>
+            </build>
         </profile>
     </profiles>
 
