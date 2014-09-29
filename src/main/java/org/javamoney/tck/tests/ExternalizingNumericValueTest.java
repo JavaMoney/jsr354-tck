@@ -926,11 +926,11 @@ public class ExternalizingNumericValueTest {
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit.assertEquals(
                         "Section 4.2.3: Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
-                        new BigDecimal(String.valueOf(num)).floatValue(), result.numberValue(Float.class),
-                        0.0d);
+                        new BigDecimal(String.valueOf(num)).floatValue(), result.numberValue(Float.class).floatValue(),
+                        0.0f);
                 AssertJUnit.assertEquals(
                         "Section 4.2.3: Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
-                        new BigDecimal(String.valueOf(num)).floatValue(), result.floatValue(), 0.0d);
+                        new BigDecimal(String.valueOf(num)).floatValue(), result.floatValue(), 0.0f);
             }
         }
     }
