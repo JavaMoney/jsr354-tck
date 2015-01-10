@@ -12,6 +12,7 @@ package org.javamoney.tck.tests.internal;
 import javax.money.NumberValue;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.util.Objects;
 
 /**
@@ -74,6 +75,11 @@ public final class TestNumberValue extends NumberValue{
             return (T) BigDecimal.valueOf(value.doubleValue());
         }
         throw new UnsupportedOperationException(numberType.getCanonicalName());
+    }
+
+    @Override
+    public NumberValue round(MathContext mathContext) {
+        return new TestNumberValue(this.value.round(mathContext));
     }
 
     @Override

@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * This class models an exchange rate, which defines the factor the numeric value of a base amount in some currency
  * 'A' must be multiplied
- * to get the corresponding amount in the terminating currency 'B'. Hereby
+ * to getTyped the corresponding amount in the terminating currency 'B'. Hereby
  * <ul>
  * <li>an exchange rate always models one rate from a base (source) to a term
  * (target) {@link javax.money.CurrencyUnit}.</li>
@@ -81,7 +81,7 @@ import java.util.Objects;
  * href="https://en.wikipedia.org/wiki/Exchange_rate#Quotations">Wikipedia:
  * Exchange Rate (Quotations)</a>
  */
-public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<ExchangeRate>{
+public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<ExchangeRate> {
 
     /**
      * serialVersionUID.
@@ -115,7 +115,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      *
      * @param builder The Builder, never {@code null}.
      */
-    private TestExchangeRate(Builder builder){
+    private TestExchangeRate(Builder builder) {
         Objects.requireNonNull(builder.base, "base may not be null.");
         Objects.requireNonNull(builder.term, "term may not be null.");
         Objects.requireNonNull(builder.factor, "factor may not be null.");
@@ -129,18 +129,18 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
     }
 
     /**
-     * Internal method to set the rate chain, which also ensure that the chain
+     * Internal method to setTyped the rate chain, which also ensure that the chain
      * passed, when not null, contains valid elements.
      *
-     * @param chain the chain to set.
+     * @param chain the chain to setTyped.
      */
-    private void setExchangeRateChain(List<ExchangeRate> chain){
+    private void setExchangeRateChain(List<ExchangeRate> chain) {
         this.chain.clear();
-        if(chain == null || chain.isEmpty()){
+        if (chain == null || chain.isEmpty()) {
             this.chain.add(this);
-        }else{
-            for(ExchangeRate aChain : chain){
-                if(chain == null){
+        } else {
+            for (ExchangeRate aChain : chain) {
+                if (chain == null) {
                     throw new IllegalArgumentException("Chain element can not be null.");
                 }
             }
@@ -153,7 +153,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      *
      * @return the conversion context, never null.
      */
-    public final ConversionContext getConversionContext(){
+    public final ConversionContext getConversionContext() {
         return this.conversionContext;
     }
 
@@ -162,7 +162,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      *
      * @return the base {@link javax.money.CurrencyUnit}.
      */
-    public final CurrencyUnit getBaseCurrency(){
+    public final CurrencyUnit getBaseCurrency() {
         return this.base;
     }
 
@@ -171,7 +171,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      *
      * @return the term {@link javax.money.CurrencyUnit}.
      */
-    public final CurrencyUnit getCurrency(){
+    public final CurrencyUnit getCurrency() {
         return this.term;
     }
 
@@ -180,7 +180,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      *
      * @return the bid factor for this exchange rate, or {@code null}.
      */
-    public final NumberValue getFactor(){
+    public final NumberValue getFactor() {
         return this.factor;
     }
 
@@ -191,7 +191,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      * several instances. For a direct exchange rate, this equals to
      * <code>new ExchangeRate[]{this}</code>.
      */
-    public final List<ExchangeRate> getExchangeRateChain(){
+    public final List<ExchangeRate> getExchangeRateChain() {
         return this.chain;
     }
 
@@ -206,7 +206,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      *
      * @return true, if the exchange rate is derived.
      */
-    public final boolean isDerived(){
+    public final boolean isDerived() {
         return this.chain.size() > 1;
     }
 
@@ -216,15 +216,15 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo(ExchangeRate o){
-        if(o == null){
+    public int compareTo(ExchangeRate o) {
+        if (o == null) {
             return -1;
         }
         int compare = this.getBaseCurrency().getCurrencyCode().compareTo(o.getBaseCurrency().getCurrencyCode());
-        if(compare == 0){
+        if (compare == 0) {
             compare = this.getCurrency().getCurrencyCode().compareTo(o.getCurrency().getCurrencyCode());
         }
-        if(compare == 0){
+        if (compare == 0) {
             compare = this.getConversionContext().getProvider().compareTo(o.getConversionContext().getProvider());
         }
         return compare;
@@ -236,7 +236,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString(){
+    public String toString() {
         return "ExchangeRate [base=" + base + ", factor=" + factor + ", conversionContext=" + conversionContext + "]";
     }
 
@@ -246,7 +246,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      * @see java.lang.Object#hashCode()
      */
     @Override
-    public int hashCode(){
+    public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((base == null) ? 0 : base.hashCode());
@@ -263,46 +263,46 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj){
-        if(this == obj){
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if(obj == null){
+        if (obj == null) {
             return false;
         }
-        if(getClass() != obj.getClass()){
+        if (getClass() != obj.getClass()) {
             return false;
         }
         TestExchangeRate other = (TestExchangeRate) obj;
-        if(base == null){
-            if(other.base != null){
+        if (base == null) {
+            if (other.base != null) {
                 return false;
             }
-        }else if(!base.equals(other.base)){
+        } else if (!base.equals(other.base)) {
             return false;
         }
-        if(!chain.equals(other.getExchangeRateChain())){
+        if (!chain.equals(other.getExchangeRateChain())) {
             return false;
         }
-        if(conversionContext == null){
-            if(other.conversionContext != null){
+        if (conversionContext == null) {
+            if (other.conversionContext != null) {
                 return false;
             }
-        }else if(!conversionContext.equals(other.conversionContext)){
+        } else if (!conversionContext.equals(other.conversionContext)) {
             return false;
         }
-        if(factor == null){
-            if(other.factor != null){
+        if (factor == null) {
+            if (other.factor != null) {
                 return false;
             }
-        }else if(!factor.equals(other.factor)){
+        } else if (!factor.equals(other.factor)) {
             return false;
         }
-        if(term == null){
-            if(other.term != null){
+        if (term == null) {
+            if (other.term != null) {
                 return false;
             }
-        }else if(!term.equals(other.term)){
+        } else if (!term.equals(other.term)) {
             return false;
         }
         return true;
@@ -315,7 +315,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      * @author Anatole Tresch
      * @author Werner Keil
      */
-    public static class Builder{
+    public static class Builder {
 
         /**
          * The {@link javax.money.convert.ConversionContext}.
@@ -343,7 +343,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
          *
          * @param rateType the {@link javax.money.convert.RateType} contained
          */
-        public Builder(String provider, RateType rateType){
+        public Builder(String provider, RateType rateType) {
             this(ConversionContext.of(provider, rateType));
         }
 
@@ -352,7 +352,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
          *
          * @param context the {@link javax.money.convert.ConversionContext} to be applied
          */
-        public Builder(ConversionContext context){
+        public Builder(ConversionContext context) {
             setContext(context);
         }
 
@@ -361,7 +361,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
          *
          * @param rate the {@link javax.money.convert.ExchangeRate} to be applied
          */
-        public Builder(ExchangeRate rate){
+        public Builder(ExchangeRate rate) {
             setContext(rate.getConversionContext());
             setFactor(rate.getFactor());
             setTerm(rate.getCurrency());
@@ -375,7 +375,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
          * @param base to base (source) {@link javax.money.CurrencyUnit} to be applied
          * @return the builder instance
          */
-        public Builder setBase(CurrencyUnit base){
+        public Builder setBase(CurrencyUnit base) {
             this.base = base;
             return this;
         }
@@ -386,7 +386,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
          * @param term to terminating {@link javax.money.CurrencyUnit} to be applied
          * @return the builder instance
          */
-        public Builder setTerm(CurrencyUnit term){
+        public Builder setTerm(CurrencyUnit term) {
             this.term = term;
             return this;
         }
@@ -397,9 +397,9 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
          * @param exchangeRates the {@link javax.money.convert.ExchangeRate} chain to be applied
          * @return the builder instance
          */
-        public Builder setRateChain(ExchangeRate... exchangeRates){
+        public Builder setRateChain(ExchangeRate... exchangeRates) {
             this.rateChain.clear();
-            if(exchangeRates != null){
+            if (exchangeRates != null) {
                 this.rateChain.addAll(Arrays.asList(exchangeRates.clone()));
             }
             return this;
@@ -411,9 +411,9 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
          * @param exchangeRates the {@link javax.money.convert.ExchangeRate} chain to be applied
          * @return the builder instance
          */
-        public Builder setRateChain(List<ExchangeRate> exchangeRates){
+        public Builder setRateChain(List<ExchangeRate> exchangeRates) {
             this.rateChain.clear();
-            if(exchangeRates != null){
+            if (exchangeRates != null) {
                 this.rateChain.addAll(exchangeRates);
             }
             return this;
@@ -427,7 +427,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
          * @param factor the factor.
          * @return The builder instance.
          */
-        public Builder setFactor(NumberValue factor){
+        public Builder setFactor(NumberValue factor) {
             this.factor = factor;
             return this;
         }
@@ -438,7 +438,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
          * @param conversionContext the {@link javax.money.convert.ConversionContext}, not null.
          * @return The builder.
          */
-        public Builder setContext(ConversionContext conversionContext){
+        public Builder setContext(ConversionContext conversionContext) {
             Objects.requireNonNull(conversionContext);
             this.conversionContext = conversionContext;
             return this;
@@ -450,7 +450,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
          * @return a new instance of {@link javax.money.convert.ExchangeRate}.
          * @throws IllegalArgumentException if the rate could not be built.
          */
-        public TestExchangeRate build(){
+        public TestExchangeRate build() {
             return new TestExchangeRate(this);
         }
 
@@ -462,7 +462,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
          * @param rate the base rate
          * @return the Builder, for chaining.
          */
-        public Builder setRate(ExchangeRate rate){
+        public Builder setRate(ExchangeRate rate) {
             this.base = rate.getBaseCurrency();
             this.term = rate.getCurrency();
             this.conversionContext = rate.getConversionContext();
@@ -478,7 +478,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      *
      * @return a new {@link Builder}, never {@code null}.
      */
-    public Builder toBuilder(){
+    public Builder toBuilder() {
         return new Builder(getConversionContext()).setBase(getBaseCurrency()).setTerm(getCurrency())
                 .setFactor(getFactor()).setRateChain(getExchangeRateChain());
     }
