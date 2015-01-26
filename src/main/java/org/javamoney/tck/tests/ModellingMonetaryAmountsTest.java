@@ -1568,6 +1568,72 @@ public class ModellingMonetaryAmountsTest{
     }
 
     /**
+     * Test multiply(Double.NaN) must throw an ArithmeticException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D14")
+    @Test(description = "4.2.2 For each amount class, ensure multiplication of Double.NaN throws ArithmeticException.")
+    public void testMultiply_DoubleNaN() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
+            if (type.equals(TestAmount.class)) {
+                continue;
+            }
+            MonetaryAmount mAmount1 = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            try {
+                MonetaryAmount mActualResult = mAmount1.multiply(Double.NaN);
+                AssertJUnit
+                        .fail("Section 4.2.2: ArithmeticException expected for multiplication with Double.NaN, type was " +
+                                type.getName());
+            } catch (ArithmeticException e) {
+                // expected
+            }
+        }
+    }
+
+    /**
+     * Test multiply(Double.POSITIVE_INFINITY) must throw an ArithmeticException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D14")
+    @Test(description = "4.2.2 For each amount class, ensure multiplication of Double.POSITIVE_INFINITY throws ArithmeticException.")
+    public void testMultiply_DoublePOSITIVE_INFINITY() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
+            if (type.equals(TestAmount.class)) {
+                continue;
+            }
+            MonetaryAmount mAmount1 = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            try {
+                MonetaryAmount mActualResult = mAmount1.multiply(Double.POSITIVE_INFINITY);
+                AssertJUnit
+                        .fail("Section 4.2.2: ArithmeticException expected for multiplication with Double.POSITIVE_INFINITY, type was " +
+                                type.getName());
+            } catch (ArithmeticException e) {
+                // expected
+            }
+        }
+    }
+
+    /**
+     * Test multiply(Double.POSITIVE_INFINITY) must throw an ArithmeticException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D14")
+    @Test(description = "4.2.2 For each amount class, ensure multiplication of Double.NEGATIVE_INFINITY throws ArithmeticException.")
+    public void testMultiply_DoubleNEGATIVE_INFINITY() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
+            if (type.equals(TestAmount.class)) {
+                continue;
+            }
+            MonetaryAmount mAmount1 = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            try {
+                MonetaryAmount mActualResult = mAmount1.multiply(Double.NEGATIVE_INFINITY);
+                AssertJUnit
+                        .fail("Section 4.2.2: ArithmeticException expected for multiplication with Double.NEGATIVE_INFINITY, type was " +
+                                type.getName());
+            } catch (ArithmeticException e) {
+                // expected
+            }
+        }
+    }
+
+    /**
      * Test divide() function allow to divide numbers.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D15")
@@ -1635,6 +1701,61 @@ public class ModellingMonetaryAmountsTest{
             catch(ArithmeticException ex){
                 // expected
             }
+        }
+    }
+
+    /**
+     * Test divide(0) function must throw an ArithmeticException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D16")
+    @Test(description = "4.2.2 For each amount class, ensure divide(Double.NaN) throws ArithmeticException.")
+    public void testDivideDoubleNaN() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
+            if (type.equals(TestAmount.class)) {
+                continue;
+            }
+            MonetaryAmount mAmount1 = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            try {
+                MonetaryAmount mActualResult = mAmount1.divide(Double.NaN);
+                AssertJUnit.fail("Section 4.2.2: ArithmeticException expected on division by Double.NaN, type was " +
+                        type.getName());
+            } catch (ArithmeticException ex) {
+                // expected
+            }
+        }
+    }
+
+    /**
+     * Test divide(0) function must return ZERO amount.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D16")
+    @Test(description = "4.2.2 For each amount class, ensure divide(Double.POSITIVE_INFINITY) return ZERO amount.")
+    public void testDivideDoublePOSITIVE_INFINITY() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
+            if (type.equals(TestAmount.class)) {
+                continue;
+            }
+            MonetaryAmount mAmount1 = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mActualResult = mAmount1.divide(Double.POSITIVE_INFINITY);
+            AssertJUnit.assertEquals("Section 4.2.2: ZERO amount expected on division by Double.POSITIVE_INFINITY, type was " +
+                    type.getName(), mActualResult, getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create());
+        }
+    }
+
+    /**
+     * Test divide(Double.NEGATIVE_INFINITY) function must return ZERO amount.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D16")
+    @Test(description = "4.2.2 For each amount class, ensure divide(Double.NEGATIVE_INFINITY) return ZERO amount.")
+    public void testDivideDoubleNEGATIVE_INFINITY() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
+            if (type.equals(TestAmount.class)) {
+                continue;
+            }
+            MonetaryAmount mAmount1 = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mActualResult = mAmount1.divide(Double.NEGATIVE_INFINITY);
+            AssertJUnit.assertEquals("Section 4.2.2: ZERO amount expected on division by Double.POSITIVE_INFINITY, type was " +
+                    type.getName(), mActualResult, getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create());
         }
     }
 
@@ -1823,6 +1944,60 @@ public class ModellingMonetaryAmountsTest{
     }
 
     /**
+     * Test remainder(null) must throw a NullPointerException
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D21")
+    @Test(description = "4.2.2 For each amount class, ensure remainder(Double.NaN), throws ArithmeticException.")
+    public void testRemainder_DoubleNaN() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
+            if (type.equals(TestAmount.class)) {
+                continue;
+            }
+            MonetaryAmount mAmount1 = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            try {
+                MonetaryAmount mActualResult = mAmount1.remainder(Double.NaN);
+                AssertJUnit.fail("Section 4.2.2: ArithmeticException expected for remainder(Double.NaN), type was " +
+                        type.getName());
+            } catch (ArithmeticException e) {
+                // expected
+            }
+        }
+    }
+
+    /**
+     * Test remainder(null) must throw a NullPointerException
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D21")
+    @Test(description = "4.2.2 For each amount class, ensure remainder(Double.POSITIVE_INFINITY), throws ArithmeticException.")
+    public void testRemainder_DoublePOSITIVE_INFINITY() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
+            if (type.equals(TestAmount.class)) {
+                continue;
+            }
+            MonetaryAmount mAmount1 = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mActualResult = mAmount1.remainder(Double.POSITIVE_INFINITY);
+            AssertJUnit.assertEquals(getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create(), mActualResult);
+        }
+    }
+
+    /**
+     * Test remainder(null) must throw a NullPointerException
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D21")
+    @Test(description = "4.2.2 For each amount class, ensure remainder(Double.NEGATIVE_INFINITY), throws ArithmeticException.")
+    public void testRemainder_DoubleNEGATIVE_INFINITY() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
+            if (type.equals(TestAmount.class)) {
+                continue;
+            }
+            MonetaryAmount mAmount1 = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount mActualResult = mAmount1.remainder(Double.NEGATIVE_INFINITY);
+            AssertJUnit.assertEquals(getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create(), mActualResult);
+        }
+    }
+
+
+    /**
      * Test  divideAndRemainder()allow to divide/remind numbers.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D22")
@@ -1902,6 +2077,77 @@ public class ModellingMonetaryAmountsTest{
             }
         }
     }
+
+    /**
+     * Test  divideAndRemainder(null) throws an NullPointerException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D24")
+    @Test(description = "4.2.2 For each amount class, ensure divideAndRemainder(Double.NaN) throws a ArithmeticException.")
+    public void testDivideAndRemainderDoubleNaN() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
+            if (type.equals(TestAmount.class)) {
+                continue;
+            }
+            MonetaryAmount mAmount1 = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            try {
+                MonetaryAmount[] mActualResult = mAmount1.divideAndRemainder(Double.NaN);
+                AssertJUnit.fail("Section 4.2.2: ArithmeticException expected for divideAndRemainder with Double.NaN, " +
+                        "type was " +
+                        type.getName());
+            } catch (ArithmeticException e) {
+                // expected
+            }
+        }
+    }
+
+    /**
+     * Test  divideAndRemainder(null) throws an NullPointerException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D24")
+    @Test(description = "4.2.2 For each amount class, ensure divideAndRemainder(Double.POSITIVE_INFINITY) returns ZERO amount.")
+    public void testDivideAndRemainderDoublePOSITIVE_INFINITY() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
+            if (type.equals(TestAmount.class)) {
+                continue;
+            }
+            MonetaryAmount mAmount1 = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount[] mActualResult = mAmount1.divideAndRemainder(Double.POSITIVE_INFINITY);
+            MonetaryAmount zero = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
+            AssertJUnit.assertEquals("Section 4.2.2: ZERO amount expected for divideAndRemainder with Double.POSITIVE_INFINITY, " +
+                            "type was " +
+                            type.getName(), zero,
+                    mActualResult[0]);
+            AssertJUnit.assertEquals("Section 4.2.2: ZERO amount expected for divideAndRemainder with Double.POSITIVE_INFINITY, " +
+                            "type was " +
+                            type.getName(), zero,
+                    mActualResult[1]);
+        }
+    }
+
+    /**
+     * Test  divideAndRemainder(null) throws an NullPointerException.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D24")
+    @Test(description = "4.2.2 For each amount class, ensure divideAndRemainder(Double.NEGATIVE_INFINITY) returns ZERO amount.")
+    public void testDivideAndRemainderDoubleNEGATIVE_INFINITY() {
+        for (Class type : MonetaryAmounts.getAmountTypes()) {
+            if (type.equals(TestAmount.class)) {
+                continue;
+            }
+            MonetaryAmount mAmount1 = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+            MonetaryAmount[] mActualResult = mAmount1.divideAndRemainder(Double.NEGATIVE_INFINITY);
+            MonetaryAmount zero = getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(0).create();
+            AssertJUnit.assertEquals("Section 4.2.2: ZERO amount expected for divideAndRemainder with Double.NEGATIVE_INFINITY, " +
+                            "type was " +
+                            type.getName(), zero,
+                    mActualResult[0]);
+            AssertJUnit.assertEquals("Section 4.2.2: ZERO amount expected for divideAndRemainder with Double.NEGATIVE_INFINITY, " +
+                            "type was " +
+                            type.getName(), zero,
+                    mActualResult[1]);
+        }
+    }
+
 
     /**
      * Test  divideAndRemainder(1) returns this/ZERO.

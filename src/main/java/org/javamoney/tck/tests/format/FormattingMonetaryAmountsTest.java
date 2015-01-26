@@ -29,6 +29,7 @@ import java.util.Set;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertEquals;
+import static org.testng.AssertJUnit.fail;
 
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class FormattingMonetaryAmountsTest {
@@ -119,8 +120,8 @@ public class FormattingMonetaryAmountsTest {
                     assertNotNull(amtParsed, "Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
                             "' using MonetaryAmountFormat: " + format);
                 } catch (MonetaryException e) {
-                    System.out.println("WARNING: Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
-                            "' using MonetaryAmountFormat: " + format);
+                    fail("Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                            "' using MonetaryAmountFormat: " + format.getClass().getName() + " for Locale: " + locale);
                 }
             }
         }
@@ -162,8 +163,8 @@ public class FormattingMonetaryAmountsTest {
                                     "' using MonetaryAmountFormat(invalid type " +
                                     amtParsed.getClass().getName() + ") for format: " + format);
                 } catch (MonetaryException e) {
-                    System.out.println("WARNING: Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
-                            "' using MonetaryAmountFormat: " + format);
+                    fail("Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                            "' using MonetaryAmountFormat: " + format.getClass().getName() + " for Locale: " + locale);
                 }
             }
         }
@@ -200,8 +201,8 @@ public class FormattingMonetaryAmountsTest {
                                         "' using MonetaryAmountFormat(invalid currency " +
                                         amtParsed.getCurrency().getCurrencyCode() + "): " + format);
                     } catch (MonetaryException e) {
-                        System.out.println("WARNING: Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
-                                "' using MonetaryAmountFormat: " + format);
+                        fail("Reverse-parsing of MonetaryAmount failed for '" + formatProduced +
+                                "' using MonetaryAmountFormat: " + format.getClass().getName() + " for Locale: " + locale);
                     }
                 }
             }
