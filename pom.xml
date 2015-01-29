@@ -17,13 +17,11 @@
     <parent>
         <groupId>org.javamoney</groupId>
         <artifactId>javamoney-parent</artifactId>
-        <version>0.5</version>
+        <version>1.0-RC1</version>
     </parent>
 
     <artifactId>javamoney-tck</artifactId>
     <packaging>jar</packaging>
-
-    <version>1.0-RC1</version>
 
     <name>JSR 354 (TCK)</name>
     <url>http://java.net/projects/javamoney</url>
