@@ -555,7 +555,6 @@
         </profile>
     </profiles>
 
-
     <repositories>
         <repository>
             <id>jboss-maven2-brew</id>
