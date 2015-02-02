@@ -187,7 +187,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -196,7 +196,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -206,7 +206,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the scale setTyped on the context for " + type.getName(),
+                            "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             } else {
@@ -214,7 +214,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
@@ -243,7 +243,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -252,7 +252,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -262,7 +262,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the scale setTyped on the context for " + type.getName(),
+                            "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             } else {
@@ -270,7 +270,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
@@ -299,7 +299,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -308,7 +308,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -318,7 +318,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the scale setTyped on the context for " + type.getName(),
+                            "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             } else {
@@ -326,7 +326,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
@@ -460,7 +460,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -469,7 +469,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -479,7 +479,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the scale setTyped on the context for " + type.getName(),
+                            "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             } else {
@@ -487,7 +487,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
@@ -518,7 +518,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -527,7 +527,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -537,7 +537,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the scale setTyped on the context for " + type.getName(),
+                            "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             } else {
@@ -545,7 +545,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
@@ -576,7 +576,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -585,7 +585,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -595,7 +595,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the scale setTyped on the context for " + type.getName(),
+                            "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             } else {
@@ -603,7 +603,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
@@ -827,7 +827,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -836,7 +836,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -846,7 +846,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the scale setTyped on the context for " + type.getName(),
+                            "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             } else {
@@ -854,7 +854,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
@@ -883,7 +883,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -892,7 +892,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -902,7 +902,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the scale setTyped on the context for " + type.getName(),
+                            "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             } else {
@@ -910,7 +910,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
@@ -939,7 +939,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -948,7 +948,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setPrecision(p).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getPrecision() == 0 || m.getMonetaryContext().getPrecision() >= p);
                 }
@@ -958,7 +958,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the scale setTyped on the context for " + type.getName(),
+                            "Section 4.2.6: Factory did not honor the scale set on the context for " + type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }
             } else {
@@ -966,7 +966,7 @@ public class CreatingMonetaryAmountsTest {
                     f.setContext(MonetaryContextBuilder.of(MonetaryAmount.class).setMaxScale(s).build());
                     MonetaryAmount m = f.create();
                     AssertJUnit.assertTrue(
-                            "Section 4.2.6: Factory did not honor the precision setTyped on the context for " +
+                            "Section 4.2.6: Factory did not honor the precision set on the context for " +
                                     type.getName(),
                             m.getMonetaryContext().getMaxScale() == -1 || m.getMonetaryContext().getMaxScale() >= s);
                 }

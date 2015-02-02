@@ -128,7 +128,7 @@ public class FormattingMonetaryAmountsTest {
     }
 
     /**
-     * Get/setTyped different amount styles (especially patterns, group
+     * Get/set different amount styles (especially patterns, group
      * sizes, group characters) and compare results with results as from
      * RI.
      * Also apply patterns without currency invovled.
@@ -172,7 +172,7 @@ public class FormattingMonetaryAmountsTest {
 
 
     /**
-     * Get/setTyped default currency, try to parse patterns without
+     * Get/set default currency, try to parse patterns without
      * currency information.
      */
     @SpecAssertion(section = "4.4.1", id = "441-A6")

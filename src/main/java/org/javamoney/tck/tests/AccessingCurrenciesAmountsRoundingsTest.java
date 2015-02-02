@@ -393,7 +393,7 @@ public class AccessingCurrenciesAmountsRoundingsTest {
      * custom currencies.
      */
     @Test(expectedExceptions = NullPointerException.class,
-            description = "Section 4.2.7: Expected NullPointerException accessing a rounding with " +
+            description = "4.2.7: Expected NullPointerException accessing a rounding with " +
                     "'MonetaryRoundings.getRounding(null)'.")
     @SpecAssertion(section = "4.2.7", id = "427-C1")
     public void testAccessRoundingsForCustomCurrencies_Explicit_Null() {
@@ -409,7 +409,7 @@ public class AccessingCurrenciesAmountsRoundingsTest {
     @Test(description = "4.2.7 Ensure correct MonetaryRounding returned for a mathematical RoundingQuery.")
     @SpecAssertion(section = "4.2.7", id = "427-C2")
     public void testAccessRoundingsWithRoundingContext() {
-        RoundingQuery ctx = RoundingQueryBuilder.of().setScale(1).setTyped(RoundingMode.UP).build();
+        RoundingQuery ctx = RoundingQueryBuilder.of().setScale(1).set(RoundingMode.UP).build();
         MonetaryOperator r = MonetaryRoundings.getRounding(ctx);
         AssertJUnit.assertNotNull("Section 4.2.7: No rounding provided for RoundingQuery: " + ctx, r);
         MonetaryAmount m =

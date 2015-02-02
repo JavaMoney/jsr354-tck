@@ -181,7 +181,7 @@ public class ExchangeRatesAndRateProvidersTest {
     @SpecAssertion(id = "433-A2", section = "4.3.3")
     public void testPassingOverConversionContextToSPIs() {
         ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider("TestRateProvider");
-        ConversionQuery ctx = ConversionQueryBuilder.of().setTyped(Locale.CANADA).set("Foo", "bar").setBaseCurrency(FOO_UNIT)
+        ConversionQuery ctx = ConversionQueryBuilder.of().set(Locale.CANADA).set("Foo", "bar").setBaseCurrency(FOO_UNIT)
                 .setTermCurrency(MonetaryCurrencies.getCurrency("XXX")).build();
         ExchangeRate rate = prov.getExchangeRate(ctx);
         AssertJUnit.assertNotNull("No test rate returned by getExchangeRate(ConversionQuery), " +
@@ -191,7 +191,7 @@ public class ExchangeRatesAndRateProvidersTest {
                 rate.getConversionContext().getText("Foo"));
         AssertJUnit.assertEquals(
                 "Object parameter Locale.class was not correctly passed to ExchangeRateProvider implementation.",
-                Locale.CANADA, rate.getConversionContext().getTyped(Locale.class));
+                Locale.CANADA, rate.getConversionContext().get(Locale.class));
     }
 
 
