@@ -45,6 +45,11 @@ public class TestRateProvider implements ExchangeRateProvider{
         }
 
         @Override
+        public ExchangeRateProvider getExchangeRateProvider() {
+            return TestRateProvider.this;
+        }
+
+        @Override
         public MonetaryAmount apply(MonetaryAmount value){
             return value.multiply(2).getFactory().setCurrency(TERM).create();
         }

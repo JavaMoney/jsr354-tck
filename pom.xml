@@ -23,7 +23,7 @@
     <artifactId>javamoney-tck</artifactId>
     <packaging>jar</packaging>
 
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-RC2</version>
 
     <name>JSR 354 (TCK)</name>
     <url>http://java.net/projects/javamoney</url>
@@ -46,7 +46,7 @@
     </licenses>
 
     <properties>
-        <jsr.version>1.0-SNAPSHOT</jsr.version>
+        <jsr.version>1.0-RC2</jsr.version>
         <jdkVersion>1.8</jdkVersion>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
