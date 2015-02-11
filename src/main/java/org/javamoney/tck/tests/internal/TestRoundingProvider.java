@@ -14,6 +14,7 @@ import javax.money.*;
 import javax.money.spi.RoundingProviderSpi;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -57,7 +58,7 @@ public class TestRoundingProvider implements RoundingProviderSpi {
             return null;
         }
         Boolean cashRounding = Optional.ofNullable(context.getBoolean("cashRounding")).orElse(Boolean.FALSE);
-        Long timestamp = context.getTimestampMillis();
+        LocalDate timestamp = context.get(LocalDate.class);
         if (cashRounding) {
             if (timestamp != null) {
                 return getCashRounding(context.getCurrency(), timestamp);
@@ -118,8 +119,8 @@ public class TestRoundingProvider implements RoundingProviderSpi {
         return null;
     }
 
-    private MonetaryRounding getCashRounding(CurrencyUnit currency, long timestamp) {
-        if ("XAU".equals(currency.getCurrencyCode()) && timestamp < 100) {
+    private MonetaryRounding getCashRounding(CurrencyUnit currency, LocalDate timestamp) {
+        if ("XAU".equals(currency.getCurrencyCode()) && timestamp.getYear() < 1972) {
             return new MonetaryRounding() {
                 @Override
                 public RoundingContext getRoundingContext() {

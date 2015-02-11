@@ -14,6 +14,7 @@ import org.javamoney.tck.tests.conversion.TestExchangeRate;
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
 import javax.money.convert.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -77,7 +78,7 @@ public class TestRateProvider2 implements ExchangeRateProvider{
     @Override
     public ExchangeRate getExchangeRate(ConversionQuery conversionQuery){
         if(isAvailable(conversionQuery)){
-            if(conversionQuery.getTimestampMillis() != null){
+            if (conversionQuery.get(LocalDate.class) != null) {
                 return new TestExchangeRate.Builder("TestRateProvider2", RateType.OTHER)
                         .setFactor(new TestNumberValue(FACTOR * 100)).setBase(conversionQuery.getBaseCurrency())
                         .setTerm(conversionQuery.getCurrency()).build();

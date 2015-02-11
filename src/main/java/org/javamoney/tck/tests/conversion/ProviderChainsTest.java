@@ -16,10 +16,9 @@ import org.testng.annotations.Test;
 
 import javax.money.convert.*;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Collection;
-
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertTrue;
 
 /**
  * Tests for conversion provider chains.
@@ -117,7 +116,10 @@ public class ProviderChainsTest{
         rate = prov1.getExchangeRate("EUR", "USD");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 2);
         rate = prov1.getExchangeRate(
-                ConversionQueryBuilder.of().setTimestampMillis(10L).setBaseCurrency("EUR").setTermCurrency("USD")
+                ConversionQueryBuilder.of()
+                        .set(LocalDate.of(1970, Month.JANUARY, 1))
+                        .setBaseCurrency("EUR")
+                        .setTermCurrency("USD")
                         .build());
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", 200, rate.getFactor().intValueExact());
     }
