@@ -28,7 +28,7 @@ import static org.testng.AssertJUnit.assertEquals;
  * Created by Anatole on 10.03.14.
  */
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
-public class ConvertingAmountsTest{
+public class ConvertingAmountsTest {
 
     // ******************************* A. Test Basic MonetaryConversions Accessors ******************************
 
@@ -39,7 +39,7 @@ public class ConvertingAmountsTest{
      */
     @Test(description = "4.3.2 Test successful conversion for CHF -> FOO, using TestRateProvider.")
     @SpecAssertion(id = "432-A1", section = "4.3.2")
-    public void testConversion(){
+    public void testConversion() {
         CurrencyUnit cu = new TestCurrencyUnit("FOO");
         CurrencyConversion conv = MonetaryConversions.getConversion(cu, "TestRateProvider");
         MonetaryAmount m = MonetaryAmounts.getDefaultAmountFactory().setNumber(10).setCurrency("CHF").create();
@@ -56,14 +56,14 @@ public class ConvertingAmountsTest{
      */
     @Test(description = "4.3.2 Test correct ExchangeRate is returned for CHF -> FOO, using TestRateProvider.")
     @SpecAssertion(id = "432-A2", section = "4.3.2")
-    public void testConversionComparedWithRate(){
+    public void testConversionComparedWithRate() {
         final CurrencyUnit FOO = new TestCurrencyUnit("FOO");
         ExchangeRate rate = MonetaryConversions.getExchangeRateProvider("TestRateProvider")
                 .getExchangeRate(MonetaryCurrencies.getCurrency("CHF"), FOO);
         AssertJUnit.assertEquals(rate.getBaseCurrency(), MonetaryCurrencies.getCurrency("CHF"));
         AssertJUnit.assertEquals(rate.getCurrency().getCurrencyCode(), FOO.getCurrencyCode());
         AssertJUnit.assertEquals(rate.getFactor().intValueExact(), 2);
-        AssertJUnit.assertEquals("TestRateProvider", rate.getConversionContext().getProvider());
+        AssertJUnit.assertEquals("TestRateProvider", rate.getConversionContext().getProviderName());
     }
 
     /**
@@ -76,14 +76,13 @@ public class ConvertingAmountsTest{
     @Test(description = "4.3.2 Bad case: Try CurrencyConversion to an inconvertible (custom) " +
             "currency (FOOANY), ensure CurrencyConversionException is thrown.")
     @SpecAssertion(id = "432-A3", section = "4.3.2")
-    public void testUnsupportedConversion(){
+    public void testUnsupportedConversion() {
         MonetaryAmount m = MonetaryAmounts.getDefaultAmountFactory().setNumber(10).setCurrency("CHF").create();
         CurrencyUnit cu = new TestCurrencyUnit("FOOANY");
-        try{
+        try {
             CurrencyConversion conv = MonetaryConversions.getConversion(cu);
             m.with(conv);
-        }
-        catch(CurrencyConversionException e){
+        } catch (CurrencyConversionException e) {
             // expected
         }
     }
@@ -92,10 +91,10 @@ public class ConvertingAmountsTest{
      * Bad case: try converting from/to a null currency, ensure NullPointerException is thrown.
      */
     @Test(expectedExceptions = NullPointerException.class,
-          description = "4.3.2 Bad case: Access CurrencyConversion " +
-                  "with a CurrencyUnit==null, ensure NullPointerException is thrown.")
+            description = "4.3.2 Bad case: Access CurrencyConversion " +
+                    "with a CurrencyUnit==null, ensure NullPointerException is thrown.")
     @SpecAssertion(id = "432-A4", section = "4.3.2")
-    public void testNullConversion1(){
+    public void testNullConversion1() {
         MonetaryConversions.getConversion((CurrencyUnit) null);
     }
 
@@ -103,10 +102,10 @@ public class ConvertingAmountsTest{
      * Bad case: try converting from/to a null currency, ensure NullPointerException is thrown.
      */
     @Test(expectedExceptions = NullPointerException.class,
-          description = "4.3.2 Bad case: Access CurrencyConversion with a currency code==null, ensure " +
-                  "NullPointerException is thrown.")
+            description = "4.3.2 Bad case: Access CurrencyConversion with a currency code==null, ensure " +
+                    "NullPointerException is thrown.")
     @SpecAssertion(id = "432-A4", section = "4.3.2")
-    public void testNullConversion2(){
+    public void testNullConversion2() {
         MonetaryConversions.getConversion((String) null);
     }
 

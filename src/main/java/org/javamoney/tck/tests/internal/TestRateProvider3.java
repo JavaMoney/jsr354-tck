@@ -19,39 +19,39 @@ import java.util.Objects;
 /**
  * Test ExchangeRateProvider.
  */
-public class TestRateProvider3 implements ExchangeRateProvider{
+public class TestRateProvider3 implements ExchangeRateProvider {
 
     public static final int FACTOR = 3;
     private static ProviderContext PC = ProviderContextBuilder.of("TestRateProvider3", RateType.OTHER).build();
     private static ConversionContext CC = ConversionContextBuilder.create(PC, RateType.OTHER).build();
 
-    private static final class Conversion implements CurrencyConversion{
+    private static final class Conversion implements CurrencyConversion {
 
         private CurrencyUnit term;
 
-        private Conversion(CurrencyUnit term){
+        private Conversion(CurrencyUnit term) {
             Objects.requireNonNull(term);
             this.term = term;
         }
 
         @Override
-        public CurrencyUnit getCurrency(){
+        public CurrencyUnit getCurrency() {
             return term;
         }
 
         @Override
-        public ConversionContext getConversionContext(){
+        public ConversionContext getConversionContext() {
             return CC;
         }
 
         @Override
-        public ExchangeRate getExchangeRate(MonetaryAmount sourceAmount){
+        public ExchangeRate getExchangeRate(MonetaryAmount sourceAmount) {
             return new TestExchangeRate.Builder(CC).setFactor(new TestNumberValue(FACTOR))
                     .setBase(sourceAmount.getCurrency()).setTerm(term).build();
         }
 
         @Override
-        public MonetaryAmount apply(MonetaryAmount value){
+        public MonetaryAmount apply(MonetaryAmount value) {
             return value.multiply(FACTOR).getFactory().setCurrency(term).create();
         }
 
@@ -62,12 +62,12 @@ public class TestRateProvider3 implements ExchangeRateProvider{
     }
 
     @Override
-    public ProviderContext getProviderContext(){
+    public ProviderContext getProviderContext() {
         return PC;
     }
 
     @Override
-    public boolean isAvailable(ConversionQuery query){
+    public boolean isAvailable(ConversionQuery query) {
         Objects.requireNonNull(query);
         Objects.requireNonNull(query.getBaseCurrency());
         Objects.requireNonNull(query.getCurrency());
@@ -75,16 +75,16 @@ public class TestRateProvider3 implements ExchangeRateProvider{
     }
 
     @Override
-    public ExchangeRate getExchangeRate(ConversionQuery query){
-        if(isAvailable(query)){
-            return new TestExchangeRate.Builder(PC.getProvider(), RateType.OTHER).setFactor(new TestNumberValue(FACTOR))
+    public ExchangeRate getExchangeRate(ConversionQuery query) {
+        if (isAvailable(query)) {
+            return new TestExchangeRate.Builder(PC.getProviderName(), RateType.OTHER).setFactor(new TestNumberValue(FACTOR))
                     .setBase(query.getBaseCurrency()).setTerm(query.getCurrency()).build();
         }
         return null;
     }
 
     @Override
-    public CurrencyConversion getCurrencyConversion(ConversionQuery conversionQuery){
+    public CurrencyConversion getCurrencyConversion(ConversionQuery conversionQuery) {
         Objects.requireNonNull(conversionQuery);
         Objects.requireNonNull(conversionQuery.getCurrency());
         return new Conversion(conversionQuery.getCurrency());
