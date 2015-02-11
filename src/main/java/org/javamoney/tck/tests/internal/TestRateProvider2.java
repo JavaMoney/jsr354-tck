@@ -41,7 +41,7 @@ public class TestRateProvider2 implements ExchangeRateProvider{
         }
 
         @Override
-        public ConversionContext getConversionContext(){
+        public ConversionContext getContext() {
             return CC;
         }
 
@@ -63,7 +63,7 @@ public class TestRateProvider2 implements ExchangeRateProvider{
     }
 
     @Override
-    public ProviderContext getProviderContext(){
+    public ProviderContext getContext() {
         return PC;
     }
 

@@ -18,51 +18,51 @@ import java.util.Objects;
 /**
  * Created by Anatole on 19.04.2014.
  */
-public final class TestCurrencyUnit implements CurrencyUnit, Serializable{
+public final class TestCurrencyUnit implements CurrencyUnit, Serializable {
 
     private String code;
     private int defsultFractionUnits = 11;
     private static final CurrencyContext CONTEXT =
             CurrencyContextBuilder.of(TestCurrencyUnit.class.getSimpleName()).build();
 
-    public TestCurrencyUnit(String code){
+    public TestCurrencyUnit(String code) {
         Objects.requireNonNull(code);
         this.code = code;
     }
 
-    public TestCurrencyUnit(String code, int defsultFractionUnits){
+    public TestCurrencyUnit(String code, int defsultFractionUnits) {
         Objects.requireNonNull(code);
         this.code = code;
         this.defsultFractionUnits = defsultFractionUnits;
     }
 
-    public TestCurrencyUnit(){
+    public TestCurrencyUnit() {
         this("TesT");
     }
 
     @Override
-    public String getCurrencyCode(){
+    public String getCurrencyCode() {
         return code;
     }
 
     @Override
-    public int getNumericCode(){
+    public int getNumericCode() {
         return Integer.MIN_VALUE;
     }
 
     @Override
-    public int getDefaultFractionDigits(){
+    public int getDefaultFractionDigits() {
         return defsultFractionUnits;
     }
 
     @Override
-    public CurrencyContext getCurrencyContext(){
+    public CurrencyContext getContext() {
         return CONTEXT;
     }
 
     @Override
-    public int compareTo(CurrencyUnit o){
-        if(o instanceof TestCurrencyUnit){
+    public int compareTo(CurrencyUnit o) {
+        if (o instanceof TestCurrencyUnit) {
             return 0;
         }
         return 1;

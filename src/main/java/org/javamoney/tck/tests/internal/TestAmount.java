@@ -17,316 +17,314 @@ import java.util.Objects;
 /**
  * Created by Anatole on 19.04.2014.
  */
-public final class TestAmount implements MonetaryAmount, Serializable{
+public final class TestAmount implements MonetaryAmount, Serializable {
 
     private BigDecimal value;
     private CurrencyUnit currencyUnit;
     public static final MonetaryContext MONETARY_CONTEXT =
             MonetaryContextBuilder.of().setAmountType(TestAmount.class).setMaxScale(-1).setPrecision(0).build();
 
-    public TestAmount(Number number, CurrencyUnit currency){
+    public TestAmount(Number number, CurrencyUnit currency) {
         this.currencyUnit = currency;
         this.value = new BigDecimal(String.valueOf(number));
     }
 
     @Override
-    public MonetaryAmount with(MonetaryOperator operator){
-        try{
+    public MonetaryAmount with(MonetaryOperator operator) {
+        try {
             return operator.apply(this);
-        }
-        catch(MonetaryException e){
+        } catch (MonetaryException e) {
             throw e;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw new MonetaryException("Exception during operator execution.", e);
         }
     }
 
     @Override
-    public MonetaryAmountFactory<? extends MonetaryAmount> getFactory(){
+    public MonetaryAmountFactory<? extends MonetaryAmount> getFactory() {
 
 
-        return new MonetaryAmountFactory<TestAmount>(){
+        return new MonetaryAmountFactory<TestAmount>() {
 
             private CurrencyUnit currency = TestAmount.this.currencyUnit;
             private BigDecimal number = TestAmount.this.value;
 
             @Override
-            public Class<? extends MonetaryAmount> getAmountType(){
+            public Class<? extends MonetaryAmount> getAmountType() {
                 return TestAmount.class;
             }
 
             @Override
-            public MonetaryAmountFactory setCurrency(String currencyCode){
+            public MonetaryAmountFactory setCurrency(String currencyCode) {
                 this.currency = MonetaryCurrencies.getCurrency(currencyCode);
                 return this;
             }
 
             @Override
-            public MonetaryAmountFactory setCurrency(CurrencyUnit currency){
+            public MonetaryAmountFactory setCurrency(CurrencyUnit currency) {
                 Objects.requireNonNull(currency);
                 this.currency = currency;
                 return this;
             }
 
             @Override
-            public MonetaryAmountFactory setNumber(double number){
+            public MonetaryAmountFactory setNumber(double number) {
                 Objects.requireNonNull(number);
                 this.number = new BigDecimal(String.valueOf(number));
                 return this;
             }
 
             @Override
-            public MonetaryAmountFactory setNumber(long number){
+            public MonetaryAmountFactory setNumber(long number) {
                 Objects.requireNonNull(number);
                 this.number = new BigDecimal(String.valueOf(number));
                 return this;
             }
 
             @Override
-            public MonetaryAmountFactory setNumber(Number number){
+            public MonetaryAmountFactory setNumber(Number number) {
                 Objects.requireNonNull(number);
                 this.number = new BigDecimal(String.valueOf(number));
                 return this;
             }
 
             @Override
-            public NumberValue getMaxNumber(){
+            public NumberValue getMaxNumber() {
                 return null;
             }
 
             @Override
-            public NumberValue getMinNumber(){
+            public NumberValue getMinNumber() {
                 return null;
             }
 
             @Override
-            public MonetaryAmountFactory setContext(MonetaryContext monetaryContext){
+            public MonetaryAmountFactory setContext(MonetaryContext monetaryContext) {
                 return this;
             }
 
             @Override
-            public MonetaryAmountFactory setAmount(MonetaryAmount amount){
+            public MonetaryAmountFactory setAmount(MonetaryAmount amount) {
                 this.currency = amount.getCurrency();
                 this.number = amount.getNumber().numberValue(BigDecimal.class);
                 return this;
             }
 
             @Override
-            public TestAmount create(){
+            public TestAmount create() {
                 return new TestAmount(number, currency);
             }
 
             @Override
-            public MonetaryContext getDefaultMonetaryContext(){
+            public MonetaryContext getDefaultMonetaryContext() {
                 return MONETARY_CONTEXT;
             }
 
             @Override
-            public MonetaryContext getMaximalMonetaryContext(){
+            public MonetaryContext getMaximalMonetaryContext() {
                 return MONETARY_CONTEXT;
             }
         };
     }
 
     @Override
-    public MonetaryAmount subtract(MonetaryAmount amount){
+    public MonetaryAmount subtract(MonetaryAmount amount) {
         return this;
     }
 
     @Override
-    public MonetaryAmount stripTrailingZeros(){
+    public MonetaryAmount stripTrailingZeros() {
         value = value.stripTrailingZeros();
         return this;
     }
 
     @Override
-    public int signum(){
+    public int signum() {
         return value.signum();
     }
 
     @Override
-    public MonetaryAmount add(MonetaryAmount amount){
+    public MonetaryAmount add(MonetaryAmount amount) {
         return null;
     }
 
     @Override
-    public MonetaryAmount scaleByPowerOfTen(int power){
+    public MonetaryAmount scaleByPowerOfTen(int power) {
         return this;
     }
 
     @Override
-    public MonetaryAmount abs(){
+    public MonetaryAmount abs() {
         return null;
     }
 
     @Override
-    public MonetaryAmount remainder(Number divisor){
+    public MonetaryAmount remainder(Number divisor) {
         return this;
     }
 
     @Override
-    public MonetaryAmount[] divideAndRemainder(long divisor){
+    public MonetaryAmount[] divideAndRemainder(long divisor) {
         return new MonetaryAmount[0];
     }
 
     @Override
-    public MonetaryAmount[] divideAndRemainder(double divisor){
+    public MonetaryAmount[] divideAndRemainder(double divisor) {
         return new MonetaryAmount[0];
     }
 
     @Override
-    public MonetaryAmount[] divideAndRemainder(Number divisor){
+    public MonetaryAmount[] divideAndRemainder(Number divisor) {
         return new MonetaryAmount[0];
     }
 
     @Override
-    public MonetaryAmount divideToIntegralValue(long divisor){
+    public MonetaryAmount divideToIntegralValue(long divisor) {
         return null;
     }
 
     @Override
-    public MonetaryAmount divideToIntegralValue(double divisor){
+    public MonetaryAmount divideToIntegralValue(double divisor) {
         return null;
     }
 
     @Override
-    public MonetaryAmount divideToIntegralValue(Number divisor){
+    public MonetaryAmount divideToIntegralValue(Number divisor) {
         return null;
     }
 
     @Override
-    public MonetaryAmount remainder(double divisor){
+    public MonetaryAmount remainder(double divisor) {
         return this;
     }
 
     @Override
-    public MonetaryAmount remainder(long divisor){
+    public MonetaryAmount remainder(long divisor) {
         return this;
     }
 
     @Override
-    public <R> R query(MonetaryQuery<R> query){
+    public <R> R query(MonetaryQuery<R> query) {
         return query.queryFrom(this);
     }
 
     @Override
-    public MonetaryAmount plus(){
+    public MonetaryAmount plus() {
         return this;
     }
 
     @Override
-    public MonetaryAmount negate(){
+    public MonetaryAmount negate() {
         return this;
     }
 
     @Override
-    public MonetaryAmount multiply(Number multiplicand){
+    public MonetaryAmount multiply(Number multiplicand) {
         return new TestAmount(this.value.multiply(new BigDecimal(String.valueOf(multiplicand))), getCurrency());
     }
 
     @Override
-    public MonetaryAmount divide(long divisor){
+    public MonetaryAmount divide(long divisor) {
         return null;
     }
 
     @Override
-    public MonetaryAmount divide(double divisor){
+    public MonetaryAmount divide(double divisor) {
         return null;
     }
 
     @Override
-    public MonetaryAmount divide(Number divisor){
+    public MonetaryAmount divide(Number divisor) {
         return null;
     }
 
     @Override
-    public MonetaryAmount multiply(double multiplicand){
+    public MonetaryAmount multiply(double multiplicand) {
         return this;
     }
 
     @Override
-    public MonetaryAmount multiply(long multiplicand){
+    public MonetaryAmount multiply(long multiplicand) {
         return this;
     }
 
     @Override
-    public boolean isZero(){
+    public boolean isZero() {
         return false;
     }
 
     @Override
-    public boolean isPositiveOrZero(){
+    public boolean isPositiveOrZero() {
         return true;
     }
 
     @Override
-    public boolean isPositive(){
+    public boolean isPositive() {
         return true;
     }
 
     @Override
-    public boolean isNegativeOrZero(){
+    public boolean isNegativeOrZero() {
         return false;
     }
 
     @Override
-    public boolean isNegative(){
+    public boolean isNegative() {
         return false;
     }
 
     @Override
-    public boolean isLessThanOrEqualTo(MonetaryAmount amount){
+    public boolean isLessThanOrEqualTo(MonetaryAmount amount) {
         return this.value.stripTrailingZeros()
                 .compareTo(amount.getNumber().numberValue(BigDecimal.class).stripTrailingZeros()) == 0;
     }
 
     @Override
-    public boolean isLessThan(MonetaryAmount amount){
+    public boolean isLessThan(MonetaryAmount amount) {
         return this.value.stripTrailingZeros()
                 .compareTo(amount.getNumber().numberValue(BigDecimal.class).stripTrailingZeros()) < 0;
     }
 
     @Override
-    public boolean isGreaterThanOrEqualTo(MonetaryAmount amount){
+    public boolean isGreaterThanOrEqualTo(MonetaryAmount amount) {
         return this.value.stripTrailingZeros()
                 .compareTo(amount.getNumber().numberValue(BigDecimal.class).stripTrailingZeros()) >= 0;
     }
 
     @Override
-    public boolean isGreaterThan(MonetaryAmount amount){
+    public boolean isGreaterThan(MonetaryAmount amount) {
         return this.value.stripTrailingZeros()
                 .compareTo(amount.getNumber().numberValue(BigDecimal.class).stripTrailingZeros()) > 0;
     }
 
     @Override
-    public boolean isEqualTo(MonetaryAmount amount){
+    public boolean isEqualTo(MonetaryAmount amount) {
         return this.value.stripTrailingZeros()
                 .compareTo(amount.getNumber().numberValue(BigDecimal.class).stripTrailingZeros()) == 0;
     }
 
     @Override
-    public CurrencyUnit getCurrency(){
+    public CurrencyUnit getCurrency() {
         return currencyUnit;
     }
 
     @Override
-    public MonetaryContext getMonetaryContext(){
+    public MonetaryContext getContext() {
         return MONETARY_CONTEXT;
     }
 
     @Override
-    public int compareTo(MonetaryAmount o){
+    public int compareTo(MonetaryAmount o) {
         return 0;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return currencyUnit.getCurrencyCode() + ' ' + String.valueOf(value);
     }
 
     @Override
-    public NumberValue getNumber(){
+    public NumberValue getNumber() {
         return new TestNumberValue(this.value);
     }
 

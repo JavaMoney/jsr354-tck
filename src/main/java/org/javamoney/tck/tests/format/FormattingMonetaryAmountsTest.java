@@ -223,7 +223,7 @@ public class FormattingMonetaryAmountsTest {
         for (Locale jdkDecimalFormatLocale : jdkDecimalFormatLocales) {
             MonetaryAmountFormat amountFormat = MonetaryFormats.getAmountFormat(jdkDecimalFormatLocale);
             AssertJUnit.assertNotNull(amountFormat);
-            assertEquals(jdkDecimalFormatLocale, amountFormat.getAmountFormatContext().getLocale());
+            assertEquals(jdkDecimalFormatLocale, amountFormat.getContext().getLocale());
         }
     }
 

@@ -34,7 +34,7 @@ public class TestRateProvider implements ExchangeRateProvider{
         }
 
         @Override
-        public ConversionContext getConversionContext(){
+        public ConversionContext getContext() {
             return CC;
         }
 
@@ -56,7 +56,7 @@ public class TestRateProvider implements ExchangeRateProvider{
     };
 
     @Override
-    public ProviderContext getProviderContext(){
+    public ProviderContext getContext() {
         return PC;
     }
 
@@ -94,7 +94,7 @@ public class TestRateProvider implements ExchangeRateProvider{
     public ExchangeRate getExchangeRate(ConversionQuery conversionQuery){
         if(isAvailable(conversionQuery)){
             return new TestExchangeRate.Builder(
-                    ConversionContextBuilder.create(getProviderContext(), RateType.OTHER).importContext(conversionQuery)
+                    ConversionContextBuilder.create(getContext(), RateType.OTHER).importContext(conversionQuery)
                             .build()).setFactor(new TestNumberValue(2)).setBase(conversionQuery.getBaseCurrency())
                     .setTerm(conversionQuery.getCurrency()).build();
         }

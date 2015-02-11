@@ -153,7 +153,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      *
      * @return the conversion context, never null.
      */
-    public final ConversionContext getConversionContext() {
+    public final ConversionContext getContext() {
         return this.conversionContext;
     }
 
@@ -225,7 +225,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
             compare = this.getCurrency().getCurrencyCode().compareTo(o.getCurrency().getCurrencyCode());
         }
         if (compare == 0) {
-            compare = this.getConversionContext().getProviderName().compareTo(o.getConversionContext().getProviderName());
+            compare = this.getContext().getProviderName().compareTo(o.getContext().getProviderName());
         }
         return compare;
     }
@@ -362,7 +362,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
          * @param rate the {@link javax.money.convert.ExchangeRate} to be applied
          */
         public Builder(ExchangeRate rate) {
-            setContext(rate.getConversionContext());
+            setContext(rate.getContext());
             setFactor(rate.getFactor());
             setTerm(rate.getCurrency());
             setBase(rate.getBaseCurrency());
@@ -465,7 +465,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
         public Builder setRate(ExchangeRate rate) {
             this.base = rate.getBaseCurrency();
             this.term = rate.getCurrency();
-            this.conversionContext = rate.getConversionContext();
+            this.conversionContext = rate.getContext();
             this.factor = rate.getFactor();
             this.rateChain = rate.getExchangeRateChain();
             this.term = rate.getCurrency();
@@ -479,7 +479,7 @@ public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<
      * @return a new {@link Builder}, never {@code null}.
      */
     public Builder toBuilder() {
-        return new Builder(getConversionContext()).setBase(getBaseCurrency()).setTerm(getCurrency())
+        return new Builder(getContext()).setBase(getBaseCurrency()).setTerm(getCurrency())
                 .setFactor(getFactor()).setRateChain(getExchangeRateChain());
     }
 }

@@ -125,7 +125,7 @@ public class MonetaryConversionsTest {
         for (String providerName : MonetaryConversions.getProviderNames()) {
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerName);
             AssertJUnit.assertNotNull("Provider mot accessible: " + providerName, prov);
-            ProviderContext ctx = prov.getProviderContext();
+            ProviderContext ctx = prov.getContext();
             AssertJUnit.assertNotNull(
                     "ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName, ctx);
             AssertJUnit.assertEquals("ExchangeProvider's ProviderContext returns invalid name: " + providerName,
@@ -151,7 +151,7 @@ public class MonetaryConversionsTest {
         for (String providerName : MonetaryConversions.getProviderNames()) {
             if (MonetaryConversions.isConversionAvailable("XXX", providerName)) {
                 CurrencyConversion conv = MonetaryConversions.getConversion("XXX", providerName);
-                ConversionContext ctx = conv.getConversionContext();
+                ConversionContext ctx = conv.getContext();
                 AssertJUnit.assertNotNull(
                         "ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName,
                         ctx);
@@ -177,7 +177,7 @@ public class MonetaryConversionsTest {
             if (MonetaryConversions.isConversionAvailable(MonetaryCurrencies.getCurrency("XXX"), providerName)) {
                 CurrencyConversion conv =
                         MonetaryConversions.getConversion(MonetaryCurrencies.getCurrency("XXX"), providerName);
-                ConversionContext ctx = conv.getConversionContext();
+                ConversionContext ctx = conv.getContext();
                 AssertJUnit.assertNotNull(
                         "ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName,
                         ctx);
@@ -204,7 +204,7 @@ public class MonetaryConversionsTest {
                     setTermCurrency("XXX").setProviderNames(providerName).build();
             if (MonetaryConversions.isConversionAvailable(query)) {
                 CurrencyConversion conv = MonetaryConversions.getConversion(query);
-                ConversionContext ctx = conv.getConversionContext();
+                ConversionContext ctx = conv.getContext();
                 AssertJUnit.assertNotNull(
                         "ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName,
                         ctx);
@@ -231,7 +231,7 @@ public class MonetaryConversionsTest {
                     setTermCurrency(MonetaryCurrencies.getCurrency("XXX")).setProviderName(providerName).build();
             if (MonetaryConversions.isConversionAvailable(query)) {
                 CurrencyConversion conv = MonetaryConversions.getConversion(query);
-                ConversionContext ctx = conv.getConversionContext();
+                ConversionContext ctx = conv.getContext();
                 AssertJUnit.assertNotNull(
                         "ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName,
                         ctx);

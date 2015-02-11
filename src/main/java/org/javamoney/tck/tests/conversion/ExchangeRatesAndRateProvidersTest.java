@@ -188,10 +188,10 @@ public class ExchangeRatesAndRateProvidersTest {
                 "probably TestProvider is not correct registered.");
         AssertJUnit.assertEquals(
                 "Text parameter Locale.class was not correctly passed to ExchangeRateProvider implementation.", "bar",
-                rate.getConversionContext().getText("Foo"));
+                rate.getContext().getText("Foo"));
         AssertJUnit.assertEquals(
                 "Object parameter Locale.class was not correctly passed to ExchangeRateProvider implementation.",
-                Locale.CANADA, rate.getConversionContext().get(Locale.class));
+                Locale.CANADA, rate.getContext().get(Locale.class));
     }
 
 

@@ -63,7 +63,7 @@ public class ConvertingAmountsTest {
         AssertJUnit.assertEquals(rate.getBaseCurrency(), MonetaryCurrencies.getCurrency("CHF"));
         AssertJUnit.assertEquals(rate.getCurrency().getCurrencyCode(), FOO.getCurrencyCode());
         AssertJUnit.assertEquals(rate.getFactor().intValueExact(), 2);
-        AssertJUnit.assertEquals("TestRateProvider", rate.getConversionContext().getProviderName());
+        AssertJUnit.assertEquals("TestRateProvider", rate.getContext().getProviderName());
     }
 
     /**
