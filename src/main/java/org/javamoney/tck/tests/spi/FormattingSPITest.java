@@ -35,8 +35,8 @@ public class FormattingSPITest {
      * invalid
      * input.
      */
-    @Test(description = "4.5.1 Test if a MonetaryAmountFormatProviderSpi instance is registered.")
-    @SpecAssertion(id = "452-A1", section = "4.5.2")
+    @Test(description = "4.5.3 Test if a MonetaryAmountFormatProviderSpi instance is registered.")
+    @SpecAssertion(id = "453-A1", section = "4.5.3")
     public void testMonetaryAmountFormatProviderSpiIsRegistered() {
         ServiceLoader l = null;
         try {

@@ -570,22 +570,22 @@
                 </text>
             </assertion>
             <assertion id="423-C5">
-            <text>Check if a correct integer value is returned, truncation is
+                <text>Check if a correct integer value is returned, truncation is
                     allowed to be performed (but is not necessary).
                 </text>
             </assertion>
             <assertion id="423-C6">
-            <text>Check if a correct long value is returned, truncation is
+                <text>Check if a correct long value is returned, truncation is
                     allowed to be performed (but is not necessary).
                 </text>
             </assertion>
             <assertion id="423-C7">
-            <text>Check if a correct double value is returned, truncation is
+                <text>Check if a correct double value is returned, truncation is
                     allowed to be performed (but is not necessary).
                 </text>
             </assertion>
             <assertion id="423-C8">
-            <text>Check if a correct number value is returned, truncation is
+                <text>Check if a correct number value is returned, truncation is
                     allowed to be performed (but is not necessary).
                     Check should be done
                     for every JDK type
@@ -593,11 +593,11 @@
                 </text>
             </assertion>
             <assertion id="423-C9">
-            <text>Test correct precision values, including border cases.
+                <text>Test correct precision values, including border cases.
                 </text>
             </assertion>
             <assertion id="423-C10">
-            <text>Test correct scale values, including border cases.
+                <text>Test correct scale values, including border cases.
                 </text>
             </assertion>
         </group>
@@ -832,7 +832,7 @@
                 <text>Access the default provider chain (must be defined).</text>
             </assertion>
             <assertion id="431-A5">
-            <text>Access and test conversion using the default provider chain.</text>
+                <text>Access and test conversion using the default provider chain.</text>
             </assertion>
             <assertion id="431-A6">
                 <text>Bad case: Test access of an inexistent provider.</text>
@@ -880,7 +880,7 @@
         </group>
     </section>
     <section id="4.3.4" title="ExchangeRateProvider Chains">
-    <group>
+        <group>
             <text>A. Test Basic MonetaryConversions Accessors
             </text>
             <assertion id="434-A1">
@@ -943,20 +943,20 @@
         <group>
             <text>B. Accessing Monetary Amount Formats</text>
             <assertion id="443-A1">
-            <text>AccessingMonetaryAmountFormat using
+                <text>AccessingMonetaryAmountFormat using
                     MonetaryFormats.getAmountFormat(Locale locale), all locales
                     available also from java.text.DecimalFormat must be supported.
                 </text>
             </assertion>
             <assertion id="443-A2">
-            <text>AccessingMonetaryAmountFormat using
+                <text>AccessingMonetaryAmountFormat using
                     MonetaryFormats.getAmountFormat(AmountStyle style), all locales
                     available also from java.text.DecimalFormat must be supported
                     (using AmountStyle.of(Locale)).
                 </text>
             </assertion>
             <assertion id="443-A3">
-            <text>Test
+                <text>Test
                     MonetaryFormats.getAvailableLocales, all locales
                     available
                     also from java.text.DecimalFormat must be supported
@@ -1032,7 +1032,7 @@
         <group>
             <text>A. Prodivding Amount Formats</text>
             <assertion id="453-A1">
-            <text>Test registered MonetaryAmountFormatProviderSpi (one is
+                <text>Test registered MonetaryAmountFormatProviderSpi (one is
                     required), especially bad case behaviour for invalid input.
                 </text>
             </assertion>

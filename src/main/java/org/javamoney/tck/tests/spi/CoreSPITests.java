@@ -139,8 +139,8 @@ public class CoreSPITests {
      * especially bad case behaviour for invalid
      * input.
      */
-    @Test(description = "4.5.1 Test if any ExchangeRateProvider instances are registered.")
-    @SpecAssertion(id = "451-E1", section = "4.5.1")
+    @Test(description = "4.5.2 Test if any ExchangeRateProvider instances are registered.")
+    @SpecAssertion(id = "452-A1", section = "4.5.2")
     public void testExchangeRateProviderSpi() {
         ServiceLoader l = null;
         try {
@@ -157,8 +157,8 @@ public class CoreSPITests {
      * especially bad case behaviour for invalid
      * input.
      */
-    @Test(description = "4.5.1 Test if a MonetaryConversionsSingletonSpi instance is registered.")
-    @SpecAssertion(id = "451-E2", section = "4.5.1")
+    @Test(description = "4.5.2 Test if a MonetaryConversionsSingletonSpi instance is registered.")
+    @SpecAssertion(id = "452-A2", section = "4.5.2")
     public void testMonetaryConversionsSingletonSpi() {
         ServiceLoader l = null;
         try {

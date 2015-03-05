@@ -1146,7 +1146,7 @@ public class ExternalizingNumericValueTest {
      * Check should be done for every JDK type
      * supported.
      */
-    @SpecAssertion(section = "4.2.3", id = "423-C5")
+    @SpecAssertion(section = "4.2.3", id = "423-C4")
     @Test(description = "4.2.3 Check if a correct long zero value is returned, no truncation is " +
             " allowed to be performed.")
     public void testNumberValueZero() {
@@ -1195,7 +1195,7 @@ public class ExternalizingNumericValueTest {
      * Check should be done for every JDK type
      * supported.
      */
-    @SpecAssertion(section = "4.2.3", id = "423-C6")
+    @SpecAssertion(section = "4.2.3", id = "423-C5")
     @Test(description = "4.2.3 Check if a correct integer value is returned, truncation is " +
             "allowed to be performed. " +
             "Check should be done for every JDK type " +
@@ -1238,7 +1238,7 @@ public class ExternalizingNumericValueTest {
      * Check should be done for every JDK type
      * supported.
      */
-    @SpecAssertion(section = "4.2.3", id = "423-C7")
+    @SpecAssertion(section = "4.2.3", id = "423-C6")
     @Test(description = "4.2.3 Check if a correct long value is returned, truncation is " +
             "allowed to be performed. " +
             "Check should be done for every JDK type " +
@@ -1279,7 +1279,7 @@ public class ExternalizingNumericValueTest {
      * Check if a correct double value is returned, truncation is
      * allowed to be performed (but is not necessary).
      */
-    @SpecAssertion(section = "4.2.3", id = "423-C8")
+    @SpecAssertion(section = "4.2.3", id = "423-C7")
     @Test(description = "4.2.3 Check if a correct double value is returned, truncation is " +
             "allowed to be performed (but is not necessary).")
     public void testDoubleValueWithTruncationZero() {
@@ -1315,7 +1315,7 @@ public class ExternalizingNumericValueTest {
      * Check should be done for every JDK type
      * supported.
      */
-    @SpecAssertion(section = "4.2.3", id = "423-C9")
+    @SpecAssertion(section = "4.2.3", id = "423-C8")
     @Test(description = "4.2.3 Check if a correct Number value is returned, truncation is " +
             "allowed to be performed. " +
             "Check should be done for every JDK type " +
@@ -1348,7 +1348,7 @@ public class ExternalizingNumericValueTest {
      * Check should be done for every JDK type
      * supported.
      */
-    @SpecAssertion(section = "4.2.3", id = "423-C10")
+    @SpecAssertion(section = "4.2.3", id = "423-C9")
     @Test(description = "4.2.3 Check if a correct precision value is returned. Check should be done for every JDK type " +
             "supported.")
     public void testPrecisionZero() {
@@ -1379,7 +1379,7 @@ public class ExternalizingNumericValueTest {
     /**
      * Check if a correct scale value is returned. For 0 the scale should always be 0.
      */
-    @SpecAssertion(section = "4.2.3", id = "423-C11")
+    @SpecAssertion(section = "4.2.3", id = "423-C10")
     @Test(description = "4.2.3 Check if a correct scale value is returned. Check should be done for every JDK type " +
             "supported.")
     public void testScaleZero() {

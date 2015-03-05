@@ -294,6 +294,22 @@ public class MonetaryConversionsTest {
         // we cannot test more here...
     }
 
+    /**
+     * Access the conversion using the default conversion chain.
+     */
+    @Test(description = "4.3.1 Access and test conversion using the default provider chain.")
+    @SpecAssertion(id = "431-A5", section = "4.3.1")
+    public void testDefaultConversion() {
+        ConversionQuery query =
+                ConversionQueryBuilder.of().setTermCurrency(MonetaryCurrencies.getCurrency("USD")).build();
+        CurrencyConversion conv = MonetaryConversions.getConversion(query);
+        AssertJUnit.assertNotNull("No default CurrencyConversion returned for USD.", conv);
+        query =
+                ConversionQueryBuilder.of().setTermCurrency(MonetaryCurrencies.getCurrency("EUR")).build();
+        conv = MonetaryConversions.getConversion(query);
+        AssertJUnit.assertNotNull("No default CurrencyConversion returned for EUR.", conv);
+    }
+
 
     /**
      * Bad case: Test access of an inexistent provider. Should throw a MonetaryException

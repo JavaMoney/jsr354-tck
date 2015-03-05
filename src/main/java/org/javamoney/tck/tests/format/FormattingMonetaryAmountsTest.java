@@ -133,9 +133,9 @@ public class FormattingMonetaryAmountsTest {
      * RI.
      * Also apply patterns without currency invovled.
      */
-    @SpecAssertion(section = "4.4.1", id = "441-A4")
+    @SpecAssertion(section = "4.4.2", id = "442-A1")
     @Test(description =
-            "4.4.1 Test formats and parses (round-trip) any supported amount type for each supported Locale, " +
+            "4.4.2 Test formats and parses (round-trip) any supported amount type for each supported Locale, " +
                     "using different format queries.")
     public void testParseDifferentStyles() {
         for (Locale locale : MonetaryFormats.getAvailableLocales()) {
@@ -175,7 +175,7 @@ public class FormattingMonetaryAmountsTest {
      * Get/set default currency, try to parse patterns without
      * currency information.
      */
-    @SpecAssertion(section = "4.4.1", id = "441-A6")
+    @SpecAssertion(section = "4.4.1", id = "441-A4")
     @Test(description =
             "4.4.1 Test formats and parses (round-trip) any supported amount type for each supported Locale," +
                     " checks results for different currencies")
@@ -215,8 +215,8 @@ public class FormattingMonetaryAmountsTest {
      * MonetaryFormats.getAmountFormat(Locale locale), all locales
      * available also from java.text.DecimalFormat must be supported.
      */
-    @SpecAssertion(section = "4.4.1", id = "441-B1")
-    @Test(description = "4.4.1 Ensures all Locales defined by DecimalFormat.getAvailableLocales() are available for " +
+    @SpecAssertion(section = "4.4.3", id = "443-A1")
+    @Test(description = "4.4.3 Ensures all Locales defined by DecimalFormat.getAvailableLocales() are available for " +
             "monetary formatting.")
     public void testLocalesSupported() {
         Locale[] jdkDecimalFormatLocales = DecimalFormat.getAvailableLocales();
@@ -233,9 +233,9 @@ public class FormattingMonetaryAmountsTest {
      * available also from java.text.DecimalFormat must be supported
      * (using AmountFormatContext.of(Locale)).
      */
-    @Test(description = "4.4.1 Ensures for each locale defined by DecimalFormat.getAvailableLocales() a " +
+    @Test(description = "4.4.3 Ensures for each locale defined by DecimalFormat.getAvailableLocales() a " +
             "MonetaryAmountFormat instance is provided.")
-    @SpecAssertion(section = "4.4.1", id = "441-B2")
+    @SpecAssertion(section = "4.4.3", id = "443-A2")
     public void testGetAmountFormat() {
         for (Locale locale : DecimalFormat.getAvailableLocales()) {
             AssertJUnit.assertNotNull(MonetaryFormats.getAmountFormat(AmountFormatQuery.of(locale)));
@@ -246,9 +246,9 @@ public class FormattingMonetaryAmountsTest {
      * Test MonetaryFormats.getAvailableLocales, all locales available also from java.text.DecimalFormat must be
      * supported (using AmountFormatContext.of(Locale)), more locales are possible.
      */
-    @Test(description = "4.4.1 Ensures for each locale defined by DecimalFormat.getAvailableLocales() a " +
+    @Test(description = "4.4.3 Ensures for each locale defined by DecimalFormat.getAvailableLocales() a " +
             "MonetaryFormats.isAvailable(Locale) is true.")
-    @SpecAssertion(section = "4.4.1", id = "441-B3")
+    @SpecAssertion(section = "4.4.3", id = "443-A3")
     public void testGetAvailableLocales() {
         Set<Locale> locales = MonetaryFormats.getAvailableLocales();
         for (Locale locale : DecimalFormat.getAvailableLocales()) {
@@ -265,9 +265,9 @@ public class FormattingMonetaryAmountsTest {
      * Test MonetaryFormats.getAvailableLocales, all locales available also from java.text.DecimalFormat must be
      * supported (using AmountFormatContext.of(Locale)), more locales are possible.
      */
-    @Test(description = "4.4.1 Ensures for each locale defined by DecimalFormat.getAvailableLocales() a " +
+    @Test(description = "4.4.3 Ensures for each locale defined by DecimalFormat.getAvailableLocales() a " +
             "MonetaryFormats.getAmountFormat(AmountFormatQuery) returns a formatter.")
-    @SpecAssertion(section = "4.4.1", id = "441-B3")
+    @SpecAssertion(section = "4.4.3", id = "443-A3")
     public void testAmountStyleOf() {
         for (Locale locale : DecimalFormat.getAvailableLocales()) {
             AssertJUnit.assertNotNull(MonetaryFormats.getAmountFormat(AmountFormatQuery.of(locale)));
