@@ -1,4 +1,6 @@
 money-tck.iml
+.project
+.classpath
 target/
 test-output/
 *.iml
