@@ -11,84 +11,84 @@ package org.javamoney.tck.tests.internal;
 
 import javax.money.*;
 
-public final class TestMonetaryAmountBuilder implements MonetaryAmountFactory<TestAmount>{
+public final class TestMonetaryAmountBuilder implements MonetaryAmountFactory<TestAmount> {
 
     private Number value;
     private CurrencyUnit currency;
 
-    public static TestAmount getAmount(final Number number, final CurrencyUnit currency){
+    public static TestAmount getAmount(final Number number, final CurrencyUnit currency) {
         return new TestAmount(number, currency);
     }
 
     @Override
-    public Class<? extends MonetaryAmount> getAmountType(){
+    public Class<? extends MonetaryAmount> getAmountType() {
         return TestAmount.class;
     }
 
     @Override
-    public MonetaryAmountFactory<TestAmount> setCurrency(String currencyCode){
+    public MonetaryAmountFactory<TestAmount> setCurrency(String currencyCode) {
         this.currency = MonetaryCurrencies.getCurrency(currencyCode);
         return this;
     }
 
     @Override
-    public MonetaryAmountFactory<TestAmount> setCurrency(CurrencyUnit currency){
+    public MonetaryAmountFactory<TestAmount> setCurrency(CurrencyUnit currency) {
         this.currency = currency;
         return this;
     }
 
     @Override
-    public MonetaryAmountFactory<TestAmount> setNumber(double number){
+    public MonetaryAmountFactory<TestAmount> setNumber(double number) {
         this.value = number;
         return this;
     }
 
     @Override
-    public MonetaryAmountFactory<TestAmount> setNumber(long number){
+    public MonetaryAmountFactory<TestAmount> setNumber(long number) {
         this.value = number;
         return this;
     }
 
     @Override
-    public MonetaryAmountFactory<TestAmount> setNumber(Number number){
+    public MonetaryAmountFactory<TestAmount> setNumber(Number number) {
         this.value = number;
         return this;
     }
 
     @Override
-    public NumberValue getMaxNumber(){
+    public NumberValue getMaxNumber() {
         return null;
     }
 
     @Override
-    public NumberValue getMinNumber(){
+    public NumberValue getMinNumber() {
         return null;
     }
 
     @Override
-    public MonetaryAmountFactory<TestAmount> setContext(MonetaryContext monetaryContext){
+    public MonetaryAmountFactory<TestAmount> setContext(MonetaryContext monetaryContext) {
         return this;
     }
 
     @Override
-    public MonetaryAmountFactory<TestAmount> setAmount(MonetaryAmount amount){
+    public MonetaryAmountFactory<TestAmount> setAmount(MonetaryAmount amount) {
         setCurrency(amount.getCurrency());
         setNumber(amount.getNumber());
         return this;
     }
 
     @Override
-    public TestAmount create(){
+    public TestAmount create() {
         return new TestAmount(value, currency);
     }
 
     @Override
-    public MonetaryContext getDefaultMonetaryContext(){
+    public MonetaryContext getDefaultMonetaryContext() {
         return TestAmount.MONETARY_CONTEXT;
     }
 
     @Override
-    public MonetaryContext getMaximalMonetaryContext(){
+    public MonetaryContext getMaximalMonetaryContext() {
         return TestAmount.MONETARY_CONTEXT;
     }
 }

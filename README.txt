@@ -16,9 +16,14 @@ To setup the TCK with your implementation you must follow the following steps:
   
 To execute the TCK, simply execute
   
-mvn clean test site
+    mvn clean test site
        
 5) Go to target/site - there you will find your TCK test results.
+
+
+As jump-start you can clone https://github.com/JavaMoney/jsr354-ritest .
+
+The JSR 354 Team.
    
    
    

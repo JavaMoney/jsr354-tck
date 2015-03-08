@@ -25,7 +25,7 @@ import java.util.Collection;
  * Created by Anatole on 10.03.14.
  */
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
-public class ProviderChainsTest{
+public class ProviderChainsTest {
 
     // ********************** A. Test Basic MonetaryConversions Accessors *********************************
 
@@ -35,7 +35,7 @@ public class ProviderChainsTest{
      */
     @Test(description = "4.3.4 Test correct rate evaluation for different conversion provider chains.")
     @SpecAssertion(id = "434-A1", section = "4.3.4")
-    public void testCorrectRateEvaluationInChain_diffProviders(){
+    public void testCorrectRateEvaluationInChain_diffProviders() {
         ExchangeRateProvider prov1 = MonetaryConversions
                 .getExchangeRateProvider("TestRateProvider1", "TestRateProvider2", "TestRateProvider3");
         ExchangeRate rate = prov1.getExchangeRate("CHF", "EUR");
@@ -68,7 +68,7 @@ public class ProviderChainsTest{
 
         prov1 = MonetaryConversions
                 .getExchangeRateProvider("TestRateProvider3", "TestRateProvider2", "TestRateProvider1",
-                                         "TestRateProvider02");
+                        "TestRateProvider02");
         rate = prov1.getExchangeRate("CHF", "EUR");
         AssertJUnit.assertEquals("Invalid ExchangeRateProvider selected.", rate.getFactor().intValueExact(), 1);
         rate = prov1.getExchangeRate("EUR", "USD");
@@ -86,7 +86,7 @@ public class ProviderChainsTest{
     @Test(description = "4.3.4 Test correct rate evaluation for different conversion provider chains, " +
             "with duplicate provider entries.")
     @SpecAssertion(id = "434-A1", section = "4.3.4")
-    public void testCorrectRateEvaluationInChain_sameProviders(){
+    public void testCorrectRateEvaluationInChain_sameProviders() {
         ExchangeRateProvider prov1 = MonetaryConversions
                 .getExchangeRateProvider("TestRateProvider1", "TestRateProvider1", "TestRateProvider1");
         ExchangeRate rate = prov1.getExchangeRate("CHF", "EUR");
@@ -108,7 +108,7 @@ public class ProviderChainsTest{
     @Test(description = "4.3.4 Test correct rate evaluation for different conversion provider chains, " +
             "with historic rates.")
     @SpecAssertion(id = "434-A2", section = "4.3.4")
-    public void testCorrectRateEvaluationInChainHistoric(){
+    public void testCorrectRateEvaluationInChainHistoric() {
         ExchangeRateProvider prov1 = MonetaryConversions
                 .getExchangeRateProvider("TestRateProvider1", "TestRateProvider2", "TestRateProvider3");
         ExchangeRate rate = prov1.getExchangeRate("CHF", "EUR");
@@ -130,18 +130,18 @@ public class ProviderChainsTest{
      */
     @Test(description = "4.3.4 Test availability of TCK provided providers.")
     @SpecAssertion(id = "434-A3", section = "4.3.4")
-    public void testTCKRateChainAvailability(){
+    public void testTCKRateChainAvailability() {
         Collection<String> provNames = MonetaryConversions.getProviderNames();
         AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestRateProvider",
-                               provNames.contains("TestRateProvider"));
+                provNames.contains("TestRateProvider"));
         AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered:TestRateProvider1",
-                               provNames.contains("TestRateProvider1"));
+                provNames.contains("TestRateProvider1"));
         AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestRateProvider2",
-                               provNames.contains("TestRateProvider2"));
+                provNames.contains("TestRateProvider2"));
         AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestRateProvider3",
-                               provNames.contains("TestRateProvider3"));
+                provNames.contains("TestRateProvider3"));
         AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestRateProvider02",
-                               provNames.contains("TestRateProvider02"));
+                provNames.contains("TestRateProvider02"));
     }
 
 }

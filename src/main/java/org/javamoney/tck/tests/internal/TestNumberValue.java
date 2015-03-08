@@ -18,60 +18,60 @@ import java.util.Objects;
 /**
  * Created by Anatole on 26.04.2014.
  */
-public final class TestNumberValue extends NumberValue{
+public final class TestNumberValue extends NumberValue {
     private static final long serialVersionUID = 1L;
 
     private BigDecimal value;
 
-    public TestNumberValue(Number value){
+    public TestNumberValue(Number value) {
         Objects.requireNonNull(value);
         this.value = new BigDecimal(String.valueOf(value));
     }
 
     @Override
-    public long longValue(){
+    public long longValue() {
         return value.longValue();
     }
 
     @Override
-    public int intValue(){
+    public int intValue() {
         return value.intValue();
     }
 
     @Override
-    public float floatValue(){
+    public float floatValue() {
         return value.floatValue();
     }
 
     @Override
-    public double doubleValue(){
+    public double doubleValue() {
         return value.doubleValue();
     }
 
     @Override
-    public <T extends Number> T numberValueExact(Class<T> numberType){
+    public <T extends Number> T numberValueExact(Class<T> numberType) {
         return null;
     }
 
     @Override
-    public long getAmountFractionNumerator(){
+    public long getAmountFractionNumerator() {
         return 0;
     }
 
     @Override
-    public long getAmountFractionDenominator(){
+    public long getAmountFractionDenominator() {
         return 0;
     }
 
     @Override
-    public <T extends Number> T numberValue(Class<T> numberType){
-        if(numberType.equals(Integer.class)){
+    public <T extends Number> T numberValue(Class<T> numberType) {
+        if (numberType.equals(Integer.class)) {
             return (T) Integer.valueOf(value.intValue());
         }
-        if(numberType.equals(BigInteger.class)){
+        if (numberType.equals(BigInteger.class)) {
             return (T) BigInteger.valueOf(value.intValue());
         }
-        if(numberType.equals(BigDecimal.class)){
+        if (numberType.equals(BigDecimal.class)) {
             return (T) BigDecimal.valueOf(value.doubleValue());
         }
         throw new UnsupportedOperationException(numberType.getCanonicalName());
@@ -83,37 +83,37 @@ public final class TestNumberValue extends NumberValue{
     }
 
     @Override
-    public long longValueExact(){
+    public long longValueExact() {
         return value.longValue();
     }
 
     @Override
-    public int intValueExact(){
+    public int intValueExact() {
         return value.intValue();
     }
 
     @Override
-    public int getScale(){
+    public int getScale() {
         return value.scale();
     }
 
     @Override
-    public int getPrecision(){
+    public int getPrecision() {
         return value.precision();
     }
 
     @Override
-    public Class<?> getNumberType(){
+    public Class<?> getNumberType() {
         return BigDecimal.class;
     }
 
     @Override
-    public double doubleValueExact(){
+    public double doubleValueExact() {
         return value.doubleValue();
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.value.toString();
     }
 }

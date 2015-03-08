@@ -16,30 +16,30 @@ import javax.money.spi.MonetaryAmountFactoryProviderSpi;
 /**
  * Created by Anatole on 19.04.2014.
  */
-public final class TestMonetaryAmountFactoryProvider implements MonetaryAmountFactoryProviderSpi{
+public final class TestMonetaryAmountFactoryProvider implements MonetaryAmountFactoryProviderSpi {
 
     @Override
-    public QueryInclusionPolicy getQueryInclusionPolicy(){
+    public QueryInclusionPolicy getQueryInclusionPolicy() {
         return QueryInclusionPolicy.DIRECT_REFERENCE_ONLY;
     }
 
     @Override
-    public Class getAmountType(){
+    public Class getAmountType() {
         return TestAmount.class;
     }
 
     @Override
-    public MonetaryAmountFactory createMonetaryAmountFactory(){
+    public MonetaryAmountFactory createMonetaryAmountFactory() {
         return new TestMonetaryAmountBuilder();
     }
 
     @Override
-    public MonetaryContext getDefaultMonetaryContext(){
+    public MonetaryContext getDefaultMonetaryContext() {
         return TestAmount.MONETARY_CONTEXT;
     }
 
     @Override
-    public MonetaryContext getMaximalMonetaryContext(){
+    public MonetaryContext getMaximalMonetaryContext() {
         return TestAmount.MONETARY_CONTEXT;
     }
 }

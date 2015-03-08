@@ -13,24 +13,24 @@ import java.util.ServiceLoader;
 
 public final class TCKTestSetup {
 
-	private static JSR354TestConfiguration TEST_CONFIG = loadTestConfiguration();
+    private static JSR354TestConfiguration TEST_CONFIG = loadTestConfiguration();
 
-	private TCKTestSetup() {
-	}
+    private TCKTestSetup() {
+    }
 
-	private static JSR354TestConfiguration loadTestConfiguration() {
-		try {
-			return ServiceLoader.load(JSR354TestConfiguration.class).iterator()
-					.next();
-		} catch (Exception e) {
-			throw new IllegalStateException("No valid implementation of "
-						+ JSR354TestConfiguration.class.getName()
-						+ " is registered with the ServiceLoader.");
-		}
-	}
+    private static JSR354TestConfiguration loadTestConfiguration() {
+        try {
+            return ServiceLoader.load(JSR354TestConfiguration.class).iterator()
+                    .next();
+        } catch (Exception e) {
+            throw new IllegalStateException("No valid implementation of "
+                    + JSR354TestConfiguration.class.getName()
+                    + " is registered with the ServiceLoader.");
+        }
+    }
 
-	public static JSR354TestConfiguration getTestConfiguration() {
-		return TEST_CONFIG;
-	}
+    public static JSR354TestConfiguration getTestConfiguration() {
+        return TEST_CONFIG;
+    }
 
 }

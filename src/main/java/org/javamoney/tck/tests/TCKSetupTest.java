@@ -18,14 +18,14 @@ import org.testng.annotations.Test;
 import java.util.Collection;
 
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
-public class TCKSetupTest{
+public class TCKSetupTest {
 
     @SpecAssertion(
             section = "0",
             id = "Setup",
             note = "Tests that a TestConfiguration is registered with the JDK's ServiceLoader.")
     @Test(description = "TCK Setup: ensure TCK Configuration is registered and available.")
-    public void testTestSetup(){
+    public void testTestSetup() {
         AssertJUnit.assertTrue("TCK Configuration not available.", TCKTestSetup.getTestConfiguration() != null);
         AssertJUnit.assertNotNull(TCKTestSetup.getTestConfiguration());
     }
@@ -36,7 +36,7 @@ public class TCKSetupTest{
             note = "Checks that TestConfiguration.getAmountClasses() returns a non empty collection of amount " +
                     "implementations")
     @Test(description = "TChecks that MonetaryAmount classes are registered for testing.")
-    public void testTestAmountConfiguration(){
+    public void testTestAmountConfiguration() {
         Collection<Class> amountClasses = TCKTestSetup.getTestConfiguration().getAmountClasses();
         AssertJUnit.assertNotNull("TCK Test Configuration amount classes are null.", amountClasses);
         AssertJUnit.assertFalse("TCK Test Configuration amount classes is empty.", amountClasses.isEmpty());

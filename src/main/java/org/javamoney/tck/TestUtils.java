@@ -29,73 +29,71 @@ import java.util.Currency;
 import java.util.Random;
 
 
-public class TestUtils{
+public class TestUtils {
 
     private static final StringBuffer warnings = new StringBuffer();
 
-    private TestUtils(){
+    private TestUtils() {
 
     }
 
 
-    public static BigDecimal createNumberWithPrecision(MonetaryAmountFactory f, int precision){
-        if(precision == 0){
+    public static BigDecimal createNumberWithPrecision(MonetaryAmountFactory f, int precision) {
+        if (precision == 0) {
             precision = new Random().nextInt(100);
         }
         StringBuilder b = new StringBuilder(precision + 1);
-        for(int i = 0; i < precision; i++){
+        for (int i = 0; i < precision; i++) {
             b.append(String.valueOf(i % 10));
         }
         return new BigDecimal(b.toString(), MathContext.UNLIMITED);
     }
 
-    public static BigDecimal createNumberWithScale(MonetaryAmountFactory f, int scale){
+    public static BigDecimal createNumberWithScale(MonetaryAmountFactory f, int scale) {
         StringBuilder b = new StringBuilder(scale + 2);
         b.append("9.");
-        for(int i = 0; i < scale; i++){
+        for (int i = 0; i < scale; i++) {
             b.append(String.valueOf(i % 10));
         }
         return new BigDecimal(b.toString(), MathContext.UNLIMITED);
     }
 
 
-    public static void testSerializable(String section, Class c){
-        if(!Serializable.class.isAssignableFrom(c)){
+    public static void testSerializable(String section, Class c) {
+        if (!Serializable.class.isAssignableFrom(c)) {
             throw new TCKValidationException(section + ": Class must be serializable: " + c.getName());
         }
     }
 
-    public static void testImmutable(String section, Class c){
-        try{
+    public static void testImmutable(String section, Class c) {
+        try {
             MutabilityAssert.assertInstancesOf(c, MutabilityMatchers.areImmutable(), AllowedReason
-                                                       .provided(Currency.class, MonetaryAmount.class,
-                                                                 CurrencyUnit.class, NumberValue.class,
-                                                                 MonetaryOperator.class, MonetaryQuery.class)
-                                                       .areAlsoImmutable(), AllowedReason.allowingForSubclassing(),
-                                               AllowedReason.allowingNonFinalFields());
-        }
-        catch(Exception e){
+                            .provided(Currency.class, MonetaryAmount.class,
+                                    CurrencyUnit.class, NumberValue.class,
+                                    MonetaryOperator.class, MonetaryQuery.class)
+                            .areAlsoImmutable(), AllowedReason.allowingForSubclassing(),
+                    AllowedReason.allowingNonFinalFields());
+        } catch (Exception e) {
             throw new TCKValidationException(section + ": Class is not immutable: " + c.getName(), e);
         }
     }
 
-    public static void testSerializable(String section, Object o){
-        if(!(o instanceof Serializable)){
+    public static void testSerializable(String section, Object o) {
+        if (!(o instanceof Serializable)) {
             throw new TCKValidationException(section + ": Class must be serializable: " + o.getClass().getName());
         }
-        try(
-                ObjectOutputStream oos = new ObjectOutputStream(new ByteArrayOutputStream())){
+        try (
+                ObjectOutputStream oos = new ObjectOutputStream(new ByteArrayOutputStream())) {
             oos.writeObject(o);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw new TCKValidationException(
                     "Class must be serializable, but serialization failed: " + o.getClass().getName(), e);
         }
     }
 
-    public static void testImplementsInterface(String section, Class type, Class iface){
-        for(Class ifa : type.getInterfaces()){
-            if(ifa.equals(iface)){
+    public static void testImplementsInterface(String section, Class type, Class iface) {
+        for (Class ifa : type.getInterfaces()) {
+            if (ifa.equals(iface)) {
                 return;
             }
         }
@@ -103,14 +101,14 @@ public class TestUtils{
     }
 
     public static void testHasPublicMethod(String section, Class type, Class returnType, String name,
-                                           Class... paramTypes){
+                                           Class... paramTypes) {
         Class current = type;
-        while(current != null){
-            for(Method m : current.getDeclaredMethods()){
-                if(returnType.equals(returnType) &&
+        while (current != null) {
+            for (Method m : current.getDeclaredMethods()) {
+                if (returnType.equals(returnType) &&
                         m.getName().equals(name) &&
                         ((m.getModifiers() & Modifier.PUBLIC) != 0) &&
-                        Arrays.equals(m.getParameterTypes(), paramTypes)){
+                        Arrays.equals(m.getParameterTypes(), paramTypes)) {
                     return;
                 }
             }
@@ -122,15 +120,15 @@ public class TestUtils{
     }
 
     public static void testHasPublicStaticMethod(String section, Class type, Class returnType, String name,
-                                                 Class... paramTypes){
+                                                 Class... paramTypes) {
         Class current = type;
-        while(current != null){
-            for(Method m : current.getDeclaredMethods()){
-                if(returnType.equals(returnType) &&
+        while (current != null) {
+            for (Method m : current.getDeclaredMethods()) {
+                if (returnType.equals(returnType) &&
                         m.getName().equals(name) &&
                         ((m.getModifiers() & Modifier.PUBLIC) != 0) &&
                         ((m.getModifiers() & Modifier.STATIC) != 0) &&
-                        Arrays.equals(m.getParameterTypes(), paramTypes)){
+                        Arrays.equals(m.getParameterTypes(), paramTypes)) {
                     return;
                 }
             }
@@ -142,13 +140,13 @@ public class TestUtils{
     }
 
     public static void testHasNotPublicMethod(String section, Class type, Class returnType, String name,
-                                              Class... paramTypes){
+                                              Class... paramTypes) {
         Class current = type;
-        while(current != null){
-            for(Method m : current.getDeclaredMethods()){
-                if(returnType.equals(returnType) &&
+        while (current != null) {
+            for (Method m : current.getDeclaredMethods()) {
+                if (returnType.equals(returnType) &&
                         m.getName().equals(name) &&
-                        Arrays.equals(m.getParameterTypes(), paramTypes)){
+                        Arrays.equals(m.getParameterTypes(), paramTypes)) {
                     throw new TCKValidationException(
                             section + ": Class must NOT implement method " + name + '(' + Arrays.toString(paramTypes) +
                                     "): " + returnType.getName() + ", but does: " + type.getName());
@@ -158,36 +156,34 @@ public class TestUtils{
         }
     }
 
-    public static void testComparable(String section, Class type){
+    public static void testComparable(String section, Class type) {
         testImplementsInterface(section, type, Comparable.class);
     }
 
     public static void assertValue(String section, Object value, String methodName, Object instance)
             throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException{
+            InvocationTargetException {
         Method m = instance.getClass().getDeclaredMethod(methodName);
         Assert.assertEquals(section + ": " + m.getName() + '(' + instance + ") returned invalid value:", value,
-                            m.invoke(instance));
+                m.invoke(instance));
     }
 
-    public static boolean testImmutableOpt(String section, Class type){
-        try{
+    public static boolean testImmutableOpt(String section, Class type) {
+        try {
             testImmutable(section, type);
             return true;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             warnings.append(section).append(": Recommendation failed: Class should be immutable: ")
                     .append(type.getName()).append(", details: ").append(e.getMessage()).append("\n");
             return false;
         }
     }
 
-    public static boolean testSerializableOpt(String section, Class type){
-        try{
+    public static boolean testSerializableOpt(String section, Class type) {
+        try {
             testSerializable(section, type);
             return true;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             warnings.append(section).append(": Recommendation failed: Class should be serializable: ")
                     .append(type.getName()).append(", details: ").append(e.getMessage()).append("\n");
             return false;
@@ -195,12 +191,11 @@ public class TestUtils{
     }
 
     public static boolean testHasPublicStaticMethodOpt(String section, Class type, Class returnType, String methodName,
-                                                       Class... paramTypes){
-        try{
+                                                       Class... paramTypes) {
+        try {
             testHasPublicStaticMethod(section, type, returnType, methodName, paramTypes);
             return true;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             warnings.append(section).append(": Recommendation failed: Missing method [public static ")
                     .append(methodName).append('(').append(Arrays.toString(paramTypes)).append("):")
                     .append(returnType.getName()).append("] on: ").append(type.getName()).append("\n");
@@ -208,12 +203,11 @@ public class TestUtils{
         }
     }
 
-    public static boolean testSerializableOpt(String section, Object instance){
-        try{
+    public static boolean testSerializableOpt(String section, Object instance) {
+        try {
             testSerializable(section, instance);
             return true;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             warnings.append(section)
                     .append(": Recommendation failed: Class is serializable, but serialization failed: ")
                     .append(instance.getClass().getName()).append("\n");
@@ -221,40 +215,38 @@ public class TestUtils{
         }
     }
 
-    public static void resetWarnings(){
+    public static void resetWarnings() {
         warnings.setLength(0);
     }
 
-    public static String getWarnings(){
+    public static String getWarnings() {
         return warnings.toString();
     }
 
-    public static MonetaryAmount createAmountWithScale(int scale){
+    public static MonetaryAmount createAmountWithScale(int scale) {
         MonetaryAmountFactoryQuery tgtContext = MonetaryAmountFactoryQueryBuilder.of().setMaxScale(scale).build();
         MonetaryAmountFactory<?> exceedingFactory;
-        try{
+        try {
             exceedingFactory = MonetaryAmounts.getAmountFactory(tgtContext);
             AssertJUnit.assertNotNull(exceedingFactory);
             MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
                     MonetaryAmounts.getAmountFactory(exceedingFactory.getAmountType());
             return bigFactory.setCurrency("CHF").setNumber(createNumberWithScale(bigFactory, scale)).create();
-        }
-        catch(MonetaryException e){
+        } catch (MonetaryException e) {
             return null;
         }
     }
 
-    public static MonetaryAmount createAmountWithPrecision(int precision){
+    public static MonetaryAmount createAmountWithPrecision(int precision) {
         MonetaryAmountFactoryQuery tgtContext = MonetaryAmountFactoryQueryBuilder.of().setPrecision(precision).build();
         MonetaryAmountFactory<?> exceedingFactory;
-        try{
+        try {
             exceedingFactory = MonetaryAmounts.getAmountFactory(tgtContext);
             AssertJUnit.assertNotNull(exceedingFactory);
             MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
                     MonetaryAmounts.getAmountFactory(exceedingFactory.getAmountType());
             return bigFactory.setCurrency("CHF").setNumber(createNumberWithPrecision(bigFactory, precision)).create();
-        }
-        catch(MonetaryException e){
+        } catch (MonetaryException e) {
             return null;
         }
     }

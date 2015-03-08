@@ -34,8 +34,8 @@ import java.util.List;
  * Main class for executing the JSR 354 TCK.
  * Created by Anatole on 12.06.2014.
  */
-public class TCKRunner extends XmlSuite{
-    public TCKRunner(){
+public class TCKRunner extends XmlSuite {
+    public TCKRunner() {
         setName("JSR354-TCK 1.0");
         XmlTest test = new XmlTest(this);
         test.setName("TCK/Test Setup");
@@ -55,7 +55,7 @@ public class TCKRunner extends XmlSuite{
         test.setXmlClasses(classes);
     }
 
-    public static void main(String... args){
+    public static void main(String... args) {
         System.out.println("-- JSR 354 TCK started --");
         List<XmlSuite> suites = new ArrayList<>();
         suites.add(new TCKRunner());
@@ -72,7 +72,7 @@ public class TCKRunner extends XmlSuite{
         System.out.println("-- JSR 354 TCK finished --");
     }
 
-    public static final class TCKReporter extends TestListenerAdapter{
+    public static final class TCKReporter extends TestListenerAdapter {
         private int count = 0;
         private int skipped = 0;
         private int failed = 0;
@@ -81,101 +81,92 @@ public class TCKRunner extends XmlSuite{
         private StringWriter internalBuffer = new StringWriter(3000);
         private FileWriter w;
 
-        public TCKReporter(File file){
-            try{
-                if(!file.exists()){
+        public TCKReporter(File file) {
+            try {
+                if (!file.exists()) {
                     file.createNewFile();
                 }
                 w = new FileWriter(file);
                 w.write("*****************************************************************************************\n");
                 w.write("**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.0\n");
                 w.write("*****************************************************************************************\n\n");
-                w.write("Executed on " + new java.util.Date() +"\n\n" );
+                w.write("Executed on " + new java.util.Date() + "\n\n");
 
                 // System.out:
                 internalBuffer.write("*****************************************************************************************\n");
                 internalBuffer.write("**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.0\n");
                 internalBuffer.write("*****************************************************************************************\n\n");
                 internalBuffer.write("Executed on " + new java.util.Date() + "\n\n");
-            }
-            catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
                 System.exit(-1);
             }
         }
 
         @Override
-        public void onTestFailure(ITestResult tr){
+        public void onTestFailure(ITestResult tr) {
             failed++;
-            String location = tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName();
-            try{
+            String location = tr.getTestClass().getRealClass().getSimpleName() + '#' + tr.getMethod().getMethodName();
+            try {
                 Method realTestMethod = tr.getMethod().getMethod();
                 Test testAnnot = realTestMethod.getAnnotation(Test.class);
-                if(testAnnot!=null && testAnnot.description()!=null && !testAnnot.description().isEmpty()){
-                    if(tr.getThrowable()!=null){
+                if (testAnnot != null && testAnnot.description() != null && !testAnnot.description().isEmpty()) {
+                    if (tr.getThrowable() != null) {
                         StringWriter sw = new StringWriter();
                         PrintWriter w = new PrintWriter(sw);
                         tr.getThrowable().printStackTrace(w);
                         w.flush();
-                        log("[FAILED]  " + testAnnot.description() + "("+location+"):\n"+sw.toString());
+                        log("[FAILED]  " + testAnnot.description() + "(" + location + "):\n" + sw.toString());
+                    } else {
+                        log("[FAILED]  " + testAnnot.description() + "(" + location + ")");
                     }
-                    else{
-                        log("[FAILED]  " + testAnnot.description()+ "("+location+")");
-                    }
-                }
-                else{
+                } else {
 
-                    if(tr.getThrowable()!=null){
+                    if (tr.getThrowable() != null) {
                         StringWriter sw = new StringWriter();
                         PrintWriter w = new PrintWriter(sw);
                         tr.getThrowable().printStackTrace(w);
                         w.flush();
-                        log("[FAILED]  " + location + ":\n"+sw.toString());
-                    }
-                    else{
+                        log("[FAILED]  " + location + ":\n" + sw.toString());
+                    } else {
                         log("[FAILED]  " + location);
                     }
                 }
-            }
-            catch(IOException e){
+            } catch (IOException e) {
                 throw new IllegalStateException("IO Error", e);
             }
         }
 
         @Override
-        public void onTestSkipped(ITestResult tr){
+        public void onTestSkipped(ITestResult tr) {
             skipped++;
-            String location = tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName();
-            try{
+            String location = tr.getTestClass().getRealClass().getSimpleName() + '#' + tr.getMethod().getMethodName();
+            try {
                 Method realTestMethod = tr.getMethod().getMethod();
                 Test specAssert = realTestMethod.getAnnotation(Test.class);
-                if(specAssert!=null && specAssert.description()!=null && !specAssert.description().isEmpty()){
-                    log("[SKIPPED] " + specAssert.description()+ "("+location+")");
-                }
-                else{
+                if (specAssert != null && specAssert.description() != null && !specAssert.description().isEmpty()) {
+                    log("[SKIPPED] " + specAssert.description() + "(" + location + ")");
+                } else {
                     log("[SKIPPED] " + location);
                 }
-            }
-            catch(IOException e){
+            } catch (IOException e) {
                 throw new IllegalStateException("IO Error", e);
             }
         }
 
         @Override
-        public void onTestSuccess(ITestResult tr){
+        public void onTestSuccess(ITestResult tr) {
             success++;
-            String location = tr.getTestClass().getRealClass().getSimpleName()+'#'+tr.getMethod().getMethodName();
-            try{
+            String location = tr.getTestClass().getRealClass().getSimpleName() + '#' + tr.getMethod().getMethodName();
+            try {
                 Method realTestMethod = tr.getMethod().getMethod();
                 Test specAssert = realTestMethod.getAnnotation(Test.class);
-                if(specAssert!=null && specAssert.description()!=null && !specAssert.description().isEmpty()){
-                    log("[SUCCESS] " + specAssert.description()+ "("+location+")");
-                }
-                else{
+                if (specAssert != null && specAssert.description() != null && !specAssert.description().isEmpty()) {
+                    log("[SUCCESS] " + specAssert.description() + "(" + location + ")");
+                } else {
                     log("[SUCCESS] " + location);
                 }
-            }
-            catch(IOException e){
+            } catch (IOException e) {
                 throw new IllegalStateException("IO Error", e);
             }
         }
@@ -188,8 +179,8 @@ public class TCKRunner extends XmlSuite{
             internalBuffer.write('\n');
         }
 
-        public void writeSummary(){
-            try{
+        public void writeSummary() {
+            try {
                 log("\nJSR 354 TCP version 1.0 Summary");
                 log("-------------------------------");
                 log("\nTOTAL TESTS EXECUTED : " + count);
@@ -201,8 +192,7 @@ public class TCKRunner extends XmlSuite{
                 internalBuffer.flush();
                 System.out.println();
                 System.out.println(internalBuffer);
-            }
-            catch(IOException e){
+            } catch (IOException e) {
                 throw new IllegalStateException("IO Error", e);
             }
         }

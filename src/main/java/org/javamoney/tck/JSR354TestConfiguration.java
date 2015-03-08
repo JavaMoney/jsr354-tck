@@ -22,7 +22,7 @@ import java.util.ServiceLoader;
  *
  * @author Anatole Tresch
  */
-public interface JSR354TestConfiguration{
+public interface JSR354TestConfiguration {
 
     /**
      * Return a collection with all {@link MonetaryAmount} classes that are implemented. The list
