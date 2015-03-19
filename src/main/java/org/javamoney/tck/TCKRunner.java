@@ -15,12 +15,10 @@ import org.javamoney.tck.tests.conversion.ExchangeRatesAndRateProvidersTest;
 import org.javamoney.tck.tests.conversion.MonetaryConversionsTest;
 import org.javamoney.tck.tests.conversion.ProviderChainsTest;
 import org.javamoney.tck.tests.format.FormattingMonetaryAmountsTest;
-import org.jboss.test.audit.annotations.SpecAssertion;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 import org.testng.annotations.Test;
-import org.testng.reporters.VerboseReporter;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
@@ -181,7 +179,7 @@ public class TCKRunner extends XmlSuite {
 
         public void writeSummary() {
             try {
-                log("\nJSR 354 TCP version 1.0 Summary");
+                log("\nJSR 354 TCK version 1.0 Summary");
                 log("-------------------------------");
                 log("\nTOTAL TESTS EXECUTED : " + count);
                 log("TOTAL TESTS SKIPPED  : " + skipped);

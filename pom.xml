@@ -254,6 +254,17 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
+                <groupId>org.javamoney</groupId>
+                <artifactId>javamoney-tck-java7</artifactId>
+                <version>1.0-RC3</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>money-api-java7</artifactId>
+                        <groupId>javax.money</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
                 <groupId>javax.money</groupId>
                 <artifactId>money-api</artifactId>
                 <version>${jsr.version}</version>
@@ -296,6 +307,10 @@
         <dependency>
             <groupId>javax.money</groupId>
             <artifactId>money-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.javamoney</groupId>
+            <artifactId>javamoney-tck-java7</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>

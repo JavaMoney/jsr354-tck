@@ -55,8 +55,23 @@ JSR's mailto:atsticks@java.net[spec lead].
 Downloading and Installing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Basically the JSR 354 API as well as the TCK and its dependencies are available as maven artifacts. Additionally you
-should of course also include the implementation to test:
+Basically the JSR 354 API as well as the TCK and its dependencies are available as maven artifacts.
+Hereby JSR 354 defines a Java 7 based API, which comprises almost all functionality that but
+also comes with a Java 8 API, which adds Java 8 related additional features and several default
+methods that makes developer's life easier:
+
+* +javax.money:money-api:<version>:jar+ contains the full Java 8 based API
+* +javax.money:money-api-java7:<version>:jar+ contains the Java 7 compatible subset of the
+ API.
+* +org.javamoney:moneta:<version>:jar+ contains the Java 8 compatible reference implementation (RI)
+* +org.javamoney:moneta-java7:<version>:jar+ contains the Java 7 compatible reference implementation (RI)
+* +org.javamoney:money-tck:<version>:jar+ contains the Java 8 compatible technological compatibility kit (TCK)
+* +org.javamoney:money-tck-java7:<version>:jar+ contains the Java 7 compatible technological compatibility kit (TCK)
+
+This is also reflected in the TCK structure and output. The Java7 based TCK basically tests almost all features
+of the JSR. The Java 8 based version effectively is the same test code running. The only different is the test
+wrapper that produces slightly difference so from the test output it is always clear which TCK you were
+running. Additionally this module comes, of course, with the right dependency (to the Java 8 version of the API).
 
 [source, xml]
 .Required Dependencies
