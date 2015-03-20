@@ -40,7 +40,7 @@
         <license>
             <name>Apache 2 License</name>
             <comments>Spec</comments>
-            <url>LICENSE.html</url>
+            <url>LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
@@ -56,9 +56,6 @@
         <basedir>.</basedir>
         <testng.version>6.8.5</testng.version>
         <jboss.test.audit.version>1.1.0.Final</jboss.test.audit.version>
-
-        <license.licenseName>jcp_spec</license.licenseName>
-        <license.licenseResolver>src/license</license.licenseResolver>
     </properties>
 
     <developers>
@@ -228,20 +225,15 @@
     </scm>
 
     <distributionManagement>
-        <site>
-            <id>javamoney.java.net-site</id>
-            <url>scm:svn:https://svn.java.net/svn/javamoney-maven-site</url>
-            <name>Java Net Public SVN Site Repository</name>
-        </site>
         <repository>
-            <id>sonatype-nexus-staging</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-            <name>Nexus Release Repository</name>
+            <id>bintray</id>
+            <name>oss-jfrog-artifactory-snapshots</name>
+            <url>https://oss.jfrog.org/artifactory/oss-release-local</url>
         </repository>
         <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <name>Sonatype Nexus Snapshots</name>
+            <id>bintray</id>
+            <name>oss-jfrog-artifactory-snapshots</name>
+            <url>https://oss.jfrog.org/artifactory/oss-snapshot-local</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -255,11 +247,11 @@
             </dependency>
             <dependency>
                 <groupId>org.javamoney</groupId>
-                <artifactId>javamoney-tck-java7</artifactId>
-                <version>1.0-RC3</version>
+                <artifactId>javamoney-tck-bp</artifactId>
+                <version>1.0-SNAPSHOT</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>money-api-java7</artifactId>
+                        <artifactId>money-api-bp</artifactId>
                         <groupId>javax.money</groupId>
                     </exclusion>
                 </exclusions>
@@ -310,7 +302,7 @@
         </dependency>
         <dependency>
             <groupId>org.javamoney</groupId>
-            <artifactId>javamoney-tck-java7</artifactId>
+            <artifactId>javamoney-tck-bp</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
@@ -455,6 +447,33 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>libs-release</name>
+            <url>http://oss.jfrog.org/artifactory/libs-release</url>
+        </repository>
+        <repository>
+            <snapshots />
+            <id>snapshots</id>
+            <name>libs-snapshot</name>
+            <url>http://oss.jfrog.org/artifactory/libs-snapshot</url>
+        </repository>
+        <repository>
+            <id>jboss-maven2-brew</id>
+            <name>JBoss Maven 2 Brew Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>jboss-maven2-snapshots</id>
+            <name>JBoss Maven 2 Brew Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+
     <profiles>
         <profile>
             <id>audit</id>
@@ -546,73 +565,6 @@
                 </plugins>
             </build>
         </profile>
-
-        <profile>
-            <id>license</id>
-            <activation>
-                <property>
-                    <name>license</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <pluginManagement>
-                <plugins>
-                        <!-- ======================================================= -->
-                        <!-- License -->
-                        <!-- ======================================================= -->
-                        <plugin>
-                            <groupId>com.google.code.maven-license-plugin</groupId>
-                            <artifactId>maven-license-plugin</artifactId>
-                            <version>1.4.0</version>
-                            <configuration>
-                                <basedir>${basedir}</basedir>
-                                <header>${basedir}/src/etc/header.txt</header>
-                                <quiet>false</quiet>
-                                <failIfMissing>true</failIfMissing>
-                                <aggregate>false</aggregate>
-                                <encoding>UTF-8</encoding>
-                                <excludes>
-                                    <exclude>target/**</exclude>
-                                    <exclude>LICENSE*.txt</exclude>
-                                    <exclude>README.*</exclude>
-                                    <exclude>checkstyle*.*</exclude>
-                                    <exclude>*.css</exclude>
-                                </excludes>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-                <plugins>
-                    <plugin>
-                        <groupId>com.google.code.maven-license-plugin</groupId>
-                        <artifactId>maven-license-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>format</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
-
-
-    <repositories>
-        <repository>
-            <id>jboss-maven2-brew</id>
-            <name>JBoss Maven 2 Brew Repository</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
-        </repository>
-        <repository>
-            <id>jboss-maven2-snapshots</id>
-            <name>JBoss Maven 2 Brew Repository</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-    </repositories>
 
 </project>
