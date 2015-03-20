@@ -10,11 +10,11 @@ The current module contains the technical compatibility kit of JSR 354.
 To setup the TCK with your implementation you must follow the following steps:
 
 1) Create a new maven project.
-2) Add this TCK and your implementation as dependency.
+2) Add this TCK, the target API (Java 7 or 8) and your implementation as dependency.
 3) Implement a class of type org.javamoney.tck.TestSetup, read the Javadoc, what 
   you must provide with this class.
   
-To execute the TCK, simply execute
+4) To execute the TCK, simply execute
   
     mvn clean test site
        

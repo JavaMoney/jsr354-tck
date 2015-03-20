@@ -57,23 +57,17 @@ Downloading and Installing
 
 Basically the JSR 354 API as well as the TCK and its dependencies are available as maven artifacts.
 Hereby JSR 354 defines a Java 7 based API, which comprises almost all functionality that but
-also comes with a Java 8 API, which adds Java 8 related additional features and several default
-methods that makes developer's life easier:
+also comes with a Java 8 API, which adds Java 8 related additional features (default
+methods that makes developer's life easier):
 
 * +javax.money:money-api:<version>:jar+ contains the full Java 8 based API
-* +javax.money:money-api-java7:<version>:jar+ contains the Java 7 compatible subset of the
- API.
+* +javax.money:money-api-bp:<version>:jar+ contains the Java SE pre8 compatible API.
 * +org.javamoney:moneta:<version>:jar+ contains the Java 8 compatible reference implementation (RI)
-* +org.javamoney:moneta-java7:<version>:jar+ contains the Java 7 compatible reference implementation (RI)
-* +org.javamoney:money-tck:<version>:jar+ contains the Java 8 compatible technological compatibility kit (TCK)
-* +org.javamoney:money-tck-java7:<version>:jar+ contains the Java 7 compatible technological compatibility kit (TCK)
+* +org.javamoney:moneta-bp:<version>:jar+ contains the Java SE pre8 compatible reference implementation (RI)
+* +org.javamoney:money-tck:<version>:jar+ contains the technological compatibility kit (TCK), built against
+  the Java 7 API, which is compatible with the Java 8 version.
 
-This is also reflected in the TCK structure and output. The Java7 based TCK basically tests almost all features
-of the JSR. The Java 8 based version basically only adds support for specific Java 8 related aspects and
-ensures that Java8 based implementation are backward compatible with Java7 based implementations as
-well.
-
-Additionally you should of course also include the implementation to test:
+Summarizing you should add the following dependencies:
 
 [source, xml]
 .Required Dependencies
@@ -93,6 +87,13 @@ Additionally you should of course also include the implementation to test:
     <artifactId>${impl.artifactId}</artifactId>
     <type>${impl.packageType}</type>
     <version>${impl.version}</version>
+</dependency>
+<dependency>
+    <groupId>javax.money</groupId>
+    <artifactId>money-api</artifactId>
+    <!-- Java 7: artifactId>money-api-bp</artifactId -->
+    <type>jar</type>
+    <version>${api.version}</version>
 </dependency>
 ---------------------------------------------------------------------------------------
 
@@ -266,7 +267,7 @@ Total tests run: 219, Failures: 0, Skips: 0
 
 
 *****************************************************************************************
-**** JSR 354 - Money & Currency, Technical Compatibility Kit - Java 7, version 1.0
+**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.0
 *****************************************************************************************
 
 Executed on Sun Aug 24 00:38:44 CEST 2014
@@ -491,7 +492,7 @@ Executed on Sun Aug 24 00:38:44 CEST 2014
 [SUCCESS] 4.4.1 Test formats and parses (round-trip) any supported amount type for each supported Locale.(FormattingMonetaryAmountsTest#testParseIsIndependentOfImplementation)
 [SUCCESS] 4.4.1 Test formats and parses (round-trip) any supported amount type for each supported Locale, checks results for different currencies(FormattingMonetaryAmountsTest#testParseWithDifferentCurrencies)
 
-JSR 354 TCK - Java 7, version 1.0 Summary
+JSR 354 TCK, version 1.0 Summary
 ------------------------------------------
 
 TOTAL TESTS EXECUTED : 221
@@ -499,7 +500,7 @@ TOTAL TESTS SKIPPED  : 0
 TOTAL TESTS SUCCESS  : 219
 TOTAL TESTS FAILED   : 0
 
--- JSR 354 TCK Java 7 finished --
+-- JSR 354 TCK finished --
 
 ===============================================
 Custom suite
