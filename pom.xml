@@ -25,11 +25,13 @@
 
     <version>1.0-SNAPSHOT</version>
 
-    <name>JSR 354 (TCK)</name>
+    <name>JSR 354 (TCK) - Tests</name>
     <url>http://java.net/projects/javamoney</url>
     <inceptionYear>2012</inceptionYear>
     <description>JSR 354 provides an API for representing, transporting, and performing comprehensive calculations with
-        Money and Currency. This module implements JSR 354.
+        Money and Currency. This module implements JSR 354. This module provides the test code that is compatible
+        with the Java 7 and the Java 8 based API. The targeted API must be provided as well as the implementation
+        under test to execute this TCK.
     </description>
 
     <organization>
@@ -47,7 +49,7 @@
 
     <properties>
         <jsr.version>1.0-RC3</jsr.version>
-        <jdkVersion>1.8</jdkVersion>
+        <jdkVersion>1.7</jdkVersion>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -246,20 +248,10 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>org.javamoney</groupId>
-                <artifactId>javamoney-tck-bp</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>money-api-bp</artifactId>
-                        <groupId>javax.money</groupId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
                 <groupId>javax.money</groupId>
-                <artifactId>money-api</artifactId>
+                <artifactId>money-api-java7</artifactId>
                 <version>${jsr.version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -298,11 +290,7 @@
         </dependency>
         <dependency>
             <groupId>javax.money</groupId>
-            <artifactId>money-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.javamoney</groupId>
-            <artifactId>javamoney-tck-bp</artifactId>
+            <artifactId>money-api-java7</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
@@ -311,7 +299,7 @@
         </dependency>
         <dependency>
             <groupId>org.javamoney</groupId>
-            <artifactId>moneta</artifactId>
+            <artifactId>moneta-java7</artifactId>
             <version>${jsr.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -379,9 +367,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <testClassesDirectory>${build.directory}/classes</testClassesDirectory>
+                    <testClassesDirectory>${project.build.directory}/classes</testClassesDirectory>
                     <additionalClasspathElements>
-                        <additionalClasspathElement>${build.directory}/test-classes</additionalClasspathElement>
+                        <additionalClasspathElement>${project.build.directory}/test-classes</additionalClasspathElement>
                     </additionalClasspathElements>
                 </configuration>
             </plugin>
@@ -457,7 +445,7 @@
             <url>http://oss.jfrog.org/artifactory/libs-release</url>
         </repository>
         <repository>
-            <snapshots />
+            <snapshots/>
             <id>snapshots</id>
             <name>libs-snapshot</name>
             <url>http://oss.jfrog.org/artifactory/libs-snapshot</url>
@@ -474,6 +462,7 @@
         </repository>
     </repositories>
 
+
     <profiles>
         <profile>
             <id>audit</id>
@@ -485,7 +474,7 @@
             </activation>
             <build>
                 <pluginManagement>
-                <plugins>
+                    <plugins>
                         <plugin>
                             <groupId>org.bsc.maven</groupId>
                             <artifactId>maven-processor-plugin</artifactId>
@@ -568,7 +557,7 @@
             </activation>
             <build>
                 <pluginManagement>
-                <plugins>
+                    <plugins>
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-gpg-plugin</artifactId>
@@ -578,10 +567,6 @@
                 </pluginManagement>
                 <plugins>
                     <plugin>
-                        <!-- Usage: mvn clean deploy -Dgpg.passphrase=yourpassphrase ; Or sign
-                            already deployed artifact: mvn gpg:sign-and-deploy-file -DpomFile=target/myapp-1.0.pom
-                            -Dfile=target/myapp-1.0.jar -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/
-                            -DrepositoryId=sonatype-nexus-staging -->
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>1.4</version>

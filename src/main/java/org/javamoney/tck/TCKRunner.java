@@ -34,9 +34,9 @@ import java.util.List;
  */
 public class TCKRunner extends XmlSuite {
     public TCKRunner() {
-        setName("JSR354-TCK 1.0");
+        setName("JSR354-TCK, version 1.0");
         XmlTest test = new XmlTest(this);
-        test.setName("TCK/Test Setup");
+        test.setName("TCK/Test Setup - Java 7");
         List<XmlClass> classes = new ArrayList<>();
         classes.add(new XmlClass(TCKTestSetup.class));
         classes.add(new XmlClass(ModellingCurrenciesTest.class));
@@ -56,7 +56,7 @@ public class TCKRunner extends XmlSuite {
     public static void main(String... args) {
         System.out.println("-- JSR 354 TCK started --");
         List<XmlSuite> suites = new ArrayList<>();
-        suites.add(new TCKRunner());
+        suites.add(new TCKRunnerJava7());
         TestNG tng = new TestNG();
         tng.setXmlSuites(suites);
         tng.setOutputDirectory("./tck-results");
@@ -67,7 +67,7 @@ public class TCKRunner extends XmlSuite {
         tng.addListener(rep);
         tng.run();
         rep.writeSummary();
-        System.out.println("-- JSR 354 TCK finished --");
+        System.out.println("-- JSR 354 TCK  finished --");
     }
 
     public static final class TCKReporter extends TestListenerAdapter {
@@ -85,15 +85,15 @@ public class TCKRunner extends XmlSuite {
                     file.createNewFile();
                 }
                 w = new FileWriter(file);
-                w.write("*****************************************************************************************\n");
+                w.write("********************************************************************************************\n");
                 w.write("**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.0\n");
-                w.write("*****************************************************************************************\n\n");
+                w.write("********************************************************************************************\n\n");
                 w.write("Executed on " + new java.util.Date() + "\n\n");
 
                 // System.out:
-                internalBuffer.write("*****************************************************************************************\n");
-                internalBuffer.write("**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.0\n");
-                internalBuffer.write("*****************************************************************************************\n\n");
+                internalBuffer.write("********************************************************************************\n");
+                internalBuffer.write("**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.0.\n");
+                internalBuffer.write("********************************************************************************\n\n");
                 internalBuffer.write("Executed on " + new java.util.Date() + "\n\n");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -179,8 +179,8 @@ public class TCKRunner extends XmlSuite {
 
         public void writeSummary() {
             try {
-                log("\nJSR 354 TCK version 1.0 Summary");
-                log("-------------------------------");
+                log("\nJSR 354 TCK, version 1.0 Summary");
+                log("------------------------------------------");
                 log("\nTOTAL TESTS EXECUTED : " + count);
                 log("TOTAL TESTS SKIPPED  : " + skipped);
                 log("TOTAL TESTS SUCCESS  : " + success);

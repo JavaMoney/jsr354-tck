@@ -1,6 +1,6 @@
-package org.javamoney;
+package org.javamoney.tck;
 
-import org.javamoney.tck.TCKRunner;
+import org.javamoney.tck.TCKRunnerJava7;
 import org.testng.annotations.Test;
 
 /**
@@ -10,6 +10,6 @@ public class TCKRunnerTest {
 
     @Test
     public static void testTCKRunner() {
-        TCKRunner.main(new String[]{TCKRunner.class.getName()});
+        TCKRunnerJava7.main(new String[]{TCKRunnerJava7.class.getName()});
     }
 }

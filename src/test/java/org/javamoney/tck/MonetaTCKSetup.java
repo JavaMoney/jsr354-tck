@@ -7,37 +7,39 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License. Contributors: Anatole Tresch - initial version.
  */
-package org.javamoney;
+package org.javamoney.tck;
 
 import org.javamoney.moneta.FastMoney;
-import org.javamoney.moneta.function.MonetaryFunctions;
+import org.javamoney.moneta.Money;
 import org.javamoney.moneta.function.MonetaryUtil;
 import org.javamoney.tck.JSR354TestConfiguration;
 
 import javax.money.MonetaryOperator;
 import javax.money.MonetaryRoundings;
 import javax.money.convert.MonetaryConversions;
-
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Anatole on 14.06.2014.
  */
-public final class MonetaTCKSetup implements JSR354TestConfiguration{
+public final class MonetaTCKSetup implements JSR354TestConfiguration {
 
     @Override
     public Collection<Class> getAmountClasses() {
             return Arrays
-                    .asList(new Class[]{FastMoney.class,FastMoney.class});
+                    .asList(new Class[]{Money.class, FastMoney.class});
     }
 
     @Override
     public Collection<Class> getCurrencyClasses() {
         try{
             return Arrays
-                    .asList(new Class[] { Class.forName("org.javamoney.moneta.internal.JDKCurrencyAdapter")});
+                    .asList(new Class[]{Class.forName("org.javamoney.moneta.internal.JDKCurrencyAdapter")});
         }
         catch(ClassNotFoundException e){
             e.printStackTrace();

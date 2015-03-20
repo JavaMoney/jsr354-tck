@@ -69,9 +69,11 @@ methods that makes developer's life easier:
 * +org.javamoney:money-tck-java7:<version>:jar+ contains the Java 7 compatible technological compatibility kit (TCK)
 
 This is also reflected in the TCK structure and output. The Java7 based TCK basically tests almost all features
-of the JSR. The Java 8 based version effectively is the same test code running. The only different is the test
-wrapper that produces slightly difference so from the test output it is always clear which TCK you were
-running. Additionally this module comes, of course, with the right dependency (to the Java 8 version of the API).
+of the JSR. The Java 8 based version basically only adds support for specific Java 8 related aspects and
+ensures that Java8 based implementation are backward compatible with Java7 based implementations as
+well.
+
+Additionally you should of course also include the implementation to test:
 
 [source, xml]
 .Required Dependencies
@@ -120,13 +122,13 @@ This can be achieved in different ways:
 
 * The most easiest way to run the tests is to create a small maven project, where you add the JSR 354 API, your
 implementation and the TCK as dependency. The only thing to be done is executing the test suite by running
-+org.javamoney.tck.TCKRunner.main+.
++org.javamoney.tck.TCKRunnerJava7.main+.
 * Or you can execute the TCK by starting it on the console:
 
 [source, listing]
 .Running the TCK
 ---------------------------------------------------------------------------------------
-java -cp ... org.javamoney.tck.TCKRunner
+java -cp ... org.javamoney.tck.TCKRunnerJava7
 ---------------------------------------------------------------------------------------
 
 The org.javamoney.tck.JSR354TestConfiguration Interface
@@ -258,13 +260,13 @@ following an example output from testing the reference implementation:
 ... (Basic Trace Output)
 
 ===============================================
-JSR354-TCK 1.0
+JSR354-TCK - Commons, version 1.0
 Total tests run: 219, Failures: 0, Skips: 0
 ===============================================
 
 
 *****************************************************************************************
-**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.0
+**** JSR 354 - Money & Currency, Technical Compatibility Kit - Java 7, version 1.0
 *****************************************************************************************
 
 Executed on Sun Aug 24 00:38:44 CEST 2014
@@ -380,7 +382,7 @@ Executed on Sun Aug 24 00:38:44 CEST 2014
 [SUCCESS] 4.2.6 For each MonetaryAmount Factory: Create negative amounts, with explicit MonetaryContext.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryNegativePositiveAmountsWithContexts3)
 [SUCCESS] 4.2.6 Bad case: For each MonetaryAmount Factory: Create negative amounts, with invalid numeric value, expect ArithmeticException.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryNegativePositiveAmountsWithInvalidNumber)
 [SUCCESS] 4.2.6 Ensure MonetaryAmountFactory instances accessible for all amount types under test return correct amount type.(CreatingMonetaryAmountsTest#testMonetaryAmountFactoryReturnsCorrectType)
-[SUCCESS] Checks if a correct Double value is returned, no truncation is allowed to be performed.(ExternalizingNumericValueTest#testDoubleNegative)
+[SUCCESS] 4.2.2 Checks if a correct Double value is returned, no truncation is allowed to be performed.(ExternalizingNumericValueTest#testDoubleNegative)
 [SUCCESS] 4.2.3 Check if a correct double value is returned, truncation is allowed to be performed (but is not necessary).(ExternalizingNumericValueTest#testDoubleValueWithTruncationZero)
 [SUCCESS] 4.2.3 Checks if a correct double value is returned, truncation is allowed to be performed.(ExternalizingNumericValueTest#testDoubleWithTruncationNegative)
 [SUCCESS] 4.2.3 Checks if a correct Integer value is returned, no truncation is allowed to be performed.(ExternalizingNumericValueTest#testIntegerNegative)
@@ -489,15 +491,15 @@ Executed on Sun Aug 24 00:38:44 CEST 2014
 [SUCCESS] 4.4.1 Test formats and parses (round-trip) any supported amount type for each supported Locale.(FormattingMonetaryAmountsTest#testParseIsIndependentOfImplementation)
 [SUCCESS] 4.4.1 Test formats and parses (round-trip) any supported amount type for each supported Locale, checks results for different currencies(FormattingMonetaryAmountsTest#testParseWithDifferentCurrencies)
 
-JSR 354 TCP version 1.0 Summary
--------------------------------
+JSR 354 TCK - Java 7, version 1.0 Summary
+------------------------------------------
 
 TOTAL TESTS EXECUTED : 221
 TOTAL TESTS SKIPPED  : 0
 TOTAL TESTS SUCCESS  : 219
 TOTAL TESTS FAILED   : 0
 
--- JSR 354 TCK finished --
+-- JSR 354 TCK Java 7 finished --
 
 ===============================================
 Custom suite
