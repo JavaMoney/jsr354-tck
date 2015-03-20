@@ -249,7 +249,7 @@
             </dependency>
             <dependency>
                 <groupId>javax.money</groupId>
-                <artifactId>money-api-java7</artifactId>
+                <artifactId>money-api-bp</artifactId>
                 <version>${jsr.version}</version>
                 <scope>provided</scope>
             </dependency>
