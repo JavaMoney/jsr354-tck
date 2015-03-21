@@ -9,7 +9,12 @@
  */
 package org.javamoney.tck;
 
-import org.javamoney.tck.tests.*;
+import org.javamoney.tck.tests.AccessingCurrenciesAmountsRoundingsTest;
+import org.javamoney.tck.tests.CreatingMonetaryAmountsTest;
+import org.javamoney.tck.tests.ExternalizingNumericValueTest;
+import org.javamoney.tck.tests.FunctionalExtensionPointsTest;
+import org.javamoney.tck.tests.ModellingCurrenciesTest;
+import org.javamoney.tck.tests.ModellingMonetaryAmountsTest;
 import org.javamoney.tck.tests.conversion.ConvertingAmountsTest;
 import org.javamoney.tck.tests.conversion.ExchangeRatesAndRateProvidersTest;
 import org.javamoney.tck.tests.conversion.MonetaryConversionsTest;
@@ -56,7 +61,7 @@ public class TCKRunner extends XmlSuite {
     public static void main(String... args) {
         System.out.println("-- JSR 354 TCK started --");
         List<XmlSuite> suites = new ArrayList<>();
-        suites.add(new TCKRunnerJava7());
+        suites.add(new TCKRunner());
         TestNG tng = new TestNG();
         tng.setXmlSuites(suites);
         tng.setOutputDirectory("./tck-results");
