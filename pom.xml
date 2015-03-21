@@ -290,7 +290,7 @@
         </dependency>
         <dependency>
             <groupId>javax.money</groupId>
-            <artifactId>money-api-java7</artifactId>
+            <artifactId>money-api-bp</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
