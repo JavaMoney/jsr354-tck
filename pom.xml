@@ -299,7 +299,7 @@
         </dependency>
         <dependency>
             <groupId>org.javamoney</groupId>
-            <artifactId>moneta-java7</artifactId>
+            <artifactId>moneta-bp</artifactId>
             <version>${jsr.version}</version>
             <scope>provided</scope>
         </dependency>
