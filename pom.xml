@@ -29,8 +29,8 @@
     <url>http://java.net/projects/javamoney</url>
     <inceptionYear>2012</inceptionYear>
     <description>JSR 354 provides an API for representing, transporting, and performing comprehensive calculations with
-        Money and Currency. This module implements JSR 354. This module provides the test code that is compatible
-        with the Java 7 and the Java 8 based API. The targeted API must be provided as well as the implementation
+        Money and Currency. This module implements JSR 354. This module provides the test code that is compatible with
+        both the Java 7 and the Java 8 based API. The targeted API must be provided as well as the implementation
         under test to execute this TCK.
     </description>
 
