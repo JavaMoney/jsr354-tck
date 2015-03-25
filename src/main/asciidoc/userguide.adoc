@@ -123,13 +123,13 @@ This can be achieved in different ways:
 
 * The most easiest way to run the tests is to create a small maven project, where you add the JSR 354 API, your
 implementation and the TCK as dependency. The only thing to be done is executing the test suite by running
-+org.javamoney.tck.TCKRunnerJava7.main+.
++org.javamoney.tck.TCKRunner.main+.
 * Or you can execute the TCK by starting it on the console:
 
 [source, listing]
 .Running the TCK
 ---------------------------------------------------------------------------------------
-java -cp ... org.javamoney.tck.TCKRunnerJava7
+java -cp ... org.javamoney.tck.TCKRunner
 ---------------------------------------------------------------------------------------
 
 The org.javamoney.tck.JSR354TestConfiguration Interface
