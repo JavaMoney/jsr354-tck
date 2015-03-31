@@ -16,7 +16,7 @@ import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import javax.money.MonetaryAmount;
-import javax.money.MonetaryAmounts;
+import javax.money.Monetary;
 import javax.money.MonetaryException;
 import javax.money.NumberValue;
 import java.math.BigDecimal;
@@ -41,12 +41,12 @@ public class ExternalizingNumericValueTest {
     @SpecAssertion(section = "4.2.3", id = "423-A1")
     @Test(description = "4.2.3 Amount types do not return a NumberValue of null.")
     public void testReturningNumberValueIsNotNull() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
             MonetaryAmount mAmount1 =
-                    MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
+                    Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(10).create();
             NumberValue result = mAmount1.getNumber();
             AssertJUnit.assertNotNull("Section 4.2.3: Amount type does not return a NumberValue (null); " + type.getName(), result);
         }
@@ -61,12 +61,12 @@ public class ExternalizingNumericValueTest {
     public void testValidInteger() {
         int[] nums = new int[]{-3, -1, 0, 1, 3};
         for (int num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1 =
-                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                        Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit.assertNotNull("Section 4.2.3: Amount creation failed for " + type, result);
                 AssertJUnit.assertEquals("Section 4.2.3: Number value (int) returned is not correct for " + type.getName(), num,
@@ -86,13 +86,13 @@ public class ExternalizingNumericValueTest {
     public void testValidLong() {
         long[] nums = new long[]{1, 3, 11, 123, 12345, 1223345566, 1234523462532753243L};
         for (long num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // could be that the number exceeds the amount's capabilities...
@@ -119,12 +119,12 @@ public class ExternalizingNumericValueTest {
     public void testValidDouble() {
         double[] nums = new double[]{0, 0.3, 1, 1.3453};
         for (double num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1 =
-                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                        Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit.assertNotNull("Section 4.2.3: Amount creation failed for " + type, result);
                 AssertJUnit.assertEquals("Section 4.2.3: Number value (double) returned is not correct for " + type.getName(), num,
@@ -147,12 +147,12 @@ public class ExternalizingNumericValueTest {
     public void testValidNumberBD() {
         Number[] nums = new Number[]{-3, -3.5f - 1L, -1.2d, (short) 0, 0.3, (byte) 1, 1.3453};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1 =
-                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                        Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit.assertEquals("Section 4.2.3: Number value (BigDecimal) returned is not correct for " + type.getName(),
                         new BigDecimal(String.valueOf(num)).stripTrailingZeros(),
@@ -176,12 +176,12 @@ public class ExternalizingNumericValueTest {
     public void testValidNumberBI() {
         Number[] nums = new Number[]{-3, -1L, (short) 0, (byte) 1};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1 =
-                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                        Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit.assertEquals("Section 4.2.3: Number value (BigInteger) returned is not correct for " + type.getName(),
                         new BigInteger(String.valueOf(num)), result.numberValue(BigInteger.class));
@@ -201,13 +201,13 @@ public class ExternalizingNumericValueTest {
     public void testValidIntegerWithTruncation() {
         double[] nums = new double[]{-3.12334, -1.23345, 0.4343, 1.3343435, 5.345454};
         for (double num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
@@ -237,13 +237,13 @@ public class ExternalizingNumericValueTest {
     public void testValidLongWithTruncation() {
         double[] nums = new double[]{0.4343, 1.3343435, 5.345454};
         for (double num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
@@ -274,13 +274,13 @@ public class ExternalizingNumericValueTest {
         Number[] nums = new Number[]{new BigDecimal("26353527352735725372357.287362873287362836283"), 3232232334423L,
                 33434243242342342434.5d, 1L, 1.24355354543534545d, (short) 0, 0.3, (byte) 1, 1.3453, 32432532};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // can happen if capabilities are exceeded
@@ -303,13 +303,13 @@ public class ExternalizingNumericValueTest {
     public void testValidNumberWithTruncation_Byte() {
         Number[] nums = new Number[]{-3232423, -3.5f - 1L, -1.2d, (short) 0, 0.3, (byte) 1, 1.3453, 32432532};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // can happen if capabilities are exceeded
@@ -333,13 +333,13 @@ public class ExternalizingNumericValueTest {
     public void testValidNumberWithTruncation_Short() {
         Number[] nums = new Number[]{-3232423, -3.5f - 1L, -1.2d, (short) 0, 0.3, (byte) 1, 1.3453, 32432532};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // can happen if capabilities are exceeded
@@ -365,13 +365,13 @@ public class ExternalizingNumericValueTest {
                 new Number[]{-3232232334423L, -33434243242342342434.5d - 1L, -1.24355354543534545d, (short) 0, 0.3,
                         (byte) 1, 1.3453, 32432532};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // can happen if capabilities are exceeded
@@ -397,13 +397,13 @@ public class ExternalizingNumericValueTest {
                 new BigDecimal("-26353527352735725372357.287362873287362836283"), -3232232334423L,
                 -33434243242342342434.5d - 1L, -1.24355354543534545d, (short) 0, 0.3, (byte) 1, 1.3453, 32432532};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // can happen if capabilities are exceeded
@@ -428,13 +428,13 @@ public class ExternalizingNumericValueTest {
     public void testValidNumberWithTruncation_Integer() {
         Number[] nums = new Number[]{-3232423, -3.5f - 1L, -1.2d, (short) 0, 0.3, (byte) 1, 1.3453, 32432532};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // can happen if capabilities are exceeded
@@ -462,7 +462,7 @@ public class ExternalizingNumericValueTest {
                         "12345", "123456", "1234567", "12345678", "123456789"};
 
         for (String num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
@@ -470,7 +470,7 @@ public class ExternalizingNumericValueTest {
                 BigDecimal bd = new BigDecimal(num);
                 try {
                     mAmount1 =
-                            MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(bd).create();
+                            Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(bd).create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
                     continue;
@@ -495,7 +495,7 @@ public class ExternalizingNumericValueTest {
                         "12345678.1234567", "12345678.12345678", "-123456789.123456789", "1", "12", "123", "1234",
                         "12345", "123456", "1234567", "12345678", "123456789"};
         for (String num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
@@ -503,7 +503,7 @@ public class ExternalizingNumericValueTest {
                 BigDecimal bd = new BigDecimal(num);
                 try {
                     mAmount1 =
-                            MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(bd).create();
+                            Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(bd).create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
                     continue;
@@ -527,12 +527,12 @@ public class ExternalizingNumericValueTest {
     public void testNumberTypeNegative() {
         Number[] nums = new Number[]{-1213243544435L, -3, -3.5f - 1L, -1.2d, -21323234324324.23};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1 =
-                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                        Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit.assertEquals("Section 4.2.3: Number value (BigDecimal) returned is not correct for " + type.getName(),
                         new BigDecimal(String.valueOf(num)).stripTrailingZeros(),
@@ -555,12 +555,12 @@ public class ExternalizingNumericValueTest {
     public void testIntegerNegative() {
         int[] nums = new int[]{-1, -3, -11, -123, -12345, -1223345566};
         for (long num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1 =
-                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                        Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit.assertNotNull("Section 4.2.3: Amount creation failed for " + type, result);
                 AssertJUnit.assertEquals("Section 4.2.3: Number value (int) returned is not correct for " + type.getName(), num,
@@ -581,13 +581,13 @@ public class ExternalizingNumericValueTest {
     public void testLongNegative() {
         long[] nums = new long[]{-1, -3, -11, -123, -12345, -1223345566, -1234523462532753243L};
         for (long num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // can happen, if number exceeds capabilities.
@@ -613,13 +613,13 @@ public class ExternalizingNumericValueTest {
     public void testDoubleNegative() {
         double[] nums = new double[]{-3.12334, -1.235, -0.43, -1.35, -52.4, -12345, 123, -1223243.342325435};
         for (double num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
@@ -645,14 +645,14 @@ public class ExternalizingNumericValueTest {
     public void testNumberWithTruncationNegative() {
         double[] nums = new double[]{-1, -1.1, -1111111111111111111111111111111111111111.11111111111111111111111d};
         for (double num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 BigDecimal dec = new BigDecimal(String.valueOf(num));
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // can hhappen if number exceeds capabilities
@@ -703,13 +703,13 @@ public class ExternalizingNumericValueTest {
     public void testIntegerWithTruncationNegative() {
         double[] nums = new double[]{-1.1, -3.12, -11.123, -123.1234, -12345.12233, -1223345566.2332432};
         for (double num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // can hhappen if number exceeds capabilities
@@ -732,13 +732,13 @@ public class ExternalizingNumericValueTest {
     public void testLongWithTruncationNegative() {
         double[] nums = new double[]{-3.12334, -1.23345, -1223234.23};
         for (double num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
@@ -770,13 +770,13 @@ public class ExternalizingNumericValueTest {
         Number[] nums = new Number[]{new BigDecimal("-26353527352735725372357.287362873287362836283"), -3232232334423L,
                 -33434243242342342434.5d, -1L, -1.24355354543534545d, (short) -0, -0.3, (byte) -1, -1.3453, 32432532};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // can happen if capabilities are exceeded
@@ -801,12 +801,12 @@ public class ExternalizingNumericValueTest {
     public void testNumberValueWithTruncationNegative() {
         Number[] nums = new Number[]{-1213243544435L, -3234, -3.5f - 1.1, -1.2d, -21323234324324.23};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1 =
-                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                        Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit
                         .assertEquals("Section 4.2.3: Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
@@ -827,12 +827,12 @@ public class ExternalizingNumericValueTest {
     public void testNumberValueWithTruncationNegative_Short() {
         Number[] nums = new Number[]{-1213243544435L, -3234, -3.5f - 1.1, -1.2d, -21323234324324.23};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1 =
-                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                        Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit
                         .assertEquals("Section 4.2.3: Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
@@ -857,12 +857,12 @@ public class ExternalizingNumericValueTest {
     public void testNumberValueWithTruncationNegative_Integer() {
         Number[] nums = new Number[]{-1213243544435L, -3234, -3.5f - 1.1, -1.2d, -21323234324324.23};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1 =
-                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                        Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit
                         .assertEquals("Section 4.2.3: Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
@@ -886,12 +886,12 @@ public class ExternalizingNumericValueTest {
     public void testNumberValueWithTruncationNegative_Long() {
         Number[] nums = new Number[]{-1213243544435L, -3234, -3.5f - 1.1, -1.2d, -21323234324324.23};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1 =
-                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                        Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit
                         .assertEquals("Section 4.2.3: Number value (BigDecimal -> byte) returned is not correct for " + type.getName(),
@@ -917,12 +917,12 @@ public class ExternalizingNumericValueTest {
     public void testNumberValueWithTruncationNegative_Float() {
         Number[] nums = new Number[]{-1213243544435L, -3234, -3.5f - 1.1, -1.2d, -21323234324324.23};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1 =
-                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                        Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit.assertEquals(
                         "Section 4.2.3: Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
@@ -946,12 +946,12 @@ public class ExternalizingNumericValueTest {
     public void testNumberValueWithTruncationNegative_Double() {
         Number[] nums = new Number[]{-1213243544435L, -3234, -3.5f - 1.1, -1.2d, -21323234324324.23};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1 =
-                        MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
+                        Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num).create();
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit.assertEquals(
                         "Section 4.2.3: Number value (BigDecimal -> double) returned is not correct for " + type.getName(),
@@ -974,7 +974,7 @@ public class ExternalizingNumericValueTest {
                 "-123456.123456", "-12345678.1234567", "-12345678.12345678", "-123456789.123456789", "-1", "-12",
                 "-123", "-1234", "-12345", "-123456", "-1234567", "-12345678", "-123456789"};
         for (String num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
@@ -982,7 +982,7 @@ public class ExternalizingNumericValueTest {
                 BigDecimal bd = new BigDecimal(num);
                 try {
                     mAmount1 =
-                            MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(bd).create();
+                            Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(bd).create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
                     continue;
@@ -1006,7 +1006,7 @@ public class ExternalizingNumericValueTest {
                 "-123456.123456", "-12345678.1234567", "-12345678.12345678", "-123456789.123456789", "-1", "-12",
                 "-123", "-1234", "-12345", "-123456", "-1234567", "-12345678", "-123456789"};
         for (String num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
@@ -1014,7 +1014,7 @@ public class ExternalizingNumericValueTest {
                 BigDecimal bd = new BigDecimal(num);
                 try {
                     mAmount1 =
-                            MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(bd).create();
+                            Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(bd).create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
                     continue;
@@ -1040,13 +1040,13 @@ public class ExternalizingNumericValueTest {
                 new Number[]{new BigDecimal("-0.0"), new BigDecimal("0"), new BigInteger("0"), 0, 0L, (byte) 0, 0.0f,
                         0.0d};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // can happen if capabilities are exceeded
@@ -1086,13 +1086,13 @@ public class ExternalizingNumericValueTest {
         Number[] nums = new Number[]{0, 0.0, -0.0, new BigDecimal("0.000000000000000000000000000001"),
                 new BigDecimal("-0.000000000000000000000000000001"), new BigInteger("0")};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
@@ -1117,13 +1117,13 @@ public class ExternalizingNumericValueTest {
         Number[] nums = new Number[]{0, 0.0, -0.0, new BigDecimal("0.00000000000000000000000000000"),
                 new BigDecimal("-0.00000000000000000000000000000"), new BigInteger("0")};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
@@ -1153,13 +1153,13 @@ public class ExternalizingNumericValueTest {
         Number[] nums = new Number[]{0.0, -0.0, new BigDecimal("0.00000"), new BigDecimal("-0.000000000000000000000"),
                 new BigInteger("0")};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
@@ -1204,13 +1204,13 @@ public class ExternalizingNumericValueTest {
         Number[] nums =
                 new Number[]{0.01, -0.02, new BigDecimal("0.000001"), new BigDecimal("-0.0000000000000000000001")};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
@@ -1247,13 +1247,13 @@ public class ExternalizingNumericValueTest {
         Number[] nums =
                 new Number[]{0.01, -0.02, new BigDecimal("0.000001"), new BigDecimal("-0.0000000000000000000001")};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
@@ -1288,13 +1288,13 @@ public class ExternalizingNumericValueTest {
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" +
                 "000000000000000000000000000001234")};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // can happen if capabilities are exceeded
@@ -1323,13 +1323,13 @@ public class ExternalizingNumericValueTest {
     public void testNumberValueWithTruncationZero() {
         Number[] nums = new Number[]{new BigDecimal("-0000000000000000.00000000000000000000000000000000000001234")};
         for (Number num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
                 MonetaryAmount mAmount1;
                 try {
-                    mAmount1 = MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
+                    mAmount1 = Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(num)
                             .create();
                 } catch (ArithmeticException | MonetaryException e) {
                     // can happen if capabilities are exceeded
@@ -1356,7 +1356,7 @@ public class ExternalizingNumericValueTest {
                 new String[]{"-0", "0", "-0.0", "0.0", "-0.00", "0.00", "-0.000", "0.0000", "0.00000", "-0.0000000",
                         "-0.000000000", "-0.00000000000"};
         for (String num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
@@ -1364,7 +1364,7 @@ public class ExternalizingNumericValueTest {
                 BigDecimal bd = new BigDecimal(num);
                 try {
                     mAmount1 =
-                            MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(bd).create();
+                            Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(bd).create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
                     continue;
@@ -1386,7 +1386,7 @@ public class ExternalizingNumericValueTest {
         String[] nums =
                 new String[]{"-0", "-0.0", "-0.00", "-0.000", "-0.0000", "-0.00000", "-0.000000", "-0.00000000"};
         for (String num : nums) {
-            for (Class type : MonetaryAmounts.getAmountTypes()) {
+            for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {
                     continue;
                 }
@@ -1394,7 +1394,7 @@ public class ExternalizingNumericValueTest {
                 BigDecimal bd = new BigDecimal(num);
                 try {
                     mAmount1 =
-                            MonetaryAmounts.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(bd).create();
+                            Monetary.getAmountFactory(type).setCurrency(DEFAULT_CURRENCY).setNumber(bd).create();
                 } catch (MonetaryException | ArithmeticException e) {
                     // It is possible, that our test may exceed the capabilities, so in that case, we just continue
                     continue;

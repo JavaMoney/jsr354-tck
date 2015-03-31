@@ -15,13 +15,12 @@ import org.jboss.test.audit.annotations.SpecAssertion;
 import org.jboss.test.audit.annotations.SpecVersion;
 import org.testng.annotations.Test;
 
+import javax.money.Monetary;
 import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmountFactory;
-import javax.money.MonetaryAmounts;
 import javax.money.MonetaryOperator;
 import java.util.Collection;
 
-import static javax.money.MonetaryAmounts.getAmountFactory;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -44,11 +43,11 @@ public class FunctionalExtensionPointsTest {
         Collection<MonetaryOperator> operators = TCKTestSetup.getTestConfiguration().getMonetaryOperators4Test();
         assertNotNull(operators,
                 "No operators (null) to test returned from TestConfiguration.getMonetaryOperators4Test().");
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory<?> f = getAmountFactory(type);
+            MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             f.setCurrency("CHF");
             f.setNumber(200.10);
             MonetaryAmount m = f.create();

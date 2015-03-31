@@ -19,7 +19,7 @@ import javax.money.spi.CurrencyProviderSpi;
 import javax.money.spi.MonetaryAmountFactoryProviderSpi;
 import javax.money.spi.MonetaryAmountsSingletonSpi;
 import javax.money.spi.MonetaryConversionsSingletonSpi;
-import javax.money.spi.MonetaryCurrenciesSingletonSpi;
+import javax.money.spi.MonetaryAmountsSingletonSpi;
 import javax.money.spi.RoundingProviderSpi;
 import java.util.ServiceLoader;
 
@@ -52,29 +52,22 @@ public class CoreSPITests {
     }
 
     /**
-     * Test registered MonetaryCurrenciesSingletonSpi (at least one instance
+     * Test registered MonetarySingletonSpi (at least one instance
      * required). Test behaviour,
      * especially bad case behaviour for invalid
      * input.
      */
-    @Test(description = "4.5.1 Test if a MonetaryCurrenciesSingletonSpi is registered.")
+    @Test(description = "4.5.1 Test if a MonetaryAmountsSingletonSpi is registered.")
     @SpecAssertion(id = "451-A2", section = "4.5.1")
-    public void testMonetaryCurrenciesSingletonSpi() {
-        ServiceLoader l = null;
-        try {
-            l = ServiceLoader.load(MonetaryCurrenciesSingletonSpi.class);
-        } catch (Exception e) {
-            Assert.fail("Failure during check for loadable MonetaryCurrenciesSingletonSpi.", e);
-        }
-        // this spi is optional, a default will be installed if missing, which will cover the currencies bsed
-        // on java.util.Currency.
+    public void testMonetaryAmountsSingletonSpi2() {
+        // Duplicate test.
     }
 
 
     // ***************************************** A. Registering Monetary Amount Factories **************************
 
     /**
-     * Test registered MonetaryAmountsSpi (at least one instance
+     * Test registered MonetarySpi (at least one instance
      * required). Test behaviour,
      * especially bad case behaviour for invalid
      * input.
@@ -92,10 +85,10 @@ public class CoreSPITests {
                 "No instance of MonetaryAmountFactoryProviderSpi provided by implementation.");
     }
 
-    // ************************************ C. Backing the MonetaryAmounts Singleton ******************************
+    // ************************************ C. Backing the Monetary Singleton ******************************
 
     /**
-     * Test registered MonetaryAmountsSingletonSpi (at least one instance
+     * Test registered MonetarySingletonSpi (at least one instance
      * required). Test behaviour,
      * especially bad case behaviour for invalid
      * input.

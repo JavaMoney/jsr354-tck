@@ -39,7 +39,7 @@
             <assertion id="421-A1">
                 <text>Ensure at least one javax.money.CurrencyUnit implementation
                     is
-                    available and registered/accessible from MonetaryCurrencies.
+                    available and registered/accessible from Monetary.
                 </text>
             </assertion>
             <assertion id="421-A2">
@@ -51,7 +51,7 @@
             </assertion>
             <assertion id="421-A3">
                 <text>Ensure all ISO 3-letters codes as defined by the JDK are also
-                    available from MonetaryCurrencies.
+                    available from Monetary.
                 </text>
             </assertion>
             <assertion id="421-A4">
@@ -92,13 +92,13 @@
         </group>
     </section>
     <section id="4.2.2" title="Modeling of Monetary Amounts">
-        <!-- Tests class ModellingMonetaryAmountsTest -->
+        <!-- Tests class ModellingMonetaryTest -->
         <group>
             <text>Preconditions</text>
             <assertion id="422-0">
                 <text>Ensure at least one javax.money.MonetaryAmount
                     implementation
-                    is registered, by calling MonetaryAmounts.getAmountTypes();
+                    is registered, by calling Monetary.getAmountTypes();
                 </text>
             </assertion>
         </group>
@@ -617,7 +617,7 @@
         <!-- No tests, class is part of API! -->
     </section>
     <!-- Theses tests must be done for every amount type registered. Factories
-        must be accessed first using MonetaryAmounts singleton, then from a created
+        must be accessed first using Monetary singleton, then from a created
         amount. -->
     <section id="4.2.6" title="Creating Monetary Amount Instances">
         <group>
@@ -725,27 +725,27 @@
         <group>
             <text>A. Accessing Currencies</text>
             <assertion id="427-A1">
-                <text>Test if MonetaryCurrencies provides all ISO related entries,
+                <text>Test if Monetary provides all ISO related entries,
                     similar to the JDK.
                 </text>
             </assertion>
             <assertion id="427-A2">
-                <text>Test if MonetaryCurrencies provides all Locale related
+                <text>Test if Monetary provides all Locale related
                     entries, similar to the JDK.
                 </text>
             </assertion>
             <assertion id="427-A3">
-                <text>Test if MonetaryCurrencies provides correct check for ISO
+                <text>Test if Monetary provides correct check for ISO
                     codes.
                 </text>
             </assertion>
             <assertion id="427-A4">
-                <text>Test if MonetaryCurrencies provides correct check for
+                <text>Test if Monetary provides correct check for
                     Locales.
                 </text>
             </assertion>
             <assertion id="427-A5">
-                <text>Test for custom MonetaryCurrencies provided, based on the TCK
+                <text>Test for custom Monetary provided, based on the TCK
                     TestProvider.
                 </text>
             </assertion>
@@ -980,7 +980,7 @@
                 </text>
             </assertion>
             <assertion id="451-A2">
-                <text>Test registered MonetaryCurrenciesSingletonSpi (at least one instance
+                <text>Test registered MonetarySingletonSpi (at least one instance
                     required). Test behaviour, especially bad case behaviour for invalid
                     input.
                 </text>
@@ -989,7 +989,7 @@
         <group>
             <text>B. Registering Monetary Amount Factories</text>
             <assertion id="451-B1">
-                <text>Test registered MonetaryAmountsSpi (at least one instance
+                <text>Test registered MonetarySpi (at least one instance
                     required). Test behaviour,
                     especially bad case behaviour for invalid
                     input.
@@ -997,7 +997,7 @@
             </assertion>
         </group>
         <group>
-            <text>C. Backing the MonetaryAmounts Singleton</text>
+            <text>C. Backing the Monetary Singleton</text>
             <assertion id="451-C1">
                 <text>Test registered RoundingProviderSpi (at least one instance
                     required). Test behaviour,

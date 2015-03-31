@@ -17,7 +17,7 @@ import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import javax.money.CurrencyUnit;
-import javax.money.MonetaryCurrencies;
+import javax.money.Monetary;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
@@ -28,7 +28,7 @@ public class ModellingCurrenciesTest {
 
     /**
      * Ensure at least one CurrencyUnit implementation
-     * is available and registered/accessible from MonetaryCurrencies.
+     * is available and registered/accessible from Monetary.
      */
     @SpecAssertion(section = "4.2.1", id = "421-A1")
     @Test(description = "4.2.1 Ensure TCK has CurrencyUnit classes configured.")
@@ -47,9 +47,9 @@ public class ModellingCurrenciesTest {
     @Test(description = "4.2.1 Test currencies provided equal at least currencies from java.util.Currency.")
     public void testEqualISOCurrencies() {
         for (Currency currency : Currency.getAvailableCurrencies()) {
-            CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
+            CurrencyUnit unit = Monetary.getCurrency(currency.getCurrencyCode());
             AssertJUnit.assertNotNull(unit);
-            CurrencyUnit unit2 = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
+            CurrencyUnit unit2 = Monetary.getCurrency(currency.getCurrencyCode());
             AssertJUnit.assertNotNull(unit2);
             AssertJUnit.assertEquals(unit, unit2);
         }
@@ -57,13 +57,13 @@ public class ModellingCurrenciesTest {
 
     /**
      * Ensure all ISO 3-letters codes as defined by the JDK are also
-     * available from MonetaryCurrencies.
+     * available from Monetary.
      */
     @SpecAssertion(section = "4.2.1", id = "421-A3")
     @Test(description = "4.2.1 Test currencies provided have correct ISO 3-letter currency codes.")
     public void testEnforce3LetterCode4ISO() {
         for (Currency currency : Currency.getAvailableCurrencies()) {
-            CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
+            CurrencyUnit unit = Monetary.getCurrency(currency.getCurrencyCode());
             AssertJUnit.assertNotNull(unit);
             AssertJUnit.assertEquals(currency.getCurrencyCode(), unit.getCurrencyCode());
         }
@@ -77,7 +77,7 @@ public class ModellingCurrenciesTest {
     @Test(description = "4.2.1 Test currencies provided have correct default fraction digits and numeric code.")
     public void testISOCodes() {
         for (Currency currency : Currency.getAvailableCurrencies()) {
-            CurrencyUnit unit = MonetaryCurrencies.getCurrency(currency.getCurrencyCode());
+            CurrencyUnit unit = Monetary.getCurrency(currency.getCurrencyCode());
             AssertJUnit.assertEquals(currency.getCurrencyCode(), unit.getCurrencyCode());
             AssertJUnit.assertEquals(currency.getDefaultFractionDigits(), unit.getDefaultFractionDigits());
             AssertJUnit.assertEquals(currency.getNumericCode(), unit.getNumericCode());
@@ -94,7 +94,7 @@ public class ModellingCurrenciesTest {
             TestUtils.testHasPublicMethod("Section 4.2.1", type, int.class, "hashCode");
         }
         for (String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}) {
-            CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+            CurrencyUnit unit = Monetary.getCurrency(code);
             TestUtils.testHasPublicMethod("Section 4.2.1", unit.getClass(), int.class, "hashCode");
         }
     }
@@ -108,16 +108,16 @@ public class ModellingCurrenciesTest {
         List<CurrencyUnit> firstUnits = new ArrayList<>();
         List<CurrencyUnit> secondUnits = new ArrayList<>();
         for (String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}) {
-            CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+            CurrencyUnit unit = Monetary.getCurrency(code);
             AssertJUnit.assertNotNull(unit);
             TestUtils.testHasPublicMethod("Section 4.2.1", unit.getClass(), boolean.class, "equals", Object.class);
             firstUnits.add(unit);
-            CurrencyUnit unit2 = MonetaryCurrencies.getCurrency(code);
+            CurrencyUnit unit2 = Monetary.getCurrency(code);
             AssertJUnit.assertNotNull(unit2);
             secondUnits.add(unit2);
         }
         for (String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}) {
-            CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+            CurrencyUnit unit = Monetary.getCurrency(code);
             TestUtils.testHasPublicMethod("Section 4.2.1", unit.getClass(), boolean.class, "equals", Object.class);
         }
         for (int i = 0; i < firstUnits.size(); i++) {
@@ -135,7 +135,7 @@ public class ModellingCurrenciesTest {
             TestUtils.testComparable("Section 4.2.1", type);
         }
         for (String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}) {
-            CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+            CurrencyUnit unit = Monetary.getCurrency(code);
             TestUtils.testComparable("Section 4.2.1", unit.getClass());
         }
     }
@@ -150,7 +150,7 @@ public class ModellingCurrenciesTest {
             TestUtils.testImmutable("Section 4.2.1", type);
         }
         for (String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}) {
-            CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+            CurrencyUnit unit = Monetary.getCurrency(code);
             TestUtils.testImmutable("Section 4.2.1", unit.getClass());
         }
     }
@@ -165,7 +165,7 @@ public class ModellingCurrenciesTest {
             TestUtils.testSerializable("Section 4.2.1", type);
         }
         for (String code : new String[]{"CHF", "USD", "EUR", "GBP", "USS"}) {
-            CurrencyUnit unit = MonetaryCurrencies.getCurrency(code);
+            CurrencyUnit unit = Monetary.getCurrency(code);
             TestUtils.testSerializable("Section 4.2.1", unit);
         }
     }

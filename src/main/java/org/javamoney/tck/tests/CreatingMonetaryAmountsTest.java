@@ -19,10 +19,9 @@ import org.testng.annotations.Test;
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmountFactory;
-import javax.money.MonetaryAmounts;
+import javax.money.Monetary;
 import javax.money.MonetaryContext;
 import javax.money.MonetaryContextBuilder;
-import javax.money.MonetaryCurrencies;
 import javax.money.MonetaryException;
 import javax.money.UnknownCurrencyException;
 import java.math.BigDecimal;
@@ -46,9 +45,9 @@ public class CreatingMonetaryAmountsTest {
     @Test(description = "4.2.6 Ensure MonetaryAmountFactory instances are accessible for all amount types under test.")
     @SpecAssertion(section = "4.2.6", id = "426-A1")
     public void testAccessToMonetaryAmountFactory() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             assertNotNull("Section 4.2.6: No MonetaryAmountFactory available for " + type.getName(),
-                    MonetaryAmounts.getAmountFactory(type));
+                    Monetary.getAmountFactory(type));
         }
     }
 
@@ -60,10 +59,10 @@ public class CreatingMonetaryAmountsTest {
                     "correct amount type.")
     @SpecAssertion(section = "4.2.6", id = "426-A2")
     public void testMonetaryAmountFactoryReturnsCorrectType() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             AssertJUnit.assertEquals(
                     "Section 4.2.6: MonetaryAmountFactory declares invalid amount type for " + type.getName(), type,
-                    MonetaryAmounts.getAmountFactory(type).getAmountType());
+                    Monetary.getAmountFactory(type).getAmountType());
         }
     }
 
@@ -77,8 +76,8 @@ public class CreatingMonetaryAmountsTest {
                     "correct min/max MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-A3")
     public void testMonetaryAmountFactoryMinMaxCapabilities() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
-            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+        for (Class type : Monetary.getAmountTypes()) {
+            MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             MonetaryContext defCtx = f.getDefaultMonetaryContext();
             MonetaryContext maxCts = f.getMaximalMonetaryContext();
             assertTrue("Section 4.2.6: MonetaryAmountFactory default/max declares invalid precisions for " +
@@ -98,8 +97,8 @@ public class CreatingMonetaryAmountsTest {
                     "correct min/max MonetaryContext (min <= max).")
     @SpecAssertion(section = "4.2.6", id = "426-A4")
     public void testMonetaryAmountFactoryMinMaxCapabilities_Compare() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
-            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+        for (Class type : Monetary.getAmountTypes()) {
+            MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             MonetaryContext defCtx = f.getDefaultMonetaryContext();
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
             if (f.getDefaultMonetaryContext().getMaxScale() > -1) {
@@ -150,13 +149,13 @@ public class CreatingMonetaryAmountsTest {
     @Test(description = "4.2.6 Ensure MonetaryAmountFactory instances support creation of 0 amounts.")
     @SpecAssertion(section = "4.2.6", id = "426-B1")
     public void testMonetaryAmountFactoryCreateZeroAmountsWithDiffCurrencies() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
             for (Currency cur : Currency.getAvailableCurrencies()) {
-                CurrencyUnit cu = MonetaryCurrencies.getCurrency(cur.getCurrencyCode());
-                MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+                CurrencyUnit cu = Monetary.getCurrency(cur.getCurrencyCode());
+                MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
                 f.setCurrency(cu);
                 f.setNumber(0);
                 MonetaryAmount m = f.create();
@@ -186,11 +185,11 @@ public class CreatingMonetaryAmountsTest {
             "MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-B2")
     public void testMonetaryAmountFactoryCreateZeroAmountsWithDiffContexts() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             f.setCurrency("GBP");
             f.setNumber(0);
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
@@ -242,11 +241,11 @@ public class CreatingMonetaryAmountsTest {
             "explicit MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-B2")
     public void testMonetaryAmountFactoryCreateZeroAmountsWithDiffContexts2() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             f.setCurrency("GBP");
             f.setNumber(0.0d);
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
@@ -298,11 +297,11 @@ public class CreatingMonetaryAmountsTest {
             "explicit MonetaryContext (precision, scale).")
     @SpecAssertion(section = "4.2.6", id = "426-B2")
     public void testMonetaryAmountFactoryCreateZeroAmountsWithDiffContexts3() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             f.setCurrency("GBP");
             f.setNumber(BigDecimal.ZERO);
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
@@ -355,13 +354,13 @@ public class CreatingMonetaryAmountsTest {
             " from a factory with an invalid currency.")
     @SpecAssertion(section = "4.2.6", id = "426-B3")
     public void testMonetaryAmountFactoryCreateAmountsWithInvalidCurrency() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
             for (Currency cur : Currency.getAvailableCurrencies()) {
-                MonetaryCurrencies.getCurrency(cur.getCurrencyCode());
-                MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+                Monetary.getCurrency(cur.getCurrencyCode());
+                MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
                 try {
                     f.setCurrency("shjgssgsjgsj");
                     AssertJUnit
@@ -383,11 +382,11 @@ public class CreatingMonetaryAmountsTest {
             " from a factory with an invalid MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-B4")
     public void testMonetaryAmountFactoryCreateAmountsWithInvalidMonetaryContext() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             try {
                 f.setCurrency("USD");
                 MonetaryContext maxCtx = f.getMaximalMonetaryContext();
@@ -423,13 +422,13 @@ public class CreatingMonetaryAmountsTest {
     @Test(description = "4.2.6 For each MonetaryAmount Factory: Create positive amounts.")
     @SpecAssertion(section = "4.2.6", id = "426-C1")
     public void testMonetaryAmountFactoryCreatePositiveAmountsWitCurrencies() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
             for (Currency cur : Currency.getAvailableCurrencies()) {
-                CurrencyUnit cu = MonetaryCurrencies.getCurrency(cur.getCurrencyCode());
-                MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+                CurrencyUnit cu = Monetary.getCurrency(cur.getCurrencyCode());
+                MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
                 f.setCurrency(cu);
                 f.setNumber(1);
                 MonetaryAmount m = f.create();
@@ -459,11 +458,11 @@ public class CreatingMonetaryAmountsTest {
     @Test(description = "4.2.6 For each MonetaryAmount Factory: Create positive amounts with explicit MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-C2")
     public void testMonetaryAmountFactoryCreatePositiveAmountsWithContexts() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             f.setCurrency("GBP");
             f.setNumber(1);
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
@@ -517,11 +516,11 @@ public class CreatingMonetaryAmountsTest {
                     "(precision/scale).")
     @SpecAssertion(section = "4.2.6", id = "426-C2")
     public void testMonetaryAmountFactoryCreatePositiveAmountsWithContexts2() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             f.setCurrency("GBP");
             f.setNumber(1.0d);
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
@@ -575,11 +574,11 @@ public class CreatingMonetaryAmountsTest {
                     "(precision/scale).")
     @SpecAssertion(section = "4.2.6", id = "426-C2")
     public void testMonetaryAmountFactoryCreatePositiveAmountsWithContexts3() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             f.setCurrency("GBP");
             f.setNumber(BigDecimal.ONE);
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
@@ -633,11 +632,11 @@ public class CreatingMonetaryAmountsTest {
                     " expecting ArithemticException thrown.")
     @SpecAssertion(section = "4.2.6", id = "426-C3")
     public void testMonetaryAmountFactoryCreatePositiveAmountsWithInvalidNumber() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory f = Monetary.getAmountFactory(type);
             f.setCurrency("INR");
             MonetaryContext ctx = f.getMaximalMonetaryContext();
             if (ctx.getPrecision() != 0) {
@@ -676,11 +675,11 @@ public class CreatingMonetaryAmountsTest {
             " expecting MonetaryException thrown.")
     @SpecAssertion(section = "4.2.6", id = "426-C4")
     public void testMonetaryAmountFactoryCreatePositiveNoCurrency_BadCase() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory f = Monetary.getAmountFactory(type);
             try {
                 if (f.getDefaultMonetaryContext().getPrecision() == 0) {
                     f.setNumber(TestUtils.createNumberWithPrecision(f, 5));
@@ -713,11 +712,11 @@ public class CreatingMonetaryAmountsTest {
                     " expecting MonetaryException thrown.")
     @SpecAssertion(section = "4.2.6", id = "426-C4")
     public void testMonetaryAmountFactoryCreatePositiveInvalidCurrency_BadCase() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory f = Monetary.getAmountFactory(type);
             try {
                 if (f.getDefaultMonetaryContext().getPrecision() == 0) {
                     f.setNumber(TestUtils.createNumberWithPrecision(f, 5));
@@ -746,11 +745,11 @@ public class CreatingMonetaryAmountsTest {
                     " expecting MonetaryException thrown.")
     @SpecAssertion(section = "4.2.6", id = "426-C5")
     public void testMonetaryAmountFactoryCreatePositiveInvalidContext_BadCase() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory f = Monetary.getAmountFactory(type);
             MonetaryContext mc = f.getMaximalMonetaryContext();
             try {
                 MonetaryContextBuilder b = mc.toBuilder();
@@ -789,13 +788,13 @@ public class CreatingMonetaryAmountsTest {
     @Test(description = "4.2.6 For each MonetaryAmount Factory: Create negative amounts.")
     @SpecAssertion(section = "4.2.6", id = "426-D1")
     public void testMonetaryAmountFactoryNegativePositiveAmountsWitCurrencies() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
             for (Currency cur : Currency.getAvailableCurrencies()) {
-                CurrencyUnit cu = MonetaryCurrencies.getCurrency(cur.getCurrencyCode());
-                MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+                CurrencyUnit cu = Monetary.getCurrency(cur.getCurrencyCode());
+                MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
                 f.setCurrency(cu);
                 f.setNumber(-3);
                 MonetaryAmount m = f.create();
@@ -826,11 +825,11 @@ public class CreatingMonetaryAmountsTest {
             " MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-D2")
     public void testMonetaryAmountFactoryNegativePositiveAmountsWithContexts() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             f.setCurrency("GBP");
             f.setNumber(1);
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
@@ -882,11 +881,11 @@ public class CreatingMonetaryAmountsTest {
             "MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-D2")
     public void testMonetaryAmountFactoryNegativePositiveAmountsWithContexts2() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             f.setCurrency("GBP");
             f.setNumber(11.2);
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
@@ -938,11 +937,11 @@ public class CreatingMonetaryAmountsTest {
             "MonetaryContext.")
     @SpecAssertion(section = "4.2.6", id = "426-D2")
     public void testMonetaryAmountFactoryNegativePositiveAmountsWithContexts3() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory<?> f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             f.setCurrency("GBP");
             f.setNumber(BigDecimal.TEN);
             MonetaryContext maxCtx = f.getMaximalMonetaryContext();
@@ -995,11 +994,11 @@ public class CreatingMonetaryAmountsTest {
             "numeric value, expect ArithmeticException.")
     @SpecAssertion(section = "4.2.6", id = "426-D3")
     public void testMonetaryAmountFactoryNegativePositiveAmountsWithInvalidNumber() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory f = Monetary.getAmountFactory(type);
             f.setCurrency("INR");
             MonetaryContext ctx = f.getMaximalMonetaryContext();
             if (ctx.getPrecision() != 0) {
@@ -1038,11 +1037,11 @@ public class CreatingMonetaryAmountsTest {
             "currency, expect MonetaryException.")
     @SpecAssertion(section = "4.2.6", id = "426-D4")
     public void testMonetaryAmountFactoryCreateNegativeNoCurrency_BadCase() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory f = Monetary.getAmountFactory(type);
             try {
                 if (f.getDefaultMonetaryContext().getPrecision() == 0) {
                     f.setNumber(TestUtils.createNumberWithPrecision(f, 5).negate());
@@ -1073,11 +1072,11 @@ public class CreatingMonetaryAmountsTest {
             "currency, expect MonetaryException.")
     @SpecAssertion(section = "4.2.6", id = "426-D4")
     public void testMonetaryAmountFactoryCreateNegativeInvalidCurrency_BadCase() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory f = Monetary.getAmountFactory(type);
             try {
                 if (f.getDefaultMonetaryContext().getPrecision() == 0) {
                     f.setNumber(TestUtils.createNumberWithPrecision(f, 5).negate());
@@ -1104,11 +1103,11 @@ public class CreatingMonetaryAmountsTest {
             "currency, expect MonetaryException.")
     @SpecAssertion(section = "4.2.6", id = "426-D5")
     public void testMonetaryAmountFactoryCreateNegativeInvalidContext_BadCase() {
-        for (Class type : MonetaryAmounts.getAmountTypes()) {
+        for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
-            MonetaryAmountFactory f = MonetaryAmounts.getAmountFactory(type);
+            MonetaryAmountFactory f = Monetary.getAmountFactory(type);
             MonetaryContext mc = f.getMaximalMonetaryContext();
             try {
                 MonetaryContextBuilder b = mc.toBuilder();
@@ -1147,9 +1146,9 @@ public class CreatingMonetaryAmountsTest {
     @Test(description = "4.2.7 Ensure the types available, must be at least one type.")
     @SpecAssertion(section = "4.2.7", id = "427-B1")
     public void testMonetaryAmountTypes_Available() {
-        Collection<Class<? extends MonetaryAmount>> types = MonetaryAmounts.getAmountTypes();
-        assertNotNull("Section 4.2.6: MonetaryAmounts returns null for amount implementations.", types);
-        assertTrue("Section 4.2.6: MonetaryAmounts does not provide any amount implementations.", types.size() > 0);
+        Collection<Class<? extends MonetaryAmount>> types = Monetary.getAmountTypes();
+        assertNotNull("Section 4.2.6: Monetary returns null for amount implementations.", types);
+        assertTrue("Section 4.2.6: Monetary does not provide any amount implementations.", types.size() > 0);
     }
 
 }

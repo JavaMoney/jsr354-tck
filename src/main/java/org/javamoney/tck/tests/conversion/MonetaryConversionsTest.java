@@ -14,7 +14,7 @@ import org.jboss.test.audit.annotations.SpecVersion;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
-import javax.money.MonetaryCurrencies;
+import javax.money.Monetary;
 import javax.money.MonetaryException;
 import javax.money.convert.ConversionContext;
 import javax.money.convert.ConversionQuery;
@@ -180,9 +180,9 @@ public class MonetaryConversionsTest {
     @SpecAssertion(id = "431-A3", section = "4.3.1")
     public void testProviderMetadata3() {
         for (String providerName : MonetaryConversions.getProviderNames()) {
-            if (MonetaryConversions.isConversionAvailable(MonetaryCurrencies.getCurrency("XXX"), providerName)) {
+            if (MonetaryConversions.isConversionAvailable(Monetary.getCurrency("XXX"), providerName)) {
                 CurrencyConversion conv =
-                        MonetaryConversions.getConversion(MonetaryCurrencies.getCurrency("XXX"), providerName);
+                        MonetaryConversions.getConversion(Monetary.getCurrency("XXX"), providerName);
                 ConversionContext ctx = conv.getContext();
                 AssertJUnit.assertNotNull(
                         "ExchangeProvider must return a valid ProviderContext, but returned null: " + providerName,
@@ -234,7 +234,7 @@ public class MonetaryConversionsTest {
     public void testProviderMetadata3WithContext() {
         for (String providerName : MonetaryConversions.getProviderNames()) {
             ConversionQuery query = ConversionQueryBuilder.of().
-                    setTermCurrency(MonetaryCurrencies.getCurrency("XXX")).setProviderName(providerName).build();
+                    setTermCurrency(Monetary.getCurrency("XXX")).setProviderName(providerName).build();
             if (MonetaryConversions.isConversionAvailable(query)) {
                 CurrencyConversion conv = MonetaryConversions.getConversion(query);
                 ConversionContext ctx = conv.getContext();
@@ -269,7 +269,7 @@ public class MonetaryConversionsTest {
             "CurrencyConversion for term CurrencyUnit CHF.")
     @SpecAssertion(id = "431-A4", section = "4.3.1")
     public void testDefaultProviderChainIsDefinedDefault() {
-        CurrencyConversion conv = MonetaryConversions.getConversion(MonetaryCurrencies.getCurrency("CHF"));
+        CurrencyConversion conv = MonetaryConversions.getConversion(Monetary.getCurrency("CHF"));
         AssertJUnit.assertNotNull("No default CurrencyConversion returned.", conv);
         // we cannot test more here...
     }
@@ -294,7 +294,7 @@ public class MonetaryConversionsTest {
     @SpecAssertion(id = "431-A4", section = "4.3.1")
     public void testDefaultProviderChainIsDefinedDefaultWithContext() {
         ConversionQuery query =
-                ConversionQueryBuilder.of().setTermCurrency(MonetaryCurrencies.getCurrency("CHF")).build();
+                ConversionQueryBuilder.of().setTermCurrency(Monetary.getCurrency("CHF")).build();
         CurrencyConversion conv = MonetaryConversions.getConversion(query);
         AssertJUnit.assertNotNull("No default CurrencyConversion returned.", conv);
         // we cannot test more here...
@@ -307,11 +307,11 @@ public class MonetaryConversionsTest {
     @SpecAssertion(id = "431-A5", section = "4.3.1")
     public void testDefaultConversion() {
         ConversionQuery query =
-                ConversionQueryBuilder.of().setTermCurrency(MonetaryCurrencies.getCurrency("USD")).build();
+                ConversionQueryBuilder.of().setTermCurrency(Monetary.getCurrency("USD")).build();
         CurrencyConversion conv = MonetaryConversions.getConversion(query);
         AssertJUnit.assertNotNull("No default CurrencyConversion returned for USD.", conv);
         query =
-                ConversionQueryBuilder.of().setTermCurrency(MonetaryCurrencies.getCurrency("EUR")).build();
+                ConversionQueryBuilder.of().setTermCurrency(Monetary.getCurrency("EUR")).build();
         conv = MonetaryConversions.getConversion(query);
         AssertJUnit.assertNotNull("No default CurrencyConversion returned for EUR.", conv);
     }

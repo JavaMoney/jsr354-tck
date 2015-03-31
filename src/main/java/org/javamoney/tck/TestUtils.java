@@ -20,7 +20,7 @@ import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmountFactory;
 import javax.money.MonetaryAmountFactoryQuery;
 import javax.money.MonetaryAmountFactoryQueryBuilder;
-import javax.money.MonetaryAmounts;
+import javax.money.Monetary;
 import javax.money.MonetaryException;
 import javax.money.MonetaryOperator;
 import javax.money.MonetaryQuery;
@@ -236,10 +236,10 @@ public class TestUtils {
         MonetaryAmountFactoryQuery tgtContext = MonetaryAmountFactoryQueryBuilder.of().setMaxScale(scale).build();
         MonetaryAmountFactory<?> exceedingFactory;
         try {
-            exceedingFactory = MonetaryAmounts.getAmountFactory(tgtContext);
+            exceedingFactory = Monetary.getAmountFactory(tgtContext);
             AssertJUnit.assertNotNull(exceedingFactory);
             MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
-                    MonetaryAmounts.getAmountFactory(exceedingFactory.getAmountType());
+                    Monetary.getAmountFactory(exceedingFactory.getAmountType());
             return bigFactory.setCurrency("CHF").setNumber(createNumberWithScale(bigFactory, scale)).create();
         } catch (MonetaryException e) {
             return null;
@@ -250,10 +250,10 @@ public class TestUtils {
         MonetaryAmountFactoryQuery tgtContext = MonetaryAmountFactoryQueryBuilder.of().setPrecision(precision).build();
         MonetaryAmountFactory<?> exceedingFactory;
         try {
-            exceedingFactory = MonetaryAmounts.getAmountFactory(tgtContext);
+            exceedingFactory = Monetary.getAmountFactory(tgtContext);
             AssertJUnit.assertNotNull(exceedingFactory);
             MonetaryAmountFactory<? extends MonetaryAmount> bigFactory =
-                    MonetaryAmounts.getAmountFactory(exceedingFactory.getAmountType());
+                    Monetary.getAmountFactory(exceedingFactory.getAmountType());
             return bigFactory.setCurrency("CHF").setNumber(createNumberWithPrecision(bigFactory, precision)).create();
         } catch (MonetaryException e) {
             return null;

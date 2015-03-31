@@ -13,7 +13,7 @@ import org.javamoney.tck.tests.conversion.TestExchangeRate;
 
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
-import javax.money.MonetaryCurrencies;
+import javax.money.Monetary;
 import javax.money.convert.ConversionContext;
 import javax.money.convert.ConversionContextBuilder;
 import javax.money.convert.ConversionQuery;
@@ -112,7 +112,7 @@ public class TestRateProvider implements ExchangeRateProvider {
     @Override
     public ExchangeRate getExchangeRate(String baseCode, String termCode) {
         if (isAvailable(baseCode, termCode)) {
-            return getExchangeRate(MonetaryCurrencies.getCurrency(baseCode), TERM);
+            return getExchangeRate(Monetary.getCurrency(baseCode), TERM);
         }
         return null;
     }

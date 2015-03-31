@@ -14,7 +14,7 @@ import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmountFactory;
 import javax.money.MonetaryContext;
 import javax.money.MonetaryContextBuilder;
-import javax.money.MonetaryCurrencies;
+import javax.money.Monetary;
 import javax.money.MonetaryException;
 import javax.money.MonetaryOperator;
 import javax.money.MonetaryQuery;
@@ -65,7 +65,7 @@ public final class TestAmount implements MonetaryAmount, Serializable {
 
             @Override
             public MonetaryAmountFactory setCurrency(String currencyCode) {
-                this.currency = MonetaryCurrencies.getCurrency(currencyCode);
+                this.currency = Monetary.getCurrency(currencyCode);
                 return this;
             }
 

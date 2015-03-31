@@ -19,8 +19,7 @@ import org.testng.annotations.Test;
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmountFactory;
-import javax.money.MonetaryAmounts;
-import javax.money.MonetaryCurrencies;
+import javax.money.Monetary;
 import javax.money.MonetaryException;
 import javax.money.format.AmountFormatQuery;
 import javax.money.format.AmountFormatQueryBuilder;
@@ -54,10 +53,10 @@ public class FormattingMonetaryAmountsTest {
         // values
         // and
         // currencies
-        for (CurrencyUnit currency : MonetaryCurrencies.getCurrencies()) {
+        for (CurrencyUnit currency : Monetary.getCurrencies()) {
             for (Number value : values) {
                 MonetaryAmount amount =
-                        MonetaryAmounts.getDefaultAmountFactory().setCurrency(currency.getCurrencyCode())
+                        Monetary.getDefaultAmountFactory().setCurrency(currency.getCurrencyCode())
                                 .setNumber(value).create();
                 String formattedAmount = amountFormat.format(amount);
                 MonetaryAmount amountMock = TestMonetaryAmountBuilder.getAmount(value, currency);
@@ -80,7 +79,7 @@ public class FormattingMonetaryAmountsTest {
         for (Locale locale : MonetaryFormats.getAvailableLocales()) {
             MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(locale);
             Set<String> formatsProcuced = new HashSet<>();
-            for (MonetaryAmountFactory fact : MonetaryAmounts.getAmountFactories()) {
+            for (MonetaryAmountFactory fact : Monetary.getAmountFactories()) {
                 if (fact.getAmountType().equals(TestAmount.class)) {
                     continue;
                 }
@@ -109,7 +108,7 @@ public class FormattingMonetaryAmountsTest {
     public void testParseIsIndependentOfImplementation() {
         for (Locale locale : MonetaryFormats.getAvailableLocales()) {
             MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(locale);
-            for (MonetaryAmountFactory fact : MonetaryAmounts.getAmountFactories()) {
+            for (MonetaryAmountFactory fact : Monetary.getAmountFactories()) {
                 if (fact.getAmountType().equals(TestAmount.class)) {
                     continue;
                 }
@@ -142,11 +141,11 @@ public class FormattingMonetaryAmountsTest {
                     "using different format queries.")
     public void testParseDifferentStyles() {
         for (Locale locale : MonetaryFormats.getAvailableLocales()) {
-            for (Class clazz : MonetaryAmounts.getAmountTypes()) {
+            for (Class clazz : Monetary.getAmountTypes()) {
                 if (clazz.equals(TestAmount.class)) {
                     continue;
                 }
-                MonetaryAmountFactory fact = MonetaryAmounts.getAmountFactory(clazz);
+                MonetaryAmountFactory fact = Monetary.getAmountFactory(clazz);
                 AmountFormatQuery query = AmountFormatQueryBuilder.of(locale).setMonetaryAmountFactory(fact).build();
                 if (fact.getAmountType().equals(TestAmount.class)) {
                     continue;
@@ -185,7 +184,7 @@ public class FormattingMonetaryAmountsTest {
     public void testParseWithDifferentCurrencies() {
         for (Locale locale : MonetaryFormats.getAvailableLocales()) {
             MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(locale);
-            for (MonetaryAmountFactory fact : MonetaryAmounts.getAmountFactories()) {
+            for (MonetaryAmountFactory fact : Monetary.getAmountFactories()) {
                 if (fact.getAmountType().equals(TestAmount.class)) {
                     continue;
                 }

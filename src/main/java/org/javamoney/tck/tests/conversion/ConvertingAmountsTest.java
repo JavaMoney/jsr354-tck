@@ -17,8 +17,7 @@ import org.testng.annotations.Test;
 
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
-import javax.money.MonetaryAmounts;
-import javax.money.MonetaryCurrencies;
+import javax.money.Monetary;
 import javax.money.convert.CurrencyConversion;
 import javax.money.convert.CurrencyConversionException;
 import javax.money.convert.ExchangeRate;
@@ -43,7 +42,7 @@ public class ConvertingAmountsTest {
     public void testConversion() {
         CurrencyUnit cu = new TestCurrencyUnit("FOO");
         CurrencyConversion conv = MonetaryConversions.getConversion(cu, "TestRateProvider");
-        MonetaryAmount m = MonetaryAmounts.getDefaultAmountFactory().setNumber(10).setCurrency("CHF").create();
+        MonetaryAmount m = Monetary.getDefaultAmountFactory().setNumber(10).setCurrency("CHF").create();
         MonetaryAmount m2 = m.with(conv);
         AssertJUnit.assertEquals(m2.getCurrency().getCurrencyCode(), "FOO");
         AssertJUnit.assertEquals(20L, m2.getNumber().longValueExact());
@@ -60,8 +59,8 @@ public class ConvertingAmountsTest {
     public void testConversionComparedWithRate() {
         final CurrencyUnit FOO = new TestCurrencyUnit("FOO");
         ExchangeRate rate = MonetaryConversions.getExchangeRateProvider("TestRateProvider")
-                .getExchangeRate(MonetaryCurrencies.getCurrency("CHF"), FOO);
-        AssertJUnit.assertEquals(rate.getBaseCurrency(), MonetaryCurrencies.getCurrency("CHF"));
+                .getExchangeRate(Monetary.getCurrency("CHF"), FOO);
+        AssertJUnit.assertEquals(rate.getBaseCurrency(), Monetary.getCurrency("CHF"));
         AssertJUnit.assertEquals(rate.getCurrency().getCurrencyCode(), FOO.getCurrencyCode());
         AssertJUnit.assertEquals(rate.getFactor().intValueExact(), 2);
         AssertJUnit.assertEquals("TestRateProvider", rate.getContext().getProviderName());
@@ -78,7 +77,7 @@ public class ConvertingAmountsTest {
             "currency (FOOANY), ensure CurrencyConversionException is thrown.")
     @SpecAssertion(id = "432-A3", section = "4.3.2")
     public void testUnsupportedConversion() {
-        MonetaryAmount m = MonetaryAmounts.getDefaultAmountFactory().setNumber(10).setCurrency("CHF").create();
+        MonetaryAmount m = Monetary.getDefaultAmountFactory().setNumber(10).setCurrency("CHF").create();
         CurrencyUnit cu = new TestCurrencyUnit("FOOANY");
         try {
             CurrencyConversion conv = MonetaryConversions.getConversion(cu);

@@ -12,10 +12,9 @@ package org.javamoney.tck;
 import org.javamoney.moneta.FastMoney;
 import org.javamoney.moneta.Money;
 import org.javamoney.moneta.function.MonetaryUtil;
-import org.javamoney.tck.JSR354TestConfiguration;
 
 import javax.money.MonetaryOperator;
-import javax.money.MonetaryRoundings;
+import javax.money.Monetary;
 import javax.money.convert.MonetaryConversions;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -58,7 +57,7 @@ public final class MonetaTCKSetup implements JSR354TestConfiguration {
         ops.add(MonetaryUtil.permil(BigDecimal.ONE));
         ops.add(MonetaryUtil.permil(10.5, MathContext.DECIMAL32));
         ops.add(MonetaryUtil.reciprocal());
-        ops.add(MonetaryRoundings.getDefaultRounding());
+        ops.add(Monetary.getDefaultRounding());
         ops.add(MonetaryConversions.getConversion("EUR"));
         return ops;
     }

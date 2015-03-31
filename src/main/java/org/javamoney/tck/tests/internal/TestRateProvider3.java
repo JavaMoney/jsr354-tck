@@ -13,7 +13,7 @@ import org.javamoney.tck.tests.conversion.TestExchangeRate;
 
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
-import javax.money.MonetaryCurrencies;
+import javax.money.Monetary;
 import javax.money.convert.ConversionContext;
 import javax.money.convert.ConversionContextBuilder;
 import javax.money.convert.ConversionQuery;
@@ -101,14 +101,14 @@ public class TestRateProvider3 implements ExchangeRateProvider {
 
     @Override
     public boolean isAvailable(String baseCode, String termCode) {
-        return isAvailable(ConversionQueryBuilder.of().setBaseCurrency(MonetaryCurrencies.getCurrency(baseCode))
-                .setTermCurrency(MonetaryCurrencies.getCurrency(termCode)).build());
+        return isAvailable(ConversionQueryBuilder.of().setBaseCurrency(Monetary.getCurrency(baseCode))
+                .setTermCurrency(Monetary.getCurrency(termCode)).build());
     }
 
     @Override
     public ExchangeRate getExchangeRate(String baseCode, String termCode) {
-        return getExchangeRate(ConversionQueryBuilder.of().setBaseCurrency(MonetaryCurrencies.getCurrency(baseCode))
-                .setTermCurrency(MonetaryCurrencies.getCurrency(termCode)).build());
+        return getExchangeRate(ConversionQueryBuilder.of().setBaseCurrency(Monetary.getCurrency(baseCode))
+                .setTermCurrency(Monetary.getCurrency(termCode)).build());
     }
 
     @Override
@@ -123,7 +123,7 @@ public class TestRateProvider3 implements ExchangeRateProvider {
 
     @Override
     public CurrencyConversion getCurrencyConversion(String termCode) {
-        return new Conversion(MonetaryCurrencies.getCurrency(termCode));
+        return new Conversion(Monetary.getCurrency(termCode));
     }
 
     @Override

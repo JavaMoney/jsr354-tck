@@ -13,7 +13,7 @@ import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
 import javax.money.MonetaryAmountFactory;
 import javax.money.MonetaryContext;
-import javax.money.MonetaryCurrencies;
+import javax.money.Monetary;
 import javax.money.NumberValue;
 
 public final class TestMonetaryAmountBuilder implements MonetaryAmountFactory<TestAmount> {
@@ -32,7 +32,7 @@ public final class TestMonetaryAmountBuilder implements MonetaryAmountFactory<Te
 
     @Override
     public MonetaryAmountFactory<TestAmount> setCurrency(String currencyCode) {
-        this.currency = MonetaryCurrencies.getCurrency(currencyCode);
+        this.currency = Monetary.getCurrency(currencyCode);
         return this;
     }
 
