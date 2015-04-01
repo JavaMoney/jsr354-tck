@@ -40,7 +40,7 @@ public class MonetaryConversionsTest {
     @SpecAssertion(id = "431-A1", section = "4.3.1")
     public void testProvidersAvailable() {
         int providerCount = 0;
-        for (String providername : MonetaryConversions.getProviderNames()) {
+        for (String providername : MonetaryConversions.getConversionProviderNames()) {
             if (!"TestRateProvider".equals(providername)) {
                 providerCount++;
             }
@@ -59,7 +59,7 @@ public class MonetaryConversionsTest {
                     "available a non-null CurrencyConversion must be provided.")
     @SpecAssertion(id = "431-A2", section = "4.3.1")
     public void testConversionsAreAvailable() {
-        for (String providerName : MonetaryConversions.getProviderNames()) {
+        for (String providerName : MonetaryConversions.getConversionProviderNames()) {
             try {
                 if (MonetaryConversions.isConversionAvailable("XXX", providerName)) {
                     CurrencyConversion conv = MonetaryConversions.getConversion("XXX", providerName);
@@ -94,7 +94,7 @@ public class MonetaryConversionsTest {
                     "available a non-null CurrencyConversion must be provided.")
     @SpecAssertion(id = "431-A2", section = "4.3.1")
     public void testConversionsAreAvailableWithQuery() {
-        for (String providerName : MonetaryConversions.getProviderNames()) {
+        for (String providerName : MonetaryConversions.getConversionProviderNames()) {
             ConversionQuery query =
                     ConversionQueryBuilder.of().setTermCurrency("XXX").setProviderNames(providerName).build();
             try {
@@ -128,7 +128,7 @@ public class MonetaryConversionsTest {
     @Test(description = "4.3.1 Test if all ExchangeRateProvider instances returns valid ProviderContext.")
     @SpecAssertion(id = "431-A3", section = "4.3.1")
     public void testProviderMetadata() {
-        for (String providerName : MonetaryConversions.getProviderNames()) {
+        for (String providerName : MonetaryConversions.getConversionProviderNames()) {
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerName);
             AssertJUnit.assertNotNull("Provider mot accessible: " + providerName, prov);
             ProviderContext ctx = prov.getContext();
@@ -154,7 +154,7 @@ public class MonetaryConversionsTest {
             "currency code.")
     @SpecAssertion(id = "431-A3", section = "4.3.1")
     public void testProviderMetadata2() {
-        for (String providerName : MonetaryConversions.getProviderNames()) {
+        for (String providerName : MonetaryConversions.getConversionProviderNames()) {
             if (MonetaryConversions.isConversionAvailable("XXX", providerName)) {
                 CurrencyConversion conv = MonetaryConversions.getConversion("XXX", providerName);
                 ConversionContext ctx = conv.getContext();
@@ -179,7 +179,7 @@ public class MonetaryConversionsTest {
             "CurrencyUnit.")
     @SpecAssertion(id = "431-A3", section = "4.3.1")
     public void testProviderMetadata3() {
-        for (String providerName : MonetaryConversions.getProviderNames()) {
+        for (String providerName : MonetaryConversions.getConversionProviderNames()) {
             if (MonetaryConversions.isConversionAvailable(Monetary.getCurrency("XXX"), providerName)) {
                 CurrencyConversion conv =
                         MonetaryConversions.getConversion(Monetary.getCurrency("XXX"), providerName);
@@ -205,7 +205,7 @@ public class MonetaryConversionsTest {
             "ConversionQuery/currency code.")
     @SpecAssertion(id = "431-A3", section = "4.3.1")
     public void testProviderMetadata2WithContext() {
-        for (String providerName : MonetaryConversions.getProviderNames()) {
+        for (String providerName : MonetaryConversions.getConversionProviderNames()) {
             ConversionQuery query = ConversionQueryBuilder.of().
                     setTermCurrency("XXX").setProviderNames(providerName).build();
             if (MonetaryConversions.isConversionAvailable(query)) {
@@ -232,7 +232,7 @@ public class MonetaryConversionsTest {
             "ConversionQuery/CurrencyUnit.")
     @SpecAssertion(id = "431-A3", section = "4.3.1")
     public void testProviderMetadata3WithContext() {
-        for (String providerName : MonetaryConversions.getProviderNames()) {
+        for (String providerName : MonetaryConversions.getConversionProviderNames()) {
             ConversionQuery query = ConversionQueryBuilder.of().
                     setTermCurrency(Monetary.getCurrency("XXX")).setProviderName(providerName).build();
             if (MonetaryConversions.isConversionAvailable(query)) {

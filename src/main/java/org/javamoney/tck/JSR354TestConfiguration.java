@@ -45,6 +45,6 @@ public interface JSR354TestConfiguration {
      * @return the list of operators to be checked, not null. It is allowed to return an empty list here, which will
      * disable TCK tests for MonetaryOperator instances.
      */
-    Collection<MonetaryOperator> getMonetaryOperators4Test();
+    Collection<javax.money.MonetaryOperator> getMonetaryOperators4Test();
 
 }

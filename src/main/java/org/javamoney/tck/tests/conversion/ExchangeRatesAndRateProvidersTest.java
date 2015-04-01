@@ -206,7 +206,7 @@ public class ExchangeRatesAndRateProvidersTest {
     @Test(description = "4.3.3 Bad case: try accessing exchange rates with invalid base currency code.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_InvalidSourceCurrency() {
-        for (String providerID : MonetaryConversions.getProviderNames()) {
+        for (String providerID : MonetaryConversions.getConversionProviderNames()) {
             if ("TestRateProvider".equals(providerID)) {
                 continue;
             }
@@ -230,7 +230,7 @@ public class ExchangeRatesAndRateProvidersTest {
     @Test(description = "4.3.3 Bad case: try accessing exchange rates with null base currency code.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_NullSourceCurrency() {
-        for (String providerID : MonetaryConversions.getProviderNames()) {
+        for (String providerID : MonetaryConversions.getConversionProviderNames()) {
             if ("TestRateProvider".equals(providerID)) {
                 continue;
             }
@@ -253,7 +253,7 @@ public class ExchangeRatesAndRateProvidersTest {
     @Test(description = "4.3.3 Bad case: try accessing exchange rates with invalid term currency code.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_InvalidTargetCurrency() {
-        for (String providerID : MonetaryConversions.getProviderNames()) {
+        for (String providerID : MonetaryConversions.getConversionProviderNames()) {
             if ("TestRateProvider".equals(providerID)) {
                 continue;
             }
@@ -277,7 +277,7 @@ public class ExchangeRatesAndRateProvidersTest {
     @Test(description = "4.3.3 Bad case: try accessing exchange rates with null term currency code.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_NullTargetCurrency() {
-        for (String providerID : MonetaryConversions.getProviderNames()) {
+        for (String providerID : MonetaryConversions.getConversionProviderNames()) {
             if ("TestRateProvider".equals(providerID)) {
                 continue;
             }
@@ -300,7 +300,7 @@ public class ExchangeRatesAndRateProvidersTest {
     @Test(description = "4.3.3 Bad case: try accessing exchange rates with null ConversionQuery.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_InvalidSourceCurrencyAndContext() {
-        for (String providerID : MonetaryConversions.getProviderNames()) {
+        for (String providerID : MonetaryConversions.getConversionProviderNames()) {
             if ("TestRateProvider".equals(providerID)) {
                 continue;
             }
@@ -324,7 +324,7 @@ public class ExchangeRatesAndRateProvidersTest {
     @Test(description = "4.3.3 Bad case: try accessing exchange rates with null base CurrencyUnit.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_NullSourceCurrencyUnit() {
-        for (String providerID : MonetaryConversions.getProviderNames()) {
+        for (String providerID : MonetaryConversions.getConversionProviderNames()) {
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
             try {
                 prov.getExchangeRate(null, Monetary.getCurrency("CHF"));
@@ -344,7 +344,7 @@ public class ExchangeRatesAndRateProvidersTest {
     @Test(description = "4.3.3 Bad case: try accessing exchange rates with null term CurrencyUnit.")
     @SpecAssertion(id = "433-A3", section = "4.3.3")
     public void testInvalidUsage_NullTargetCurrencyUnit() {
-        for (String providerID : MonetaryConversions.getProviderNames()) {
+        for (String providerID : MonetaryConversions.getConversionProviderNames()) {
             ExchangeRateProvider prov = MonetaryConversions.getExchangeRateProvider(providerID);
             try {
                 prov.getExchangeRate(Monetary.getCurrency("CHF"), null);

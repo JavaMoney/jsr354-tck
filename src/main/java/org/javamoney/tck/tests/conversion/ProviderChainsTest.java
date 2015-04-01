@@ -135,7 +135,7 @@ public class ProviderChainsTest {
     @Test(description = "4.3.4 Test availability of TCK provided providers.")
     @SpecAssertion(id = "434-A3", section = "4.3.4")
     public void testTCKRateChainAvailability() {
-        Collection<String> provNames = MonetaryConversions.getProviderNames();
+        Collection<String> provNames = MonetaryConversions.getConversionProviderNames();
         AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered: TestRateProvider",
                 provNames.contains("TestRateProvider"));
         AssertJUnit.assertTrue("TCK ExchangeRateProvider is not registered:TestRateProvider1",
