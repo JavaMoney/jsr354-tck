@@ -75,7 +75,7 @@ Summarizing you should add the following dependencies:
 <dependency>
     <groupId>org.javamoney</groupId>
     <artifactId>money-tck</artifactId>
-    <version>${tck.version}</version>
+    <version>1.0</version> <!-- or newer, if available. -->
 </dependency>
 <dependency>
     <groupId>org.testng</groupId>
@@ -88,12 +88,14 @@ Summarizing you should add the following dependencies:
     <type>${impl.packageType}</type>
     <version>${impl.version}</version>
 </dependency>
+
+<!-- Not necessary, if your implementation has this dependency in compile scope... -->
 <dependency>
     <groupId>javax.money</groupId>
     <artifactId>money-api</artifactId>
     <!-- Java 7: artifactId>money-api-bp</artifactId -->
     <type>jar</type>
-    <version>${api.version}</version>
+    <version>1.0</version>
 </dependency>
 ---------------------------------------------------------------------------------------
 
@@ -123,7 +125,7 @@ This can be achieved in different ways:
 
 * The most easiest way to run the tests is to create a small maven project, where you add the JSR 354 API, your
 implementation and the TCK as dependency. The only thing to be done is executing the test suite by running
-+org.javamoney.tck.TCKRunner.main+.
++org.javamoney.tck.TCKRunner.main+, e.g. from your IDE.
 * Or you can execute the TCK by starting it on the console:
 
 [source, listing]
@@ -497,7 +499,7 @@ JSR 354 TCK, version 1.0 Summary
 
 TOTAL TESTS EXECUTED : 221
 TOTAL TESTS SKIPPED  : 0
-TOTAL TESTS SUCCESS  : 219
+TOTAL TESTS SUCCESS  : 221
 TOTAL TESTS FAILED   : 0
 
 -- JSR 354 TCK finished --
@@ -514,4 +516,7 @@ Process finished with exit code 0
 Contacts
 ~~~~~~~~
 
-Basically you can use the JSR's public mailing list to get in contact or write an email to the JSR's mailto:atsticks@java.net[spec lead].
+Basically you can use the JSR's public mailing list to get in contact or write an email to the
+JSR's mailto:atsticks@java.net[spec lead].
+
+If you have improvements or fixes, create a pull request on GitHub.
