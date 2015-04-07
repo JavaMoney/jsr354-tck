@@ -70,7 +70,7 @@ public class TCKRunner extends XmlSuite {
             tng.setOutputDirectory(outDir);
         }
         else{
-            tng.setOutputDirectory("./tck-output");
+            tng.setOutputDirectory("./target/tck-output");
         }
         String verbose = System.getProperty("verbose");
         if("true".equalsIgnoreCase(verbose)){
@@ -82,7 +82,7 @@ public class TCKRunner extends XmlSuite {
             file = new File(reportFile);
         }
         else{
-            file = new File(System.getProperty("java.io.tmpdir"), "tck-results.txt");
+            file = new File("./target/tck-results.txt");
         }
         TCKReporter rep = new TCKReporter(file);
         System.out.println("Writing to file " + file.getAbsolutePath() + " ...");
