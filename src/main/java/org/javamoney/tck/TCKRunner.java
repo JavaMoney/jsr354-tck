@@ -24,6 +24,7 @@ import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 import org.testng.annotations.Test;
+import org.testng.reporters.VerboseReporter;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
@@ -64,9 +65,25 @@ public class TCKRunner extends XmlSuite {
         suites.add(new TCKRunner());
         TestNG tng = new TestNG();
         tng.setXmlSuites(suites);
-        tng.setOutputDirectory("./tck-results");
-//        tng.addListener(new VerboseReporter());
-        File file = new File(System.getProperty("java.io.tmpdir"), "tck-results.txt");
+        String outDir = System.getProperty("outputDir");
+        if(outDir!=null) {
+            tng.setOutputDirectory(outDir);
+        }
+        else{
+            tng.setOutputDirectory("./tck-output");
+        }
+        String verbose = System.getProperty("verbose");
+        if("true".equalsIgnoreCase(verbose)){
+            tng.addListener(new VerboseReporter());
+        }
+        String reportFile = System.getProperty("reportFile");
+        File file = null;
+        if(reportFile!=null) {
+            file = new File(reportFile);
+        }
+        else{
+            file = new File(System.getProperty("java.io.tmpdir"), "tck-results.txt");
+        }
         TCKReporter rep = new TCKReporter(file);
         System.out.println("Writing to file " + file.getAbsolutePath() + " ...");
         tng.addListener(rep);

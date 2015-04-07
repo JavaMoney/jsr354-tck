@@ -99,9 +99,9 @@ Summarizing you should add the following dependencies:
 </dependency>
 ---------------------------------------------------------------------------------------
 
-Also we have added an https://github.com/JavaMoney/jsr354-ritest[example maven project] that can be used as a starting
-point. All you have to do is clone it from https://github.com/JavaMoney/jsr354-ritest[GitHub] and exchange the
-implementation under test with your own.
+Also we have added https://github.com/JavaMoney/jsr354-ritest[example maven project for Java 8] and
+https://github.com/JavaMoney/jsr354-ritest[example maven project for Java 7] that can be used as a starting
+point. All you have to do is clone it from GitHub and exchange the implementation under test with your own.
 
 Main Design Decisions
 ~~~~~~~~~~~~~~~~~~~~~
@@ -133,6 +133,21 @@ implementation and the TCK as dependency. The only thing to be done is executing
 ---------------------------------------------------------------------------------------
 java -cp ... org.javamoney.tck.TCKRunner
 ---------------------------------------------------------------------------------------
+
+Hereby the TCK allows to set additional system properties:
+
+* +outputDir+ allows to set the output directory used by Test NG.
+* +reportFile+ allows to define the file, which contains the TCK's test result summary (your TCK report).
+* +verbose+ allows to enable TestNG to log in verbose mode.
+
+So you can also run the TCK with the options above:
+
+[source, listing]
+.Running the TCK with options
+---------------------------------------------------------------------------------------
+java -cp ... -Dverbose=true -DoutputDir=c:/temp -DreportFile=./tck-report.txt org.javamoney.tck.TCKRunner
+---------------------------------------------------------------------------------------
+
 
 The org.javamoney.tck.JSR354TestConfiguration Interface
 -------------------------------------------------------
