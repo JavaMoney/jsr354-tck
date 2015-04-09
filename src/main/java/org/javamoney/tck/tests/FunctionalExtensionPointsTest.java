@@ -25,7 +25,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 /**
- * Created by Anatole on 10.03.14.
+ * Tests the functional extension points.
  */
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class FunctionalExtensionPointsTest {

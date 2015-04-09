@@ -16,7 +16,7 @@ import java.math.MathContext;
 import java.util.Objects;
 
 /**
- * Created by Anatole on 26.04.2014.
+ * Test NumberValue implementation.
  */
 public final class TestNumberValue extends NumberValue {
     private static final long serialVersionUID = 1L;

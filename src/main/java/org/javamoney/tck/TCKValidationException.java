@@ -9,14 +9,28 @@
  */
 package org.javamoney.tck;
 
+/**
+ * Exception thrown if the TCK test setup failed.
+ */
 public final class TCKValidationException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructor.
+     *
+     * @param message the error message.
+     */
     public TCKValidationException(String message) {
         super(message);
     }
 
+    /**
+     * Constructor.
+     *
+     * @param message the error message.
+     * @param e       the exception.
+     */
     public TCKValidationException(String message, Throwable e) {
         super(message, e);
     }

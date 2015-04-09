@@ -18,7 +18,7 @@ import javax.money.spi.MonetaryAmountFormatProviderSpi;
 import java.util.ServiceLoader;
 
 /**
- * Created by Anatole on 10.03.14.
+ * Tests the FormatProviderSpi.
  */
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class FormattingSPITest {

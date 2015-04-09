@@ -52,7 +52,7 @@ public class ModellingMonetaryAmountsTest {
                 Monetary.getAmountTypes());
         AssertJUnit.assertTrue(
                 "Section 4.2.2: At least one type must be registered with Monetary (see getAmountTypes()).",
-                Monetary.getAmountTypes().size() > 0);
+                !Monetary.getAmountTypes().isEmpty());
     }
 
     /**
@@ -847,10 +847,8 @@ public class ModellingMonetaryAmountsTest {
             instances.add(f.setNumber(BigDecimal.TEN).create());
         }
         // compare each other...
-        for (int i = 0; i < instances.size(); i++) {
-            for (int j = 0; j < instances.size(); j++) {
-                MonetaryAmount mi = instances.get(i);
-                MonetaryAmount mj = instances.get(j);
+        for (MonetaryAmount mi: instances) {
+            for (MonetaryAmount mj: instances) {
                 AssertJUnit
                         .assertTrue("Section 4.2.2: isEqualTo must be true for " + mi + " and " + mj, mi.isEqualTo(mj));
             }
@@ -1082,7 +1080,7 @@ public class ModellingMonetaryAmountsTest {
                 try {
                     MonetaryAmount m = f.setNumber(1).create();
                     MonetaryAmount m2 =
-                            f.setNumber(TestUtils.createNumberWithScale(f, maxCtx.getMaxScale() + 5)).create();
+                            f.setNumber(TestUtils.createNumberWithScale(maxCtx.getMaxScale() + 5)).create();
                     m.add(m2);
                     AssertJUnit.fail("Section 4.2.2: Exception expected, since adding " + m2 + " to " + m +
                             " exceeds capabilities (scale) for " +
@@ -1492,7 +1490,7 @@ public class ModellingMonetaryAmountsTest {
             MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             MonetaryContext ctx = f.getMaximalMonetaryContext();
             if (ctx.getMaxScale() >= 0) {
-                BigDecimal num = TestUtils.createNumberWithScale(f, ctx.getMaxScale() + 5);
+                BigDecimal num = TestUtils.createNumberWithScale(ctx.getMaxScale() + 5);
                 MonetaryAmount m = f.setNumber(10).setCurrency("USD").create();
                 try {
                     m.multiply(num);
@@ -1514,7 +1512,7 @@ public class ModellingMonetaryAmountsTest {
             MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
             MonetaryContext ctx = f.getMaximalMonetaryContext();
             if (ctx.getPrecision() > 0) {
-                BigDecimal num = TestUtils.createNumberWithPrecision(f, ctx.getPrecision() + 5);
+                BigDecimal num = TestUtils.createNumberWithPrecision(ctx.getPrecision() + 5);
                 MonetaryAmount m = f.setNumber(10).setCurrency("USD").create();
                 try {
                     m.multiply(num);
@@ -1639,7 +1637,6 @@ public class ModellingMonetaryAmountsTest {
                     DEFAULT_CURRENCY, m2.getCurrency().getCurrencyCode());
             AssertJUnit.assertEquals("Section 4.2.2: Division result is not correct for " + type.getName(), 1,
                     m2.getNumber().longValueExact());
-            // TODO iterate over array of different numbers and divisors, use BD to check results
         }
     }
 
@@ -2539,6 +2536,7 @@ public class ModellingMonetaryAmountsTest {
     /**
      * Implementations of MonetaryAmount must be Serializable.
      */
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
     @SpecAssertion(section = "4.2.2", id = "422-F4")
     @Test(description = "4.2.2 For each amount class, test iis immutable.")
     public void testImmutable() {
@@ -2552,6 +2550,7 @@ public class ModellingMonetaryAmountsTest {
             if (type.equals(TestAmount.class)) {
                 continue;
             }
+            //noinspection ErrorNotRethrown
             try {
                 TestUtils.testImmutable("Section 4.2.2", type);
             } catch (MutabilityAssertionError e) {

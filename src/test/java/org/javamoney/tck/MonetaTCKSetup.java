@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by Anatole on 14.06.2014.
+ * Implementation of TCK Setup class for the Moneta reference implementation.
  */
 public final class MonetaTCKSetup implements JSR354TestConfiguration {
 
@@ -41,8 +41,9 @@ public final class MonetaTCKSetup implements JSR354TestConfiguration {
                     .asList(new Class[]{Class.forName("org.javamoney.moneta.internal.JDKCurrencyAdapter")});
         }
         catch(ClassNotFoundException e){
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
-            throw new RuntimeException("Currency class not lodable: org.javamoney.moneta.internal.JDKCurrencyAdapter");
+            throw new RuntimeException("Currency class not loadable: org.javamoney.moneta.internal.JDKCurrencyAdapter");
         }
     }
 

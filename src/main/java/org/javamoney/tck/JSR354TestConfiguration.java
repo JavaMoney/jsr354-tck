@@ -9,7 +9,6 @@
  */
 package org.javamoney.tck;
 
-import javax.money.MonetaryOperator;
 import java.util.Collection;
 
 /**

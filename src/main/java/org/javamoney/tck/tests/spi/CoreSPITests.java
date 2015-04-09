@@ -19,7 +19,6 @@ import javax.money.spi.CurrencyProviderSpi;
 import javax.money.spi.MonetaryAmountFactoryProviderSpi;
 import javax.money.spi.MonetaryAmountsSingletonSpi;
 import javax.money.spi.MonetaryConversionsSingletonSpi;
-import javax.money.spi.MonetaryAmountsSingletonSpi;
 import javax.money.spi.RoundingProviderSpi;
 import java.util.ServiceLoader;
 

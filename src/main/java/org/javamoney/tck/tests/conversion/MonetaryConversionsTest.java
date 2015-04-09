@@ -25,7 +25,7 @@ import javax.money.convert.MonetaryConversions;
 import javax.money.convert.ProviderContext;
 
 /**
- * Created by Anatole on 10.03.14.
+ * Tests for MonetaryConversions.
  */
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class MonetaryConversionsTest {

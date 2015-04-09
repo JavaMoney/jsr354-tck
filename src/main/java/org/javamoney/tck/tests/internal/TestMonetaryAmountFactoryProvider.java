@@ -14,7 +14,7 @@ import javax.money.MonetaryContext;
 import javax.money.spi.MonetaryAmountFactoryProviderSpi;
 
 /**
- * Created by Anatole on 19.04.2014.
+ * Test provider for TestAmounts.
  */
 public final class TestMonetaryAmountFactoryProvider implements MonetaryAmountFactoryProviderSpi {
 

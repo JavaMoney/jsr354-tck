@@ -24,7 +24,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * Created by Anatole on 19.04.2014.
+ * Test amount class.
  */
 public final class TestAmount implements MonetaryAmount, Serializable {
 

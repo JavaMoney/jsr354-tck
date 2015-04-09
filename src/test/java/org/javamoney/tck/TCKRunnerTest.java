@@ -12,12 +12,12 @@ package org.javamoney.tck;
 import org.testng.annotations.Test;
 
 /**
- * Created by atsticks on 23.08.14.
+ * Test class for the executing the TCKRunner.
  */
 public class TCKRunnerTest {
 
     @Test
-    public static void testTCKRunner() {
+    public void testTCKRunner() {
         TCKRunner.main(new String[]{TCKRunner.class.getName()});
     }
 }

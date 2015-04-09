@@ -29,7 +29,11 @@ import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +42,11 @@ import java.util.List;
  * Main class for executing the JSR 354 TCK.
  * Created by Anatole on 12.06.2014.
  */
-public class TCKRunner extends XmlSuite {
+@SuppressWarnings("UseOfSystemOutOrSystemErr")
+public final class TCKRunner extends XmlSuite {
+    /**
+     * Constructor.
+     */
     public TCKRunner() {
         setName("JSR354-TCK, version 1.0");
         XmlTest test = new XmlTest(this);
@@ -59,6 +67,16 @@ public class TCKRunner extends XmlSuite {
         test.setXmlClasses(classes);
     }
 
+    /**
+     * Mein method to start the TCK. Optional arguments are:
+     * <ul>
+     *     <li>-DoutputDir for defining the output directory TestNG uses (default: ./target/tck-output).</li>
+     *     <li>-Dverbose=true to enable TestNG verbose mode.</li>
+     *     <li>-DreportFile=targetFile.txt for defining the TCK result summary report target file
+     *     (default: ./target/tck-results.txt).</li>
+     * </ul>
+     * @param args
+     */
     public static void main(String... args) {
         System.out.println("-- JSR 354 TCK started --");
         List<XmlSuite> suites = new ArrayList<>();
@@ -92,6 +110,9 @@ public class TCKRunner extends XmlSuite {
         System.out.println("-- JSR 354 TCK  finished --");
     }
 
+    /**
+     * Reporter implementation.
+     */
     public static final class TCKReporter extends TestListenerAdapter {
         private int count = 0;
         private int skipped = 0;
@@ -101,6 +122,11 @@ public class TCKRunner extends XmlSuite {
         private StringWriter internalBuffer = new StringWriter(3000);
         private FileWriter w;
 
+        /**
+         * Constructor of the TCK reporter, writing to the given file.
+         * @param file the target file, not null.
+         */
+        @SuppressWarnings("CallToPrintStackTrace")
         public TCKReporter(File file) {
             try {
                 if (!file.exists()) {
@@ -126,6 +152,7 @@ public class TCKRunner extends XmlSuite {
         @Override
         public void onTestFailure(ITestResult tr) {
             failed++;
+            count++;
             String location = tr.getTestClass().getRealClass().getSimpleName() + '#' + tr.getMethod().getMethodName();
             try {
                 Method realTestMethod = tr.getMethod().getMethod();
@@ -160,6 +187,7 @@ public class TCKRunner extends XmlSuite {
         @Override
         public void onTestSkipped(ITestResult tr) {
             skipped++;
+            count++;
             String location = tr.getTestClass().getRealClass().getSimpleName() + '#' + tr.getMethod().getMethodName();
             try {
                 Method realTestMethod = tr.getMethod().getMethod();
@@ -177,6 +205,7 @@ public class TCKRunner extends XmlSuite {
         @Override
         public void onTestSuccess(ITestResult tr) {
             success++;
+            count++;
             String location = tr.getTestClass().getRealClass().getSimpleName() + '#' + tr.getMethod().getMethodName();
             try {
                 Method realTestMethod = tr.getMethod().getMethod();
@@ -191,8 +220,9 @@ public class TCKRunner extends XmlSuite {
             }
         }
 
+
+
         private void log(String text) throws IOException {
-            count++;
             w.write(text);
             w.write('\n');
             internalBuffer.write(text);

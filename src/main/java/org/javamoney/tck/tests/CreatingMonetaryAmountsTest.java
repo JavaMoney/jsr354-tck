@@ -32,7 +32,7 @@ import static org.testng.AssertJUnit.assertNotNull;
 import static org.testng.AssertJUnit.assertTrue;
 
 /**
- * Created by Anatole on 10.03.14.
+ * Test class for creating new amounts.
  */
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class CreatingMonetaryAmountsTest {
@@ -641,7 +641,7 @@ public class CreatingMonetaryAmountsTest {
             MonetaryContext ctx = f.getMaximalMonetaryContext();
             if (ctx.getPrecision() != 0) {
                 try {
-                    f.setNumber(TestUtils.createNumberWithPrecision(f, ctx.getPrecision() + 5));
+                    f.setNumber(TestUtils.createNumberWithPrecision(ctx.getPrecision() + 5));
                     f.create();
                     AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
                             "when an amount with exceeding precision is " +
@@ -655,7 +655,7 @@ public class CreatingMonetaryAmountsTest {
             }
             if (ctx.getMaxScale() != -1) {
                 try {
-                    f.setNumber(TestUtils.createNumberWithScale(f, ctx.getMaxScale() + 5));
+                    f.setNumber(TestUtils.createNumberWithScale(ctx.getMaxScale() + 5));
                     f.create();
                     AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
                             "when an amount with exceeding scale is tried" +
@@ -682,9 +682,9 @@ public class CreatingMonetaryAmountsTest {
             MonetaryAmountFactory f = Monetary.getAmountFactory(type);
             try {
                 if (f.getDefaultMonetaryContext().getPrecision() == 0) {
-                    f.setNumber(TestUtils.createNumberWithPrecision(f, 5));
+                    f.setNumber(TestUtils.createNumberWithPrecision(5));
                 } else {
-                    f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision()));
+                    f.setNumber(TestUtils.createNumberWithPrecision(f.getDefaultMonetaryContext().getPrecision()));
                 }
                 f.create();
                 AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
@@ -719,9 +719,9 @@ public class CreatingMonetaryAmountsTest {
             MonetaryAmountFactory f = Monetary.getAmountFactory(type);
             try {
                 if (f.getDefaultMonetaryContext().getPrecision() == 0) {
-                    f.setNumber(TestUtils.createNumberWithPrecision(f, 5));
+                    f.setNumber(TestUtils.createNumberWithPrecision(5));
                 } else {
-                    f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision()));
+                    f.setNumber(TestUtils.createNumberWithPrecision(f.getDefaultMonetaryContext().getPrecision()));
                 }
                 f.setCurrency("FooBar_foobar_fOobAr_foObaR");
                 f.create();
@@ -763,7 +763,7 @@ public class CreatingMonetaryAmountsTest {
                     runTest = true;
                 }
                 if (runTest) {
-                    f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision()));
+                    f.setNumber(TestUtils.createNumberWithPrecision(f.getDefaultMonetaryContext().getPrecision()));
                     f.setCurrency("FooBar_foobar_fOobAr_foObaR");
                     f.create();
                     AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw a MonetaryException, " +
@@ -1003,7 +1003,7 @@ public class CreatingMonetaryAmountsTest {
             MonetaryContext ctx = f.getMaximalMonetaryContext();
             if (ctx.getPrecision() != 0) {
                 try {
-                    f.setNumber(TestUtils.createNumberWithPrecision(f, ctx.getPrecision() + 5).negate());
+                    f.setNumber(TestUtils.createNumberWithPrecision(ctx.getPrecision() + 5).negate());
                     f.create();
                     AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
                             "when an amount with exceeding precision is " +
@@ -1017,7 +1017,7 @@ public class CreatingMonetaryAmountsTest {
             }
             if (ctx.getMaxScale() != -1) {
                 try {
-                    f.setNumber(TestUtils.createNumberWithScale(f, ctx.getMaxScale() + 5).negate());
+                    f.setNumber(TestUtils.createNumberWithScale(ctx.getMaxScale() + 5).negate());
                     f.create();
                     AssertJUnit.fail("Section 4.2.6: MonetaryAmountFactory must throw an ArithmeticException, " +
                             "when an amount with exceeding scale is tried" +
@@ -1044,9 +1044,9 @@ public class CreatingMonetaryAmountsTest {
             MonetaryAmountFactory f = Monetary.getAmountFactory(type);
             try {
                 if (f.getDefaultMonetaryContext().getPrecision() == 0) {
-                    f.setNumber(TestUtils.createNumberWithPrecision(f, 5).negate());
+                    f.setNumber(TestUtils.createNumberWithPrecision(5).negate());
                 } else {
-                    f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision())
+                    f.setNumber(TestUtils.createNumberWithPrecision(f.getDefaultMonetaryContext().getPrecision())
                             .negate());
                 }
                 f.create();
@@ -1079,9 +1079,9 @@ public class CreatingMonetaryAmountsTest {
             MonetaryAmountFactory f = Monetary.getAmountFactory(type);
             try {
                 if (f.getDefaultMonetaryContext().getPrecision() == 0) {
-                    f.setNumber(TestUtils.createNumberWithPrecision(f, 5).negate());
+                    f.setNumber(TestUtils.createNumberWithPrecision(5).negate());
                 } else {
-                    f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision())
+                    f.setNumber(TestUtils.createNumberWithPrecision(f.getDefaultMonetaryContext().getPrecision())
                             .negate());
                 }
                 f.setCurrency("Section 4.2.6: FooBar_foobar_fOobAr_foObaR");
@@ -1122,9 +1122,9 @@ public class CreatingMonetaryAmountsTest {
                 }
                 if (runTest) {
                     if (f.getDefaultMonetaryContext().getPrecision() == 0) {
-                        f.setNumber(TestUtils.createNumberWithPrecision(f, 5).negate());
+                        f.setNumber(TestUtils.createNumberWithPrecision(5).negate());
                     } else {
-                        f.setNumber(TestUtils.createNumberWithPrecision(f, f.getDefaultMonetaryContext().getPrecision())
+                        f.setNumber(TestUtils.createNumberWithPrecision(f.getDefaultMonetaryContext().getPrecision())
                                 .negate());
                     }
                     f.setCurrency("FooBar_foobar_fOobAr_foObaR");
@@ -1148,7 +1148,7 @@ public class CreatingMonetaryAmountsTest {
     public void testMonetaryAmountTypes_Available() {
         Collection<Class<? extends MonetaryAmount>> types = Monetary.getAmountTypes();
         assertNotNull("Section 4.2.6: Monetary returns null for amount implementations.", types);
-        assertTrue("Section 4.2.6: Monetary does not provide any amount implementations.", types.size() > 0);
+        assertTrue("Section 4.2.6: Monetary does not provide any amount implementations.", !types.isEmpty());
     }
 
 }

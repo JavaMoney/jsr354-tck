@@ -48,11 +48,8 @@ public class FormattingMonetaryAmountsTest {
     public void testNoDepOnAmountImplementation() {
         final Locale defaultLocale = Locale.getDefault();
         MonetaryAmountFormat amountFormat = MonetaryFormats.getAmountFormat(defaultLocale);
-        final Number[] values = new Number[]{100, 10000000000000L};// TODO
-        // other
-        // values
-        // and
-        // currencies
+        final Number[] values = new Number[]{100, 10000000000000L};
+
         for (CurrencyUnit currency : Monetary.getCurrencies()) {
             for (Number value : values) {
                 MonetaryAmount amount =

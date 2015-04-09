@@ -34,7 +34,7 @@ public class ModellingCurrenciesTest {
     @Test(description = "4.2.1 Ensure TCK has CurrencyUnit classes configured.")
     public void testEnsureCurrencyUnit() {
         AssertJUnit.assertTrue("TCK Configuration not available.", TCKTestSetup.getTestConfiguration() != null);
-        AssertJUnit.assertTrue(TCKTestSetup.getTestConfiguration().getCurrencyClasses().size() > 0);
+        AssertJUnit.assertTrue(!TCKTestSetup.getTestConfiguration().getCurrencyClasses().isEmpty());
     }
 
     /**

@@ -17,7 +17,7 @@ import java.util.Locale;
 import java.util.Set;
 
 /**
- * Created by Anatole on 19.04.2014.
+ * Test currency provider.
  */
 public final class TestCurrencyProvider implements CurrencyProviderSpi {
 

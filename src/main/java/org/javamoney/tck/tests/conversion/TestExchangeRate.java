@@ -81,7 +81,8 @@ import java.util.Objects;
  * href="https://en.wikipedia.org/wiki/Exchange_rate#Quotations">Wikipedia:
  * Exchange Rate (Quotations)</a>
  */
-public class TestExchangeRate implements ExchangeRate, Serializable, Comparable<ExchangeRate> {
+@SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
+public final class TestExchangeRate implements ExchangeRate, Serializable, Comparable<ExchangeRate> {
 
     /**
      * serialVersionUID.

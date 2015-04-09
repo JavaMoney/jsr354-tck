@@ -11,13 +11,20 @@ package org.javamoney.tck;
 
 import java.util.ServiceLoader;
 
+/**
+ * TCK bootstrap class loading the {@link org.javamoney.tck.JSR354TestConfiguration}.
+ */
 public final class TCKTestSetup {
 
-    private static JSR354TestConfiguration TEST_CONFIG = loadTestConfiguration();
+    private static final JSR354TestConfiguration TEST_CONFIG = loadTestConfiguration();
 
     private TCKTestSetup() {
     }
 
+    /**
+     * Loads the test configuration setup from the ServiceLoader.
+     * @return
+     */
     private static JSR354TestConfiguration loadTestConfiguration() {
         try {
             return ServiceLoader.load(JSR354TestConfiguration.class).iterator()
@@ -29,6 +36,10 @@ public final class TCKTestSetup {
         }
     }
 
+    /**
+     * Get the current test configuration setup.
+     * @return the test configuration, not null.
+     */
     public static JSR354TestConfiguration getTestConfiguration() {
         return TEST_CONFIG;
     }

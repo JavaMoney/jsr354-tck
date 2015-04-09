@@ -32,8 +32,8 @@ import java.util.Objects;
 public class TestRateProvider3 implements ExchangeRateProvider {
 
     public static final int FACTOR = 3;
-    private static ProviderContext PC = ProviderContextBuilder.of("TestRateProvider3", RateType.OTHER).build();
-    private static ConversionContext CC = ConversionContextBuilder.create(PC, RateType.OTHER).build();
+    private static final ProviderContext PC = ProviderContextBuilder.of("TestRateProvider3", RateType.OTHER).build();
+    private static final ConversionContext CC = ConversionContextBuilder.create(PC, RateType.OTHER).build();
 
     private static final class Conversion implements CurrencyConversion {
 

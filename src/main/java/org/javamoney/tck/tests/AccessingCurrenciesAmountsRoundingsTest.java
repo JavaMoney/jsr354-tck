@@ -40,7 +40,7 @@ import static org.junit.Assert.assertNotNull;
 
 
 /**
- * Created by Anatole on 10.03.14.
+ * Test class for accessing currencies and amounts.
  */
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
 public class AccessingCurrenciesAmountsRoundingsTest {
@@ -324,7 +324,6 @@ public class AccessingCurrenciesAmountsRoundingsTest {
     public void testAmountDefaultType() {
         AssertJUnit.assertNotNull("Section 4.2.7: No default MonetaryAmountFactory found.",
                 Monetary.getDefaultAmountFactory());
-        // TODO check default configuration...
     }
 
     // ********************************* C. Accessing Roundings *****************************

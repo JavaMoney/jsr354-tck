@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Created by Anatole on 19.04.2014.
+ * Test currency unit.
  */
 public final class TestCurrencyUnit implements CurrencyUnit, Serializable {
 
