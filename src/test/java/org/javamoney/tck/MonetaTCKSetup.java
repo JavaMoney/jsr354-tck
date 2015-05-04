@@ -9,19 +9,20 @@
  */
 package org.javamoney.tck;
 
-import org.javamoney.moneta.FastMoney;
-import org.javamoney.moneta.Money;
-import org.javamoney.moneta.function.MonetaryUtil;
-
-import javax.money.MonetaryOperator;
-import javax.money.Monetary;
-import javax.money.convert.MonetaryConversions;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import javax.money.Monetary;
+import javax.money.MonetaryOperator;
+import javax.money.convert.MonetaryConversions;
+
+import org.javamoney.moneta.FastMoney;
+import org.javamoney.moneta.Money;
+import org.javamoney.moneta.function.MonetaryOperators;
 
 /**
  * Implementation of TCK Setup class for the Moneta reference implementation.
@@ -50,14 +51,14 @@ public final class MonetaTCKSetup implements JSR354TestConfiguration {
     @Override
     public Collection<MonetaryOperator> getMonetaryOperators4Test(){
         List<MonetaryOperator> ops = new ArrayList<>();
-        ops.add(MonetaryUtil.majorPart());
-        ops.add(MonetaryUtil.minorPart());
-        ops.add(MonetaryUtil.percent(BigDecimal.ONE));
-        ops.add(MonetaryUtil.percent(3.5));
-        ops.add(MonetaryUtil.permil(10.3));
-        ops.add(MonetaryUtil.permil(BigDecimal.ONE));
-        ops.add(MonetaryUtil.permil(10.5, MathContext.DECIMAL32));
-        ops.add(MonetaryUtil.reciprocal());
+        ops.add(MonetaryOperators.majorPart());
+        ops.add(MonetaryOperators.minorPart());
+        ops.add(MonetaryOperators.percent(BigDecimal.ONE));
+        ops.add(MonetaryOperators.percent(3.5));
+        ops.add(MonetaryOperators.permil(10.3));
+        ops.add(MonetaryOperators.permil(BigDecimal.ONE));
+        ops.add(MonetaryOperators.permil(10.5, MathContext.DECIMAL32));
+        ops.add(MonetaryOperators.reciprocal());
         ops.add(Monetary.getDefaultRounding());
         ops.add(MonetaryConversions.getConversion("EUR"));
         return ops;
