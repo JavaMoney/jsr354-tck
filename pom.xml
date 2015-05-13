@@ -23,7 +23,7 @@
     <artifactId>javamoney-tck</artifactId>
     <packaging>jar</packaging>
 
-    <version>1.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <name>JSR 354 Technical Compatibility Kit (TCK)</name>
 
@@ -44,6 +44,7 @@
 
     <properties>
         <jsr.version>1.0</jsr.version>
+        <ri.version>1.0.1-SNAPSHOT</ri.version>
         <jdkVersion>1.7</jdkVersion>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
@@ -81,7 +82,6 @@
         <system>JIRA</system>
         <url>http://java.net/jira/browse/JAVAMONEY</url>
     </issueManagement>
-
 
     <prerequisites>
         <maven>3.0.4</maven>
@@ -168,7 +168,7 @@
         <dependency>
             <groupId>org.javamoney</groupId>
             <artifactId>moneta-bp</artifactId>
-            <version>${jsr.version}</version>
+            <version>${ri.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -205,7 +205,7 @@
                 <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
-                    <version>2.3.5</version>
+                    <version>2.5.3</version>
                     <extensions>true</extensions>
                     <configuration>
                         <instructions>
