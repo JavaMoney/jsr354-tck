@@ -32,18 +32,27 @@ import org.testng.xml.XmlTest;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import javax.lang.model.SourceVersion;
+import javax.tools.Tool;
 
 /**
  * Main class for executing the JSR 354 TCK.
  * Created by Anatole on 12.06.2014.
  */
 @SuppressWarnings("UseOfSystemOutOrSystemErr")
-public final class TCKRunner extends XmlSuite {
+public final class TCKRunner extends XmlSuite implements Tool {
     /**
      * Constructor.
      */
@@ -77,7 +86,9 @@ public final class TCKRunner extends XmlSuite {
      * </ul>
      * @param args
      */
-    public static void main(String... args) {
+    @Override
+    public int run(InputStream in, OutputStream out, OutputStream err,
+    			String... args) {
         System.out.println("-- JSR 354 TCK started --");
         List<XmlSuite> suites = new ArrayList<>();
         suites.add(new TCKRunner());
@@ -108,7 +119,16 @@ public final class TCKRunner extends XmlSuite {
         tng.run();
         rep.writeSummary();
         System.out.println("-- JSR 354 TCK  finished --");
+        return 0;
     }
+    
+
+	@Override
+	public final Set<SourceVersion> getSourceVersions() {
+		return Collections.unmodifiableSet(new HashSet<SourceVersion>(Arrays.asList(
+				new SourceVersion[]{SourceVersion.RELEASE_5, SourceVersion.RELEASE_6, 
+						SourceVersion.RELEASE_7 } )));
+	}
 
     /**
      * Reporter implementation.
@@ -231,7 +251,7 @@ public final class TCKRunner extends XmlSuite {
 
         public void writeSummary() {
             try {
-                log("\nJSR 354 TCK, version 1.0 Summary");
+                log("\nJSR 354 TCK, version 1.0 Summary"); // FIXME this should not be hardcoded here
                 log("------------------------------------------");
                 log("\nTOTAL TESTS EXECUTED : " + count);
                 log("TOTAL TESTS SKIPPED  : " + skipped);
@@ -247,6 +267,4 @@ public final class TCKRunner extends XmlSuite {
             }
         }
     }
-
-
 }
