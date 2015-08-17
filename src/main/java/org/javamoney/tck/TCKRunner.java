@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, Werner Keil, Credit Suisse (Anatole Tresch). Licensed under the Apache
+ * Copyright (c) 2012, 2015, Werner Keil, Credit Suisse, Anatole Tresch. Licensed under the Apache
  * License, Version 2.0 (the "License"); you may not use this file except in compliance with the
  * License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License
@@ -77,7 +77,7 @@ public final class TCKRunner extends XmlSuite implements Tool {
     }
 
     /**
-     * Mein method to start the TCK. Optional arguments are:
+     * Main method to start the TCK. Optional arguments are:
      * <ul>
      *     <li>-DoutputDir for defining the output directory TestNG uses (default: ./target/tck-output).</li>
      *     <li>-Dverbose=true to enable TestNG verbose mode.</li>
@@ -122,13 +122,12 @@ public final class TCKRunner extends XmlSuite implements Tool {
         return 0;
     }
     
-
-	@Override
-	public final Set<SourceVersion> getSourceVersions() {
-		return Collections.unmodifiableSet(new HashSet<SourceVersion>(Arrays.asList(
-				new SourceVersion[]{SourceVersion.RELEASE_5, SourceVersion.RELEASE_6, 
-						SourceVersion.RELEASE_7 } )));
-	}
+    @Override
+    public final Set<SourceVersion> getSourceVersions() {
+	return Collections.unmodifiableSet(new HashSet<SourceVersion>(Arrays.asList(
+		new SourceVersion[]{SourceVersion.RELEASE_5, SourceVersion.RELEASE_6, 
+ 			SourceVersion.RELEASE_7 } )));
+    }
 
     /**
      * Reporter implementation.
@@ -239,8 +238,6 @@ public final class TCKRunner extends XmlSuite implements Tool {
                 throw new IllegalStateException("IO Error", e);
             }
         }
-
-
 
         private void log(String text) throws IOException {
             w.write(text);
