@@ -25,7 +25,8 @@ You can do this all manually, use your IDE or use maven, the ladder by performin
 
     @Test
     public void runTCK(){
-        TCKRunner.main(new String[0]);
+        Tool runner = new TCKRunner();
+        runner.run(System.in, System.out, System.err, new String[0]);
     }
     
 4) To execute the TCK, simply execute
