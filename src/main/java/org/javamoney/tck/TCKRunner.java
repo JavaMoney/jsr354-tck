@@ -128,7 +128,12 @@ public final class TCKRunner extends XmlSuite implements Tool {
 		new SourceVersion[]{SourceVersion.RELEASE_5, SourceVersion.RELEASE_6, 
  			SourceVersion.RELEASE_7 } )));
     }
-
+    
+    public static final void main(String... args) {
+	 TCKRunner runner = new TCKRunner();
+	 runner.run(System.in, System.out, System.err, args);
+    }
+    
     /**
      * Reporter implementation.
      */
