@@ -18,7 +18,7 @@
 	<artifactId>javamoney-tck</artifactId>
 	<packaging>jar</packaging>
 
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.1-SNAPSHOT</version>
 
 	<name>JSR 354 Technical Compatibility Kit (TCK)</name>
 
@@ -39,7 +39,7 @@
 
 	<properties>
 		<jsr.version>1.0</jsr.version>
-		<ri.version>1.0.1-SNAPSHOT</ri.version>
+		<ri.version>1.1-SNAPSHOT</ri.version>
 		<jdkVersion>1.7</jdkVersion>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
 		<maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
@@ -346,7 +346,6 @@
 		</repository>
 	</repositories>
 
-
 	<profiles>
 		<profile>
 			<id>audit</id>
@@ -480,5 +479,4 @@
 			</build>
 		</profile>
 	</profiles>
-
 </project>
