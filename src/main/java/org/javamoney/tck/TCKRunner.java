@@ -57,9 +57,9 @@ public final class TCKRunner extends XmlSuite implements Tool {
      * Constructor.
      */
     public TCKRunner() {
-        setName("JSR354-TCK, version 1.0.1");
+        setName("JSR354-TCK, version 1.1");
         XmlTest test = new XmlTest(this);
-        test.setName("TCK/Test Setup - Java 7");
+        test.setName("TCK/Test Setup");
         List<XmlClass> classes = new ArrayList<>();
         classes.add(new XmlClass(TCKTestSetup.class));
         classes.add(new XmlClass(ModellingCurrenciesTest.class));
@@ -158,13 +158,13 @@ public final class TCKRunner extends XmlSuite implements Tool {
                 }
                 w = new FileWriter(file);
                 w.write("********************************************************************************************\n");
-                w.write("**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.0.1\n");
+                w.write("**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.1\n");
                 w.write("********************************************************************************************\n\n");
                 w.write("Executed on " + new java.util.Date() + "\n\n");
 
                 // System.out:
                 internalBuffer.write("********************************************************************************\n");
-                internalBuffer.write("**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.0.1.\n");
+                internalBuffer.write("**** JSR 354 - Money & Currency, Technical Compatibility Kit, version 1.1.\n");
                 internalBuffer.write("********************************************************************************\n\n");
                 internalBuffer.write("Executed on " + new java.util.Date() + "\n\n");
             } catch (IOException e) {
@@ -253,7 +253,7 @@ public final class TCKRunner extends XmlSuite implements Tool {
 
         public void writeSummary() {
             try {
-                log("\nJSR 354 TCK, version 1.0.1 Summary"); // FIXME this should not be hardcoded here
+                log("\nJSR 354 TCK, version 1.1 Summary"); // FIXME this should not be hardcoded here
                 log("------------------------------------------");
                 log("\nTOTAL TESTS EXECUTED : " + count);
                 log("TOTAL TESTS SKIPPED  : " + skipped);
