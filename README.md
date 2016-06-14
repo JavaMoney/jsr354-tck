@@ -37,8 +37,7 @@ You can do this all manually, use your IDE or use maven, the ladder by performin
 
 
 As jump-start you can clone
-- https://github.com/JavaMoney/javamoney-tck-usage-example (Java 8 and above), or
-- https://github.com/JavaMoney/javamoney-tck-usage-example-bp (Java 7)
+- https://github.com/JavaMoney/javamoney-tck-usage-example (master: Java 8 and above, backport: Java 7)
 
 Additional details and options are also available src/main/asciidoc/userguide.adoc[here] .
 
