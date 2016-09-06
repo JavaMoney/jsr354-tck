@@ -2,7 +2,7 @@ JSR 354: Money and Currency TCK
 ===============================
 
 JSR 354 provides an API for representing, transporting, and performing comprehensive calculations with Money and Currency. 
-See the home page for more details: [JSR 354: Money and Currency API](http://jcp.org/en/jsr/detail?id=354)
+For more details see [JavaMoney.org](http://javamoney.org) and [JSR 354: Money and Currency API](https://jcp.org/en/jsr/detail?id=354)
 
 The current module contains the technical compatibility kit of JSR 354.
 
