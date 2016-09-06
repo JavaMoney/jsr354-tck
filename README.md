@@ -2,8 +2,7 @@ JSR 354: Money and Currency TCK
 ===============================
 
 JSR 354 provides an API for representing, transporting, and performing comprehensive calculations with Money and Currency. 
-See the home page for more details:
-http://jcp.org/en/jsr/detail?id=354
+See the home page for more details: [JSR 354: Money and Currency API](http://jcp.org/en/jsr/detail?id=354)
 
 The current module contains the technical compatibility kit of JSR 354.
 
@@ -13,39 +12,44 @@ to your classpath:
 - the JSR 354 API jar (either for Java 8 or for Java 7)
 - your implementation under test and all its dependencies
 - TestNG and all its dependencies
-- your implementation and SE service registration of *org.javamoney.tck.JSR354TestConfiguration*
+- your implementation and SE service registration of `org.javamoney.tck.JSR354TestConfiguration`
 
-You can do this all manually, use your IDE or use maven, the ladder by performing the following tasks:
+You can do this all manually, use your IDE or use Maven, the ladder by performing the following tasks:
 
-1) Create a new maven project.
-2) Add this TCK, the target API (Java 7 or 8) and your implementation as dependency.
-3) Implement a class of type *org.javamoney.tck.JSR354TestConfiguration*, read the Javadoc, what 
-  you must provide with this class.
-4) Add a single test class with a singlet test as follows:
+1. Create a new project Maven or Gradle.
+2. Add dependencies:
+   * Add this TCK [org.javamoney:javamoney-tck](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.javamoney%22%20AND%20a%3A%22javamoney-tck%22)
+   * Add the target API ["javax.moneyy:money-api-bp](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22javax.money%22%20AND%20a%3A%22money-api-bp%22) for Java 7 or ["javax.money:money-api](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22javax.money%22%20AND%20a%3A%22money-api%22) for Java 8
+   * and your implementation as dependency
+3. Implement a class of type [org.javamoney.tck.JSR354TestConfiguration](./src/main/java/org/javamoney/tck/JSR354TestConfiguration.java), read the Javadoc, what you must provide with this class.
+4. Add a single test class with a singlet test as follows:
 
-    @Test
-    public void runTCK(){
-        Tool runner = new TCKRunner();
-        runner.run(System.in, System.out, System.err, new String[0]);
-    }
-    
-4) To execute the TCK, simply execute
-  
-    mvn clean test
+     ```java
+     @Test
+     public void runTCK(){
+         Tool runner = new TCKRunner();
+         runner.run(System.in, System.out, System.err, new String[0]);
+     }
+     ```
 
-5) Go to target - there you will find your TCK test results.
+5. To execute the TCK, simply execute
+
+     mvn clean test
+
+6. Go to target - there you will find your TCK test results.
 
 
-As jump-start you can clone
-- https://github.com/JavaMoney/javamoney-tck-usage-example (master: Java 8 and above, backport: Java 7)
+As jump-start you can clone [javamoney-tck-usage-example](https://github.com/JavaMoney/javamoney-tck-usage-example) (master: Java 8 and above, backport: Java 7)
 
-Additional details and options are also available src/main/asciidoc/userguide.adoc[here] .
+Additional details and options are also available in [user guide](src/main/asciidoc/userguide.adoc).
 
 The JSR 354 Team.
 
 
 This module is licenced under the the [Apache 2 Licence](https://www.apache.org/licenses/LICENSE-2.0.html).
 
+[![Maven Central](https://img.shields.io/maven-central/v/org.javamoney/javamoney-tck.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.javamoney%22%20AND%20a%3A%22javamoney-tck%22)
 [![Build Status](https://api.travis-ci.org/JavaMoney/jsr354-tck.png?branch=master)](https://travis-ci.org/JavaMoney/jsr354-tck) [![License](http://img.shields.io/badge/license-Apache2-red.svg)](http://opensource.org/licenses/apache-2.0)
+[![Reference Status](https://www.versioneye.com/java/org.javamoney:javamoney-tck/reference_badge.svg?style=flat)](https://www.versioneye.com/java/org.javamoney:javamoney-tck/references)
 
 [![Built with Maven](http://maven.apache.org/images/logos/maven-feather.png)](http://maven.org/)
