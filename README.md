@@ -19,7 +19,7 @@ You can do this all manually, use your IDE or use Maven, the ladder by performin
 1. Create a new project Maven or Gradle.
 2. Add dependencies:
    * Add this TCK [org.javamoney:javamoney-tck](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.javamoney%22%20AND%20a%3A%22javamoney-tck%22)
-   * Add the target API ["javax.moneyy:money-api-bp](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22javax.money%22%20AND%20a%3A%22money-api-bp%22) for Java 7 or ["javax.money:money-api](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22javax.money%22%20AND%20a%3A%22money-api%22) for Java 8
+   * Add the target API [javax.moneyy:money-api-bp](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22javax.money%22%20AND%20a%3A%22money-api-bp%22) for Java 7 or [javax.money:money-api](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22javax.money%22%20AND%20a%3A%22money-api%22) for Java 8
    * and your implementation as dependency
 3. Implement a class of type [org.javamoney.tck.JSR354TestConfiguration](./src/main/java/org/javamoney/tck/JSR354TestConfiguration.java), read the Javadoc, what you must provide with this class.
 4. Add a single test class with a singlet test as follows:
@@ -34,7 +34,9 @@ You can do this all manually, use your IDE or use Maven, the ladder by performin
 
 5. To execute the TCK, simply execute
 
-     mvn clean test
+   ```
+       mvn clean test
+   ```
 
 6. Go to target - there you will find your TCK test results.
 
