@@ -14,7 +14,7 @@ to your classpath:
 - TestNG and all its dependencies
 - your implementation and SE service registration of `org.javamoney.tck.JSR354TestConfiguration`
 
-You can do this all manually, use your IDE or use Maven, the ladder by performing the following tasks:
+You can do this all manually, use your IDE or use Maven, the latter by performing the following tasks:
 
 1. Create a new project Maven or Gradle.
 2. Add dependencies:
