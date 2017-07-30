@@ -2520,16 +2520,16 @@ public class ModellingMonetaryAmountsTest {
             MonetaryAmount amount4 = factory.setCurrency("XXX").setNumber(1).create();
 
             AssertJUnit.assertTrue("Section 4.2.2: Comparable failed for: " + type.getName(),
-                    ((Comparable) amount).compareTo(amount3) > 0);
+                    amount.compareTo(amount3) > 0);
 
             AssertJUnit.assertTrue("Section 4.2.2: Comparable failed for: " + type.getName(),
-                    ((Comparable) amount3).compareTo(amount) < 0);
+                    amount3.compareTo(amount) < 0);
 
             AssertJUnit.assertTrue("Section 4.2.2: Comparable failed for: " + type.getName(),
-                    ((Comparable) amount).compareTo(amount4) < 0);
+                    amount.compareTo(amount4) < 0);
 
             AssertJUnit.assertTrue("Section 4.2.2: Comparable failed for: " + type.getName(),
-                    ((Comparable) amount4).compareTo(amount) > 0);
+                    amount4.compareTo(amount) > 0);
         }
     }
 

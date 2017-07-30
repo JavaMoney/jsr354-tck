@@ -381,7 +381,7 @@ public class ExternalizingNumericValueTest {
                 AssertJUnit
                         .assertEquals("Section 4.2.3: Number value (Float, truncating) returned is not correct for " + type.getName(),
                                 new BigDecimal(String.valueOf(num)).floatValue(),
-                                result.numberValue(Float.class).floatValue(), 0.0f);
+                                result.numberValue(Float.class), 0.0f);
             }
         }
     }
@@ -926,7 +926,7 @@ public class ExternalizingNumericValueTest {
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit.assertEquals(
                         "Section 4.2.3: Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
-                        new BigDecimal(String.valueOf(num)).floatValue(), result.numberValue(Float.class).floatValue(),
+                        new BigDecimal(String.valueOf(num)).floatValue(), result.numberValue(Float.class),
                         0.0f);
                 AssertJUnit.assertEquals(
                         "Section 4.2.3: Number value (BigDecimal -> float) returned is not correct for " + type.getName(),
@@ -1055,19 +1055,19 @@ public class ExternalizingNumericValueTest {
                 NumberValue result = mAmount1.getNumber();
                 AssertJUnit.assertEquals("Section 4.2.3: Number value (byte) returned is not correct for " + type.getName(),
                         new BigDecimal(String.valueOf(num)).byteValue(), (byte) 0,
-                        result.numberValue(Byte.class).byteValue());
+                        result.numberValue(Byte.class));
                 AssertJUnit.assertEquals("Section 4.2.3: Number value (short) returned is not correct for " + type.getName(),
                         new BigDecimal(String.valueOf(num)).shortValue(), (short) 0,
-                        result.numberValue(Short.class).shortValue());
+                        result.numberValue(Short.class));
                 AssertJUnit.assertEquals("Section 4.2.3: Number value (int) returned is not correct for " + type.getName(),
                         new BigDecimal(String.valueOf(num)).intValue(), 0,
-                        result.numberValue(Integer.class).intValue());
+                        result.numberValue(Integer.class));
                 AssertJUnit.assertEquals("Section 4.2.3: Number value (long) returned is not correct for " + type.getName(),
                         new BigDecimal(String.valueOf(num)).longValue(), (long) 0,
-                        result.numberValue(Long.class).longValue());
+                        result.numberValue(Long.class));
                 AssertJUnit.assertEquals("Section 4.2.3: Number value (float) returned is not correct for " + type.getName(),
                         new BigDecimal(String.valueOf(num)).floatValue(), 0.0f,
-                        result.numberValue(Float.class).floatValue());
+                        result.numberValue(Float.class));
                 AssertJUnit.assertEquals("Section 4.2.3: Number value (double) returned is not correct for " + type.getName(),
                         new BigDecimal(String.valueOf(num)).doubleValue(), 0.0f,
                         result.numberValue(Double.class));

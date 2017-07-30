@@ -141,7 +141,7 @@ public final class TestExchangeRate implements ExchangeRate, Serializable, Compa
             this.chain.add(this);
         } else {
             for (ExchangeRate aChain : chain) {
-                if (chain == null) {
+                if (aChain == null) {
                     throw new IllegalArgumentException("Chain element can not be null.");
                 }
             }

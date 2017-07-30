@@ -124,12 +124,12 @@ public final class TCKRunner extends XmlSuite implements Tool {
     
     @Override
     public final Set<SourceVersion> getSourceVersions() {
-	return Collections.unmodifiableSet(new HashSet<SourceVersion>(Arrays.asList(
-		new SourceVersion[]{SourceVersion.RELEASE_5, SourceVersion.RELEASE_6, 
- 			SourceVersion.RELEASE_7 } )));
+	return Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+            new SourceVersion[]{SourceVersion.RELEASE_5, SourceVersion.RELEASE_6,
+                    SourceVersion.RELEASE_7})));
     }
     
-    public static final void main(String... args) {
+    public static void main(String... args) {
 	 TCKRunner runner = new TCKRunner();
 	 runner.run(System.in, System.out, System.err, args);
     }
@@ -181,7 +181,7 @@ public final class TCKRunner extends XmlSuite implements Tool {
             try {
                 Method realTestMethod = tr.getMethod().getMethod();
                 Test testAnnot = realTestMethod.getAnnotation(Test.class);
-                if (testAnnot != null && testAnnot.description() != null && !testAnnot.description().isEmpty()) {
+                if (!testAnnot.description().isEmpty()) {
                     if (tr.getThrowable() != null) {
                         StringWriter sw = new StringWriter();
                         PrintWriter w = new PrintWriter(sw);
@@ -216,7 +216,7 @@ public final class TCKRunner extends XmlSuite implements Tool {
             try {
                 Method realTestMethod = tr.getMethod().getMethod();
                 Test specAssert = realTestMethod.getAnnotation(Test.class);
-                if (specAssert != null && specAssert.description() != null && !specAssert.description().isEmpty()) {
+                if (specAssert != null && !specAssert.description().isEmpty()) {
                     log("[SKIPPED] " + specAssert.description() + "(" + location + ")");
                 } else {
                     log("[SKIPPED] " + location);
@@ -234,7 +234,7 @@ public final class TCKRunner extends XmlSuite implements Tool {
             try {
                 Method realTestMethod = tr.getMethod().getMethod();
                 Test specAssert = realTestMethod.getAnnotation(Test.class);
-                if (specAssert != null && specAssert.description() != null && !specAssert.description().isEmpty()) {
+                if (specAssert != null && !specAssert.description().isEmpty()) {
                     log("[SUCCESS] " + specAssert.description() + "(" + location + ")");
                 } else {
                     log("[SUCCESS] " + location);
