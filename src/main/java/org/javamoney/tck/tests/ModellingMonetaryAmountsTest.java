@@ -2191,6 +2191,32 @@ public class ModellingMonetaryAmountsTest {
     }
 
     /**
+     * Test scaleByPowerOfTen() chaining returns correct results.
+     */
+    @SpecAssertion(section = "4.2.2", id = "422-D26")
+    @Test(description = "4.2.2 For each amount class, ensure scaleByPowerOfTen(-1).scaleByPowerOfTen(1) returns correct results or throws ArithmeticException.")
+    public void testScaleByPowerOfTenArithmeticException() {
+      for (Class type : Monetary.getAmountTypes()) {
+        if (type.equals(TestAmount.class)) {
+          continue;
+        }
+        MonetaryAmountFactory<?> f = Monetary.getAmountFactory(type);
+        MonetaryContext maximalContext = f.getMaximalMonetaryContext();
+        f.setCurrency("CHF");
+        f.setContext(maximalContext);
+        f.setNumber(BigDecimal.valueOf(16, maximalContext.getMaxScale()));
+
+        MonetaryAmount m = f.create();
+        try {
+          AssertJUnit.assertEquals("Section 4.2.2: Invalid " + m + " -> scaleByPowerOfTen(-1) for " +
+                  type.getName(), m, m.scaleByPowerOfTen(-1).scaleByPowerOfTen(1));
+        } catch (ArithmeticException e) {
+          // exceeds numeric capabilities, fine
+        }
+      }
+    }
+
+    /**
      * Test abs() for getting the absolute value.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D27")
