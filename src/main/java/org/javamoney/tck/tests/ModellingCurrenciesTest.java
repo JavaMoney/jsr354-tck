@@ -16,6 +16,8 @@ import org.jboss.test.audit.annotations.SpecVersion;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
+import javax.money.CurrencyContext;
+import javax.money.CurrencyQueryBuilder;
 import javax.money.CurrencyUnit;
 import javax.money.Monetary;
 import java.util.ArrayList;
@@ -122,6 +124,12 @@ public class ModellingCurrenciesTest {
         }
         for (int i = 0; i < firstUnits.size(); i++) {
             AssertJUnit.assertEquals(firstUnits.get(i), secondUnits.get(i));
+        }
+        for (CurrencyUnit unit : Monetary.getCurrencies(CurrencyQueryBuilder.of().build())) {
+            String currencyCode = unit.getCurrencyCode();
+            if (currencyCode != null) {
+                AssertJUnit.assertEquals("CurrencyUnit#hashCode() must be equal to currency code hash code", unit.hashCode(), currencyCode.hashCode());
+            }
         }
     }
 
