@@ -335,7 +335,7 @@ public final class TestExchangeRate implements ExchangeRate, Serializable, Compa
          */
         private NumberValue factor;
         /**
-         * The chain of invovled rates.
+         * The chain of involved rates.
          */
         private List<ExchangeRate> rateChain = new ArrayList<>();
 

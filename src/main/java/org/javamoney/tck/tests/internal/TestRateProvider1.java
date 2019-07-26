@@ -27,7 +27,7 @@ import javax.money.convert.RateType;
 import java.util.Objects;
 
 /**
- * CTest ExchangeProvider.  reated by Anatole on 26.04.2014.
+ * CTest ExchangeProvider. Created by Anatole on 26.04.2014.
  */
 public class TestRateProvider1 implements ExchangeRateProvider {
 

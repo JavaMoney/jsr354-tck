@@ -158,7 +158,7 @@ public final class TestUtils {
      * @param type the type to be checked.
      * @param returnType the method return type.
      * @param name the method name
-     * @param paramTypes the parametr types.
+     * @param paramTypes the parameter types.
      *                   @throws org.javamoney.tck.TCKValidationException if test fails.
      */
     public static void testHasPublicMethod(String section, Class type, Class returnType, String name,
@@ -186,7 +186,7 @@ public final class TestUtils {
      * @param type the type to be checked.
      * @param returnType the method return type.
      * @param name the method name
-     * @param paramTypes the parametr types.
+     * @param paramTypes the parameter types.
      *                   @throws org.javamoney.tck.TCKValidationException if test fails.
      */
     public static void testHasPublicStaticMethod(String section, Class type, Class returnType, String name,
@@ -215,7 +215,7 @@ public final class TestUtils {
      * @param type the type to be checked.
      * @param returnType the method return type.
      * @param name the method name
-     * @param paramTypes the parametr types.
+     * @param paramTypes the parameter types.
      *                   @throws org.javamoney.tck.TCKValidationException if test fails.
      */
     public static void testHasNotPublicMethod(String section, Class type, Class returnType, String name,
@@ -305,7 +305,7 @@ public final class TestUtils {
      * @param type the type to be checked.
      * @param returnType the method return type.
      * @param methodName  the target method name
-     * @param paramTypes the parametr types.
+     * @param paramTypes the parameter types.
      * @return true, if test succeeded.
      */
     public static boolean testHasPublicStaticMethodOpt(String section, Class type, Class returnType, String methodName,
@@ -325,7 +325,7 @@ public final class TestUtils {
      * Tests if an instance is effectively serializable.
      * @param section the section of the spec under test
      * @param instance the instance to call
-     * @return true, if test succeded.
+     * @return true, if test succeed.
      */
     public static boolean testSerializableOpt(String section, Object instance) {
         try {
