@@ -48,7 +48,7 @@ correctly and help to ensure also behavioural interoperability between different
 TCK for JSR 354 Money and Currency ensures exactly this for implementations of the Money & Currency JSR.
 The TCK hereby is open sourced under the Apache 2 licence. Nevertheless we would be highly interested to keep track of
 implementation of this JSR. So if you are are planning or even writing on an implementation of this JSR, drop a mail to
-the JSR's mailto:jcurrency_mail@javamoney.java.net[mailing list] on http://java.net/project/JavaMoney[java.net] or the
+the JSR's mailto:javamoney@groups.io[mailing list] on https://groups.io/g/javamoney/[groups.io] or the
 JSR's mailto:atsticks@java.net[spec lead].
 
 
