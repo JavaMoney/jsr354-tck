@@ -27,8 +27,7 @@ You can do this all manually, use your IDE or use Maven, the latter by performin
      ```java
      @Test
      public void runTCK(){
-         Tool runner = new TCKRunner();
-         runner.run(System.in, System.out, System.err, new String[0]);
+         TCKRunner.main();
      }
      ```
 
