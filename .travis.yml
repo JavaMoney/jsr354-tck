@@ -1,6 +1,7 @@
+dist: trusty
 language: java
 jdk:
-  - oraclejdk7
+  - openjdk7
 
 after_success:
   - mvn deploy -Dmaven.test.skip -s settings.xml
