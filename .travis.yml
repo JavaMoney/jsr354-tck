@@ -1,7 +1,7 @@
 dist: trusty
 language: java
 jdk:
-  - openjdk7
+  - openjdk8
 
 after_success:
   - mvn deploy -Dmaven.test.skip -s settings.xml
