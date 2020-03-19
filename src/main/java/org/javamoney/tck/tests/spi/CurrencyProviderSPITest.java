@@ -57,12 +57,13 @@ public class CurrencyProviderSPITest {
       }
 
       CurrencyQuery dollarQuery = CurrencyQueryBuilder.of().setCurrencyCodes(dollarRegex).build();
-      Collection<CurrencyUnit> dollarCurrencies = Monetary.getCurrencies(dollarQuery);
+      final Collection<CurrencyUnit> dollarCurrencies = Monetary.getCurrencies(dollarQuery);
       for (CurrencyUnit dollarCurrency : dollarCurrencies) {
           availableDollarCodes.remove(dollarCurrency.getCurrencyCode());
       }
 
-      assertTrue(availableDollarCodes.isEmpty());
+      assertTrue(availableDollarCodes.isEmpty(), String.format("Available Dollar codes are not empty but %s.",
+              availableDollarCodes.size()));
   }
 
 }

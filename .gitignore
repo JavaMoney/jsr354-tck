@@ -1,7 +1,8 @@
-../../git/jsr354-tck/money-tck.iml
 target/
 test-output/
 *.iml
+/.idea
+
 /bin
 /.settings
 /.classpath
