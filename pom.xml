@@ -117,15 +117,10 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.javamoney.moneta</groupId>
-				<artifactId>moneta-core</artifactId>
-				<version>${ri.version}</version>
-			</dependency>
-
-			<dependency>
 				<groupId>org.javamoney</groupId>
-				<artifactId>moneta-core</artifactId>
+				<artifactId>moneta</artifactId>
 				<version>${ri.version}</version>
+				<type>pom</type>
 			</dependency>
 
 			<dependency>
