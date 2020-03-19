@@ -20,9 +20,7 @@ import javax.money.CurrencyContext;
 import javax.money.CurrencyQueryBuilder;
 import javax.money.CurrencyUnit;
 import javax.money.Monetary;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.List;
+import java.util.*;
 
 
 @SpecVersion(spec = "JSR 354", version = "1.0.0")
@@ -126,9 +124,10 @@ public class ModellingCurrenciesTest {
             AssertJUnit.assertEquals(firstUnits.get(i), secondUnits.get(i));
         }
         for (CurrencyUnit unit : Monetary.getCurrencies(CurrencyQueryBuilder.of().build())) {
-            String currencyCode = unit.getCurrencyCode();
+            final String currencyCode = unit.getCurrencyCode();
             if (currencyCode != null) {
-                AssertJUnit.assertEquals("CurrencyUnit#hashCode() must be equal to currency code hash code", unit.hashCode(), currencyCode.hashCode());
+                AssertJUnit.assertEquals(String.format("CurrencyUnit#hashCode() %s must be equal to currency code %s hash code"
+                        , unit.getCurrencyCode(), currencyCode), unit.getCurrencyCode().hashCode(), currencyCode.hashCode());
             }
         }
     }

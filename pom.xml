@@ -18,7 +18,6 @@
 	<artifactId>javamoney-tck</artifactId>
 	<packaging>jar</packaging>
 
-
 	<name>JSR 354 Technical Compatibility Kit (TCK)</name>
 
 	<description>JSR 354 provides an API for representing, transporting, and performing comprehensive calculations with
@@ -37,8 +36,8 @@
 	</licenses>
 
 	<properties>
-		<jsr.version>1.0</jsr.version>
-		<ri.version>1.1-SNAPSHOT</ri.version>
+		<jsr.version>1.1-SNAPSHOT</jsr.version>
+		<ri.version>1.4-SNAPSHOT</ri.version>
 		<jdkVersion>1.7</jdkVersion>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
 		<maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
@@ -46,10 +45,12 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<moduleDir>.</moduleDir>
 		<basedir>.</basedir>
-		<testng.version>6.8.5</testng.version>
+		<mutability.version>0.10.3</mutability.version>
+		<testng.version>6.14.3</testng.version>
+		<!-- Let's stick to TestNG 6 for now, 7 is out,
+		     but it adds some more API changes especially regarding methods and reflection  -->
 		<jboss.test.audit.version>1.1.0.Final</jboss.test.audit.version>
 	</properties>
-
 	<ciManagement>
 		<system>Travis CI</system>
 		<url>https://travis-ci.org/JavaMoney/jsr354-tck</url>
@@ -140,7 +141,7 @@
 			<dependency>
 				<groupId>org.mutabilitydetector</groupId>
 				<artifactId>MutabilityDetector</artifactId>
-				<version>0.9.1</version>
+				<version>${mutability.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.jboss.test-audit</groupId>
