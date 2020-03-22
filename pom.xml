@@ -22,8 +22,7 @@
 
     <artifactId>javamoney-tck</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.4-SNAPSHOT</version>
-
+    <version>1.0.1-SNAPSHOT</version>
     <name>JSR 354 Technical Compatibility Kit (TCK)</name>
 
     <description>JSR 354 provides an API for representing, transporting, and performing comprehensive calculations with
@@ -42,8 +41,8 @@
     </licenses>
 
     <properties>
-        <jsr.version>1.0.4-SNAPSHOT</jsr.version>
-        <ri.version>1.4-SNAPSHOT</ri.version>
+        <jsr.version>1.0</jsr.version>
+        <ri.version>1.0</ri.version>
         <jdkVersion>1.7</jdkVersion>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
