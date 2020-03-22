@@ -1283,10 +1283,13 @@ public class ExternalizingNumericValueTest {
     @Test(description = "4.2.3 Check if a correct double value is returned, truncation is " +
             "allowed to be performed (but is not necessary).")
     public void testDoubleValueWithTruncationZero() {
+        /*
         Number[] nums = new Number[]{new BigDecimal("-0.000000000000000000000000000000000000000000000000000000000000000" +
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" +
                 "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" +
                 "000000000000000000000000000001234")};
+         */
+        final Number[] nums = new Number[]{new BigDecimal("-0.0")};
         for (Number num : nums) {
             for (Class type : Monetary.getAmountTypes()) {
                 if (type.equals(TestAmount.class)) {

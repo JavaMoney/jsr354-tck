@@ -22,8 +22,7 @@
 
     <artifactId>javamoney-tck</artifactId>
     <packaging>jar</packaging>
-
-    <version>1.0</version>
+    <version>1.0.4-SNAPSHOT</version>
 
     <name>JSR 354 Technical Compatibility Kit (TCK)</name>
 
@@ -43,7 +42,8 @@
     </licenses>
 
     <properties>
-        <jsr.version>1.0</jsr.version>
+        <jsr.version>1.0.4-SNAPSHOT</jsr.version>
+        <ri.version>1.4-SNAPSHOT</ri.version>
         <jdkVersion>1.7</jdkVersion>
         <maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
@@ -78,10 +78,9 @@
     </mailingLists>
 
     <issueManagement>
-        <system>JIRA</system>
-        <url>http://java.net/jira/browse/JAVAMONEY</url>
+        <system>Github</system>
+        <url>https://github.com/JavaMoney/jsr354-tck/issues</url>
     </issueManagement>
-
 
     <prerequisites>
         <maven>3.0.4</maven>
@@ -168,7 +167,7 @@
         <dependency>
             <groupId>org.javamoney</groupId>
             <artifactId>moneta-bp</artifactId>
-            <version>${jsr.version}</version>
+            <version>${ri.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
