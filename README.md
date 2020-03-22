@@ -15,9 +15,9 @@ to your classpath:
 - TestNG and all its dependencies
 - your implementation and SE service registration of *org.javamoney.tck.JSR354TestConfiguration*
 
-You can do this all manually, use your IDE or use maven, the ladder by performing the following tasks:
+You can do this all manually, use your IDE or use Maven, the latter by performing the following tasks:
 
-1) Create a new maven project.
+1) Create a new Maven project.
 2) Add this TCK, the target API (Java 7 or 8) and your implementation as dependency.
 3) Implement a class of type *org.javamoney.tck.JSR354TestConfiguration*, read the Javadoc, what 
   you must provide with this class.
@@ -35,9 +35,7 @@ You can do this all manually, use your IDE or use maven, the ladder by performin
 5) Go to target - there you will find your TCK test results.
 
 
-As jump-start you can clone
-- https://github.com/JavaMoney/jsr354-ritest (Java 8), or
-- https://github.com/JavaMoney/jsr354-ritest-bp (Java 7)
+As jump-start you can clone [javamoney-tck-usage-example](https://github.com/JavaMoney/javamoney-tck-usage-example) (master: Java 8 and above, backport: Java 7)
 
 Additional details and options are also available src/main/asciidoc/userguide.adoc[here] .
 

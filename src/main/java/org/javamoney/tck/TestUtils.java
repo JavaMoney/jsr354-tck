@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, Werner Keil, Credit Suisse (Anatole Tresch). Licensed under the Apache
+ * Copyright (c) 2012, 2020, Werner Keil, Anatole Tresch. Licensed under the Apache
  * License, Version 2.0 (the "License"); you may not use this file except in compliance with the
  * License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License
@@ -9,7 +9,6 @@
  */
 package org.javamoney.tck;
 
-import junit.framework.Assert;
 import org.mutabilitydetector.unittesting.AllowedReason;
 import org.mutabilitydetector.unittesting.MutabilityAssert;
 import org.mutabilitydetector.unittesting.MutabilityMatchers;
@@ -149,7 +148,7 @@ public final class TestUtils {
                 return;
             }
         }
-        Assert.fail(section + ": Class must implement " + iface.getName() + ", but does not: " + type.getName());
+        AssertJUnit.fail(section + ": Class must implement " + iface.getName() + ", but does not: " + type.getName());
     }
 
     /**
@@ -262,7 +261,7 @@ public final class TestUtils {
             throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
             InvocationTargetException {
         Method m = instance.getClass().getDeclaredMethod(methodName);
-        Assert.assertEquals(section + ": " + m.getName() + '(' + instance + ") returned invalid value:", value,
+        AssertJUnit.assertEquals(section + ": " + m.getName() + '(' + instance + ") returned invalid value:", value,
                 m.invoke(instance));
     }
 
