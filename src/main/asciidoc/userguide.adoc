@@ -12,7 +12,7 @@ Anatole Tresch <atsticks@gmail.com>
 :data-uri:
 
 ---------------------------------------------------------------------------------------------------
-Copyright (c) 2012, 2013, Werner Keil, Credit Suisse (Anatole Tresch). Licensed under the Apache
+Copyright (c) 2012, 2020, Werner Keil, Anatole Tresch and others. Licensed under the Apache
 License, Version 2.0 (the "License"); you may not use this file except in compliance with the
 License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 Unless required by applicable law or agreed to in writing, software distributed under the License
@@ -49,7 +49,7 @@ TCK for JSR 354 Money and Currency ensures exactly this for implementations of t
 The TCK hereby is open sourced under the Apache 2 licence. Nevertheless we would be highly interested to keep track of
 implementation of this JSR. So if you are are planning or even writing on an implementation of this JSR, drop a mail to
 the JSR's mailto:javamoney@groups.io[mailing list] on https://groups.io/g/javamoney/[groups.io] or the
-JSR's mailto:atsticks@java.net[spec lead].
+JSR's mailto:javamoney.jcp@gmail.com[spec leads].
 
 
 Downloading and Installing
@@ -216,11 +216,11 @@ public final class MonetaTCKSetup implements JSR354TestConfiguration{
     public Collection<Class> getCurrencyClasses() {
         try{
             return Arrays
-                    .asList(new Class[] { Class.forName("org.javamoney.moneta.internal.JDKCurrencyAdapter")});
+                    .asList(new Class[] { Class.forName("org.javamoney.moneta.spi.JDKCurrencyAdapter")});
         }
         catch(ClassNotFoundException e){
             e.printStackTrace();
-            throw new RuntimeException("Currency class not lodable: org.javamoney.moneta.internal.JDKCurrencyAdapter");
+            throw new RuntimeException("Currency class not lodable: org.javamoney.moneta.spi.JDKCurrencyAdapter");
         }
     }
 

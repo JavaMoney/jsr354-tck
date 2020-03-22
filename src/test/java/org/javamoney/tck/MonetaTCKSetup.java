@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, Werner Keil, Credit Suisse (Anatole Tresch). Licensed under the Apache
+ * Copyright (c) 2012, 2020, Werner Keil, Anatole Tresch. Licensed under the Apache
  * License, Version 2.0 (the "License"); you may not use this file except in compliance with the
  * License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License
@@ -28,6 +28,7 @@ import org.javamoney.moneta.function.MonetaryOperators;
  * Implementation of TCK Setup class for the Moneta reference implementation.
  */
 public final class MonetaTCKSetup implements JSR354TestConfiguration {
+    private static final String CURRENCY_ADAPTER = "org.javamoney.moneta.spi.JDKCurrencyAdapter";
 
     @Override
     public Collection<Class> getAmountClasses() {
@@ -39,12 +40,12 @@ public final class MonetaTCKSetup implements JSR354TestConfiguration {
     public Collection<Class> getCurrencyClasses() {
         try{
             return Arrays
-                    .asList(new Class[]{Class.forName("org.javamoney.moneta.internal.JDKCurrencyAdapter")});
+                    .asList(new Class[]{Class.forName(CURRENCY_ADAPTER)});
         }
         catch(ClassNotFoundException e){
             //noinspection CallToPrintStackTrace
             e.printStackTrace();
-            throw new RuntimeException("Currency class not loadable: org.javamoney.moneta.internal.JDKCurrencyAdapter");
+            throw new RuntimeException(String.format("Currency class not loadable: %s", CURRENCY_ADAPTER));
         }
     }
 
