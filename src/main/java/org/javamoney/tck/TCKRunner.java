@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, Werner Keil, Credit Suisse, Anatole Tresch. Licensed under the Apache
+ * Copyright (c) 2012, 2020, Werner Keil, Anatole Tresch. Licensed under the Apache
  * License, Version 2.0 (the "License"); you may not use this file except in compliance with the
  * License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License
@@ -51,7 +51,6 @@ import javax.tools.Tool;
  * Main class for executing the JSR 354 TCK.
  * Created by Anatole on 12.06.2014.
  */
-@SuppressWarnings("UseOfSystemOutOrSystemErr")
 public final class TCKRunner extends XmlSuite implements Tool {
     /**
      * Constructor.
@@ -84,7 +83,10 @@ public final class TCKRunner extends XmlSuite implements Tool {
      *     <li>-DreportFile=targetFile.txt for defining the TCK result summary report target file
      *     (default: ./target/tck-results.txt).</li>
      * </ul>
-     * @param args
+     * @param in input stream
+     * @param out output stream
+     * @param err error output
+     * @param args arguments
      */
     @Override
     public int run(InputStream in, OutputStream out, OutputStream err,
@@ -150,7 +152,6 @@ public final class TCKRunner extends XmlSuite implements Tool {
          * Constructor of the TCK reporter, writing to the given file.
          * @param file the target file, not null.
          */
-        @SuppressWarnings("CallToPrintStackTrace")
         public TCKReporter(File file) {
             try {
                 if (!file.exists()) {
@@ -179,7 +180,7 @@ public final class TCKRunner extends XmlSuite implements Tool {
             count++;
             String location = tr.getTestClass().getRealClass().getSimpleName() + '#' + tr.getMethod().getMethodName();
             try {
-                Method realTestMethod = tr.getMethod().getMethod();
+                Method realTestMethod = tr.getMethod().getConstructorOrMethod().getMethod();
                 Test testAnnot = realTestMethod.getAnnotation(Test.class);
                 if (!testAnnot.description().isEmpty()) {
                     if (tr.getThrowable() != null) {
@@ -232,7 +233,7 @@ public final class TCKRunner extends XmlSuite implements Tool {
             count++;
             String location = tr.getTestClass().getRealClass().getSimpleName() + '#' + tr.getMethod().getMethodName();
             try {
-                Method realTestMethod = tr.getMethod().getMethod();
+                Method realTestMethod = tr.getMethod().getConstructorOrMethod().getMethod();
                 Test specAssert = realTestMethod.getAnnotation(Test.class);
                 if (specAssert != null && !specAssert.description().isEmpty()) {
                     log("[SUCCESS] " + specAssert.description() + "(" + location + ")");
