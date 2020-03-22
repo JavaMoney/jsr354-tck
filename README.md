@@ -9,7 +9,7 @@ The current module contains the technical compatibility kit of JSR 354.
 Basically the TCK can be run as a standalone application. Hereby you must ensure you add the following libraries
 to your classpath:
 - the TCK itself
-- the JSR 354 API jar (either for Java 8 or for Java 7)
+- the JSR 354 API jar (for Java 8 and above)
 - your implementation under test and all its dependencies
 - TestNG and all its dependencies
 - your implementation and SE service registration of `org.javamoney.tck.JSR354TestConfiguration`
@@ -19,10 +19,10 @@ You can do this all manually, use your IDE or use Maven, the latter by performin
 1. Create a new project Maven or Gradle.
 2. Add dependencies:
    * Add this TCK [org.javamoney:javamoney-tck](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.javamoney%22%20AND%20a%3A%22javamoney-tck%22)
-   * Add the target API [javax.moneyy:money-api-bp](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22javax.money%22%20AND%20a%3A%22money-api-bp%22) for Java 7 or [javax.money:money-api](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22javax.money%22%20AND%20a%3A%22money-api%22) for Java 8
+   * Add the target API [javax.money:money-api](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22javax.money%22%20AND%20a%3A%22money-api%22) for Java 8 and above
    * and your implementation as dependency
 3. Implement a class of type [org.javamoney.tck.JSR354TestConfiguration](./src/main/java/org/javamoney/tck/JSR354TestConfiguration.java), read the Javadoc, what you must provide with this class.
-4. Add a single test class with a singlet test as follows:
+4. Add a single test class with a single test as follows:
 
      ```java
      @Test
