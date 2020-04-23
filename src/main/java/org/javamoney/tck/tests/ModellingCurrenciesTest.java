@@ -23,7 +23,7 @@ import javax.money.Monetary;
 import java.util.*;
 
 
-@SpecVersion(spec = "JSR 354", version = "1.0.0")
+@SpecVersion(spec = "JSR 354", version = "1.1.0")
 public class ModellingCurrenciesTest {
 
     /**

@@ -34,7 +34,7 @@ import java.util.Currency;
 import java.util.List;
 
 
-@SpecVersion(spec = "JSR 354", version = "1.0.0")
+@SpecVersion(spec = "JSR 354", version = "1.1.0")
 public class ModellingMonetaryAmountsTest {
 
     private final static String DEFAULT_CURRENCY = "CHF";
@@ -2156,7 +2156,8 @@ public class ModellingMonetaryAmountsTest {
      * Test scaleByPowerOfTen()allow to scale by power of 10.
      */
     @SpecAssertion(section = "4.2.2", id = "422-D26")
-    @Test(description = "4.2.2 For each amount class, ensure scaleByPowerOfTen(1) returns correct results.")
+    @Test(description = "4.2.2 For each amount class, ensure scaleByPowerOfTen(1) throws an ArithmeticException.",
+            expectedExceptions = java.lang.ArithmeticException.class)
     public void testScaleByPowerOfTen() {
         for (Class type : Monetary.getAmountTypes()) {
             if (type.equals(TestAmount.class)) {

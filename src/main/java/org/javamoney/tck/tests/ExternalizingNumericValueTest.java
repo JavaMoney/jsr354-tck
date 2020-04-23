@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, Werner Keil, Credit Suisse (Anatole Tresch). Licensed under the Apache
+ * Copyright (c) 2012, 2020, Werner Keil, Anatole Tresch and others. Licensed under the Apache
  * License, Version 2.0 (the "License"); you may not use this file except in compliance with the
  * License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License
@@ -26,7 +26,7 @@ import java.math.BigInteger;
  * Testing Numeric Externalization for numeric values of MonetaryAmount instances.
  * Created by Anatole on 10.03.14.
  */
-@SpecVersion(spec = "JSR 354", version = "1.0.0")
+@SpecVersion(spec = "JSR 354", version = "1.1.0")
 public class ExternalizingNumericValueTest {
 
     private final static String DEFAULT_CURRENCY = "CHF";

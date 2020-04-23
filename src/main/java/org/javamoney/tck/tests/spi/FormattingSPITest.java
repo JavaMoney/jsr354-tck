@@ -20,7 +20,7 @@ import java.util.ServiceLoader;
 /**
  * Tests the FormatProviderSpi.
  */
-@SpecVersion(spec = "JSR 354", version = "1.0.0")
+@SpecVersion(spec = "JSR 354", version = "1.1.0")
 public class FormattingSPITest {
 
     // ********************************* C. Prodivding Amount Formats

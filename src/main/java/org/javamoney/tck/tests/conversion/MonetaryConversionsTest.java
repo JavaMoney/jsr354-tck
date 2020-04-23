@@ -27,7 +27,7 @@ import javax.money.convert.ProviderContext;
 /**
  * Tests for MonetaryConversions.
  */
-@SpecVersion(spec = "JSR 354", version = "1.0.0")
+@SpecVersion(spec = "JSR 354", version = "1.1.0")
 public class MonetaryConversionsTest {
 
     // ************************************* A. Test Basic MonetaryConversions Accessors *****************************

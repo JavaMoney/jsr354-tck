@@ -26,7 +26,7 @@ import java.util.GregorianCalendar;
  * Tests for conversion provider chains.
  * Created by Anatole on 10.03.14.
  */
-@SpecVersion(spec = "JSR 354", version = "1.0.0")
+@SpecVersion(spec = "JSR 354", version = "1.1.0")
 public class ProviderChainsTest {
 
     // ********************** A. Test Basic MonetaryConversions Accessors *********************************

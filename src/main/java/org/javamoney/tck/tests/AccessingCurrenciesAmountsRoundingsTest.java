@@ -41,7 +41,7 @@ import static org.testng.AssertJUnit.assertNotNull;
 /**
  * Test class for accessing currencies and amounts.
  */
-@SpecVersion(spec = "JSR 354", version = "1.0.0")
+@SpecVersion(spec = "JSR 354", version = "1.1.0")
 public class AccessingCurrenciesAmountsRoundingsTest {
 
     // ****************** A. Accessing Currencies *******************
