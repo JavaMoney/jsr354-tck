@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>org.javamoney</groupId>
 		<artifactId>javamoney-parent</artifactId>
-		<version>1.1-SNAPSHOT</version>
+		<version>1.1</version>
 	</parent>
 
 	<artifactId>javamoney-tck</artifactId>
@@ -21,8 +21,7 @@
 	<name>JSR 354 Technical Compatibility Kit (TCK)</name>
 
 	<description>JSR 354 provides an API for representing, transporting, and performing comprehensive calculations with
-        Money and Currency. This module implements JSR 354. This module provides the test code that is compatible with
-        both the Java 7 and the Java 8 based API. The targeted API must be provided as well as the implementation
+        Money and Currency. This module implements JSR 354. The targeted API must be provided as well as the implementation
         under test to execute this TCK.
     </description>
 
@@ -36,8 +35,8 @@
 	</licenses>
 
 	<properties>
-		<jsr.version>1.1-SNAPSHOT</jsr.version>
-		<ri.version>1.4-SNAPSHOT</ri.version>
+		<jsr.version>1.1</jsr.version>
+		<ri.version>1.4</ri.version>
 		<jdkVersion>1.8</jdkVersion>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
 		<maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
