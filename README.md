@@ -40,9 +40,9 @@ You can do this all manually, use your IDE or use Maven, the latter by performin
 6. Go to target - there you will find your TCK test results.
 
 
-As jump-start you can clone [javamoney-tck-usage-example](https://github.com/JavaMoney/javamoney-tck-usage-example) (master: Java 8 and above, backport: Java 7)
+As jump-start you can clone [javamoney-tck-usage-example](https://github.com/JavaMoney/javamoney-tck-usage-example)
 
-Additional details and options are also available in [user guide](src/main/asciidoc/userguide.adoc).
+Additional details and options are documented in [user guide](src/main/asciidoc/userguide.adoc).
 
 The JSR 354 Team.
 
