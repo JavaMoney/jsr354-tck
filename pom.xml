@@ -461,4 +461,5 @@
 			</build>
 		</profile>
 	</profiles>
+	<version>1.1.1-SNAPSHOT</version>
 </project>
