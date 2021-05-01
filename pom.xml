@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>org.javamoney</groupId>
 		<artifactId>javamoney-parent</artifactId>
-		<version>1.1</version>
+		<version>1.4-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>javamoney-tck</artifactId>
@@ -81,17 +81,38 @@
 		<url>https://github.com/JavaMoney/jsr354-org.javamoney.tck</url>
 	</scm>
 
-	<distributionManagement>
+	<!-- Additional repositories -->
+	<repositories>
 		<repository>
-			<id>bintray-release</id>
-			<name>oss-jfrog-artifactory-release</name>
-			<url>https://oss.jfrog.org/artifactory/oss-release-local</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>ossrh-snapshot</id>
+			<name>OSSRH Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</repository>
+		<repository>
+			<id>jboss-maven2-brew</id>
+			<name>JBoss Maven 2 Brew Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+		</repository>
+		<repository>
+			<id>jboss-maven2-snapshots</id>
+			<name>JBoss Maven 2 Brew Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
+
+	<!-- Deployment to public servers -->
+	<distributionManagement>
 		<snapshotRepository>
-			<id>bintray-snapshot</id>
-			<name>oss-jfrog-artifactory-snapshot</name>
-			<url>https://oss.jfrog.org/artifactory/oss-snapshot-local</url>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
 	</distributionManagement>
 
 	<dependencyManagement>
@@ -248,7 +269,6 @@
 			<plugin>
 				<groupId>org.asciidoctor</groupId>
 				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<version>1.5.2</version>
 				<dependencies>
 					<dependency>
 						<groupId>org.asciidoctor</groupId>
@@ -298,35 +318,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>bintray-release</id>
-			<name>libs-release</name>
-			<url>http://oss.jfrog.org/artifactory/libs-release</url>
-		</repository>
-		<repository>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<id>bintray-snapshot</id>
-			<name>libs-snapshot</name>
-			<url>http://oss.jfrog.org/artifactory/libs-snapshot</url>
-		</repository>
-		<repository>
-			<id>jboss-maven2-brew</id>
-			<name>JBoss Maven 2 Brew Repository</name>
-			<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
-		</repository>
-		<repository>
-			<id>jboss-maven2-snapshots</id>
-			<name>JBoss Maven 2 Brew Repository</name>
-			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
-		</repository>
-	</repositories>
 
 	<profiles>
 		<profile>
