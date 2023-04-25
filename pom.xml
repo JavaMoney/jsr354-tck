@@ -19,7 +19,7 @@
 	<packaging>jar</packaging>
 
 	<name>JSR 354 Technical Compatibility Kit (TCK)</name>
-
+	<version>1.1.1-SNAPSHOT</version>
 	<description>JSR 354 provides an API for representing, transporting, and performing comprehensive calculations with
         Money and Currency. This module implements JSR 354. The targeted API must be provided as well as the implementation
         under test to execute this TCK.
@@ -36,7 +36,7 @@
 
 	<properties>
 		<jsr.version>1.1</jsr.version>
-		<ri.version>1.4</ri.version>
+		<ri.version>1.4.2</ri.version>
 		<jdkVersion>1.8</jdkVersion>
 		<maven.compile.targetLevel>${jdkVersion}</maven.compile.targetLevel>
 		<maven.compile.sourceLevel>${jdkVersion}</maven.compile.sourceLevel>
@@ -45,14 +45,15 @@
 		<moduleDir>.</moduleDir>
 		<basedir>.</basedir>
 		<mutability.version>0.10.3</mutability.version>
-		<testng.version>6.14.3</testng.version>
+		<slf4j.version>1.7.13</slf4j.version>
+		<testng.version>7.7.1</testng.version>
 		<!-- Let's stick to TestNG 6 for now, 7 is out,
 		     but it adds some more API changes especially regarding methods and reflection  -->
-		<jboss.test.audit.version>1.1.0.Final</jboss.test.audit.version>
+		<jboss.test.audit.version>2.0.0.Final</jboss.test.audit.version>
 	</properties>
 	<ciManagement>
-		<system>Travis CI</system>
-		<url>https://travis-ci.org/JavaMoney/jsr354-tck</url>
+		<system>Circle CI</system>
+		<url>https://app.circleci.com/pipelines/github/JavaMoney/jsr354-tck</url>
 	</ciManagement>
 
 	<mailingLists>
@@ -269,11 +270,12 @@
 			<plugin>
 				<groupId>org.asciidoctor</groupId>
 				<artifactId>asciidoctor-maven-plugin</artifactId>
+				<version>2.2.3</version>
 				<dependencies>
 					<dependency>
 						<groupId>org.asciidoctor</groupId>
 						<artifactId>asciidoctorj-pdf</artifactId>
-						<version>1.5.0-alpha.6</version>
+						<version>2.3.7</version>
 					</dependency>
 				</dependencies>
 				<configuration>
@@ -452,5 +454,4 @@
 			</build>
 		</profile>
 	</profiles>
-	<version>1.1.1-SNAPSHOT</version>
 </project>

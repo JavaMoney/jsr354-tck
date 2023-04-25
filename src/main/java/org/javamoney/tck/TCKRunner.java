@@ -21,9 +21,11 @@ import org.javamoney.tck.tests.conversion.MonetaryConversionsTest;
 import org.javamoney.tck.tests.conversion.ProviderChainsTest;
 import org.javamoney.tck.tests.format.FormattingMonetaryAmountsTest;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 import org.testng.annotations.Test;
+import org.testng.internal.ConstructorOrMethod;
 import org.testng.reporters.VerboseReporter;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
@@ -105,7 +107,7 @@ public final class TCKRunner extends XmlSuite implements Tool {
         }
         String verbose = System.getProperty("verbose");
         if("true".equalsIgnoreCase(verbose)){
-            tng.addListener(new VerboseReporter());
+            tng.setVerbose(1);
         }
         String reportFile = System.getProperty("reportFile");
         File file = null;
@@ -215,7 +217,7 @@ public final class TCKRunner extends XmlSuite implements Tool {
             count++;
             String location = tr.getTestClass().getRealClass().getSimpleName() + '#' + tr.getMethod().getMethodName();
             try {
-                Method realTestMethod = tr.getMethod().getMethod();
+                Method realTestMethod = tr.getMethod().getConstructorOrMethod().getMethod();
                 Test specAssert = realTestMethod.getAnnotation(Test.class);
                 if (specAssert != null && !specAssert.description().isEmpty()) {
                     log("[SKIPPED] " + specAssert.description() + "(" + location + ")");
