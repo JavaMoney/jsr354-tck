@@ -47,8 +47,6 @@
 		<mutability.version>0.10.3</mutability.version>
 		<slf4j.version>1.7.13</slf4j.version>
 		<testng.version>7.7.1</testng.version>
-		<!-- Let's stick to TestNG 6 for now, 7 is out,
-		     but it adds some more API changes especially regarding methods and reflection  -->
 		<jboss.test.audit.version>2.0.0.Final</jboss.test.audit.version>
 	</properties>
 	<ciManagement>
