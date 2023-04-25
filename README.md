@@ -50,6 +50,7 @@ The JSR 354 Team.
 This module is licenced under the the [Apache 2 Licence](https://www.apache.org/licenses/LICENSE-2.0.html).
 
 [![Maven Central](https://img.shields.io/maven-central/v/org.javamoney/javamoney-tck.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.javamoney%22%20AND%20a%3A%22javamoney-tck%22)
-[![Build Status](https://api.travis-ci.org/JavaMoney/jsr354-tck.png?branch=master)](https://travis-ci.org/JavaMoney/jsr354-tck) [![License](http://img.shields.io/badge/license-Apache2-red.svg)](http://opensource.org/licenses/apache-2.0)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/JavaMoney/jsr354-tck/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/JavaMoney/jsr354-tck/tree/master) 
+[![License](http://img.shields.io/badge/license-Apache2-red.svg)](http://opensource.org/licenses/apache-2.0)
 
 [![Built with Maven](http://maven.apache.org/images/logos/maven-feather.png)](http://maven.org/)
