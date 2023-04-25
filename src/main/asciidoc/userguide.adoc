@@ -1,7 +1,7 @@
 JSR 354 Money & Currency TCK User Guide
 =======================================
-Anatole Tresch <atsticks@gmail.com>
-:Author Initials: ATR
+Werner Keil <werner@javamoney.org>
+:Author Initials: WK
 :source-highlighter: coderay
 :toc:
 :icons:
@@ -12,7 +12,7 @@ Anatole Tresch <atsticks@gmail.com>
 :data-uri:
 
 ---------------------------------------------------------------------------------------------------
-Copyright (c) 2012, 2020, Werner Keil, Anatole Tresch and others. Licensed under the Apache
+Copyright (c) 2012, 2023, Werner Keil and others. Licensed under the Apache
 License, Version 2.0 (the "License"); you may not use this file except in compliance with the
 License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 Unless required by applicable law or agreed to in writing, software distributed under the License
@@ -60,12 +60,11 @@ Hereby JSR 354 defines a Java 7 based API, which comprises almost all functional
 also comes with a Java 8 API, which adds Java 8 related additional features (default
 methods that makes developer's life easier):
 
-* +javax.money:money-api:1.0:jar+ contains the full Java 8 based API
+* +javax.money:money-api:1.1:jar+ contains the full Java 8 based API
 * +javax.money:money-api-bp:1.0:jar+ contains the Java SE pre8 compatible API.
-* +org.javamoney:moneta:<version>:jar+ contains the Java 8 compatible reference implementation (RI)
+* +org.javamoney:moneta:<version>:jar+ contains the Java 8+ compatible reference implementation (RI)
 * +org.javamoney:moneta-bp:<version>:jar+ contains the Java SE pre8 compatible reference implementation (RI)
-* +org.javamoney:money-tck:<version>:jar+ contains the technological compatibility kit (TCK), built against
-  the Java 7 API, which is compatible with the Java 8 version.
+* +org.javamoney:money-tck:<version>:jar+ contains the technological compatibility kit (TCK).
 
 Summarizing you should add the following dependencies:
 
@@ -75,12 +74,12 @@ Summarizing you should add the following dependencies:
 <dependency>
     <groupId>org.javamoney</groupId>
     <artifactId>money-tck</artifactId>
-    <version>1.0</version> <!-- or newer, if available. -->
+    <version>1.1</version> <!-- or newer, if available. -->
 </dependency>
 <dependency>
     <groupId>org.testng</groupId>
     <artifactId>testng</artifactId>
-    <version>6.8.5</version>
+    <version>7.7.1</version>
 </dependency>
 <dependency>
     <groupId>${impl.groupId}</groupId>
@@ -95,7 +94,7 @@ Summarizing you should add the following dependencies:
     <artifactId>money-api</artifactId>
     <!-- Java 7: artifactId>money-api-bp</artifactId -->
     <type>jar</type>
-    <version>1.0</version>
+    <version>1.1</version>
 </dependency>
 ---------------------------------------------------------------------------------------
 
